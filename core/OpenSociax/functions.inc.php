@@ -1595,6 +1595,7 @@ function parse_html($html)
     //话题处理
     $html = str_replace('＃', '#', $html);
     $html = preg_replace_callback("/#([^#]*[^#^\s][^#]*)#/is", '_parse_theme', $html);
+    // #([^#]\S*?)#
     //@提到某人处理
     $html = preg_replace_callback("/@([\w\x{2e80}-\x{9fff}\-]+)/u", '_parse_at_by_uname', $html);
     /* emoji解析 */

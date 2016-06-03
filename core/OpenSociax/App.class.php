@@ -105,8 +105,40 @@ class App
             die('illegal request.');
         }
 
+        // 微信自动登陆和绑定
+        $openid = session('wx_open_id');
+        $mid = $_SESSION['mid'] ?: $_SESSION['uid'];
+        // var_dump($openid);exit;
+        if ($openid) {
+            $login = Ts\Model\Login::byType('weixin')
+                ->byVendorId($openid)
+                ->orderBy('login_id', 'desc')
+                ->first()
+            ;
+
+            if (!$login && $mid) {
+                $login = new Ts\Model\Login;
+                $login->uid = $mid;
+                $login->type_uid = $openid;
+                $login->type = 'weixin';
+                $login->is_sync = 0;
+                $login->save();
+                // var_dump(123);
+            }
+
+            // var_dump($openid, $login, $_SESSION);exit;
+
+            if (!$mid && $login) {
+                $_SESSION['mid'] = $login->uid;
+            }
+        }
+
+        //  微信
+        if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false && isset($_REQUEST['w_sign']) && !$openid) {
+            U('h5/sign/weixin', '', true);
+
         /* # 跳转移动版首页，以后有时间，可以做兼容跳转 */
-        if (
+        } elseif (
             /* # 是否不是wap，强制访问pc SESSION记录 */
             $_SESSION['wap_to_normal'] != 1 and
             /* # 是否不是wap，强制访问pc SCOOKIE记录 */
