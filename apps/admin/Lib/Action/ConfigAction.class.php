@@ -753,7 +753,7 @@ class ConfigAction extends AdministratorAction
 
         $listData = model('SensitiveWord')->getSensitiveWordList();
         foreach ($listData['data'] as &$value) {
-            $value['sensitive_category'] = $value['sensitive_category']['title'];
+            $value['sensitive_category'] = $value['sensitive_category'];
             if (in_array($value['type'], array(1, 2))) {
                 $value['replace'] = '<span style="color:blue;cursor:auto;">无</span>';
             }
