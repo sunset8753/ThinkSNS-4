@@ -75,13 +75,11 @@ class UserModel extends \Model
 
         // return $this->where($map)->field('`uid`')->count() > 0;
         // 
-        
+
         if ($isUid) {
             $users = Model\User::existent()->audit()->byUid($user)->get();
-
         } elseif (MedzValidator::isEmail($user)) {
             $users = Model\User::existent()->audit()->byEmail($user)->get();
-
         } else {
             $users = Model\User::existent()
                 ->audit()

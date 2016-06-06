@@ -127,5 +127,4 @@ class User extends Model
     {
         return $this->password == md5(md5($password).$this->login_salt);
     }
-
 } // END class User extends Model

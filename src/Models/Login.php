@@ -25,5 +25,4 @@ class Login extends Model
     {
         return $query->where('type_uid', '=', $id);
     }
-
 } // END class Login extends Model
