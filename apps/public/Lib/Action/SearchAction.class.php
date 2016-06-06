@@ -207,7 +207,7 @@ class SearchAction extends Action
 
                     //去掉微吧已经删除的
                     $is_del = D('weiba')->where('weiba_id='.$v['weiba_id'])->getField('is_del');
-                    if ($is_del == 1 || $is_del == null) {
+                    if ($is_del == 1 || $is_del === null) {
                         unset($list['data'][$k]);
                     }
                 }
@@ -493,7 +493,7 @@ class SearchAction extends Action
 
                     //去掉微吧已经删除的
                     $is_del = D('weiba')->where('weiba_id='.$v['weiba_id'])->getField('is_del');
-                if ($is_del == 1 || $is_del == null) {
+                if ($is_del == 1 || $is_del === null) {
                     unset($list['data'][$k]);
                 }
             }
