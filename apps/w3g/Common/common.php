@@ -111,7 +111,7 @@ function _w3g_parse_expression($data)
     $allexpression = model('Expression')->getAllExpression();
     $info = $allexpression[$data[0]];
     if ($info) {
-        return preg_replace("/\[.+?\]/i", "<img src='".__THEME__.'/image/expression/default/'.$info['filename']."' />", $data[0]);
+        return preg_replace("/\[.+?\]/i", "<img src='".__THEME__.'/image/expression/new/'.$info['filename']."' />", $data[0]);
     } else {
         return $data[0];
     }
