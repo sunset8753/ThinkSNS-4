@@ -126,7 +126,7 @@ class ManageAction extends Action
             //dump($weiba_member);exit;
             $this->assign('on', 'lock');
         } else {
-            $weiba_member = D('weiba_follow')->where('weiba_id='.$weiba_id)->order('level desc')->findPage(20);
+            $weiba_member = D('weiba_follow')->where('weiba_id='.$weiba_id)->order('level desc,id desc')->findPage(20);
             $this->assign('on', 'all');
         }
         foreach ($weiba_member['data'] as $k => $v) {
