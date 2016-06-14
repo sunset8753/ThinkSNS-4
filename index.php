@@ -1,8 +1,8 @@
 <?php
 
 //设置错误级别
-// error_reporting(E_ERROR ^ E_NOTICE ^ E_WARNING);
-error_reporting(E_ALL);
+error_reporting(E_ERROR ^ E_NOTICE ^ E_WARNING);
+// error_reporting(E_ALL);
 
 /* ///调试、找错时请去掉///前空格
 ini_set('display_errors',true);
