@@ -116,6 +116,9 @@ class WeibaReplyWidget extends Widget
             exit(json_encode($return));
         }
 
+        // 字段补充
+        $data['comment_id'] = 0;
+
         if ($data['reply_id'] = D('weiba_reply')->add($data)) {
 
             // 锁定发布
