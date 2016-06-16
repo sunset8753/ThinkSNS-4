@@ -413,7 +413,7 @@ function import($filename)
 {
     static $_importFiles = array();
     if (!isset($_importFiles[$filename])) {
-        if (file_exists($filename)) {
+        if (file_exists($filename) && is_file($filename)) {
             require $filename;
             $_importFiles[$filename] = true;
         } else {
@@ -424,15 +424,15 @@ function import($filename)
             if (!isset($file[2])) {
                 $file[2] = '';
             }
-            if (file_exists(APPS_PATH.'/'.$file[0].'/Lib/'.$file[1].'/'.$file[2].'.class.php')) {
-                require APPS_PATH.'/'.$file[0].'/Lib/'.$file[1].'/'.$file[2].'.class.php';
+            $file = sprintf('%s/%s/Lib/%s/%s.class.php', APPS_PATH, $file[0], $file[1], $file[2]);
+            if (file_exists($file) && is_file($file)) {
+                require $file;
                 $_importFiles[$filename] = true;
             } else {
                 $_importFiles[$filename] = false;
             }
         }
     }
-
     return $_importFiles[$filename];
 }
 
