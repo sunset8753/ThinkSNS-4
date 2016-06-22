@@ -244,7 +244,7 @@ class CommentModel extends Model
                 /* 如果是微吧 */
                 if (!$notCount and $add['app'] == 'weiba') {
                     //model('UserData')->updateKey('unread_comment_weiba', 1, true, $add['to_uid']);
-                    model('UserData')->updateKey('unread_comment_weiba', 1, true, $add['to_uid']);
+                    model('UserData')->updateKey('unread_comment', 1, true, $add['to_uid']);
                 } elseif (!$notCount) {
                     model('UserData')->updateKey('unread_comment', 1, true, $add['to_uid']);
                 }
