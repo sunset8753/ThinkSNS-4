@@ -165,7 +165,8 @@ class WeibaReplyWidget extends Widget
                 D('weiba_reply', 'weiba')->where('reply_id='.$data['reply_id'])->save($data1);
                 // 给应用UID添加一个未读的评论数
                 if ($GLOBALS['ts']['mid'] != $datas['app_uid'] && $datas['app_uid'] != '') {
-                    !$notCount && model('UserData')->updateKey('unread_comment_weiba', 1, true, $datas['app_uid']);
+                    //!$notCount && model('UserData')->updateKey('unread_comment_weiba', 1, true, $datas['app_uid']);
+                    !$notCount && model('UserData')->updateKey('unread_comment', 1, true, $datas['app_uid']);
                 }
                 model('Feed')->cleanCache($datas['row_id']);
             }
