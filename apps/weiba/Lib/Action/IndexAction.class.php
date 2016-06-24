@@ -685,8 +685,7 @@ class IndexAction extends Action
         if (!$filterContentStatus['status']) {
             $this->error($filterContentStatus['data'], $type);
         }
-        $data['content'] = $filterContentStatus['data'];
-
+        $data['content'] = addslashes($filterContentStatus['data']);
         $res = D('weiba_post')->add($data);
         if ($res) {
             D('Weiba')->setNewcount($weibaid);
@@ -743,7 +742,6 @@ class IndexAction extends Action
                 $post_detail['attachInfo'][$ak] = $_attach;
             }
         }
-
         /* # 解析表情 */
         $post_detail['content'] = preg_replace_callback('/\[.+?\]/is', '_parse_expression', $post_detail['content']);
         /* # 解析emoji’ */
