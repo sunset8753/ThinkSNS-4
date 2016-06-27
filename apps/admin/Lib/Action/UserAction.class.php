@@ -690,7 +690,7 @@ class UserAction extends AdministratorAction
             $return['status'] = 1;
             $return['data'] = model('Register')->getLastError();
         }
-        M('user_credit')->add(array('uid'=>$_POST['id'],'score'=>0,'experience'=>0));
+        M('user_credit')->add(array('uid' => $_POST['id'], 'score' => 0, 'experience' => 0));
         // 添加积分
         model('Credit')->setUserCredit($_POST['id'], 'init_default');
         //清除缓存
