@@ -2045,12 +2045,12 @@ function getFromClient($type = 0, $app = 'public', $app_name = '')
     }
     $type = intval($type);
     $client_type = array(
-    0 => '来自网站',
-    1 => '来自手机',
-    2 => '来自Android',
-    3 => '来自iPhone',
-    4 => '来自iPad',
-    5 => '来自Windows',
+        0 => '来自网站',
+        1 => '来自手机',
+        2 => '来自Android',
+        3 => '来自iPhone',
+        4 => '来自iPad',
+        5 => '来自Windows',
     );
 
     //在列表中的
