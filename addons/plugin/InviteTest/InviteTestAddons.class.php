@@ -53,11 +53,11 @@ class InviteTestAddons extends NormalAddons
         $sqls[] = "DROP TABLE IF EXISTS `{$dbPrefix}invite_test`;";
         $sqls[] = "CREATE TABLE `{$dbPrefix}invite_test` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `uid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '绑定用户',
-  `hash` varchar(32) NOT NULL DEFAULT '' COMMENT '请求hash',
-  `code` varchar(32) NOT NULL DEFAULT '' COMMENT '邀请码',
-  `utime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '最新使用时间',
-  `is_disable` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '是否禁用',
+  `uid` int(10) unsigned NULL DEFAULT '0' COMMENT '绑定用户',
+  `hash` varchar(32) NULL DEFAULT '' COMMENT '请求hash',
+  `code` varchar(32) NULL DEFAULT '' COMMENT '邀请码',
+  `utime` int(10) unsigned NULL DEFAULT '0' COMMENT '最新使用时间',
+  `is_disable` tinyint(3) unsigned NULL DEFAULT '0' COMMENT '是否禁用',
   PRIMARY KEY (`id`),
   UNIQUE KEY `code` (`code`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='邀请测试表';";
