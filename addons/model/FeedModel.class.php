@@ -541,7 +541,6 @@ class FeedModel extends Model
         } else {
             $feedlist = $this->findPage($limit);
         }
-// 		dump($feedlist);
         $feed_ids = getSubByKey($feedlist['data'], 'feed_id');
         $feedlist['data'] = $this->getFeeds($feed_ids);
 

@@ -1593,12 +1593,25 @@ function parse_html($html)
     //$html = preg_replace_callback('/((?:https?|ftp):\/\/(?:www\.)?(?:[a-zA-Z0-9][a-zA-Z0-9\-]*\.)?[a-zA-Z0-9][a-zA-Z0-9\-]*(?:\.[a-zA-Z0-9]+)+(?:\:[0-9]*)?(?:\/[^\x{2e80}-\x{9fff}\s<\'\"“”‘’,，。]*)?)/u', '_parse_url', $html);
     //表情处理
     $html = preg_replace_callback("/(\[.+?\])/is", '_parse_expression', $html);
+
     //话题处理
-    $html = str_replace('＃', '#', $html);
-    $html = preg_replace_callback("/#([^#]*[^#^\s][^#]*)#/is", '_parse_theme', $html);
+    // $html = str_replace('＃', '#', $html);
+    // $html = preg_replace_callback("/#([^#]*[^#^\s][^#]*)#/is", '_parse_theme', $html);
+    // $html = preg_replace_callback(
+    //     '/#([^#]\S*?)#/is',
+    //     function($data) {
+    //         return _parse_theme($data);
+    //     },
+    //     $html
+    // );
     // #([^#]\S*?)#
+    
     //@提到某人处理
     $html = preg_replace_callback("/@([\w\x{2e80}-\x{9fff}\-]+)/u", '_parse_at_by_uname', $html);
+
+    // 话题处理，因为话题的包涵特殊性，最后处理
+    $html = replaceTheme($html);
+
     /* emoji解析 */
     $html = formatEmoji(false, $html);
 
@@ -1640,7 +1653,14 @@ function format($content, $url = false)
 function replaceTheme($content)
 {
     $content = str_replace('＃', '#', $content);
-    $content = preg_replace_callback("/#([^#]*[^#^\s][^#]*)#/is", _parse_theme, $content);
+    // $content = preg_replace_callback("/#([^#]*[^#^\s][^#]*)#/is", '_parse_theme', $content);
+    $content = preg_replace_callback(
+        '/#([^#]\S*?)#/is', 
+        function($data) {
+            return _parse_theme($data);
+        }, 
+        $content
+    );
 
     return $content;
 }
