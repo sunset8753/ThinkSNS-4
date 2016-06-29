@@ -146,7 +146,7 @@ core.uploadFile = {
 					dataType:'json',
 			        success: function (data) {
 								$(obj).val('');
-			        	core.uploadFile.afterUpload(data.data,data.status,uploadTimes,callback,filelist);
+								core.uploadFile.afterUpload(data.data,data.status,uploadTimes,callback,filelist);
 			        }  
 			    });
 				
