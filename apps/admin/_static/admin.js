@@ -864,7 +864,8 @@ admin.upload = function(type,obj){
         core.uploadFile.filehash = new Array();
     }
 	core.plugInit('uploadFile',obj,function(data){
-        $('.input-content').remove(); $(obj).val('');
+        // $('.input-content').remove(); 
+        $(obj).val('');
         $('#show_'+type).html('<img class="pic-size" src="'+data.src+'">');
         $('#form_'+type).val(data.attach_id);    
     },'image');
