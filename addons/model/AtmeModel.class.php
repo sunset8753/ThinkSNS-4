@@ -364,7 +364,10 @@ class AtmeModel extends Model
         }
         $start = ($page - 1) * $limit;
         $end = $limit;
-        $list = $this->where($where)->limit("$start, $end")->order('atme_id DESC')->findAll();
+        if(!$list = $this->where($where)->limit("$start, $end")->order('atme_id DESC')->findAll())
+        {
+            return [];
+        }
 
         foreach ($list as $k => $v) {
             $list[$k] = model('Source')->getSourceInfo($v['table'], $v['row_id'], true, $v['app']);
