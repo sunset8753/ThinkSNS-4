@@ -3124,10 +3124,9 @@ function GetCurUrl()
 //获取用户信息
 function getUserInfo($uid)
 {
-    $userinfo = model('User')->getUserInfo($uid);
-
-    return $userinfo;
+    return model('User')->getUserInfo($uid);
 }
+
 function lastsql()
 {
     dump(M()->getLastSql());
