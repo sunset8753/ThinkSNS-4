@@ -2137,7 +2137,7 @@ function getShortPinyin($string, $encode = 'utf-8', $unknow = null)
 function getFirstLetter($s0)
 {
     /* 兼容以前 */
-    return getShortPinyin($s0);
+    return getShortPinyin($s0, 'utf-8', '#');
 }
 
 // 区间调试开始
