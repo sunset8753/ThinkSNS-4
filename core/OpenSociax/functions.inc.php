@@ -2902,8 +2902,9 @@ function msubstr($str, $start = 0, $length, $charset = 'utf-8', $suffix = true)
  */
 function isValidEmail($email)
 {
-    return preg_match("/^[_a-zA-Z\d\-\.]+@[_a-zA-Z\d\-]+(\.[_a-zA-Z\d\-]+)+$/i", $email) !== 0;
+    return MedzValidator::isEmail($email);
 }
+
 // 发送常用http header信息
 function send_http_header($type = 'utf8')
 {
