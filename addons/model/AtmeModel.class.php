@@ -366,7 +366,7 @@ class AtmeModel extends Model
         $end = $limit;
         if(!$list = $this->where($where)->limit("$start, $end")->order('atme_id DESC')->findAll())
         {
-            return [];
+            return array();
         }
 
         foreach ($list as $k => $v) {
