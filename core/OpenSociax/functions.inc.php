@@ -1194,14 +1194,7 @@ function display($templateFile = '', $tvar = array(), $charset = 'UTF8', $conten
 
 function mk_dir($dir, $mode = 0755)
 {
-    if (is_dir($dir) || @mkdir($dir, $mode)) {
-        return true;
-    }
-    if (!mk_dir(dirname($dir), $mode)) {
-        return false;
-    }
-
-    return @mkdir($dir, $mode);
+    return \Medz\Component\Filesystem\Filesystem::mkdir($dir, $mode);
 }
 
 /**
