@@ -239,15 +239,22 @@ function isAjax()
  * @param  int    $type 转换类型
  * @return string
  */
-function parse_name($name, $type = 0)
+function parse_name($name, $type = false)
 {
     if ($type) {
-        return ucfirst(preg_replace('/_([a-zA-Z])/e', "strtoupper('\\1')", $name));
+        $name = preg_replace_callback(
+            '/_([a-zA-Z])/e',
+            function($data) {
+                return strtoupper($data[1]);
+            },
+            $name
+        );
+        $name = ucfirst($name);
     } else {
         $name = preg_replace('/[A-Z]/', '_\\0', $name);
-
-        return strtolower(trim($name, '_'));
+        $name = strtolower(trim($name, '_'));
     }
+    return $name;
 }
 
 /**
