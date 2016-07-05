@@ -3029,9 +3029,7 @@ function format_array_intval($str)
 
 function filter_words($content)
 {
-    $data = model('SensitiveWord')->checkedContent($content);
-
-    return $data;
+    return model('SensitiveWord')->checkedContent($content);
 }
 
 function ipaccess($ip, $accesslist)
