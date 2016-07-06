@@ -47,6 +47,7 @@ class WeibaDarenWidget extends Widget
         $where = '`is_del` != 1';
         $uid && $where .= ' AND `post_uid` != '.$uid;
         $wid && $where .= ' AND `weiba_id` = '.$wid;
+        $where .= ' AND `post_time`> '.(time()-604800);//1 week is 604800 seconds
         $uids = D('WeibaPost', 'weiba')->where($where)->field('`post_uid`, count(`post_id`) as `num`')->order('`num` DESC')->group('`post_uid`')->limit(50)->select();
         $limit > count($uids) && $limit = count($uids);
         $ids = array();
