@@ -30,7 +30,7 @@ class HotPostWidget extends Widget
      */
     public function changeRelate()
     {
-        $list = $this->_getRelatedGroup($data);
+        $list = $this->_getRelatedGroup($data,FALSE);
         $var['topic_list'] = $list;
         $var['title'] = '热门帖子';
         $content = $this->renderFile(dirname(__FILE__).'/_index.html', $var);
@@ -44,7 +44,7 @@ class HotPostWidget extends Widget
      *                     配置相关数据
      * @return array 显示所需数据
      */
-    private function _getRelatedGroup($data)
+    private function _getRelatedGroup($data,$isReadCache = TRUE)
     {
         $map['recommend'] = 1;
         $map['lock'] = 0;
@@ -52,11 +52,15 @@ class HotPostWidget extends Widget
         if (!$data['limit']) {
             $data['limit'] = 10;
         }
-        //$list = model( 'Cache' )->get('weiba_post_recommend');
+		if($isReadCache){
+			$list = model( 'Cache' )->get('weiba_post_recommend');
+		}else{
+			$list = FALSE;
+		}     
         if (!$list) {
             $list = M('weiba_post')->where($map)->order('rand()')->limit($data['limit'])->select();
             !$list && $list = 1;
-                //model( 'Cache' )->set( 'weiba_post_recommend' , $list , 86400 );
+            model( 'Cache' )->set( 'weiba_post_recommend' , $list , 1800 );
         }
 
         return $list;
