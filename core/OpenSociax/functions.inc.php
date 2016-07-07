@@ -2053,6 +2053,7 @@ function getFromClient($type = 0, $app = 'public', $app_name = '')
         3 => '来自iPhone',
         4 => '来自iPad',
         5 => '来自Windows',
+        6 => '来自H5客户端',
     );
 
     //在列表中的
