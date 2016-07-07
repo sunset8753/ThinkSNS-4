@@ -36,7 +36,7 @@ class LatestPostWidget extends Widget
         $var['uid'] = $data['uid'] = intval(t($_POST['uid']));
         $var['weiba_id'] = $data['weiba_id'] = intval(t($_POST['weiba_id']));
         $var['max'] = $data['max'] = intval(t($_POST['max']));
-        $list = $this->_getRelatedGroup($data);
+        $list = $this->_getRelatedGroup($data,FALSE);
         $var['topic_list'] = $list;
         $var['title'] = '热门帖子';
         $content = $this->renderFile(dirname(__FILE__).'/_index.html', $var);
@@ -50,21 +50,29 @@ class LatestPostWidget extends Widget
      *                     配置相关数据
      * @return array 显示所需数据
      */
-    private function _getRelatedGroup($data)
+    private function _getRelatedGroup($data,$isNeedCache = TRUE)
     {
         $map['is_del'] = 0;
         if (!$data['max']) {
             $data['max'] = 10;
         }
-        //$list = model( 'Cache' )->get('weiba_post_recommend');
-        if (!$list) {
+        $list = model( 'Cache' )->get('weiba_latest_post'.$data['weiba_id']);
+        if (!$list || !$isNeedCache) {
             $map1['weiba_id'] = $data['weiba_id'];
-            //$map1['post_time'] = array('gt',time()-604800);;
+            $map1['post_time'] = array('gt',time()-604800);//一周
             $map1['is_del'] = 0;
             //dump($map1);
             $list = M('weiba_post')->where($map1)->order('rand()')->limit($data['max'])->select();
+			if($list && count($list)<$data['max']){
+				$map1['post_time'] = array('gt',time()-777600);//三个月
+				$list = M('weiba_post')->where($map1)->order('rand()')->limit($data['max'])->select();
+			}
+			if($list && count($list)<$data['max']){
+				unset($map1['post_time']);//当前微吧
+				$list = M('weiba_post')->where($map1)->order('rand()')->limit($data['max'])->select();
+			}
             !$list && $list = 1;
-            //model( 'Cache' )->set( 'weiba_post_recommend' , $list , 86400 );
+            model( 'Cache' )->set( 'weiba_latest_post'.$data['weiba_id'] , $list , 1800 );//30分钟
         }
 
         return $list;
