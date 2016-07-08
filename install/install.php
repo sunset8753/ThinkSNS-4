@@ -21,7 +21,7 @@ if (strtolower(ini_get('session.save_handler')) == 'files') {
 }
 session_start();
 
-$_TSVERSION = '4-R2';
+$_TSVERSION = '4-R2（4.3.3）';
 
 include 'install_function.php';
 include 'install_lang.php';
