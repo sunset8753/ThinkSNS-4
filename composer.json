@@ -58,6 +58,9 @@
         "preferred-install": "dist"
     },
     "autoload": {
+        "files": [
+            "core/OpenSociax/functions.inc.php"
+        ],
         "classmap": [
             "src/Ts.php",
             "addons/utility/MedzValidator.php",

@@ -85,11 +85,6 @@ $_REQUEST = array_merge($_GET, $_POST);
 //参数处理 控制不合规格的参数
 check_gpc($_GET);
 check_gpc($_REQUEST);
-// check_gpc($_POST);
-// check_gpc($_COOKIE);
-
-//载入扩展函数库
-tsload(CORE_LIB_PATH.'/functions.inc.php');
 
 //如果有UC的配置载入配置
 if (file_exists(CONF_PATH.'/uc_config.inc.php')) {
