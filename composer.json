@@ -51,7 +51,7 @@
         "illuminate/database": "4.1.*"
     },
     "require-dev": {
-        "fabpot/php-cs-fixer": "^1.11"
+        "friendsofphp/php-cs-fixer": "^1.11"
     },
     "config": {
         "vendor-dir": "src/Vendor/",
