@@ -93,7 +93,6 @@ if (file_exists(CONF_PATH.'/uc_config.inc.php')) {
 
 //如果未定义.
 tsdefine('UC_SYNC', 0);
-//tsload(CORE_LIB_PATH.'/extend.inc.php');
 
 /*  应用配置  */
 //载入应用配置
@@ -183,16 +182,3 @@ if (C('DEPLOY_STATIC')) {
     tsdefine('THEME_PUBLIC_URL', PUBLIC_URL.'/'.THEME_NAME);
     tsdefine('APP_PUBLIC_URL', THEME_PUBLIC_URL.'/'.TRUE_APPNAME);
 }
-
-//载入插件钩子
-//$ts['_config']['hooks']	=	array('app_init'=>array('check_access','check_access2'));
-
-//根据应用配置信息. 重置一些常量
-tsload(CORE_LIB_PATH.'/Think.class.php');
-tsload(CORE_LIB_PATH.'/App.class.php');
-//tsload(CORE_LIB_PATH.'/Action.class.php');
-//tsload(CORE_LIB_PATH.'/Model.class.php');
-//tsload(CORE_LIB_PATH.'/DB.class.php');
-//tsload(CORE_LIB_PATH.'/Widget.class.php');
-tsload(CORE_LIB_PATH.'/Api.class.php');
-//tsload(CORE_LIB_PATH.'/Page.class.php');

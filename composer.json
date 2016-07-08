@@ -64,7 +64,10 @@
         "classmap": [
             "src/Ts.php",
             "addons/utility/MedzValidator.php",
-            "addons/utility/MedzZip.php"
+            "addons/utility/MedzZip.php",
+            "core/OpenSociax/App.class.php",
+            "core/OpenSociax/Api.class.php",
+            "core/OpenSociax/Think.class.php"
         ],
         "psr-4": {
             "Ts\\": "src/",
