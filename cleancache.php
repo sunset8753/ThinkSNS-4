@@ -1,6 +1,6 @@
 <?php
 //清文件缓存
-$dirs = array('./_runtime/');
+$dirs = array('./storage/temp');
 
 //清理缓存
 foreach ($dirs as $value) {
@@ -8,7 +8,7 @@ foreach ($dirs as $value) {
     echo "<div style='border:2px solid green; background:#f1f1f1; padding:20px;margin:20px;width:800px;font-weight:bold;color:green;text-align:center;'>\"".$value.'" have been cleaned clear! </div> <br /><br />';
 }
 
-@mkdir('_runtime', 0777, true);
+@mkdir('./storage/temp', 0777, true);
 
 function rmdirr($dirname)
 {

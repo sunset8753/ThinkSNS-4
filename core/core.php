@@ -2,7 +2,7 @@
 /*
  * OpenSociax 核心入口文件
  * @author  liuxiaoqing <liuxiaoqing@zhishisoft.com>
- * @version ST1.0
+ * @version ThinkSNS v4.
  */
 
 if (!defined('SITE_PATH')) {
@@ -87,9 +87,9 @@ if (!defined('CORE_MODE')) {
     define('CORE_MODE', 'OpenSociax');
 }
 
-tsdefine('CORE_LIB_PATH',    CORE_PATH.'/'.CORE_MODE);
-tsdefine('CORE_RUN_PATH',    SITE_PATH.'/_runtime');
-tsdefine('LOG_PATH',    DATA_PATH.'/logs/');
+tsdefine('CORE_LIB_PATH', CORE_PATH.'/'.CORE_MODE);
+tsdefine('CORE_RUN_PATH', TS_ROOT.TS_STORAGE.'/temp');
+tsdefine('LOG_PATH', TS_ROOT.TS_STORAGE.'/logs/');
 
 //注册AUTOLOAD方法
 if (function_exists('spl_autoload_register')) {
