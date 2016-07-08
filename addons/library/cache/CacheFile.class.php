@@ -74,7 +74,7 @@ class CacheFile extends Cache
                 .'/';
             }
             if (!is_dir($this->options['temp'].$dir)) {
-                mkdir($this->options['temp'].$dir, 0777, true);
+                \Medz\Component\Filesystem\Filesystem::mkdir($this->options['temp'].$dir, 0777);
             }
             $filename = $dir.$this->options['prefix'].$name.'.php';
         } else {
