@@ -29,7 +29,7 @@ if (version_compare(PHP_VERSION, '5.3.12', '<')) {
     exit;
 }
 
-//网站根路径设置
+//网站根路径设置 // 兼容旧的地方。
 define('SITE_PATH', dirname(__FILE__));
 
 /* 新系统需要的一些配置 */
@@ -41,9 +41,7 @@ define('TS_STORAGE', '/storage');            // 储存目录，需要可以公�
 define('TS_APP_DEV', false);
 // 新的系统核心接入
 require TS_ROOT.'/src/Build.php';
-
-//载入核心文件
-require SITE_PATH.'/core/core.php';
+Ts::import(TS_ROOT, 'core', 'core', '.php');
 
 if (isset($_GET['debug'])) {
     C('APP_DEBUG', true);
