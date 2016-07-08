@@ -95,11 +95,11 @@ if (!$v) {
         echo '<script>alert('.$i_message['install_disagree_license'].');history.go(-1)</script>';
     }
     $dirarray = array(
-    'data',
-    '_runtime',
-    'install',
-    'config',
-);
+        'data',
+        'storage',
+        'install',
+        'config',
+    );
     $writeable = array();
     foreach ($dirarray as $key => $dir) {
         if (writable($dir)) {
