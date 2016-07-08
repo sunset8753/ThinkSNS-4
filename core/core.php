@@ -226,6 +226,9 @@ function tsconfig($name = null, $value = null)
     if (empty($name)) {
         return $ts['_config'];
     }
+    if (!isset($ts['_config'])) {
+        $ts['_config'] = array();
+    }
     // 优先执行设置获取或赋值
     if (is_string($name)) {
         if (!strpos($name, '.')) {
