@@ -59,15 +59,15 @@
     },
     "autoload": {
         "files": [
-            "core/OpenSociax/functions.inc.php"
+            "src/old/OpenSociax/functions.inc.php"
         ],
         "classmap": [
             "src/Ts.php",
             "addons/utility/MedzValidator.php",
             "addons/utility/MedzZip.php",
-            "core/OpenSociax/App.class.php",
-            "core/OpenSociax/Api.class.php",
-            "core/OpenSociax/Think.class.php"
+            "src/old/OpenSociax/App.class.php",
+            "src/old/OpenSociax/Api.class.php",
+            "src/old/OpenSociax/Think.class.php"
         ],
         "psr-4": {
             "Ts\\": "src/",

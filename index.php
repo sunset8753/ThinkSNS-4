@@ -41,7 +41,7 @@ define('TS_STORAGE', '/storage');            // 储存目录，需要可以公�
 define('TS_APP_DEV', false);
 // 新的系统核心接入
 require TS_ROOT.'/src/Build.php';
-Ts::import(TS_ROOT, 'core', 'core', '.php');
+Ts::import(TS_ROOT, 'src', 'old', 'core', '.php');
 
 if (isset($_GET['debug'])) {
     C('APP_DEBUG', true);
