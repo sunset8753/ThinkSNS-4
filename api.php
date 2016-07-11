@@ -29,9 +29,7 @@ define('TS_STORAGE', '/storage');            // 储存目录，需要可以公�
 define('TS_APP_DEV', false);
 // 新的系统核心接入
 require SITE_PATH.'/src/Build.php';
-
-//载入核心文件
-require SITE_PATH.'/core/core.php';
+Ts::import(TS_ROOT, 'src', 'old', 'core', '.php');
 
 Api::run();
 
