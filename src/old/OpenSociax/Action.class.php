@@ -5,7 +5,7 @@ use Medz\Component\EmojiFormat;
 /**
  * ThinkSNS Action控制器基类
  * @author  liuxiaoqing <liuxiaoqing@zhishisoft.com>
- * @version TS3.0
+ * @version TS v4
  */
 abstract class Action
 {

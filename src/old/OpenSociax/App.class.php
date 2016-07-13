@@ -3,7 +3,7 @@
 /**
  * ThinkSNS App基类
  * @author  liuxiaoqing <liuxiaoqing@zhishisoft.com>
- * @version TS3.0
+ * @version TS v4
  */
 class App
 {

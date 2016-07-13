@@ -2,7 +2,7 @@
 /**
  * 钩子抽象类
  * @author SamPeng <penglingjun@zhishisoft.com>
- * @version TS3.0
+ * @version TS v4
  */
 abstract class Hooks
 {

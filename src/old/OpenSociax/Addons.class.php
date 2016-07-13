@@ -2,7 +2,7 @@
 /**
  * ThinkSNS插件调度类，由该对象调度插件的运行逻辑
  * @author SamPeng <penglingjun@zhishisoft.com>
- * @version TS3.0
+ * @version TS v4
  */
 class Addons
 {

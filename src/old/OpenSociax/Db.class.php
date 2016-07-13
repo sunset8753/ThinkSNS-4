@@ -2,7 +2,7 @@
 /**
  * ThinkSNS 数据库中间层，只支持MySQL
  * @author  liuxiaoqing <liuxiaoqing@zhishisoft.com>
- * @version TS3.0
+ * @version TS v4
  */
 
 use Illuminate\Database\Capsule\Manager as Capsule;

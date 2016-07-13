@@ -2,7 +2,7 @@
 /**
  * 插件机制接口
  * @author SamPeng <penglingjun@zhishisoft.com>
- * @version TS3.0
+ * @version TS v4
  */
 interface AddonsInterface
 {
@@ -46,7 +46,7 @@ interface AddonsInterface
 /**
  * 插件机制抽象类
  * @author SamPeng <penglingjun@zhishisoft.com>
- * @version TS3.0
+ * @version TS v4
  */
 abstract class AbstractAddons implements AddonsInterface
 {
