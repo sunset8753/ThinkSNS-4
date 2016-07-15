@@ -1,7 +1,7 @@
 {
     "name": "medz/thinksns-4",
     "type": "project",
-    "description": "This is a sns system.",
+    "description": "A extensable social networing system.",
     "keywords": ["sns", "think", "ts", "thinksns", "t4", "ts4"],
     "homepage": "http://www.thinksns.com",
     "license": "Apache-2.0",
@@ -9,14 +9,31 @@
     "prefer-stable": true,
     "authors": [
         {
+            "name": "智艺创想",
+            "homepage": "http://www.zhiyicx.com",
+            "role": "Development company"
+        },
+        {
+            "name": "The ThinkSNS Team",
+            "email": "support@zhishisoft.com",
+            "homepage": "http://www.thinksns.com",
+            "role": "R & D team"
+        },
+        {
+            "name": "Bin Qiao",
+            "homepage": "http://demo.thinksns.com/ts4/index.php?app=public&mod=Profile&act=index&uid=32179",
+            "role": "Developer"
+        },
+        {
+            "name": "while",
+            "homepage": "http://demo.thinksns.com/ts4/index.php?app=public&mod=Profile&act=index&uid=32521",
+            "role": "Developer"
+        },
+        {
             "name": "Seven Du",
             "email": "lovevipdsw@outlook.com",
             "homepage": "http://medz.cn",
             "role": "Developer"
-        },
-        {
-            "name": "The ThinkSNS Team",
-            "homepage": "http://www.zhiyicx.com"
         }
     ],
     "repositories": [
