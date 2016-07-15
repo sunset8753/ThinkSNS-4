@@ -79,9 +79,9 @@
             "src/old/OpenSociax/functions.inc.php"
         ],
         "classmap": [
-            "src/Ts.php",
             "addons/utility/MedzValidator.php",
             "addons/utility/MedzZip.php",
+            "src/Ts.php",
             "src/old/OpenSociax/App.class.php",
             "src/old/OpenSociax/Api.class.php",
             "src/old/OpenSociax/Think.class.php"
