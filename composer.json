@@ -34,6 +34,11 @@
             "email": "lovevipdsw@outlook.com",
             "homepage": "http://medz.cn",
             "role": "Developer"
+        },
+        {
+            "name": "陈然",
+            "email": "396147081@qq.com",
+            "role": "Developer"
         }
     ],
     "repositories": [
