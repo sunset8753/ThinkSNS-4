@@ -439,7 +439,7 @@ class SmsModel extends Model
      **/
     public function CheckCaptcha($phone, $code)
     {
-        $data = $this->where('`phone` = '.floatval($phone).' AND `message` = \'\' AND `code` != 0 AND `time` > '.(time() - 1800))->field('code')->order('`time` DESC')->getField('code');
+        $data = $this->where('`phone` = '.floatval($phone).' AND `message` = \'\' AND `code` != 0 AND `time` > '.time() - 1800)->field('code')->order('`time` DESC')->getField('code');
         $code = intval($code);
         /* # 判断验证码是否为空 */
         if (!$code) {
