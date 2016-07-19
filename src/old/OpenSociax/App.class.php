@@ -1,5 +1,7 @@
 <?php
 
+use Ts\Helper\AutoJumper\Jumper;
+
 /**
  * ThinkSNS App基类
  * @author  liuxiaoqing <liuxiaoqing@zhishisoft.com>
@@ -99,7 +101,6 @@ class App
      */
     public static function execApp()
     {
-
         //防止CSRF
         if (strtoupper($_SERVER['REQUEST_METHOD']) == 'POST' && stripos($_SERVER['HTTP_REFERER'], SITE_URL) !== 0 && $_SERVER['HTTP_USER_AGENT'] !== 'Shockwave Flash' && (strpos(strtolower($_SERVER['HTTP_USER_AGENT']), 'adobe flash player') === false) && MODULE_NAME != 'Weixin') {
             die('illegal request.');
@@ -157,7 +158,9 @@ class App
             in_array('wap', C('DEFAULT_APPS'))
         ) {
             if (\Medz\Component\Filesystem\Filesystem::exists(TS_APPLICATION.'/h5') === true) {
-                U('h5/index/index', '', true);
+                // U('h5/index/index', '', true);
+                // 跳转器
+                Jumper::start();
             } else {
                 U('w3g/Public/home', '', true);
             }
