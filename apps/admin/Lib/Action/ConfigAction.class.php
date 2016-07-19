@@ -42,6 +42,9 @@ class ConfigAction extends AdministratorAction
         $this->pageTitle ['editSeo'] = '编辑SEO';
         $this->pageTitle ['setUcenter'] = 'Ucenter配置';
         $this->pageTitle ['charge'] = '充值配置';
+
+        $this->pageTitle ['attachimage'] = '图片配置';
+
         parent::_initialize();
     }
 
