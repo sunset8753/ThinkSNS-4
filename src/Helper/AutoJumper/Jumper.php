@@ -38,7 +38,7 @@ class Jumper
         }
 
         if ($url != false) {
-            redirect($url, 0, '系统即将到h5页面');
+            redirect($url, 0, '系统即将跳转到h5页面');
         }
     }
 
