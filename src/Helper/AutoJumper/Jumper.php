@@ -4,7 +4,6 @@ namespace Ts\Helper\AutoJumper;
 
 use ArrayIterator;
 use Closure;
-use stdClass;
 
 /**
  * ThinkSNS v4 Auto URL jump Conponent.
