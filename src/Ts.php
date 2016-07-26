@@ -99,6 +99,8 @@ final class Ts
         self::$capsule->setAsGlobal();
         // Setup the Eloquent ORM... (optional; unless you've used setEventDispatcher())
         self::$capsule->bootEloquent();
+        // 关闭日志功能
+        self::$capsule->connection()->disableQueryLog();
     }
 
     /**
