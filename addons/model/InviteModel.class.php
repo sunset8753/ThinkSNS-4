@@ -1,4 +1,7 @@
 <?php
+
+use Illuminate\Database\Capsule\Manager as Capsule;
+
 /**
  * 邀请模型 - 数据对象模型
  * @author nonant
@@ -24,23 +27,31 @@ class InviteModel extends Model
         if (empty($uid) || empty($num) || empty($type)) {
             return false;
         }
+        
         // 邀请码数组
         $inviteCodes = array();
-        // 生成邀请码清单
-        $codes = array();
+        $insertDatas = array();
+
         for ($i = 1; $i <= $num; $i++) {
             $inviteCode = tsmd5($uid.microtime(true).rand(1111, 9999).$i);
-            $inviteCodes[] = $inviteCode;
-            $codes[] = "($uid, '$inviteCode', 0, '$type', $adminVal)";
+            array_push($inviteCodes, $inviteCode);
+            array_push($insertDatas, array(
+                'inviter_uid' => $uid,
+                'code' => $inviteCode,
+                'is_used' => 0,
+                'is_admin' => $isAdmin ? 1 : 0,
+                'type' => $type,
+                'is_received' => 0,
+                'receiver_uid' => 0,
+                'receiver_email' => null,
+                'ctime' => time(),
+            ));
         }
-        // 插入数据库
-        if (!empty($codes)) {
-            $sql = "INSERT INTO {$this->tablePrefix}{$this->tableName} (`inviter_uid`, `code`, `is_used`, `type`, `is_admin`) VALUES ".implode(',', $codes);
-            $this->execute($sql);
 
+        if (count($insertDatas)) {
+            Capsule::table('invite_code')->insert($insertDatas);
             return $inviteCodes;
         }
-
         return false;
     }
 
