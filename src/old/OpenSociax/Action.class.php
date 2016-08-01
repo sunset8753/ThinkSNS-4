@@ -335,35 +335,6 @@ abstract class Action
 
             $GLOBALS['time_run_detail']['action_init_user_data'] = microtime(true);
 
-            // 用户禁言 - 放到计划任务里去
-            // $isDisable = model('DisableUser')->isDisableUser($this->mid, 'post');
-            // $myGroup = model('UserGroupLink')->where("uid='{$this->mid}'")->getAsFieldArray('user_group_id');
-            // if ($isDisable && !in_array(4, $myGroup)) {
-            //     $deleteMap['uid'] = $this->mid;
-            //     // $deleteMap['user_group_id'] = 3;
-            //     model('UserGroupLink')->where($deleteMap)->delete();
-            //     unset($deleteMap);
-            //     $disableGroup['uid'] = $this->mid;
-            //     $disableGroup['user_group_id'] = 4;
-            //     model('UserGroupLink')->add($disableGroup);
-            //     unset($disableGroup);
-            //     model('Cache')->rm('perm_user_'.$this->mid);
-            //     model('Cache')->rm('user_group_'.$this->mid);
-            //     model('User')->cleanCache($this->mid);
-            // } else if (!$isDisable && in_array(4, $myGroup)) {
-            //     $disableGroup['uid'] = $this->mid;
-            //     $disableGroup['user_group_id'] = 4;
-            //     model('UserGroupLink')->where($disableGroup)->delete();
-            //     unset($disableGroup);
-            //     $addMap['uid'] = $this->mid;
-            //     $addMap['user_group_id'] = 3;
-            //     model('UserGroupLink')->add($addMap);
-            //     unset($addMap);
-            //     model('Cache')->rm('perm_user_'.$this->mid);
-            //     model('Cache')->rm('user_group_'.$this->mid);
-            //     model('User')->cleanCache($this->mid);
-            // }
-
             $GLOBALS['time_run_detail']['action_init_user_disable'] = microtime(true);
         }
 

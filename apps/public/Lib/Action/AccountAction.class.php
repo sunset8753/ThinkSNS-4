@@ -1146,7 +1146,7 @@ class AccountAction extends Action
         $configs['key'] = $chargeConfigs['alipay_key'];
         $parameter = array(
             'notify_url' => SITE_URL.'/public/pay/alipay_notify.php',
-            'return_url' => SITE_URL.'/public/pay/alipay_return.php',
+            'return_url' => SITE_URL.'/alipay_return.php',
             'out_trade_no' => $data['serial_number'],
             'subject' => '积分充值:'.$data['charge_sroce'].'积分',
             'total_fee' => $data['charge_value'],
@@ -1163,6 +1163,8 @@ class AccountAction extends Action
 
     public function alipayReturn()
     {
+        unset($_GET['app'], $_GET['mod'], $_GET['act']);
+        unset($_REQUEST['app'], $_REQUEST['mod'], $_REQUEST['act']);
         require_once ADDON_PATH.'/library/alipay/alipay.php';
         $chargeConfigs = model('Xdata')->get('admin_Config:charge');
         $configs = array(
@@ -1170,7 +1172,6 @@ class AccountAction extends Action
             'seller_email' => $chargeConfigs['alipay_email'],
             'key' => $chargeConfigs['alipay_key'],
         );
-        unset($_GET['app'], $_GET['mod'], $_GET['act']);
         if (verifyAlipayReturn($configs)) {
             if (model('Credit')->charge_success(t($_GET['out_trade_no']))) {
                 $this->assign('jumpUrl', U('public/Account/scoredetail'));
@@ -1191,6 +1192,8 @@ class AccountAction extends Action
     }
     public function alipayNotify()
     {
+        unset($_GET['app'], $_GET['mod'], $_GET['act']);
+        unset($_REQUEST['app'], $_REQUEST['mod'], $_REQUEST['act']);
         header('Content-type:text/html;charset=utf-8');
         require_once ADDON_PATH.'/library/alipay/alipay.php';
         $chargeConfigs = model('Xdata')->get('admin_Config:charge');
@@ -1199,7 +1202,6 @@ class AccountAction extends Action
             'seller_email' => $chargeConfigs['alipay_email'],
             'key' => $chargeConfigs['alipay_key'],
         );
-        unset($_GET['app'], $_GET['mod'], $_GET['act']);
         if (verifyAlipayNotify($configs)) {
             model('Credit')->charge_success(t($_POST['out_trade_no']));
         }
