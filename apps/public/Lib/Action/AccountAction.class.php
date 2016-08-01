@@ -47,7 +47,7 @@ class AccountAction extends Action
         ); // 申请认证
         $tab_list_score [] = array(
             'field_key' => 'scoredetail',
-            'field_name' => L('积分规则'),
+            'field_name' => '积分规则',
         ); // 积分规则
         $tab_list_preference [] = array(
             'field_key' => 'privacy',
