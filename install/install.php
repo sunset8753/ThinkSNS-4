@@ -444,8 +444,7 @@ $randkey = uniqid(rand());
     $configfilecontent = <<<EOT
 <?php
 if (!defined('SITE_PATH')) exit();
-\$conf = include dirname(__FILE__) . '/thinksns.conf.php';
-return array_merge(array(
+return array(
 	// 数据库常用配置
 	'DB_TYPE'       => 'mysql',       // 数据库类型
 
@@ -459,7 +458,7 @@ return array_merge(array(
 	'DB_CHARSET'    => 'utf8',      // 数据库编码
 	'SECURE_CODE'   => '$randkey',  // 数据加密密钥
 	'COOKIE_PREFIX' => 'TS4_',      // # cookie
-), \$conf);
+);
 EOT;
     $configfilecontent = str_replace('SECURE_TEST', 'SECURE'.rand(10000, 20000), $configfilecontent);
     chmod(THINKSNS_ROOT.'/config/'.$thinksns_config_file, 0777);
