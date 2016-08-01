@@ -77,7 +77,7 @@
         "friendsofphp/php-cs-fixer": "^1.11"
     },
     "config": {
-        "vendor-dir": "src/Vendor/",
+        "vendor-dir": "src/vendor/",
         "preferred-install": "dist"
     },
     "autoload": {
