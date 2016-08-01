@@ -220,16 +220,16 @@ class RegisterModel extends Model
 
             return false;
         }
-        //是否已被使用
-        // if (($name != $old_name) && $this->_user_model->where('`uname`="'.mysql_escape_string($name).'"')->find()) {
-        //     $this->_error = L('PUBLIC_ACCOUNT_USED');                // 该用户名已被使用
-        //     return false;
-        // }
-        // 
-
-        if (($name != $old_name) && \Ts\Model\User::where('uname', '=', $name)->where('is_del', 0)->first()) {
-            $this->_error = '当前用户名已经存在';
-
+        
+        $old_user = \Ts\Model\User::existent()->byUserName($old_name)->first();
+        $user = \Ts\Model\User::existent()->byUserName($name)->first();
+        if (
+            $name != $old_name &&
+            $old_name &&
+            $user &&
+            $old_user->uid != $user->uid
+        ) {
+            $this->_error = '该用户名已经存在。';
             return false;
         }
 
