@@ -198,7 +198,7 @@ class PublicAction extends AdministratorAction
             $res['data'] = '编辑分类成功';
         } else {
             $res['status'] = 0;
-            $res['data'] = '编辑分类失败';
+            $res['data'] = '编辑分类失败，编辑的名称可能已经存在于当前级别。';
         }
 
         exit(json_encode($res));

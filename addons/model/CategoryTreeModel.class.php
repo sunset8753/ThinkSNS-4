@@ -1,4 +1,7 @@
 <?php
+
+use Illuminate\Database\Capsule\Manager as Capsule;
+
 /**
  * Pid型的树形结构的分类模型 - 数据对象模型
  * @author zivss <guolee226@gmail.com>
@@ -284,20 +287,25 @@ class CategoryTreeModel extends Model
      */
     public function upTreeCategory($cid, $title, $extra = array())
     {
-        // 判断名称是否重复
-        $pid = $this->_model->where($this->_talbe.'_id='.$cid)->getField('pid');
-        $isExist = $this->_model->where("pid={$pid} AND title='{$title}'")->count();
-        if ($isExist != 0 && empty($extra)) {
+        $area = (object) Capsule::table($this->getTable())->where($this->getTable().'_id', $cid)->first();
+
+        if (!$area) {
+            return false;
+        } elseif ($area->title == $title) {
+            return true;
+        } elseif (Capsule::table($this->getTable())->where('pid', $area->pid)->where('title', $title)->exists() && empty($extra)) {
             return false;
         }
-        // 更新分类操作
-        $map[$this->_talbe.'_id'] = $cid;
-        $data['title'] = $title;
-        // 添加额外信息
+
+        $data = array(
+            'title' => $title,
+        );
         if (!empty($extra)) {
             $data = array_merge($data, $extra);
         }
-        $result = $this->_model->where($map)->save($data);
+
+        $result = Capsule::table($this->getTable())->where($this->getTable().'_id', $cid)->update($data);
+
         // 清除缓存
         $result && $this->remakeTreeCache();
         $result && model('Cache')->rm('UserCategoryTree');
