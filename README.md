@@ -38,3 +38,6 @@ composer update
 
 ## 还有什么
 TS中存在太多冗余的东西，尤其是js，不知道哪位愿意做清理工作呢？
+
+## LICENSE
+[ThinkSNS授权协议](http://www.thinksns.com/commercialAuthorizationa.htm)
