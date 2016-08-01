@@ -4,7 +4,8 @@
     "description": "A extensable social networing system.",
     "keywords": ["sns", "think", "ts", "thinksns", "t4", "ts4"],
     "homepage": "http://www.thinksns.com",
-    "license": "Apache-2.0",
+    "license": "Private",
+    "license-url": "./LICENSE",
     "minimum-stability": "dev",
     "prefer-stable": true,
     "authors": [
