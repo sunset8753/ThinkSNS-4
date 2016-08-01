@@ -1145,7 +1145,7 @@ class AccountAction extends Action
         $configs['seller_email'] = $chargeConfigs['alipay_email'];
         $configs['key'] = $chargeConfigs['alipay_key'];
         $parameter = array(
-            'notify_url' => SITE_URL.'/public/pay/alipay_notify.php',
+            'notify_url' => SITE_URL.'/alipay_notify.php',
             'return_url' => SITE_URL.'/alipay_return.php',
             'out_trade_no' => $data['serial_number'],
             'subject' => '积分充值:'.$data['charge_sroce'].'积分',
