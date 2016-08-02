@@ -60,22 +60,6 @@ class UserModel extends \Model
      **/
     public function hasUser($user, $isUid = false)
     {
-        // $map['is_del'] = 0;
-        // if ($isUid) {
-        //     $map['uid'] = $user;
-        // } elseif (false !== strpos($user, '@')) {
-        //     $map['email'] = $user;
-        // } elseif (preg_match('/^\+?[0\s]*[\d]{0,4}[\-\s]?\d{4,12}$/', $user)) {
-        //     $map['phone'] = $user;
-        // } elseif (preg_match('/^[1-9]\d*$/', $user)) {
-        //     $map['uid|uname'] = $user;
-        // } else {
-        //     $map['uname'] = $user;
-        // }
-
-        // return $this->where($map)->field('`uid`')->count() > 0;
-        // 
-
         if ($isUid) {
             $users = Model\User::existent()->audit()->byUid($user)->get();
         } elseif (MedzValidator::isEmail($user)) {
@@ -935,8 +919,7 @@ class UserModel extends \Model
             //$user ['auth_icon'] = implode ( ' ', $authIcon );
             $user ['credit_info'] = model('Credit')->getUserCredit($uid);
             $user ['intro'] = $user['intro'] ? formatEmoji(false, $user['intro']) : '';
-
-            // $user['uname'] = EmojiFormat::de($user['uname']);
+            $user['uname'] = EmojiFormat::de($user['uname']);
 
             model('Cache')->set('ui_'.$uid, $user, 600);
             static_cache('user_info_'.$uid, $user);
