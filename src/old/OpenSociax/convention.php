@@ -23,7 +23,7 @@ return array(
     'GZIP_OPEN' => false,      // 开启Gzip模式
     'DEVELOP_MODE' => true,       // 开发模式，开启后台表单的配置
     'APP_PLUGIN_ON' => true,       // 是否开启插件机制
-    'DEFAULT_APPS' => array('public', 'admin', 'home', 'page', 'wap', 'w3g'), //默认核心应用
+    'DEFAULT_APPS' => array('public', 'admin', 'channel', 'people', 'square'), //默认核心应用
 
     /* 项目设定 */
     'SITE_LOGO' => 'image/logo.png', //默认的站点logo
