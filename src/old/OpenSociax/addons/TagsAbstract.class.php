@@ -98,18 +98,6 @@ abstract class TagsAbstract
             '__THEME__' => __THEME__,        // 主题页面地址
             '__UPLOAD__' => __UPLOAD__,        // 上传文件地址
         );
-        if (C('TOKEN_ON')) {
-            if (strpos($content, '{__TOKEN__}')) {
-                // 指定表单令牌隐藏域位置
-                $replace['{__TOKEN__}'] = $this->buildFormToken();
-            } elseif (strpos($content, '{__NOTOKEN__}')) {
-                // 标记为不需要令牌验证
-                $replace['{__NOTOKEN__}'] = '';
-            } elseif (preg_match('/<\/form(\s*)>/is', $content, $match)) {
-                // 智能生成表单令牌隐藏域
-                $replace[$match[0]] = $this->buildFormToken().$match[0];
-            }
-        }
         // 允许用户自定义模板的字符串替换
         if (is_array(C('TMPL_PARSE_STRING'))) {
             $replace = array_merge($replace, C('TMPL_PARSE_STRING'));
