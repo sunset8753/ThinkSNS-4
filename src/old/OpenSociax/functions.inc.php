@@ -1163,8 +1163,6 @@ function fetch($templateFile = '', $tvar = array(), $charset = 'utf-8', $content
 
     $content = str_replace(array_keys($replace), array_values($replace), $content);
 
-    // 布局模板解析
-    //$content = $this->layout($content,$charset,$contentType);
     // 输出模板文件
     if ($display) {
         echo $content;
