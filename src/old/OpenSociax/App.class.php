@@ -154,12 +154,11 @@ class App
             MODULE_NAME != 'Widget'                                                              and
             !in_array(strtolower(MODULE_NAME), array('message', 'register', 'feed'))             and
             strtolower(ACTION_NAME) != 'message'                                                 and
-            isMobile()                                                                           and
-            in_array('wap', C('DEFAULT_APPS'))
+            isMobile()
         ) {
             if (\Medz\Component\Filesystem\Filesystem::exists(TS_APPLICATION.'/h5') === true) {
                 Jumper::start();
-            } else {
+            } elseif (\Medz\Component\Filesystem\Filesystem::exists(TS_APPLICATION.'/w3g') === true)  {
                 U('w3g/Public/home', '', true);
             }
         }
