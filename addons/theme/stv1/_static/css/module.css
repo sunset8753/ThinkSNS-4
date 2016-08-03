@@ -176,7 +176,13 @@ a:hover .contribute{background-position:0 -207px;}
 .feed_list .content .infopen{margin:15px 0 0 -80px;height:1px;background:#F5F5F5; border-bottom:1px solid #FAFAFA; border-top:1px solid #ECECEC;padding:0;overflow:visible;position:relative; display:none}
 .feed_list .content .infopen .trigon{width:17px;height:11px;overflow:hidden;position:absolute;top:-8px;margin-left:71px;background:#FFF url(../image/index-ico.png) -32px -300px no-repeat}
 .feed_list .content p.info a,.minh p.info a{ color:#888;}
+
 .feed_list .content p.info a:hover,.minh p.info a:hover{ color:#0096e6;}
+.feed_list .content p.info a:hover .digg-like,
+.minh p.info a:hover .digg-like {
+    background-position:-63px -221px;
+}
+
 .feed_list .content p.border{border:none 0;border-bottom:#ccc solid 1px;height:10px;overflow:hidden;margin:0 0 8px}
 .feed_list .content p.border .arrow-t{margin:3px 0 0 85px;position:absolute;}
 /*.feed_list .info a:link,.feed_list .info a:visited, .feed_list .content .more{color:#0096e6;font-weight:normal;cursor:pointer;}*/
