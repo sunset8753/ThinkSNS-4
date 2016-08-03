@@ -184,8 +184,19 @@ a:hover .contribute{background-position:0 -207px;}
 .feed_list .content a.date em{color:#999;}
 /*.feed_list .info a.like-h:link,.feed_list .info a.like-h:visited{color:#ff8800;}*/
 .feed_list .info .digg-like,.minh .info .digg-like,.more-actions .digg-like,.feed_list .like-h .digg-like{width:17px;height:17px; display:inline-block; background:url(../image/index-ico.png);vertical-align:middle;background-position:-93px -221px;}
-.feed_list .digg-like-yes,.more-actions .digg-like-yes,.feed_list .digg-like-yes{color:#0096e6 !important}
-.feed_list .digg-like-yes .digg-like,.more-actions .digg-like-yes .digg-like,.feed_list .digg-like-yes .digg-like{background-position:-63px -221px;}
+
+.more-actions .digg-like-yes,
+.feed_list .digg-like-yes {
+  color:#0096e6 !important
+}
+
+.feed_list .digg-like:hover,
+.more-actions .digg-like-yes .digg-like,
+.feed_list .digg-like-yes .digg-like {
+  background-position:-63px -221px;
+}
+
+
 .feed_list .expand{padding:0;}
 .feed_list .arrow{height: 11px;overflow:hidden;width: 25px;position:absolute;top:-10px;left:10px;}
 .feed_list .type-bg{background:#fff;border-radius:2px;-moz-border-radius:2px;-webkit-border-radius:2px;padding:0 3px;}
