@@ -150,7 +150,7 @@ class App
             !isiPad()                       and
             /* # 是否开启了移动端开关 */
             json_decode(json_encode(model('Xdata')->get('admin_Mobile:setting')), false)->switch and
-            in_array(APP_NAME, array('public', 'channel', 'weiba', 'square', 'people'))              and
+            in_array(APP_NAME, array('public', 'channel', 'weiba', 'square', 'people'))          and
             MODULE_NAME != 'Widget'                                                              and
             !in_array(strtolower(MODULE_NAME), array('message', 'register', 'feed'))             and
             strtolower(ACTION_NAME) != 'message'                                                 and
@@ -158,8 +158,6 @@ class App
             in_array('wap', C('DEFAULT_APPS'))
         ) {
             if (\Medz\Component\Filesystem\Filesystem::exists(TS_APPLICATION.'/h5') === true) {
-                // U('h5/index/index', '', true);
-                // 跳转器
                 Jumper::start();
             } else {
                 U('w3g/Public/home', '', true);

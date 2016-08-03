@@ -10,6 +10,22 @@ Jumper::add(function ($app, $mod, $act, array $args) {
     return false;
 });
 
+// pc to h5 | 分享详情
+Jumper::add(function ($app, $mod, $act, array $args) {
+    list($app, $mod, $act) = array_map(
+        function ($key) {
+            return strtolower($key);
+        },
+        array($app, $mod, $act)
+    );
+
+    if ($app == 'public' && $mod == 'profile' && $act == 'feed') {
+        return sprintf('%s/%s?app=h5#/feed/reader/%d', SITE_URL, ROOT_FILE, intval($args['feed_id']));
+    }
+
+    return false;
+});
+
 // all to h5
 Jumper::add(function () {
     return sprintf('%s/%s?app=h5', SITE_URL, ROOT_FILE);
