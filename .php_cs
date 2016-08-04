@@ -8,7 +8,7 @@ $finder = \Symfony\CS\Finder\DefaultFinder::create()
     ->exclude('vendor')
     ->exclude('.svn')
     ->exclude('.git')
-    ->exclude('src/Vendor')
+    ->exclude('src/vendor')
     ->in($baseDir)
 ;
 
