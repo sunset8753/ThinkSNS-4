@@ -18,7 +18,7 @@
 !/data/upload/2015/0[67]15/1[578]/
 /data/
 /_runtime/
-/src/Vendor
+/src/vendor
 /storage
 /composer.lock
 api/ts-api.phar
