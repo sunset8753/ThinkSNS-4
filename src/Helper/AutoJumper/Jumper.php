@@ -30,9 +30,16 @@ class Jumper
 
         while (static::$iterator->valid()) {
             $url = call_user_func_array(static::$iterator->current(), array(APP_NAME, MODULE_NAME, ACTION_NAME, (array) $_REQUEST));
-            if ($url != false) {
+
+            if ($url === true) {
+
+                return null;
+            } elseif ($url != false) {
                 break;
             }
+
+            static::$iterator->next();
+
             static::$iterator->next();
         }
 
