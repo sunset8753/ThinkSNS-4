@@ -39,8 +39,6 @@ class Jumper
             }
 
             static::$iterator->next();
-
-            static::$iterator->next();
         }
 
         if ($url != false) {
