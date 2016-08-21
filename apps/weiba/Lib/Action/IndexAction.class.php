@@ -884,6 +884,7 @@ class IndexAction extends Action
         $post_id = intval($_GET['post_id']);
 
         $post_detail = D('weiba_post')->where('post_id='.$post_id)->find();
+        $post_detail['title'] = htmlspecialchars($post_detail['title']);
         //获得圈主uid
         $map['weiba_id'] = $post_detail['weiba_id'];
         $map['level'] = array('in', '2,3');
