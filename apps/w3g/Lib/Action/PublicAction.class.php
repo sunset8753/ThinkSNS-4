@@ -299,6 +299,10 @@ class PublicAction extends Action
         $openid = session('openid');
         empty($openid) || $map['openid'] = $openid;
 
+        $map['city']   = 0;
+        $map['area']   = 0;
+        $map['is_del'] = 0;
+
         // 审核状态： 0-需要审核；1-通过审核
         $map['is_audit'] = $this->_config['register_audit'] ? 0 : 1;
         // 需求添加 - 若后台没有填写邮件配置，将直接过滤掉激活操作
