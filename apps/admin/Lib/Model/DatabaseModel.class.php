@@ -22,13 +22,13 @@ class DatabaseModel extends Model
 
         if ($startfrom == 0) {
             $createtable = M('')->query('SHOW CREATE TABLE '.$table);
-            $tabledump       .= "DROP TABLE IF EXISTS $table;\n";
-            $tabledump       .= $createtable[0]['Create Table'].";\n\n";
+            $tabledump .= "DROP TABLE IF EXISTS $table;\n";
+            $tabledump .= $createtable[0]['Create Table'].";\n\n";
         }
 
         $first_field = $tablefields[0];
         $numrows = $offset;
-        while ($currentsize + strlen($tabledump) + 500  < $filesize && $numrows == $offset) {
+        while ($currentsize + strlen($tabledump) + 500 < $filesize && $numrows == $offset) {
             if ($first_field['Extra'] == 'auto_increment') {
                 $sql = 'SELECT * FROM '.$table.' WHERE '.$first_field['Field']." > $startfrom LIMIT $offset";
             } else {

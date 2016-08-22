@@ -28,7 +28,7 @@ class GlobalAction extends AdministratorAction
     {
         $type = t($_GET['type']);
         if ($cid = intval($_GET['cid'])) {
-            $creditType = M('credit_type')->where("`id`=$cid")->find();//积分类别
+            $creditType = M('credit_type')->where("`id`=$cid")->find(); //积分类别
             if (!$creditType) {
                 $this->error('无此积分类型');
             }
@@ -196,7 +196,7 @@ class GlobalAction extends AdministratorAction
 
     public function addCredit()
     {
-        $creditType = M('credit_type')->order('id ASC')->findAll();//积分类别
+        $creditType = M('credit_type')->order('id ASC')->findAll(); //积分类别
         $this->assign('creditType', $creditType);
         $this->assign('type', 'add');
         $this->display('editCredit');
@@ -250,7 +250,7 @@ class GlobalAction extends AdministratorAction
             $this->error('无此积分规则');
         }
 
-        $creditType = M('credit_type')->order('id ASC')->findAll();//积分类别
+        $creditType = M('credit_type')->order('id ASC')->findAll(); //积分类别
         $this->assign('creditType', $creditType);
 
         $this->assign('credit', $credit);
@@ -400,7 +400,7 @@ class GlobalAction extends AdministratorAction
         $this->success('保存成功');
     }
 
-    //积分等级设置    
+    //积分等级设置
     public function creditLevel()
     {
         $_REQUEST['tabHash'] = 'level';

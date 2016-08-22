@@ -17,7 +17,7 @@ class UpgradeAction extends AdministratorAction
      **/
     public function _initialize()
     {
-        extension_loaded('zlib')      or $this->error('服务器未安装php的zlib拓展，无法使用在线升级功能');
+        extension_loaded('zlib') or $this->error('服务器未安装php的zlib拓展，无法使用在线升级功能');
         function_exists('gzcompress') or $this->error('服务器不支持gzcompress函数，无法使用在线升级功能');
         parent::_initialize();
     }

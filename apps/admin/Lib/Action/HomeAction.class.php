@@ -179,7 +179,7 @@ class HomeAction extends AdministratorAction
         // 列表分页栏按钮
         $this->pageButton[] = array('title' => L('PUBLIC_SEARCH_INDEX'), 'onclick' => "admin.fold('search_form')");
         $this->pageButton[] = array('title' => L('PUBLIC_SYSTEM_DELALL'), 'onclick' => "admin.delselectLog('{$table}')");
-        // 数据的格式化 与pageKeyList保持一致 
+        // 数据的格式化 与pageKeyList保持一致
         $listData = $this->_getLogsData($table);
         $this->displayList($listData);
     }
@@ -560,7 +560,7 @@ class HomeAction extends AdministratorAction
         $this->pageButton[] = array('title' => L('PUBLIC_FEEDBACK_ADD_TYPE'), 'onclick' => "location.href = '".U('admin/Home/addFeedbackType', array('tabHash' => 'type'))."'");
 
         $this->assign('pageTitle', L('PUBLIC_FEEDBACK_CATEGORY_MANAGE'));
-        // 数据的格式化与listKey保持一致		
+        // 数据的格式化与listKey保持一致
         $listData = D('')->table(C('DB_PREFIX').'feedback_type')->findPage(20);
 
         foreach ($listData['data'] as &$v) {
@@ -837,7 +837,7 @@ class HomeAction extends AdministratorAction
         $map['_string'] = "`table` = '".t($_REQUEST['table'])."'";
         $map['row_id'] = intval($_REQUEST['row_id']);
         $return = array('status' => 0, 'data' => L('PUBLIC_ADMIN_OPRETING_ERROR'));
-        if ($map['tag_id'] > 0 &&  D('')->table(C('DB_PREFIX').'app_tag')->where($map)->delete()) {
+        if ($map['tag_id'] > 0 && D('')->table(C('DB_PREFIX').'app_tag')->where($map)->delete()) {
             $return = array('status' => 1, 'data' => L('PUBLIC_ADMIN_OPRETING_SUCCESS'));
         }
         echo json_encode($return);

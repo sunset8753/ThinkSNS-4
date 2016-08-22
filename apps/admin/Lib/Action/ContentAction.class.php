@@ -8,14 +8,14 @@
 // +----------------------------------------------------------------------
 // | Author: jason <yangjs17@yeah.net>
 // +----------------------------------------------------------------------
-// 
+//
 
 /**
  +------------------------------------------------------------------------------
  * 内容管理
  +------------------------------------------------------------------------------
- *                            
- * @author    jason <yangjs17@yeah.net> 
+ *
+ * @author    jason <yangjs17@yeah.net>
  * @version   1.0
  +------------------------------------------------------------------------------
  */
@@ -53,7 +53,7 @@ class ContentAction extends AdministratorAction
             $this->pageButton[] = array('title' => L('PUBLIC_REMOVE_COMPLETELY'), 'onclick' => "admin.ContentEdit('','deleteFeed','".L('PUBLIC_REMOVE_COMPLETELY')."','".L('PUBLIC_DYNAMIC')."')");
         }
 
-        $isRec == 1 &&  $_REQUEST['tabHash'] = 'rec';
+        $isRec == 1 && $_REQUEST['tabHash'] = 'rec';
         $is_audit == 0 && $_REQUEST['tabHash'] = 'unAudit';
         $this->assign('pageTitle', $isRec ? L('PUBLIC_RECYCLE_BIN') : L('PUBLIC_DYNAMIC_MANAGEMENT'));
         $map['is_del'] = $isRec == 1 ? 1 : 0;
@@ -124,7 +124,7 @@ class ContentAction extends AdministratorAction
         echo json_encode($return);
         exit();
     }
-    //假删除 
+    //假删除
     public function delFeed()
     {
         $return = model('Feed')->doEditFeed($_POST['id'], 'delFeed', L('PUBLIC_STREAM_DELETE'));
@@ -136,7 +136,7 @@ class ContentAction extends AdministratorAction
         echo json_encode($return);
         exit();
     }
-    //真删除 
+    //真删除
     public function deleteFeed()
     {
         $return = model('Feed')->doEditFeed($_POST['id'], 'deleteFeed', L('PUBLIC_REMOVE_COMPLETELY'));
@@ -176,7 +176,7 @@ class ContentAction extends AdministratorAction
             $this->pageButton[] = array('title' => L('PUBLIC_REMOVE_COMPLETELY'), 'onclick' => "admin.ContentEdit('','deleteComment','".L('PUBLIC_REMOVE_COMPLETELY')."','".L('PUBLIC_STREAM_COMMENT')."')");
         }
 
-        $isRec == 1 &&  $_REQUEST['tabHash'] = 'rec';
+        $isRec == 1 && $_REQUEST['tabHash'] = 'rec';
         $is_audit == 0 && $_REQUEST['tabHash'] = 'unAudit';
         $this->assign('pageTitle', $isRec ? L('PUBLIC_RECYCLE_BIN') : '评论管理');
         $map['is_del'] = $isRec == 1 ? 1 : 0;
@@ -244,12 +244,12 @@ class ContentAction extends AdministratorAction
         exit();
     }
 
-    //假删除 
+    //假删除
     public function delComment()
     {
         echo json_encode(model('Comment')->doEditComment($_POST['id'], 'delComment', '删除成功'));
     }
-    //真删除 
+    //真删除
     public function deleteComment()
     {
         echo json_encode(model('Comment')->doEditComment($_POST['id'], 'deleteComment', '评论彻底删除成功'));
@@ -277,9 +277,9 @@ class ContentAction extends AdministratorAction
         } else {
             $this->pageButton[] = array('title' => L('PUBLIC_REMOVE_COMPLETELY'), 'onclick' => "admin.ContentEdit('','deleteMessage','".L('PUBLIC_REMOVE_COMPLETELY')."','".L('PUBLIC_PRIVATE_MESSAGE')."')");
         }
-        $isRec == 1 &&  $_REQUEST['tabHash'] = 'rec';
+        $isRec == 1 && $_REQUEST['tabHash'] = 'rec';
         $this->assign('pageTitle', $isRec ? L('PUBLIC_RECYCLE_BIN') : L('PUBLIC_PRIVATE_MESSAGE_MANAGEMENT'));
-        // 未删除的 
+        // 未删除的
         $map['a.is_del'] = ($isRec == 1) ? 1 : 0;
         !empty($_POST['from_uid']) && $map['a.from_uid'] = intval($_POST['from_uid']);
         !empty($_POST['mix_man']) && $map['c.member_uid'] = intval($_POST['mix_man']);
@@ -308,7 +308,7 @@ class ContentAction extends AdministratorAction
                 $v['from_uid'] = $uname[$v['from_uid']];
             }
 
-            $v['content'] = '<div style="width:500px">'.getShort($v['content'], 120, '...').'</div>';// 截取120字
+            $v['content'] = '<div style="width:500px">'.getShort($v['content'], 120, '...').'</div>'; // 截取120字
             $v['mtime'] = date('Y-m-d H:i:s', $v['mtime']);
             $v['DOACTION'] = $isRec == 0 ? "<a href='javascript:void(0)' onclick='admin.ContentEdit({$v['message_id']},\"delMessage\",\"".L('PUBLIC_STREAM_DELETE').'","'.L('PUBLIC_PRIVATE_MESSAGE')."\");'>".L('PUBLIC_STREAM_DELETE').'</a>'
                                         : "<a href='javascript:void(0)' onclick='admin.ContentEdit({$v['message_id']},\"MessageRecover\",\"".L('PUBLIC_RECOVER').'","'.L('PUBLIC_PRIVATE_MESSAGE')."\")'>".L('PUBLIC_RECOVER').'</a>';
@@ -330,12 +330,12 @@ class ContentAction extends AdministratorAction
     {
         echo json_encode(model('Message')->doEditMessage($_POST['id'], 'messageRecover', L('PUBLIC_RECOVER')));
     }
-    //假删除 
+    //假删除
     public function delMessage()
     {
         echo json_encode(model('Message')->doEditMessage($_POST['id'], 'delMessage', L('PUBLIC_STREAM_DELETE')));
     }
-    //真删除 
+    //真删除
     public function deleteMessage()
     {
         echo json_encode(model('Message')->doEditMessage($_POST['id'], 'deleteMessage', L('PUBLIC_REMOVE_COMPLETELY')));
@@ -361,9 +361,9 @@ class ContentAction extends AdministratorAction
             $this->pageButton[] = array('title' => L('PUBLIC_REMOVE_COMPLETELY'), 'onclick' => "admin.ContentEdit('','deleteAttach','".L('PUBLIC_REMOVE_COMPLETELY')."','".L('PUBLIC_FILE_STREAM')."')");
         }
 
-        $isRec == 1 &&  $_REQUEST['tabHash'] = 'rec';
+        $isRec == 1 && $_REQUEST['tabHash'] = 'rec';
         $this->assign('pageTitle', $isRec ? L('PUBLIC_RECYCLE_BIN') : L('PUBLIC_FILE_MANAGEMENT'));
-        $map['is_del'] = $isRec == 1 ? 1 : 0;    //未删除的 
+        $map['is_del'] = $isRec == 1 ? 1 : 0;    //未删除的
         !empty($_POST['attach_id']) && $map['attach_id'] = array('in', explode(',', $_POST['attach_id']));
         $_POST['from'] > 1 && $map['from'] = t($_POST['from']);
         !empty($_POST['name']) && $map['name'] = array('like', '%'.t($_POST['name']).'%');
@@ -401,12 +401,12 @@ class ContentAction extends AdministratorAction
     {
         echo json_encode(model('Attach')->doEditAttach($_POST['id'], 'attachRecover', L('PUBLIC_RECOVER')));
     }
-    //假删除 
+    //假删除
     public function delAttach()
     {
         echo json_encode(model('Attach')->doEditAttach($_POST['id'], 'delAttach', L('PUBLIC_STREAM_DELETE')));
     }
-    //真删除 
+    //真删除
     public function deleteAttach()
     {
         echo json_encode(model('Attach')->doEditAttach($_POST['id'], 'deleteAttach', L('PUBLIC_REMOVE_COMPLETELY')));
@@ -437,9 +437,9 @@ class ContentAction extends AdministratorAction
             $this->pageButton[] = array('title' => L('PUBLIC_REMOVE_COMPLETELY'), 'onclick' => "admin.ContentEdit('','deleteVideo','".L('PUBLIC_REMOVE_COMPLETELY')."','".L('PUBLIC_FILE_STREAM')."')");
         }
 
-        $is_del == 1 &&  $_REQUEST['tabHash'] = 'rec';
+        $is_del == 1 && $_REQUEST['tabHash'] = 'rec';
         $this->assign('pageTitle', $is_del ? L('PUBLIC_RECYCLE_BIN') : L('视频管理'));
-        $map['is_del'] = $is_del == 1 ? 1 : 0;    //未删除的 
+        $map['is_del'] = $is_del == 1 ? 1 : 0;    //未删除的
         !empty($_POST['video_id']) && $map['video_id'] = array('in', explode(',', $_POST['video_id']));
         $_POST['from'] > 1 && $map['from'] = t($_POST['from']);
         !empty($_POST['name']) && $map['name'] = array('like', '%'.t($_POST['name']).'%');
@@ -474,12 +474,12 @@ class ContentAction extends AdministratorAction
     {
         echo json_encode(model('Video')->doEditVideo($_POST['id'], 'videoRecover', L('PUBLIC_RECOVER')));
     }
-    //假删除 
+    //假删除
     public function delvideo()
     {
         echo json_encode(model('Video')->doEditVideo($_POST['id'], 'delVideo', L('PUBLIC_STREAM_DELETE')));
     }
-    //真删除 
+    //真删除
     public function deletevideo()
     {
         echo json_encode(model('Video')->doEditVideo($_POST['id'], 'deleteVideo', L('PUBLIC_REMOVE_COMPLETELY')));
@@ -659,7 +659,7 @@ class ContentAction extends AdministratorAction
 
     /**
      * 设置话题为推荐、精华或屏蔽
-     * @return array 操作成功状态和提示信息 
+     * @return array 操作成功状态和提示信息
      */
     public function setTopic()
     {
@@ -670,7 +670,7 @@ class ContentAction extends AdministratorAction
             exit();
         }
         switch (intval($_POST['type'])) {
-            case '1' :
+            case '1':
                 $field = 'recommend';
                 break;
             case '2':
@@ -749,7 +749,7 @@ class ContentAction extends AdministratorAction
                 $this->error('外链格式错误');
             }
         }
-        //$data['name'] = t($_POST['name']); 
+        //$data['name'] = t($_POST['name']);
         $data['note'] = t($_POST['note']);
         $data['domain'] = t($_POST['domain']);
         $data['des'] = h($_POST['des']);

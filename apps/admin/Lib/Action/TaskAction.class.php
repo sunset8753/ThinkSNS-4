@@ -92,7 +92,7 @@ class TaskAction extends AdministratorAction
                 switch ($k) {
                         case 'endtime':
                             $endtime = explode('|', $condition->endtime);
-                            $condesc .=  '领取时间：'.$endtime[0].' - '.$endtime[1].'</br>';
+                            $condesc .= '领取时间：'.$endtime[0].' - '.$endtime[1].'</br>';
                             break;
                         case 'userlevel':
                             $condesc .= '用户等级：T( '.$condition->userlevel.' )'.'</br>' ;
@@ -186,7 +186,7 @@ class TaskAction extends AdministratorAction
         $this->displayConfig($data);
     }
     /**
-     * 
+     *
      * @param unknown_type $data
      */
     private function validate($data)
@@ -238,7 +238,7 @@ class TaskAction extends AdministratorAction
                     $data['share_card'] = $share_card.'|'.$sharecard_src['save_path'].$sharecard_src['save_name'];
                 }
 
-                $data['type'] = 3;//自定义任务勋章
+                $data['type'] = 3; //自定义任务勋章
                 $medal_id = model('Medal')->add($data);
             }
         }
