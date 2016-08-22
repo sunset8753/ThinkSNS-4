@@ -258,7 +258,7 @@ class RelatedUserModel extends Model
                 case 1:
                     $data = $this->_getRelatedUserFromNew();
                     break;
-                case 2;
+                case 2:
                     $data = $this->_getRelatedUserFromFriend();
                     break;
                 case 3:
