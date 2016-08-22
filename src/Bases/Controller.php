@@ -8,7 +8,7 @@ use Action as BaseController;
  * undocumented class
  *
  * @package default
- * @author 
+ * @author
  **/
 abstract class Controller extends BaseController
 {

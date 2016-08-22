@@ -18,7 +18,6 @@ class Jumper
     /**
      * Run jump.
      *
-     * @return void
      * @author Seven Du <lovevipdsw@outlook.com>
      **/
     public static function start()
@@ -32,7 +31,6 @@ class Jumper
             $url = call_user_func_array(static::$iterator->current(), array(APP_NAME, MODULE_NAME, ACTION_NAME, (array) $_REQUEST));
 
             if ($url === true) {
-
                 return null;
             } elseif ($url != false) {
                 break;
@@ -49,7 +47,6 @@ class Jumper
     /**
      * add state machine.
      *
-     * @return void
      * @author Seven Du <lovevipdsw@outlook.com>
      **/
     public static function add(Closure $matchHandle)
@@ -64,5 +61,4 @@ class Jumper
             static::$iterator = new ArrayIterator;
         }
     }
-
 } // END class Jumper

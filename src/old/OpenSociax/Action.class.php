@@ -112,7 +112,7 @@ abstract class Action
             //获取当前Js语言包
             $this->site['langJsList'] = setLangJavsScript();
 
-            //分享字数 
+            //分享字数
             $this->site['initNums'] = model('Xdata')->getConfig('weibo_nums', 'feed');
 
             //赋值给全局变量
@@ -181,7 +181,7 @@ abstract class Action
             return true;
         }
 
-        //加载后台已安装应用列表        
+        //加载后台已安装应用列表
         $GLOBALS['ts']['app'] = $this->app = model('App')->getAppByName(APP_NAME);
 
         if (empty($this->app) || !$this->app) {
@@ -237,7 +237,7 @@ abstract class Action
         $GLOBALS['time_run_detail']['action_init_user_login'] = microtime(true);
 
         //判断登录有效期
-        /*        
+        /*
         $activeTime  = cookie('ST_ACTIVE_TIME');
         if($activeTime < time() && APP_NAME != 'admin' && ACTION_NAME !='login'){
             unset($_SESSION['mid']);
@@ -291,7 +291,7 @@ abstract class Action
                             U('public/Register/step3', '', true);
                         }
                     }
-                    /*              
+                    /*
                     if ($init_config ['photo_open']) {
                         U ( 'public/Register/step2', '', true );
                     }
@@ -683,7 +683,7 @@ abstract class Action
         }
         $this->assign('status', $status);   // 状态
         empty($message) && ($message = $status == 1 ? '操作成功' : '操作失败');
-        $this->assign('message', $message);// 提示信息
+        $this->assign('message', $message); // 提示信息
         $tpl = 'success.html';
         isMobile() && $tpl = 'wap_success.html';
         //保证输出不受静态缓存影响
@@ -740,4 +740,4 @@ abstract class Action
 
         return false;
     }
-};//类定义结束
+}; //类定义结束

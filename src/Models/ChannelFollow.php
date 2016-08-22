@@ -8,7 +8,7 @@ use Ts\Base\Model;
  * 频道粉丝模型
  *
  * @package Ts\Model\ChannelFollow
- * @author Seven Du <lovevipdsw@outlook.com> 
+ * @author Seven Du <lovevipdsw@outlook.com>
  **/
 class ChannelFollow extends Model
 {

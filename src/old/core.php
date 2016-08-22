@@ -255,7 +255,7 @@ function tsconfig($name = null, $value = null)
         return $ts['_config'] = array_merge((array) $ts['_config'], array_change_key_case($name));
     }
 
-    return null;// 避免非法参数
+    return null; // 避免非法参数
 }
 
 /**

@@ -66,7 +66,7 @@ class Controller
     );
 
     /**
-     * 构建需要的对象 
+     * 构建需要的对象
      *
      * @author Seven Du <lovevipdsw@outlook.com>
      **/
@@ -103,7 +103,7 @@ class Controller
         /* 如果不存在，就判断 None类 */
         } elseif (
             class_exists($className) === false &&
-            $oldControllerName       === false
+            $oldControllerName === false
         ) {
             $className = $this->controllerName;
             $this->setController('None');
@@ -113,8 +113,8 @@ class Controller
         /* 兼容旧系统的emptyAction */
         } elseif (
             class_exists($className) === false &&
-            $oldControllerName       !== false &&
-            $this->controllerName   != 'empty'
+            $oldControllerName !== false &&
+            $this->controllerName != 'empty'
         ) {
             $this->setController('empty');
 

@@ -93,7 +93,7 @@ class AppInstall
     }
 
     /**
-     * 复制应用的公开静态资源 
+     * 复制应用的公开静态资源
      * @return self
      * @author Seven Du <lovevipdsw@outlook.com>
      **/

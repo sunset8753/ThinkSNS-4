@@ -7,7 +7,7 @@ use Ts\Base\Model;
 /**
  * 咨询列表数据模型
  *
- * @author Seven Du <lovevipdsw@outlook.com> 
+ * @author Seven Du <lovevipdsw@outlook.com>
  **/
 class InformationList extends Model
 {

@@ -7,6 +7,7 @@ Jumper::add(function ($app, $mod, $act, array $args) {
     if (strtolower($app) == 'weiba' && strtolower($mod) == 'index' && strtolower($act) == 'postdetail') {
         return sprintf('%s/%s?app=h5#/weiba/post/%s', SITE_URL, ROOT_FILE, $args['post_id']);
     }
+
     return false;
 });
 
