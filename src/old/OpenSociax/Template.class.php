@@ -311,7 +311,7 @@ class Template
         // 读取模板中的include标签
         $find = preg_match_all('/'.$this->config['taglib_begin'].'include\s(.+?)\s*?\/'.$this->config['taglib_end'].'/is', $content, $matches);
         if ($find) {
-            for ($i = 0;$i < $find;$i++) {
+            for ($i = 0; $i < $find; $i++) {
                 $include = $matches[1][$i];
                 $array = $this->parseXmlAttrs($include);
                 $file = $array['file'];
@@ -435,7 +435,7 @@ class Template
                     if (empty($tag['attribute'])) {
                         // 无属性标签
                         if ($tag['content'] != 'empty') {
-                            for ($i = 0;$i < $level;$i++) {
+                            for ($i = 0; $i < $level; $i++) {
                                 // $content = preg_replace('/'.$begin.$startTag.'(\s*?)'.$end.'(.*?)'.$begin.'\/'.$endTag.'(\s*?)'.$end.'/eis', "\$this->parseXmlTag('".$tagLib."','".$tag['name']."','\\1','\\2')", $content);
                                 $content = preg_replace_callback(
                                     '/'.$begin.$startTag.'(\s*?)'.$end.'(.*?)'.$begin.'\/'.$endTag.'(\s*?)'.$end.'/is',
@@ -457,7 +457,7 @@ class Template
                         }
                     } elseif ($tag['content'] != 'empty') {
                         //闭合标签解析
-                        for ($i = 0;$i < $level;$i++) {
+                        for ($i = 0; $i < $level; $i++) {
                             // $content = preg_replace('/'.$begin.$startTag.'\s(.*?)'.$end.'(.+?)'.$begin.'\/'.$endTag.'(\s*?)'.$end.'/eis', "\$this->parseXmlTag('".$tagLib."','".$tag['name']."','\\1','\\2')", $content);
                             $content = preg_replace_callback(
                                 '/'.$begin.$startTag.'\s(.*?)'.$end.'(.+?)'.$begin.'\/'.$endTag.'(\s*?)'.$end.'/is',
@@ -716,7 +716,7 @@ class Template
         $length = count($varArray);
         //取得模板禁止使用函数列表
         $template_deny_funs = explode(',', C('TMPL_DENY_FUNC_LIST'));
-        for ($i = 0;$i < $length ;$i++) {
+        for ($i = 0; $i < $length ; $i++) {
             $args = explode('=', $varArray[$i], 2);
             //模板函数过滤
             $fun = strtolower(trim($args[0]));
@@ -759,11 +759,11 @@ class Template
             $vars[2] = trim($vars[2]);
             switch ($vars[1]) {
                 case 'SERVER':
-                    $parseStr = '$_SERVER[\''.strtoupper($vars[2]).'\']';break;
+                    $parseStr = '$_SERVER[\''.strtoupper($vars[2]).'\']'; break;
                 case 'GET':
-                    $parseStr = '$_GET[\''.$vars[2].'\']';break;
+                    $parseStr = '$_GET[\''.$vars[2].'\']'; break;
                 case 'POST':
-                    $parseStr = '$_POST[\''.$vars[2].'\']';break;
+                    $parseStr = '$_POST[\''.$vars[2].'\']'; break;
                 case 'COOKIE':
                     if (isset($vars[3])) {
                         $parseStr = '$_COOKIE[\''.$vars[2].'\'][\''.$vars[3].'\']';
@@ -779,18 +779,18 @@ class Template
                     }
                     break;
                 case 'ENV':
-                    $parseStr = '$_ENV[\''.strtoupper($vars[2]).'\']';break;
+                    $parseStr = '$_ENV[\''.strtoupper($vars[2]).'\']'; break;
                 case 'REQUEST':
-                    $parseStr = '$_REQUEST[\''.$vars[2].'\']';break;
+                    $parseStr = '$_REQUEST[\''.$vars[2].'\']'; break;
                 case 'CONST':
-                    $parseStr = strtoupper($vars[2]);break;
+                    $parseStr = strtoupper($vars[2]); break;
                 case 'LANG':
-                    $parseStr = 'L("'.$vars[2].'")';break;
+                    $parseStr = 'L("'.$vars[2].'")'; break;
                 case 'CONFIG':
                     if (isset($vars[3])) {
                         $vars[2] .= '.'.$vars[3];
                     }
-                    $parseStr = 'C("'.$vars[2].'")';break;
+                    $parseStr = 'C("'.$vars[2].'")'; break;
                 default:break;
             }
         } elseif (count($vars) == 2) {
@@ -862,7 +862,7 @@ class Template
                 // 默认导入当前模块下面的模板
                 $tmplTemplateFile = dirname($this->templateFile).'/'.$tmplPublicName;
             }
-            $tmplTemplateFile .=  $this->config['template_suffix'];
+            $tmplTemplateFile .= $this->config['template_suffix'];
             $parseStr = file_get_contents($tmplTemplateFile);
         }
 

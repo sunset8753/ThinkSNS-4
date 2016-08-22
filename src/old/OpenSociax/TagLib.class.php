@@ -59,7 +59,7 @@ class TagLib
     public function __construct()
     {
         $this->tagLib = strtolower(substr(get_class($this), 6));
-        $this->tpl = Template::getInstance();//ThinkTemplate::getInstance();
+        $this->tpl = Template::getInstance(); //ThinkTemplate::getInstance();
         $this->_initialize();
         $this->load();
     }
@@ -321,27 +321,27 @@ class TagLib
         if (count($vars) >= 3) {
             $vars[2] = trim($vars[2]);
             switch ($vars[1]) {
-                case 'SERVER':    $parseStr = '$_SERVER[\''.$vars[2].'\']';break;
-                case 'GET':         $parseStr = '$_GET[\''.$vars[2].'\']';break;
-                case 'POST':       $parseStr = '$_POST[\''.$vars[2].'\']';break;
-                case 'COOKIE':    $parseStr = '$_COOKIE[\''.$vars[2].'\']';break;
-                case 'SESSION':   $parseStr = '$_SESSION[\''.$vars[2].'\']';break;
-                case 'ENV':         $parseStr = '$_ENV[\''.$vars[2].'\']';break;
-                case 'REQUEST':  $parseStr = '$_REQUEST[\''.$vars[2].'\']';break;
-                case 'CONST':     $parseStr = strtoupper($vars[2]);break;
-                case 'LANG':       $parseStr = 'L("'.$vars[2].'")';break;
-                case 'CONFIG':    $parseStr = 'C("'.$vars[2].'")';break;
+                case 'SERVER':    $parseStr = '$_SERVER[\''.$vars[2].'\']'; break;
+                case 'GET':         $parseStr = '$_GET[\''.$vars[2].'\']'; break;
+                case 'POST':       $parseStr = '$_POST[\''.$vars[2].'\']'; break;
+                case 'COOKIE':    $parseStr = '$_COOKIE[\''.$vars[2].'\']'; break;
+                case 'SESSION':   $parseStr = '$_SESSION[\''.$vars[2].'\']'; break;
+                case 'ENV':         $parseStr = '$_ENV[\''.$vars[2].'\']'; break;
+                case 'REQUEST':  $parseStr = '$_REQUEST[\''.$vars[2].'\']'; break;
+                case 'CONST':     $parseStr = strtoupper($vars[2]); break;
+                case 'LANG':       $parseStr = 'L("'.$vars[2].'")'; break;
+                case 'CONFIG':    $parseStr = 'C("'.$vars[2].'")'; break;
             }
         } elseif (count($vars) == 2) {
             switch ($vars[1]) {
-                case 'NOW':       $parseStr = "date('Y-m-d g:i a',time())";break;
-                case 'VERSION':  $parseStr = 'THINK_VERSION';break;
-                case 'TEMPLATE':$parseStr = 'C("TMPL_FILE_NAME")';break;
-                case 'LDELIM':    $parseStr = 'C("TMPL_L_DELIM")';break;
-                case 'RDELIM':    $parseStr = 'C("TMPL_R_DELIM")';break;
+                case 'NOW':       $parseStr = "date('Y-m-d g:i a',time())"; break;
+                case 'VERSION':  $parseStr = 'THINK_VERSION'; break;
+                case 'TEMPLATE':$parseStr = 'C("TMPL_FILE_NAME")'; break;
+                case 'LDELIM':    $parseStr = 'C("TMPL_L_DELIM")'; break;
+                case 'RDELIM':    $parseStr = 'C("TMPL_R_DELIM")'; break;
                 default:  if (defined($vars[1])) {
-      $parseStr = $vars[1];
-  }
+                    $parseStr = $vars[1];
+                }
             }
         }
 

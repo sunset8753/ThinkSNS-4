@@ -436,7 +436,7 @@ class Model extends Think
                 return false;
             }
         }
-        if (is_numeric($options)  || is_string($options)) {
+        if (is_numeric($options) || is_string($options)) {
             // 根据主键删除记录
             $pk = $this->getPk();
             if (strpos($options, ',')) {
@@ -708,7 +708,7 @@ class Model extends Think
                     $name = $result[$key];
                     $cols[$name] = '';
                     foreach ($field as $val) {
-                        $cols[$name] .=  $result[$val].$sepa;
+                        $cols[$name] .= $result[$val].$sepa;
                     }
                     $cols[$name] = substr($cols[$name], 0, -strlen($sepa));
                 }
@@ -777,7 +777,7 @@ class Model extends Think
              $val = isset($data[$name]) ? $data[$name] : null;
             //保证赋值有效
             if (!is_null($val)) {
-                $vo[$name] = (MAGIC_QUOTES_GPC && is_string($val)) ?   stripslashes($val)  :  $val;
+                $vo[$name] = (MAGIC_QUOTES_GPC && is_string($val)) ? stripslashes($val) : $val;
             }
          }
         // 创建完成对数据进行自动处理
@@ -852,7 +852,7 @@ class Model extends Think
                 } // 默认为新增的时候自动填充
                 if ($type == $auto[2] || $auto[2] == self::MODEL_BOTH) {
                     switch ($auto[3]) {
-                        case 'function' :    //  使用函数进行填充 字段的值作为参数
+                        case 'function':    //  使用函数进行填充 字段的值作为参数
                         case 'callback': // 使用回调方法
                             $args = isset($auto[4]) ? $auto[4] : array();
                             if (isset($data[$auto[0]])) {
@@ -1070,9 +1070,9 @@ class Model extends Think
 
     /**
      * 启动事务
-     * 
+     *
      * 开启事务的同时先提交其他Sql,
-     * 
+     *
      * @access public
      */
     public function startTrans()
@@ -1327,7 +1327,7 @@ class Model extends Think
 
         // 计算结果总数
 
-        if (!is_numeric($count)  || $count == null) {
+        if (!is_numeric($count) || $count == null) {
             $count_sql = explode(' FROM ', $sql);
             if (count($count_sql) != 2) {
                 return false;

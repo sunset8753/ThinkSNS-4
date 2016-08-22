@@ -49,7 +49,7 @@ class TagLibHtml extends TagLib
         $content = $tag['content'];
         $type = $tag['type'] ;
         switch (strtoupper($type)) {
-            case 'FCKEDITOR' :
+            case 'FCKEDITOR':
                 $parseStr = '<!-- 编辑器调用开始 --><script type="text/javascript" src="__ROOT__/Public/Js/FCKeditor/fckeditor.js"></script><textarea id="'.$id.'" name="'.$name.'">'.$content.'</textarea><script type="text/javascript"> var oFCKeditor = new FCKeditor( "'.$id.'","'.$width.'","'.$height.'" ) ; oFCKeditor.BasePath = "__ROOT__/Public/Js/FCKeditor/" ; oFCKeditor.ReplaceTextarea() ;function resetEditor(){setContents("'.$id.'",document.getElementById("'.$id.'").value)}; function saveEditor(){document.getElementById("'.$id.'").value = getContents("'.$id.'");} function InsertHTML(html){ var oEditor = FCKeditorAPI.GetInstance("'.$id.'") ;if (oEditor.EditMode == FCK_EDITMODE_WYSIWYG ){oEditor.InsertHtml(html) ;}else	alert( "FCK必须处于WYSIWYG模式!" ) ;}</script> <!-- 编辑器调用结束 -->';
                 break;
             case 'EWEBEDITOR':
@@ -61,7 +61,7 @@ class TagLibHtml extends TagLib
             case 'UBB':
                 $parseStr = '<script type="text/javascript" src="__ROOT__/Public/Js/UbbEditor.js"></script><div style="padding:1px;width:'.$width.';border:1px solid silver;float:left;"><script LANGUAGE="JavaScript"> showTool(); </script></div><div><TEXTAREA id="UBBEditor" name="'.$name.'"  style="clear:both;float:none;width:'.$width.';height:'.$height.'" >'.$content.'</TEXTAREA></div><div style="padding:1px;width:'.$width.';border:1px solid silver;float:left;"><script LANGUAGE="JavaScript">showEmot();  </script></div>';
                 break;
-            default :
+            default:
                 $parseStr = '<textarea id="'.$id.'" style="'.$style.'" name="'.$name.'" >'.$content.'</textarea>';
         }
 
@@ -113,7 +113,7 @@ class TagLibHtml extends TagLib
         $tag = $this->parseXmlAttr($attr, 'import');
         $file = $tag['file'];
         $basepath = !empty($tag['basepath']) ? $tag['basepath'] : WEB_PUBLIC_URL;
-        $type = !empty($tag['type']) ?  strtolower($tag['type']) : 'js';
+        $type = !empty($tag['type']) ? strtolower($tag['type']) : 'js';
         if ($type == 'js') {
             $parseStr = "<script type='text/javascript' src='".$basepath.'/'.str_replace(array('.', '#'), array('/', '.'), $file).'.js'."'></script> ";
         } elseif ($type == 'css') {
@@ -220,29 +220,29 @@ class TagLibHtml extends TagLib
             $parseStr .= '<option value="" >'.$first.'</option>';
         }
         if (!empty($options)) {
-            $parseStr   .= '<?php  foreach($'.$options.' as $key=>$val) { ?>';
+            $parseStr .= '<?php  foreach($'.$options.' as $key=>$val) { ?>';
             if (!empty($selected)) {
-                $parseStr   .= '<?php if(!empty($'.$selected.') && ($'.$selected.' == $key || in_array($key,$'.$selected.'))) { ?>';
-                $parseStr   .= '<option selected="selected" value="<?php echo $key ?>"><?php echo $val ?></option>';
-                $parseStr   .= '<?php }else { ?><option value="<?php echo $key ?>"><?php echo $val ?></option>';
-                $parseStr   .= '<?php } ?>';
+                $parseStr .= '<?php if(!empty($'.$selected.') && ($'.$selected.' == $key || in_array($key,$'.$selected.'))) { ?>';
+                $parseStr .= '<option selected="selected" value="<?php echo $key ?>"><?php echo $val ?></option>';
+                $parseStr .= '<?php }else { ?><option value="<?php echo $key ?>"><?php echo $val ?></option>';
+                $parseStr .= '<?php } ?>';
             } else {
-                $parseStr   .= '<option value="<?php echo $key ?>"><?php echo $val ?></option>';
+                $parseStr .= '<option value="<?php echo $key ?>"><?php echo $val ?></option>';
             }
-            $parseStr   .= '<?php } ?>';
+            $parseStr .= '<?php } ?>';
         } elseif (!empty($values)) {
-            $parseStr   .= '<?php  for($i=0;$i<count($'.$values.');$i++) { ?>';
+            $parseStr .= '<?php  for($i=0;$i<count($'.$values.');$i++) { ?>';
             if (!empty($selected)) {
-                $parseStr   .= '<?php if(isset($'.$selected.') && ((is_string($'.$selected.') && $'.$selected.' == $'.$values.'[$i]) || (is_array($'.$selected.') && in_array($'.$values.'[$i],$'.$selected.')))) { ?>';
-                $parseStr   .= '<option selected="selected" value="<?php echo $'.$values.'[$i] ?>"><?php echo $'.$output.'[$i] ?></option>';
-                $parseStr   .= '<?php }else { ?><option value="<?php echo $'.$values.'[$i] ?>"><?php echo $'.$output.'[$i] ?></option>';
-                $parseStr   .= '<?php } ?>';
+                $parseStr .= '<?php if(isset($'.$selected.') && ((is_string($'.$selected.') && $'.$selected.' == $'.$values.'[$i]) || (is_array($'.$selected.') && in_array($'.$values.'[$i],$'.$selected.')))) { ?>';
+                $parseStr .= '<option selected="selected" value="<?php echo $'.$values.'[$i] ?>"><?php echo $'.$output.'[$i] ?></option>';
+                $parseStr .= '<?php }else { ?><option value="<?php echo $'.$values.'[$i] ?>"><?php echo $'.$output.'[$i] ?></option>';
+                $parseStr .= '<?php } ?>';
             } else {
-                $parseStr   .= '<option value="<?php echo $'.$values.'[$i] ?>"><?php echo $'.$output.'[$i] ?></option>';
+                $parseStr .= '<option value="<?php echo $'.$values.'[$i] ?>"><?php echo $'.$output.'[$i] ?></option>';
             }
-            $parseStr   .= '<?php } ?>';
+            $parseStr .= '<?php } ?>';
         }
-        $parseStr   .= '</select>';
+        $parseStr .= '</select>';
 
         return $parseStr;
     }
@@ -270,7 +270,7 @@ class TagLibHtml extends TagLib
         $checked = $this->tpl->get($checked) ? $this->tpl->get($checked) : $checked;
         $parseStr = '';
         foreach ($checkboxes as $key => $val) {
-            if ($checked == $key  || in_array($key, $checked)) {
+            if ($checked == $key || in_array($key, $checked)) {
                 $parseStr .= '<input type="checkbox" checked="checked" name="'.$name.'[]" value="'.$key.'">'.$val.$separator;
             } else {
                 $parseStr .= '<input type="checkbox" name="'.$name.'[]" value="'.$key.'">'.$val.$separator;
@@ -331,7 +331,7 @@ class TagLibHtml extends TagLib
         $tag = $this->parseXmlAttr($attr, 'list');
         $id = $tag['id'];                       //表格ID
         $datasource = $tag['datasource'];               //列表显示的数据源VoList名称
-        $pk = empty($tag['pk']) ? 'id' : $tag['pk'];//主键名，默认为id
+        $pk = empty($tag['pk']) ? 'id' : $tag['pk']; //主键名，默认为id
         $style = $tag['style'];                    //样式名
         $name = !empty($tag['name']) ? $tag['name'] : 'vo';                 //Vo对象名
         $action = $tag['action'];                   //是否显示功能操作
@@ -358,9 +358,9 @@ class TagLibHtml extends TagLib
 
         //显示开始
         $parseStr = "<!-- Think 系统列表组件开始 -->\n";
-        $parseStr  .= '<table id="'.$id.'" class="'.$style.'" cellpadding=0 cellspacing=0 >';
-        $parseStr  .= '<tr><td height="5" colspan="'.$colNum.'" class="topTd" ></td></tr>';
-        $parseStr  .= '<tr class="row" >';
+        $parseStr .= '<table id="'.$id.'" class="'.$style.'" cellpadding=0 cellspacing=0 >';
+        $parseStr .= '<tr><td height="5" colspan="'.$colNum.'" class="topTd" ></td></tr>';
+        $parseStr .= '<tr class="row" >';
         //列表需要显示的字段
         $fields = array();
         foreach ($show as $key => $val) {
@@ -396,7 +396,7 @@ class TagLibHtml extends TagLib
         }
         foreach ($fields as $field) {
             //显示定义的列表字段
-            $parseStr   .=  '<td>';
+            $parseStr .= '<td>';
             if (!empty($field[2])) {
                 // 支持列表字段链接功能 具体方法由JS函数实现
                 $href = explode('|', $field[2]);
@@ -462,7 +462,7 @@ class TagLibHtml extends TagLib
                     } else {
                         $array = explode('|', $val);
                         if (count($array) > 2) {
-                            $parseStr    .= ' <a href="javascript:'.$array[1].'(\'{$'.$name.'.'.$array[0].'}\')">'.$array[2].'<a> ';
+                            $parseStr .= ' <a href="javascript:'.$array[1].'(\'{$'.$name.'.'.$array[0].'}\')">'.$array[2].'<a> ';
                         } else {
                             $parseStr .= ' {$'.$name.'.'.$val.'} ';
                         }
@@ -471,8 +471,8 @@ class TagLibHtml extends TagLib
                 $parseStr .= '</td>';
             }
         }
-        $parseStr    .= '</tr></volist><tr><td height="5" colspan="'.$colNum.'" class="bottomTd"></td></tr></table>';
-        $parseStr    .= "\n<!-- Think 系统列表组件结束 -->\n";
+        $parseStr .= '</tr></volist><tr><td height="5" colspan="'.$colNum.'" class="bottomTd"></td></tr></table>';
+        $parseStr .= "\n<!-- Think 系统列表组件结束 -->\n";
 
         return $parseStr;
     }

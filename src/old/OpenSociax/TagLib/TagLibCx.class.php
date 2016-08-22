@@ -107,11 +107,11 @@ class TagLibCx extends TagLib
         $mod = isset($tag['mod']) ? $tag['mod'] : '2';
         $name = $this->autoBuildVar($name);
         $parseStr = '<?php if(is_array('.$name.')): ?>';
-        $parseStr   .= '<?php $'.$key.' = 0;?>';
+        $parseStr .= '<?php $'.$key.' = 0;?>';
         if (isset($tag['length']) && '' != $tag['length']) {
-            $parseStr  .= '<?php $__LIST__ = array_slice('.$name.','.$tag['offset'].','.$tag['length'].') ?>';
-        } elseif (isset($tag['offset'])  && '' != $tag['offset']) {
-            $parseStr  .= '<?php $__LIST__ = array_slice('.$name.','.$tag['offset'].') ?>';
+            $parseStr .= '<?php $__LIST__ = array_slice('.$name.','.$tag['offset'].','.$tag['length'].') ?>';
+        } elseif (isset($tag['offset']) && '' != $tag['offset']) {
+            $parseStr .= '<?php $__LIST__ = array_slice('.$name.','.$tag['offset'].') ?>';
         } else {
             $parseStr .= '<?php $__LIST__ = '.$name.'?>';
         }
@@ -122,9 +122,9 @@ class TagLibCx extends TagLib
         $parseStr .= '<?php $mod = ($'.$key.' % '.$mod.' )?>';
         $parseStr .= $this->tpl->parse($content);
         $parseStr .= '<?php endforeach; ?>';
-        $parseStr .=  '<?php endif; ?>';
+        $parseStr .= '<?php endif; ?>';
         $parseStr .= '<?php else: echo "'.$empty.'" ;?>';
-        $parseStr .=  '<?php endif; ?>';
+        $parseStr .= '<?php endif; ?>';
         $_iterateParseCache[$cacheIterateId] = $parseStr;
 
         if (!empty($parseStr)) {
@@ -167,7 +167,7 @@ class TagLibCx extends TagLib
         $parseStr .= '<?php foreach('.$name.' as $'.$key.'=>$'.$item.'): ?>';
         $parseStr .= $this->tpl->parse($content);
         $parseStr .= '<?php endforeach; ?>';
-        $parseStr .=  '<?php endif; ?>';
+        $parseStr .= '<?php endif; ?>';
         $_iterateParseCache[$cacheIterateId] = $parseStr;
 
         if (!empty($parseStr)) {
@@ -352,7 +352,7 @@ class TagLibCx extends TagLib
             $values = explode('|', $value);
             $value = '';
             foreach ($values as $val) {
-                $value   .=  'case "'.addslashes($val).'": ';
+                $value .= 'case "'.addslashes($val).'": ';
             }
         } else {
             $value = 'case "'.$value.'": ';
@@ -542,18 +542,18 @@ class TagLibCx extends TagLib
             $array = explode('|', $name);
             $parseStr = '<?php if( ';
             for ($i = 0; $i < count($array); $i++) {
-                $parseStr  .= 'isset($_SESSION["'.$array[$i].'"]) || ';
+                $parseStr .= 'isset($_SESSION["'.$array[$i].'"]) || ';
             }
             $parseStr = substr($parseStr, 0, -3);
-            $parseStr  .= '): ?>'.$content.'<?php endif; ?>';
+            $parseStr .= '): ?>'.$content.'<?php endif; ?>';
         } elseif (strpos($name, ',')) {
             $array = explode(',', $name);
             $parseStr = '<?php if( ';
             for ($i = 0; $i < count($array); $i++) {
-                $parseStr  .= 'isset($_SESSION["'.$array[$i].'"]) && ';
+                $parseStr .= 'isset($_SESSION["'.$array[$i].'"]) && ';
             }
             $parseStr = substr($parseStr, 0, -3);
-            $parseStr  .= '): ?>'.$content.'<?php endif; ?>';
+            $parseStr .= '): ?>'.$content.'<?php endif; ?>';
         } else {
             $parseStr = '<?php if(isset($_SESSION["'.$name.'"])): ?>'.$content.'<?php endif; ?>';
         }
@@ -583,18 +583,18 @@ class TagLibCx extends TagLib
             $array = explode('|', $name);
             $parseStr = '<?php if( ';
             for ($i = 0; $i < count($array); $i++) {
-                $parseStr  .= '!isset($_SESSION["'.$array[$i].'"]) || ';
+                $parseStr .= '!isset($_SESSION["'.$array[$i].'"]) || ';
             }
             $parseStr = substr($parseStr, 0, -3);
-            $parseStr  .= '): ?>'.$content.'<?php endif; ?>';
+            $parseStr .= '): ?>'.$content.'<?php endif; ?>';
         } elseif (strpos($name, ',')) {
             $array = explode(',', $name);
             $parseStr = '<?php if( ';
             for ($i = 0; $i < count($array); $i++) {
-                $parseStr  .= '!isset($_SESSION["'.$array[$i].'"]) && ';
+                $parseStr .= '!isset($_SESSION["'.$array[$i].'"]) && ';
             }
             $parseStr = substr($parseStr, 0, -3);
-            $parseStr  .= '): ?>'.$content.'<?php endif; ?>';
+            $parseStr .= '): ?>'.$content.'<?php endif; ?>';
         } else {
             $parseStr = '<?php if( !isset($_SESSION["'.$name.'"])): ?>'.$content.'<?php endif; ?>';
         }
