@@ -9,7 +9,7 @@ class AddonsAction extends AdministratorAction
 {
     /**
      * 插件列表页面
-     * 
+     *
      */
     public function index()
     {
@@ -34,7 +34,7 @@ class AddonsAction extends AdministratorAction
 
     /**
      * 开启插件操作
-     * 
+     *
      */
     public function startAddon()
     {
@@ -48,7 +48,7 @@ class AddonsAction extends AdministratorAction
 
     /**
      * 停止插件操作
-     * 
+     *
      */
     public function stopAddon()
     {
@@ -62,7 +62,7 @@ class AddonsAction extends AdministratorAction
 
     /**
      * 卸载插件操作
-     * 
+     *
      */
     public function uninstallAddon()
     {
@@ -76,7 +76,7 @@ class AddonsAction extends AdministratorAction
 
     /**
      * 插件后台管理页面
-     * 
+     *
      */
     public function admin()
     {
