@@ -66,9 +66,9 @@ class ShareAction extends Action
                     }
                 }
         }
-        $shareInfo['shareHtml'] = !empty($oldInfo['shareHtml'])  ?  $oldInfo['shareHtml'] : '';
+        $shareInfo['shareHtml'] = !empty($oldInfo['shareHtml']) ? $oldInfo['shareHtml'] : '';
         $weiboSet = model('Xdata')->get('admin_Config:feed');
-        $canShareFeed = in_array('repost', $weiboSet['weibo_premission']) ? 1  : '0';
+        $canShareFeed = in_array('repost', $weiboSet['weibo_premission']) ? 1 : '0';
         $this->assign('canShareFeed', $canShareFeed);
         $this->assign('initNums', $weiboSet['weibo_nums']);
         $this->assign('shareInfo', $shareInfo);

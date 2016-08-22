@@ -17,7 +17,7 @@ class TaskAction extends Action
     public function index()
     {
         $type = $_REQUEST['type'] ? intval($_REQUEST['type']) : 1;
-        //传入任务参数  type 
+        //传入任务参数  type
         //查询当前 任务的 执行状态调用
         $list = model('Task')->getTaskList($type, $this->mid);
         if (!$list['list']) {
@@ -265,11 +265,11 @@ class TaskAction extends Action
         //		dump(file_exists(UPLOAD_URL.'/avatar'.model('Avatar')->convertUidToPath($GLOBALS['ts']['mid']).'/original.jpg'));
 // 		$list = D('task')->findAll();
 // 		foreach ( $list as $v ){
-// 			$array = array( 'exp' => 10 , 'score' => 10 , 'medal' => array( 'id'=>1,'name'=>'新手勋章' ,'src'=>'' ) ); 
+// 			$array = array( 'exp' => 10 , 'score' => 10 , 'medal' => array( 'id'=>1,'name'=>'新手勋章' ,'src'=>'' ) );
 // 			D('task')->setField( 'reward' , json_encode( $array ) , 'id='.$v['id']);
 // 			dump(D()->getLastSql());
 //  		dump(model('Follow')->getFriendsList($this->mid));
-// 		} 
+// 		}
 // 		dump(file_exists(UPLOAD_PATH.'/avatar'.model('Avatar')->convertUidToPath($GLOBALS['ts']['mid']).'/original.jpg'));
     }
 }

@@ -102,7 +102,7 @@ class ChannelAction extends BaseAction
             }
             $weibolist [$k] ['userGroupData'] = $this->_usergroup($v ['uid']);
             switch ($v ['app']) {
-                case 'blog' :
+                case 'blog':
                     unset($weibolist [$k]);
                     continue;
                     /*
@@ -143,7 +143,7 @@ class ChannelAction extends BaseAction
     				 * }
     				 */
                     break;
-                case 'public' :
+                case 'public':
                     if ($v ['feed_id']) {
                         $weibolist [$k] ['weibo_id'] = $weibolist [$k] ['feed_id'];
                         // $weibolist[$k]['content'] = wapFormatContent($v['content'], true, $self_url);
@@ -177,7 +177,7 @@ class ChannelAction extends BaseAction
                         }
                     }
                     break;
-                case 'weiba' :
+                case 'weiba':
                     $weiba_post = D('WeibaPost', 'weiba')->where('post_id='.$v ['app_row_id'])->find();
                     $weibolist [$k] ['weibo_id'] = $weibolist [$k] ['feed_id'];
                     $weibolist [$k] ['transpond_data'] = $weiba_post;
@@ -186,7 +186,7 @@ class ChannelAction extends BaseAction
                     $weibolist [$k] ['transpond_data'] ['uid'] = $weiba_post ['post_uid'];
                     break;
 
-                default :
+                default:
 
                     // code...
                     break;
@@ -218,9 +218,9 @@ class ChannelAction extends BaseAction
 //             foreach ($weibolist as $k => $v) {
 //                 if($v['app'] === 'blog' || $v['app'] === 'weiba' || $v['app'] === 'group'){
 //                     unset($weibolist[$k]);
-//                     continue;                   
+//                     continue;
 //                 }
-//                 $weibolist[$k]['userGroupData'] = $this->_usergroup($v['uid']);     
+//                 $weibolist[$k]['userGroupData'] = $this->_usergroup($v['uid']);
 //                     switch ($v['app']) {
 //                             case 'blog':
 //                                 break;
@@ -243,7 +243,7 @@ class ChannelAction extends BaseAction
 //                                                if(strpos($weibolist[$k]['type'], 'video')){
 //                                                    $weibolist[$k]['transpond_data']['content'] = wapFormatContent($v['transpond_data']['content'], true, $self_url, "视频");
 //                                                }else{
-//                                                    $weibolist[$k]['transpond_data']['content'] = wapFormatContent($v['transpond_data']['content'], true, $self_url);                                
+//                                                    $weibolist[$k]['transpond_data']['content'] = wapFormatContent($v['transpond_data']['content'], true, $self_url);
 //                                                }
 //                                                $weibolist[$k]['transpond_data']['weibo_id'] = $weibolist[$k]['transpond_data']['feed_id'];
 //                                            }else{
