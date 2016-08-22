@@ -12,7 +12,7 @@ class AtmeModel extends Model
     private $_app = null;                       // 所属应用
     private $_app_table = null;                 // 所属资源表
     private $_app_pk_field = null;              // 应用主键字段
-    private $_at_regex = "/@(.+?)([\s|:]|$)/is";//"/@{uid=([^}]*)}/";    // @正则规则
+    private $_at_regex = "/@(.+?)([\s|:]|$)/is"; //"/@{uid=([^}]*)}/";    // @正则规则
     private $_at_field = 'uid';                 // @的资源字段
 
     /**
@@ -364,8 +364,7 @@ class AtmeModel extends Model
         }
         $start = ($page - 1) * $limit;
         $end = $limit;
-        if(!$list = $this->where($where)->limit("$start, $end")->order('atme_id DESC')->findAll())
-        {
+        if (!$list = $this->where($where)->limit("$start, $end")->order('atme_id DESC')->findAll()) {
             return array();
         }
 

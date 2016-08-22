@@ -57,11 +57,11 @@ function cookie($name, $value = '', $option = null)
 
     if ('' === $value) {
         //return isset($_COOKIE[$name]) ? unserialize($_COOKIE[$name]) : null;// 获取指定Cookie
-        return isset($_COOKIE[$name]) ? ($_COOKIE[$name]) : null;// 获取指定Cookie
+        return isset($_COOKIE[$name]) ? ($_COOKIE[$name]) : null; // 获取指定Cookie
     } else {
         if (is_null($value)) {
             setcookie($name, '', time() - 3600, $config['path'], $config['domain']);
-            unset($_COOKIE[$name]);// 删除指定cookie
+            unset($_COOKIE[$name]); // 删除指定cookie
         } else {
             // 设置cookie
             $expire = !empty($config['expire']) ? time() + intval($config['expire']) : 0;
@@ -244,7 +244,7 @@ function parse_name($name, $type = false)
     if ($type) {
         $name = preg_replace_callback(
             '/_([a-zA-Z])/e',
-            function($data) {
+            function ($data) {
                 return strtoupper($data[1]);
             },
             $name
@@ -254,6 +254,7 @@ function parse_name($name, $type = false)
         $name = preg_replace('/[A-Z]/', '_\\0', $name);
         $name = strtolower(trim($name, '_'));
     }
+
     return $name;
 }
 
@@ -483,7 +484,7 @@ function C($name = null, $value = null)
         return $ts['_config'] = array_merge((array) $ts['_config'], array_change_key_case($name));
     }
 
-    return null;// 避免非法参数
+    return null; // 避免非法参数
 }
 
 //D函数的别名
@@ -670,7 +671,7 @@ function N($key, $step = 0, $save = false)
 {
     static $_num = array();
     if (!isset($_num[$key])) {
-        $_num[$key] = (false !== $save) ? S('N_'.$key) :  0;
+        $_num[$key] = (false !== $save) ? S('N_'.$key) : 0;
     }
     if (empty($step)) {
         return $_num[$key];
@@ -779,7 +780,7 @@ function U($url, $params = false, $redirect = false)
 
     //普通模式
     if (false == strpos($url, '/')) {
-        $url    .= '//';
+        $url .= '//';
     }
 
     //填充默认参数
@@ -798,7 +799,7 @@ function U($url, $params = false, $redirect = false)
             $params = urldecode($params);
         }
         $params = str_replace('&amp;', '&', $params);
-        $site_url   .=  '&'.$params;
+        $site_url .= '&'.$params;
     }
 
     //开启路由和Rewrite
@@ -833,7 +834,7 @@ function U($url, $params = false, $redirect = false)
 
                 //填充剩余参数
                 if (isset($lr) && is_array($lr) && count($lr) > 0) {
-                    $site_url   .=  '?'.http_build_query($lr);
+                    $site_url .= '?'.http_build_query($lr);
                 }
             }
         }
@@ -873,7 +874,7 @@ function redirect($url, $time = 0, $msg = '')
     } else {
         $str = "<meta http-equiv='Refresh' content='{$time};URL={$url}'>";
         if ($time != 0) {
-            $str   .=   $msg;
+            $str .= $msg;
         }
         exit($str);
     }
@@ -1401,13 +1402,13 @@ function getShort($str, $length = 40, $ext = '')
     foreach ($match[0] as $v) {
         preg_match("/[\xe0-\xef][\x80-\xbf]{2}/", $v, $matchs);
         if (!empty($matchs[0])) {
-            $strlenth   +=  1;
+            $strlenth += 1;
         } elseif (is_numeric($v)) {
             //$strlenth +=  0.545;  // 字符像素宽度比例 汉字为1
-            $strlenth   +=  0.5;    // 字符字节长度比例 汉字为1
+            $strlenth += 0.5;    // 字符字节长度比例 汉字为1
         } else {
             //$strlenth +=  0.475;  // 字符像素宽度比例 汉字为1
-            $strlenth   +=  0.5;    // 字符字节长度比例 汉字为1
+            $strlenth += 0.5;    // 字符字节长度比例 汉字为1
         }
 
         if ($strlenth > $length) {
@@ -1415,7 +1416,7 @@ function getShort($str, $length = 40, $ext = '')
             break;
         }
 
-        $output .=  $v;
+        $output .= $v;
     }
 
     return $output;
@@ -1519,7 +1520,7 @@ function friendlyDate($sTime, $type = 'normal', $alt = 'false')
             return intval($dTime / 3600).'小时前';
         } elseif ($dDay > 0 && $dDay <= 7) {
             return intval($dDay).'天前';
-        } elseif ($dDay > 7 &&  $dDay <= 30) {
+        } elseif ($dDay > 7 && $dDay <= 30) {
             return intval($dDay / 7).'周前';
         } elseif ($dDay > 30) {
             return intval($dDay / 30).'个月前';
@@ -1622,10 +1623,10 @@ function replaceTheme($content)
     $content = str_replace('＃', '#', $content);
     // $content = preg_replace_callback("/#([^#]*[^#^\s][^#]*)#/is", '_parse_theme', $content);
     $content = preg_replace_callback(
-        '/#([^#]\S*?)#/is', 
-        function($data) {
+        '/#([^#]\S*?)#/is',
+        function ($data) {
             return _parse_theme($data);
-        }, 
+        },
         $content
     );
 
@@ -1668,7 +1669,7 @@ function _parse_expression($data)
  */
 function _parse_url($url)
 {
-    $str = '';//'<div class="url">';
+    $str = ''; //'<div class="url">';
     if (preg_match('/(youku.com|youtube.com|ku6.com|sohu.com|mofile.com|sina.com.cn|tudou.com|yinyuetai.com)/i', $url[0], $hosts)) {
         // event-node="show_url_detail" class="ico-url-video"
         $str .= '<a href="'.$url[0].'" target="_blank">访问视频+</a>';
@@ -1679,7 +1680,7 @@ function _parse_url($url)
         // event-node="show_url_detail" class="ico-url-web"
         $str .= '<a href="'.$url[0].'" target="_blank">访问链接+</a>';
     }
-    $str .= '';//'<div class="url-detail" style="display:none;">'.$url[0].'</div></div>';
+    $str .= ''; //'<div class="url-detail" style="display:none;">'.$url[0].'</div></div>';
     return $str;
 }
 
@@ -2010,7 +2011,7 @@ function getVisitorClient()
     elseif(stristr($_SERVER['HTTP_VIA'],"wap") || strpos(strtoupper($_SERVER['HTTP_ACCEPT']),"VND.WAP.WML") > 0){// 先检查是否为wap代理，准确度高
         return 1;
     }elseif(preg_match('/(windows ce)/i', $_SERVER['HTTP_USER_AGENT'])){
-        return 5;		 	
+        return 5;
     }*/
     return '0';
 }
@@ -2407,10 +2408,10 @@ function getUserSpace($uid, $class, $target, $text, $icon = true)
         } else {
             preg_match('/{uavatar}|{uavatar\\=(.*?)}/e', $text, $face_type);
             switch ($face_type[1]) {
-                case 'b' :
+                case 'b':
                     $userface = 'big';
                     break;
-                case 'm' :
+                case 'm':
                     $userface = 'middle';
                     break;
                 default:
@@ -3034,34 +3035,34 @@ function lastsql()
  *
  * @param  string      $url           远程图片的链接
  * @param  string      $type          获取远程图片资源的方式, 默认为 curl 可选 fread
- * @param  bool        $isGetFilesize 是否获取远程图片的体积大小, 默认false不获取, 设置为 true 时 $type 将强制为 fread 
+ * @param  bool        $isGetFilesize 是否获取远程图片的体积大小, 默认false不获取, 设置为 true 时 $type 将强制为 fread
  * @return false|array
  */
 function myGetImageSize($url, $type = 'curl', $isGetFilesize = false)
 {
-    // 若需要获取图片体积大小则默认使用 fread 方式 
+    // 若需要获取图片体积大小则默认使用 fread 方式
     $type = $isGetFilesize ? 'fread' : $type;
 
     if ($type == 'fread') {
-        // 或者使用 socket 二进制方式读取, 需要获取图片体积大小最好使用此方法 
+        // 或者使用 socket 二进制方式读取, 需要获取图片体积大小最好使用此方法
         $handle = fopen($url, 'rb');
 
         if (! $handle) {
             return false;
         }
 
-        // 只取头部固定长度168字节数据 
+        // 只取头部固定长度168字节数据
         $dataBlock = fread($handle, 168);
     } else {
-        // 据说 CURL 能缓存DNS 效率比 socket 高 
+        // 据说 CURL 能缓存DNS 效率比 socket 高
         $ch = curl_init($url);
-        // 超时设置 
+        // 超时设置
         curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-        // 取前面 168 个字符 通过四张测试图读取宽高结果都没有问题,若获取不到数据可适当加大数值 
-        // curl_setopt($ch, CURLOPT_RANGE, '0-256'); 
-        // 跟踪301跳转 
+        // 取前面 168 个字符 通过四张测试图读取宽高结果都没有问题,若获取不到数据可适当加大数值
+        // curl_setopt($ch, CURLOPT_RANGE, '0-256');
+        // 跟踪301跳转
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-        // 返回结果 
+        // 返回结果
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
         $dataBlock = curl_exec($ch);
@@ -3073,8 +3074,8 @@ function myGetImageSize($url, $type = 'curl', $isGetFilesize = false)
         }
     }
 
-    // 将读取的图片信息转化为图片路径并获取图片信息,经测试,这里的转化设置 jpeg 对获取png,gif的信息没有影响,无须分别设置 
-    // 有些图片虽然可以在浏览器查看但实际已被损坏可能无法解析信息  
+    // 将读取的图片信息转化为图片路径并获取图片信息,经测试,这里的转化设置 jpeg 对获取png,gif的信息没有影响,无须分别设置
+    // 有些图片虽然可以在浏览器查看但实际已被损坏可能无法解析信息
     $size = getimagesize('data://image/jpeg;base64,'.base64_encode($dataBlock));
     if (empty($size)) {
         return false;
@@ -3083,11 +3084,11 @@ function myGetImageSize($url, $type = 'curl', $isGetFilesize = false)
     $result['width'] = $size[0];
     $result['height'] = $size[1];
 
-    // 是否获取图片体积大小 
+    // 是否获取图片体积大小
     if ($isGetFilesize) {
-        // 获取文件数据流信息 
+        // 获取文件数据流信息
         $meta = stream_get_meta_data($handle);
-        // nginx 的信息保存在 headers 里，apache 则直接在 wrapper_data  
+        // nginx 的信息保存在 headers 里，apache 则直接在 wrapper_data
         $dataInfo = isset($meta['wrapper_data']['headers']) ? $meta['wrapper_data']['headers'] : $meta['wrapper_data'];
 
         foreach ($dataInfo as $va) {
@@ -3146,41 +3147,41 @@ function formatEmoji($type = false, $data)
     return \Medz\Component\EmojiFormat::de($data);
 }
 
-/** 
- * @去除XSS（跨站脚本攻击）的函数 
- * @par $val 字符串参数，可能包含恶意的脚本代码如<script language="javascript">alert("hello world");</script> 
+/**
+ * @去除XSS（跨站脚本攻击）的函数
+ * @par $val 字符串参数，可能包含恶意的脚本代码如<script language="javascript">alert("hello world");</script>
  * @return 处理后的字符串
- * @Recoded By Androidyue 
+ * @Recoded By Androidyue
  **/
 function RemoveXSS($val)
 {
-    // remove all non-printable characters. CR(0a) and LF(0b) and TAB(9) are allowed    
-    // this prevents some character re-spacing such as <java\0script>    
-    // note that you have to handle splits with \n, \r, and \t later since they *are* allowed in some inputs    
+    // remove all non-printable characters. CR(0a) and LF(0b) and TAB(9) are allowed
+    // this prevents some character re-spacing such as <java\0script>
+    // note that you have to handle splits with \n, \r, and \t later since they *are* allowed in some inputs
     $val = preg_replace('/([\x00-\x08\x0b-\x0c\x0e-\x19])/', '', $val);
 
-    // straight replacements, the user should never need these since they're normal characters    
-    // this prevents like <IMG SRC=@avascript:alert('XSS')>    
+    // straight replacements, the user should never need these since they're normal characters
+    // this prevents like <IMG SRC=@avascript:alert('XSS')>
     $search = 'abcdefghijklmnopqrstuvwxyz';
     $search .= 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $search .= '1234567890!@#$%^&*()';
     $search .= '~`";:?+/={}[]-_|\'\\';
     for ($i = 0; $i < strlen($search); $i++) {
-        // ;? matches the ;, which is optional   
-      // 0{0,7} matches any padded zeros, which are optional and go up to 8 chars   
+        // ;? matches the ;, which is optional
+      // 0{0,7} matches any padded zeros, which are optional and go up to 8 chars
 
-      // @ @ search for the hex values   
-      $val = preg_replace('/(&#[xX]0{0,8}'.dechex(ord($search[$i])).';?)/i', $search[$i], $val); // with a ;   
-      // @ @ 0{0,7} matches '0' zero to seven times    
-      $val = preg_replace('/(&#0{0,8}'.ord($search[$i]).';?)/', $search[$i], $val); // with a ;   
+      // @ @ search for the hex values
+      $val = preg_replace('/(&#[xX]0{0,8}'.dechex(ord($search[$i])).';?)/i', $search[$i], $val); // with a ;
+      // @ @ 0{0,7} matches '0' zero to seven times
+      $val = preg_replace('/(&#0{0,8}'.ord($search[$i]).';?)/', $search[$i], $val); // with a ;
     }
 
-    // now the only remaining whitespace attacks are \t, \n, and \r   
+    // now the only remaining whitespace attacks are \t, \n, and \r
     $ra1 = array('javascript', 'vbscript', 'expression', 'applet', 'meta', 'xml', 'blink', 'link', 'style', 'script', 'embed', 'object', 'iframe', 'frame', 'frameset', 'ilayer', 'layer', 'bgsound', 'title', 'base');
     $ra2 = array('onabort', 'onactivate', 'onafterprint', 'onafterupdate', 'onbeforeactivate', 'onbeforecopy', 'onbeforecut', 'onbeforedeactivate', 'onbeforeeditfocus', 'onbeforepaste', 'onbeforeprint', 'onbeforeunload', 'onbeforeupdate', 'onblur', 'onbounce', 'oncellchange', 'onchange', 'onclick', 'oncontextmenu', 'oncontrolselect', 'oncopy', 'oncut', 'ondataavailable', 'ondatasetchanged', 'ondatasetcomplete', 'ondblclick', 'ondeactivate', 'ondrag', 'ondragend', 'ondragenter', 'ondragleave', 'ondragover', 'ondragstart', 'ondrop', 'onerror', 'onerrorupdate', 'onfilterchange', 'onfinish', 'onfocus', 'onfocusin', 'onfocusout', 'onhelp', 'onkeydown', 'onkeypress', 'onkeyup', 'onlayoutcomplete', 'onload', 'onlosecapture', 'onmousedown', 'onmouseenter', 'onmouseleave', 'onmousemove', 'onmouseout', 'onmouseover', 'onmouseup', 'onmousewheel', 'onmove', 'onmoveend', 'onmovestart', 'onpaste', 'onpropertychange', 'onreadystatechange', 'onreset', 'onresize', 'onresizeend', 'onresizestart', 'onrowenter', 'onrowexit', 'onrowsdelete', 'onrowsinserted', 'onscroll', 'onselect', 'onselectionchange', 'onselectstart', 'onstart', 'onstop', 'onsubmit', 'onunload');
     $ra = array_merge($ra1, $ra2);
 
-    $found = true; // keep replacing as long as the previous round replaced something   
+    $found = true; // keep replacing as long as the previous round replaced something
     while ($found == true) {
         $val_before = $val;
         for ($i = 0; $i < sizeof($ra); $i++) {
@@ -3196,10 +3197,10 @@ function RemoveXSS($val)
                 $pattern .= $ra[$i][$j];
             }
             $pattern .= '/i';
-            $replacement = substr($ra[$i], 0, 2).'<x>'.substr($ra[$i], 2); // add in <> to nerf the tag    
-         $val = preg_replace($pattern, $replacement, $val); // filter out the hex tags    
+            $replacement = substr($ra[$i], 0, 2).'<x>'.substr($ra[$i], 2); // add in <> to nerf the tag
+         $val = preg_replace($pattern, $replacement, $val); // filter out the hex tags
          if ($val_before == $val) {
-             // no replacements were made, so exit the loop    
+             // no replacements were made, so exit the loop
             $found = false;
          }
         }

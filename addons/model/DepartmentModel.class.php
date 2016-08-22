@@ -91,7 +91,7 @@ class DepartmentModel extends Model
         // 添加部门操作
         $add['title'] = t($data['title']);
         $add['parent_dept_id'] = $this->_getParent_dept($data);
-        $add['display_order'] = isset($data['display_order'])  && !empty($data['display_order']) ? $data['display_order'] : 255;
+        $add['display_order'] = isset($data['display_order']) && !empty($data['display_order']) ? $data['display_order'] : 255;
         $add['ctime'] = time();
 
         if ($this->add($add)) {
@@ -113,7 +113,7 @@ class DepartmentModel extends Model
         $pid = $data['parent_dept_id'];
         if (!empty($data['_parent_dept_id'])) {
             $level = count($data['_parent_dept_id']);
-            $_P = $data['_parent_dept_id'][$level - 2] ?  $data['_parent_dept_id'][$level - 2] : $pid;
+            $_P = $data['_parent_dept_id'][$level - 2] ? $data['_parent_dept_id'][$level - 2] : $pid;
             $pid = $data['_parent_dept_id'][$level - 1] > 0 ? $data['_parent_dept_id'][$level - 1] : $_P;
         }
 
@@ -142,7 +142,7 @@ class DepartmentModel extends Model
         $map['department_id'] = $id;
         // 获取子节点
         $tree = $this->treeDo->getTree($id);
-        // 移动子节点 
+        // 移动子节点
         if (!empty($tree['_child'])) {
             foreach ($tree['_child'] as $c) {
                 $this->moveDepart($c['department_id'], $pid);
@@ -259,7 +259,7 @@ class DepartmentModel extends Model
     }
 
     /**
-     * 更新部门为departMentTree的用户的关联表信息 
+     * 更新部门为departMentTree的用户的关联表信息
      * @param string $treeName      树结构的名称
      * @param array  $departmentIds 部门ID数组
      */

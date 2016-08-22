@@ -121,7 +121,7 @@ class AttachModel extends Model
             if ($type == 'deleteAttach') {
                 // 彻底删除操作
                 $res = D('Attach')->where($map)->delete();
-                // TODO:删除附件文件 
+                // TODO:删除附件文件
             } else {
                 // 假删除或者恢复操作
                 $res = D('Attach')->where($map)->save($save);

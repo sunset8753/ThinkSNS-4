@@ -160,7 +160,7 @@ class CommentModel extends Model
      * @param  bool  $forApi   是否用于API，默认为false
      * @param  bool  $notCount 是否统计到未读评论
      * @param  array $lessUids 除去@用户ID
-     * @return bool  是否添加评论成功 
+     * @return bool  是否添加评论成功
      */
     public function addComment($data, $forApi = false, $notCount = false, $lessUids = null)
     {
@@ -515,7 +515,7 @@ class CommentModel extends Model
         $max_id = intval($max_id);
         $limit = intval($limit);
         $page = intval($page);
-        $where = empty($where) ?  ' is_del = 0 ' : $where.' AND is_del=0';
+        $where = empty($where) ? ' is_del = 0 ' : $where.' AND is_del=0';
         if (!empty($since_id) || !empty($max_id)) {
             !empty($since_id) && $where .= " AND comment_id > {$since_id}";
             !empty($max_id) && $where .= " AND comment_id < {$max_id}";

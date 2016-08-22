@@ -212,7 +212,7 @@ class AvatarModel
         if (!$facedata) {
             $facedata = $_POST;
         }
-        //header("Content-type: image/jpeg"); 
+        //header("Content-type: image/jpeg");
         //Log::write(var_export($facedata,true));
         $picWidth = intval($facedata['picwidth']); //原图的宽度
         $scale = $picWidth / 300; //缩放比例

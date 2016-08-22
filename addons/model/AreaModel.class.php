@@ -1,7 +1,7 @@
 <?php
 /**
  * 地区模型 - 数据对象模型
- * @author jason <yangjs17@yeah.net> 
+ * @author jason <yangjs17@yeah.net>
  * @version TS3.0
  */
 class AreaModel extends Model
@@ -29,7 +29,7 @@ class AreaModel extends Model
 
         // $map = array();
         // $pid != -1 && $map['pid'] = $pid;
-        // $data = $this->where($map)->order('`area_id` ASC')->findAll(); 
+        // $data = $this->where($map)->order('`area_id` ASC')->findAll();
         // return $data;
     }
 

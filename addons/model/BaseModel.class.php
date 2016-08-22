@@ -1,19 +1,19 @@
 <?php
     /**
-     * BaseModel 
+     * BaseModel
      * 心情的base类
      *
      * @uses Model
      * @package Model::Mini
      * @version $id$
-     * @copyright 2009-2011 SamPeng 
-     * @author SamPeng <sampeng87@gmail.com> 
+     * @copyright 2009-2011 SamPeng
+     * @author SamPeng <sampeng87@gmail.com>
      * @license PHP Version 5.2 {@link www.sampeng.cn}
      */
     class BaseModel extends Model
     {
         /**
-         * mid 
+         * mid
          * 访问者的id
          * @var mixed
          * @access protected
@@ -25,7 +25,7 @@
         }
 
         /**
-         * DateToTimeStemp 
+         * DateToTimeStemp
          * 时间换算成时间戳返回
          * @param mixed $stime
          * @param mixed $etime
@@ -36,7 +36,7 @@
             $stime = strval($stime);
             $etime = strval($etime);
 
-           //如果输入时间是YYMMDD格式。直接换算成时间戳 
+           //如果输入时间是YYMMDD格式。直接换算成时间戳
             if (isset($stime[7]) && isset($etime[7])) {
                 //开始时间
                 $syear = substr($stime, 0, 4);
@@ -63,7 +63,7 @@
         }
 
         /**
-         * paramData 
+         * paramData
          * 处理归档查询的时间格式
          * @param string $findTime 200903这样格式的参数
          * @static
