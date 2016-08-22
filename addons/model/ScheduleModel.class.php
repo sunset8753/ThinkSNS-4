@@ -135,7 +135,7 @@ class ScheduleModel extends Model
         $this->saveSchedule($schedule);
         $str_log = "schedule_id = {$schedule['id']} 的任务已运行。";
         if (C('APP_DEBUG')) {
-            $str_log  .= "任务url为: {$schedule['task_to_run']} ，任务描述为: {$schedule['info']} 。";
+            $str_log .= "任务url为: {$schedule['task_to_run']} ，任务描述为: {$schedule['info']} 。";
         }
         $this->_log($str_log);
     }
@@ -725,7 +725,7 @@ class ScheduleModel extends Model
     //返回自2007年01月01日来的周数
     protected function _getWeekID($date = '')
     {
-        $date_base = strtotime('2007-01-01');//2007-01-01为周一，定为第一周
+        $date_base = strtotime('2007-01-01'); //2007-01-01为周一，定为第一周
         //输入日期为空时，使用当前时间
         if (empty($date)) {
             $date = strtotime(date('Y-m-d'));
