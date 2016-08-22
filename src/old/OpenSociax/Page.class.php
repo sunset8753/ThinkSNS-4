@@ -181,13 +181,13 @@ class Page
         }
 
         if ($leftPages > 0) {
-            for ($i = $this->nowPage - $leftPages;$i < $this->nowPage;$i++) {
+            for ($i = $this->nowPage - $leftPages; $i < $this->nowPage; $i++) {
                 $linkPage .= "<a href='".$url.'&'.C('VAR_PAGE')."=$i'>".$i.'</a>';
             }
         }
         $linkPage .= " <a class='current'>".$this->nowPage.'</a>';
         if ($rightPages > 0) {
-            for ($i = $this->nowPage + 1;$i <= $this->nowPage + $rightPages;$i++) {
+            for ($i = $this->nowPage + 1; $i <= $this->nowPage + $rightPages; $i++) {
                 $linkPage .= "<a href='".$url.'&'.C('VAR_PAGE')."=$i'>".$i.'</a>';
             }
         }
@@ -289,13 +289,13 @@ class Page
         }
 
         if ($leftPages > 0) {
-            for ($i = $this->nowPage - $leftPages;$i < $this->nowPage;$i++) {
+            for ($i = $this->nowPage - $leftPages; $i < $this->nowPage; $i++) {
                 $linkPage .= "<a href='".$url.'&'.C('VAR_PAGE')."=$i'>".$i.'</a>';
             }
         }
         $linkPage .= " <a class='current'>".$this->nowPage.'</a>';
         if ($rightPages > 0) {
-            for ($i = $this->nowPage + 1;$i <= $this->nowPage + $rightPages;$i++) {
+            for ($i = $this->nowPage + 1; $i <= $this->nowPage + $rightPages; $i++) {
                 $linkPage .= "<a href='".$url.'&'.C('VAR_PAGE')."=$i'>".$i.'</a>';
             }
         }

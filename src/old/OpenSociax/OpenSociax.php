@@ -34,7 +34,7 @@ if (!isset($_REQUEST['app']) && !isset($_REQUEST['mod']) && !isset($_REQUEST['ac
     $ts['_mod'] = isset($_REQUEST['mod']) && !empty($_REQUEST['mod']) ? $_REQUEST['mod'] : tsconfig('DEFAULT_MODULE');
     $ts['_act'] = isset($_REQUEST['act']) && !empty($_REQUEST['act']) ? $_REQUEST['act'] : tsconfig('DEFAULT_ACTION');
 }
-$ts['_widget_appname'] = isset($_REQUEST['widget_appname']) && !empty($_REQUEST['widget_appname'])  ? $_REQUEST['widget_appname'] : '';
+$ts['_widget_appname'] = isset($_REQUEST['widget_appname']) && !empty($_REQUEST['widget_appname']) ? $_REQUEST['widget_appname'] : '';
 
 //APP的常量定义
 tsdefine('APP_NAME', $ts['_app']);
