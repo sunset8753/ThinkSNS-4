@@ -1,7 +1,7 @@
 <?php
 /**
  * 注册模型 - 数据对象模型
- * @author jason <yangjs17@yeah.net> 
+ * @author jason <yangjs17@yeah.net>
  * @version TS3.0
  */
 class RegisterModel extends Model
@@ -15,7 +15,7 @@ class RegisterModel extends Model
     private $_phone_reg = '/^1[34578][0-9]{1}[0-9]{8}$/';
 
     /**
-     * 初始化操作，获取注册配置信息；实例化用户模型对象 
+     * 初始化操作，获取注册配置信息；实例化用户模型对象
      */
     public function __construct()
     {
@@ -82,7 +82,7 @@ class RegisterModel extends Model
 
     /**
      * 验证邮箱内容的正确性
-     * 
+     *
      * @param  string $email
      *                           输入邮箱的信息
      * @param  string $old_email
@@ -220,7 +220,7 @@ class RegisterModel extends Model
 
             return false;
         }
-        
+
         $old_user = \Ts\Model\User::existent()->byUserName($old_name)->first();
         $user = \Ts\Model\User::existent()->byUserName($name)->first();
         if (
@@ -230,6 +230,7 @@ class RegisterModel extends Model
             $old_user->uid != $user->uid
         ) {
             $this->_error = '该用户名已经存在。';
+
             return false;
         }
 
