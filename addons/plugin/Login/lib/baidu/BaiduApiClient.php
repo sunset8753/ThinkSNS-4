@@ -11,7 +11,7 @@ require_once dirname(__FILE__).'/BaiduException.php';
 
 /**
  * Client for Baidu OpenAPI2.0 service.
- * 
+ *
  * @package Baidu
  * @author zhujianting(zhujianting@baidu.com)
  * @version v2.0.0
@@ -61,7 +61,7 @@ class BaiduApiClient
 
     /**
      * Constructor
-     * 
+     *
      * @param string $clientId    Client_id of the baidu thirdparty app or access_key of the developer.
      * @param string $accessToken Access token for api call.
      */
@@ -73,7 +73,7 @@ class BaiduApiClient
 
     /**
      * Get the client_id.
-     * 
+     *
      * @return string
      */
     public function getClientId()
@@ -83,7 +83,7 @@ class BaiduApiClient
 
     /**
      * Set the client_id.
-     * 
+     *
      * @param  string         $clientId Client_id of the baidu thirdparty app or access_key of the developer.
      * @return BaiduApiClient
      */
@@ -96,7 +96,7 @@ class BaiduApiClient
 
     /**
      * Get the access token for the following api calls.
-     * 
+     *
      * @return string
      */
     public function getAccessToken()
@@ -106,7 +106,7 @@ class BaiduApiClient
 
     /**
      * Set access token for the following api calls.
-     * 
+     *
      * @param  string         $accessToken
      * @return BaiduApiClient
      */
@@ -119,7 +119,7 @@ class BaiduApiClient
 
     /**
      * Get the charset of the app.
-     * 
+     *
      * @return string
      */
     public function getFinalEncode()
@@ -129,7 +129,7 @@ class BaiduApiClient
 
     /**
      * Set the charset for the app.
-     * 
+     *
      * @param  string         $finalEncode 'UTF-8' or 'GBK'
      * @return BaiduApiClient
      */
@@ -142,7 +142,7 @@ class BaiduApiClient
 
     /**
      * Set the mode of batch/run api.
-     * 
+     *
      * @param  int            $batchMode Use BaiduApiClient::BATCH_MODE_SERVER_PARALLEL
      *                                   or BaiduApiClient::BATCH_MODE_SERIAL_ONLY
      * @return BaiduApiClient
@@ -176,14 +176,14 @@ class BaiduApiClient
     }
 
     /**
-     * Call an api which is opened by Baidu, file upload apis should not 
+     * Call an api which is opened by Baidu, file upload apis should not
      * be called by this interface.
-     * 
+     *
      * @param string $uri Uri for the api, it could be the whole url,
      *                    like 'https://openapi.baidu.com/rest/2.0/passport/user/info/get',
      *                    or url path only, like '/rest/2.0/passport/user/info/get',
      *                    or just api method only, like 'passport/user/info/get'.
-     * 
+     *
      * @param  array       $params     Api specific parameters.
      * @param  string      $httpMethod Http method, could be 'GET' or 'POST'.
      * @param  string      $type       Type name of the openapi, could be 'rest', or 'public'.
@@ -254,7 +254,7 @@ class BaiduApiClient
 
     /**
      * Call a file upload api.
-     * 
+     *
      * @param string $uri Uri for the api, it could be the whole url,
      *                    like 'https://openapi.baidu.com/file/2.0/cloudalbum/picture/upload',
      *                    or just api method only, like 'cloudalbum/picture/upload', if the api

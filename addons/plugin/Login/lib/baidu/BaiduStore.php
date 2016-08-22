@@ -9,7 +9,7 @@ require_once dirname(__FILE__).'/BaiduUtils.php';
  * Abstract class of storage engine for user session related data,
  * like state & authorization code for oauth2.0, access token &
  * refresh token for current user.
- * 
+ *
  * @package Baidu
  * @author zhujianting(zhujianting@baidu.com)
  * @version v2.0.0
@@ -34,10 +34,10 @@ abstract class BaiduStore
     /**
      * Get the variable value specified by the variable key name for
      * current session user from the storage system.
-     * 
+     *
      * @param  string $key     Variable key name
      * @param  mix    $default Default value if the key couldn't be found
-     * @return mix    Returns the value for the specified key if it exists, 
+     * @return mix    Returns the value for the specified key if it exists,
      *                        otherwise return $default value
      */
     abstract public function get($key, $default = false);
@@ -45,7 +45,7 @@ abstract class BaiduStore
     /**
      * Save the variable item specified by the variable key name into
      * the storage system for current session user.
-     * 
+     *
      * @param  string $key   Variable key name
      * @param  mix    $value Variable value
      * @return bool   Returns true if the saving operation is success,
@@ -56,7 +56,7 @@ abstract class BaiduStore
     /**
      * Remove the stored variable item specified by the variable key name
      * from the storage system for current session user.
-     * 
+     *
      * @param  string $key Variable key name
      * @return bool   Returns true if remove success, otherwise returns false
      */
@@ -65,14 +65,14 @@ abstract class BaiduStore
     /**
      * Remove all the stored variable items for current session user from
      * the storage system.
-     * 
+     *
      * @return bool Returns true if remove success, otherwise returns false
      */
     abstract public function removeAll();
 
     /**
      * Get the actual key name for current storage engine.
-     * 
+     *
      * @param  string $key The original key name
      * @return string
      */
@@ -238,7 +238,7 @@ class BaiduMemcachedStore extends BaiduStore
      */
     protected $sessionId;
 
-    /** 
+    /**
      * @param string   $clientId
      * @param Memcache $memcache
      */

@@ -70,7 +70,7 @@ class FeedTopHooks extends Hooks
         $this->assign('diggArr', $diggArr);
         $this->display('feedtop');
     }
-    //public function home_index_right_top(){	
+    //public function home_index_right_top(){
     // 	$list = $this->model('FeedTop')->getFeedTopList(0);
     // 	foreach($list as $k =>$v){
     // 		$list[$k]['feed_info'] = model('Feed')->get($v['feed_id']);

@@ -214,7 +214,7 @@ class UserGroupModel extends Model
 
     /**
      * 获取指定用户的用户组图标
-     * 
+     *
      * @param  int    $uid 用户ID
      * @return string 返回用户组图标的img标签
      */

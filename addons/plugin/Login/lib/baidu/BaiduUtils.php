@@ -13,7 +13,7 @@
 
 /**
  * Utils class for Baidu OpenAPI2.0 SDK.
- * 
+ *
  * @package Baidu
  * @author zhujianting(zhujianting@baidu.com)
  * @version v2.0.0
@@ -40,7 +40,7 @@ class BaiduUtils
 
     /**
      * Set the gloable error number and error message.
-     * 
+     *
      * @param int    $errno  Error code
      * @param string $errmsg Error message
      */
@@ -53,7 +53,7 @@ class BaiduUtils
 
     /**
      * Get the gloable errno.
-     * 
+     *
      * @return int
      */
     public static function errno()
@@ -63,7 +63,7 @@ class BaiduUtils
 
     /**
      * Get the gloable error message.
-     * 
+     *
      * @return string
      */
     public static function errmsg()
@@ -73,7 +73,7 @@ class BaiduUtils
 
     /**
      * Whether to set the debug mode of the Baidu OpenAPI SDK or not.
-     * 
+     *
      * @param bool $on true or false
      */
     public static function setDebugMode($on = true)
@@ -83,7 +83,7 @@ class BaiduUtils
 
     /**
      * Whether the debug mode of the Baidu OpenAPI SDK is on or off.
-     * 
+     *
      * @return bool
      */
     public static function isDebugMode()
@@ -93,7 +93,7 @@ class BaiduUtils
 
     /**
      * Request for a http/https resource
-     * 
+     *
      * @param  string       $url        Url to request
      * @param  array        $params     Parameters for the request
      * @param  string       $httpMethod Http method, 'GET' or 'POST'
@@ -185,7 +185,7 @@ class BaiduUtils
 
     /**
      * Generate the signature for passed parameters.
-     * 
+     *
      * @param  array  $params    Array of parameters to be signatured
      * @param  string $secret    Secret key for signature
      * @param  string $namespace The parameter which will be excluded when calculate the signature
@@ -207,7 +207,7 @@ class BaiduUtils
 
     /**
      * Get the url of current page.
-     * 
+     *
      * @return string
      */
     public static function getCurrentUrl()

@@ -16,7 +16,7 @@ class LoginHooks extends Hooks
             //"twitter"  => array("twitter_key", "twitter_secret"),
         );
     //可同步发布动态的站点
-    private static $validPublish = array('sina', 'qq', 'qzone');//, 'renren'); 暂时关闭人人网同步-不知道哪里抽风审核不过
+    private static $validPublish = array('sina', 'qq', 'qzone'); //, 'renren'); 暂时关闭人人网同步-不知道哪里抽风审核不过
     //应用名称
     private static $validAlias = array(
             'sina' => '新浪分享',
@@ -201,13 +201,13 @@ class LoginHooks extends Hooks
             return;
         }
         switch ($_REQUEST ['connectMod']) {
-        case 'bind' :
+        case 'bind':
             $this->_bindaccunt($type, $result);
             break;
-        case 'createNew' :
+        case 'createNew':
             $this->_register($type, $result);
             break;
-        default :
+        default:
             $result ['status'] = 0;
             $result ['info'] = '非法参数';
         }
@@ -423,7 +423,7 @@ class LoginHooks extends Hooks
             // foreach($sync as $key=>$v){
             //     $sync[$key] = "'{$v}'";
             // }
-            // 
+            //
             $opt = M('login')->where('uid='.intval($data['uid']).' and is_sync=1')->findAll();
 
             // Url格式化问题

@@ -3,7 +3,7 @@
  * 视频服务模型
  *
  * @package ThinkSNS\Addnons\Model\Video
- * @author Seven Du <lovevipdsw@vip.qq.com> 
+ * @author Seven Du <lovevipdsw@vip.qq.com>
  **/
 class VideoModel extends OldVideoModel
 {
@@ -516,7 +516,7 @@ class OldVideoModel extends Model
             }
         } else {
             if (extension_loaded('zlib')) {
-                $content = file_get_contents('compress.zlib://'.$link);//获取
+                $content = file_get_contents('compress.zlib://'.$link); //获取
             }
 
             if (!$content) {
@@ -614,7 +614,7 @@ class OldVideoModel extends Model
             if ($type == 'deleteVideo') {
                 // 彻底删除操作
                 $res = D('Video')->where($map)->delete();
-                // TODO:删除附件文件 
+                // TODO:删除附件文件
             } else {
                 // 假删除或者恢复操作
                 $res = D('Video')->where($map)->save($save);

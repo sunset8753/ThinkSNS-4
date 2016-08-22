@@ -15,7 +15,7 @@ class BaiduException extends Exception
 {
     /**
      * Constructor: initialize the BaiduException instance.
-     * 
+     *
      */
     public function __construct($message, $code = 0)
     {

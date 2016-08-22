@@ -5,7 +5,7 @@ use Medz\Component\EmojiFormat;
 
 /**
  * 用户模型 - 数据对象模型
- * @author jason <yangjs17@yeah.net> 
+ * @author jason <yangjs17@yeah.net>
  * @version TS3.0
  */
 class UserModel extends \Model
@@ -429,7 +429,6 @@ class UserModel extends \Model
             }
 
             return $category;
-
         }, array($category)))->select($uid))) {
             $this->error = L('PUBLIC_GET_USERPROFILE_FAIL'); // # 获取用户档案失败
             return false;
@@ -479,7 +478,7 @@ class UserModel extends \Model
      */
     public function addUser(array $user)
     {
-        // # 判断用户名是否被注册 
+        // # 判断用户名是否被注册
         if ($user['uname'] and !$this->isChangeUserName($user['uname'])) {
             $this->error = '用户昵称已存在，请使用其他昵称';
 
@@ -992,7 +991,7 @@ class UserModel extends \Model
     {
         // 判断类型？
         switch ($type) {
-            case '' :
+            case '':
                 $where = " (search_key LIKE '%{$key}%')";
                 // 过滤未激活和未审核的用户
                 // if($atme == 'at') {
