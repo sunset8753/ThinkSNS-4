@@ -15,7 +15,7 @@ class SendWeiboWidget extends Widget
      * $data['send_type'] string 分享发送类型
      * $data['app_name'] string 发布分享所在的应用名称
      * $data['initHtml'] string 发布分享框中的默认内容
-     * $data['cancomment'] integer 是否可以评论 
+     * $data['cancomment'] integer 是否可以评论
      *$data['channelID']  发布到某个频道的id
      * @param  array  $data 发布分享框的配置参数
      * @return string 渲染后的模板内容
@@ -39,7 +39,7 @@ class SendWeiboWidget extends Widget
         !$var['app_name'] && $var['app_name'] = 'public';
         !$var['prompt'] && $var['prompt'] = '转发成功';
         $var['time'] = $_SERVER['REQUEST_TIME'];
-        $var['topicHtml'] = t($data['topicHtml']).' ';//空格 控制话题提示
+        $var['topicHtml'] = t($data['topicHtml']).' '; //空格 控制话题提示
         // 获取安装的应用列表
         $var['hasChannel'] = model('App')->isAppNameOpen('channel');
         // 权限控制

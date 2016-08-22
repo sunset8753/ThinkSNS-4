@@ -1,7 +1,7 @@
 <?php
 /**
  * 分享发布框
- * @example W('Share',array('sid'=>14983,'stable'=>'contact','appname'=>'contact','nums'=>10,'initHTML'=>'这里是默认的话')) 
+ * @example W('Share',array('sid'=>14983,'stable'=>'contact','appname'=>'contact','nums'=>10,'initHTML'=>'这里是默认的话'))
  * @author jason
  * @version TS3.0
  */
@@ -12,7 +12,7 @@ class ShareWidget extends Widget
      * @param string stable 资源所在的表，如小名片就是contact表，分享就是feed表
      * @param string appname 资源所在的应用
      * @param int nums 该资源被分享的次数
-     * @param string initHTML 默认的内容 
+     * @param string initHTML 默认的内容
      */
     public function render($data)
     {

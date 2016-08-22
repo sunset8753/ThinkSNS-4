@@ -47,7 +47,7 @@ class SearchUserWidget extends Widget
     }
 
     /**
-     * 搜索用户 
+     * 搜索用户
      * @return array 搜索状态及用户列表数据
      */
     public function search()
