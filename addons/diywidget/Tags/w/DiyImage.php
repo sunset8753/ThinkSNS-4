@@ -43,7 +43,7 @@ class DiyImage extends TagsAbstract
         $time = str_replace(array(' ', '.'), '', microtime());
         $var['image'] = $this->attr['image_list'];
         $var['effect'] = $this->attr['effect']; //动画可选 'none','scrollx', 'scrolly', 'fade'
-        $var['autoPlay'] = $this->attr['autoPlay'];//是否自动播放
+        $var['autoPlay'] = $this->attr['autoPlay']; //是否自动播放
         $var['autoPlayInterval'] = $this->attr['autoPlayInterval']; //自动播放间隔时间
         $var['width'] = $this->attr['width'];
         $var['height'] = $this->attr['height'];
