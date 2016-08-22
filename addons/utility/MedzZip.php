@@ -33,18 +33,18 @@ class MedzZip
         $filenameLength = strlen($filename);
 
         $header = pack('V', LOCAL_FILE_HEADER);            // local file header signature
-        $header   .= "\x14\x00";                               // version needed to extract
-        $header   .= "\x00\x00";                            // general purpose bit flag  
-        $header   .= "\x08\x00";                               // compression method, deflated used here
-        $header   .= pack('vv', $modTime, $modDate);        // last mod file time, last mod file date
-        $header   .= pack('V', $crcValue);                   // crc-32
-        $header   .= pack('V', $compressedSize);               // compressed size
-        $header   .= pack('V', $unCompressedSize);           // uncompressed size
-        $header   .= pack('v', $filenameLength);               // file name length
-        $header   .= pack('v', 0);                           // extra field length
-        $header   .= $filename;                              // filename
-        $header   .= $compressedData;                          // file data
-        $header   .= $this->_getDataDescriptor($crcValue, $compressedSize, $unCompressedSize); // Data descriptor
+        $header .= "\x14\x00";                               // version needed to extract
+        $header .= "\x00\x00";                            // general purpose bit flag
+        $header .= "\x08\x00";                               // compression method, deflated used here
+        $header .= pack('vv', $modTime, $modDate);        // last mod file time, last mod file date
+        $header .= pack('V', $crcValue);                   // crc-32
+        $header .= pack('V', $compressedSize);               // compressed size
+        $header .= pack('V', $unCompressedSize);           // uncompressed size
+        $header .= pack('v', $filenameLength);               // file name length
+        $header .= pack('v', 0);                           // extra field length
+        $header .= $filename;                              // filename
+        $header .= $compressedData;                          // file data
+        $header .= $this->_getDataDescriptor($crcValue, $compressedSize, $unCompressedSize); // Data descriptor
         $this->fileHeaderAndData[] = $header;
         //central directory
         $this->centralDirectory[] = $this->_getCentralDirectory($modTime, $modDate, $crcValue, $compressedSize, $unCompressedSize, $filenameLength, strlen($header), $filename);
@@ -172,10 +172,10 @@ class MedzZip
             return $data;
         }
         switch ($compressMethod) {
-            case 8 : // compressed by deflate
+            case 8: // compressed by deflate
                 $data = gzinflate($data);
                 break;
-            default :
+            default:
                 return false;
                 break;
         }
