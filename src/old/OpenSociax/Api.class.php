@@ -35,15 +35,15 @@ class Api
         $GLOBALS['ts']['mid'] = $this->mid;
 
         //默认参数处理
-        $this->since_id = isset($_REQUEST['since_id'])    ? intval($_REQUEST['since_id']) : '';
-        $this->max_id = isset($_REQUEST['max_id'])      ? intval($_REQUEST['max_id'])   : '';
-        $this->page = isset($_REQUEST['page'])        ? intval($_REQUEST['page'])     : 1;
-        $this->count = isset($_REQUEST['count'])       ? intval($_REQUEST['count'])    : 20;
-        $this->user_id = isset($_REQUEST['user_id'])     ? intval($_REQUEST['user_id'])  : 0;
-        $this->user_name = isset($_REQUEST['user_name'])   ? h($_REQUEST['user_name'])     : '';
-        $this->uid = isset($_REQUEST['uid'])         ? intval($_REQUEST['uid'])      : 0;
-        $this->uname = isset($_REQUEST['uname'])       ? h($_REQUEST['uname'])         : '';
-        $this->id = isset($_REQUEST['id'])          ? intval($_REQUEST['id'])       : 0;
+        $this->since_id = isset($_REQUEST['since_id']) ? intval($_REQUEST['since_id']) : '';
+        $this->max_id = isset($_REQUEST['max_id']) ? intval($_REQUEST['max_id']) : '';
+        $this->page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
+        $this->count = isset($_REQUEST['count']) ? intval($_REQUEST['count']) : 20;
+        $this->user_id = isset($_REQUEST['user_id']) ? intval($_REQUEST['user_id']) : 0;
+        $this->user_name = isset($_REQUEST['user_name']) ? h($_REQUEST['user_name']) : '';
+        $this->uid = isset($_REQUEST['uid']) ? intval($_REQUEST['uid']) : 0;
+        $this->uname = isset($_REQUEST['uname']) ? h($_REQUEST['uname']) : '';
+        $this->id = isset($_REQUEST['id']) ? intval($_REQUEST['id']) : 0;
         $this->data = $_REQUEST;
 
         // findPage
@@ -186,15 +186,15 @@ class Api
         if (is_object($data)) {
             $data = get_object_vars($data);
         }
-        $this->since_id = $data['since_id']   ? intval($data['since_id']) : '';
-        $this->max_id = $data['max_id']     ? intval($data['max_id'])   : '';
-        $this->page = $data['page']       ? intval($data['page'])     : 1;
-        $this->count = $data['count']      ? intval($data['count'])    : 20;
-        $this->user_id = $data['user_id']    ? intval($data['user_id'])   : $this->mid;
-        $this->user_name = $data['user_name']  ? h($data['user_name'])      : '';
-        $this->uid = $_REQUEST['uid']        ? intval($_REQUEST['uid'])  : 0;
-        $this->uname = $_REQUEST['uname']      ? h($_REQUEST['uname'])     : '';
-        $this->id = $data['id']         ? intval($data['id'])        : 0;
+        $this->since_id = $data['since_id'] ? intval($data['since_id']) : '';
+        $this->max_id = $data['max_id'] ? intval($data['max_id']) : '';
+        $this->page = $data['page'] ? intval($data['page']) : 1;
+        $this->count = $data['count'] ? intval($data['count']) : 20;
+        $this->user_id = $data['user_id'] ? intval($data['user_id']) : $this->mid;
+        $this->user_name = $data['user_name'] ? h($data['user_name']) : '';
+        $this->uid = $_REQUEST['uid'] ? intval($_REQUEST['uid']) : 0;
+        $this->uname = $_REQUEST['uname'] ? h($_REQUEST['uname']) : '';
+        $this->id = $data['id'] ? intval($data['id']) : 0;
         $this->data = $data;
 
         return $this;

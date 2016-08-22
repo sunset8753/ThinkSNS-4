@@ -111,14 +111,14 @@ abstract class Hooks
         // 提示标题
         $this->assign('msgTitle', $status ? L('_OPERATION_SUCCESS_') : L('_OPERATION_FAIL_'));
         $this->assign('status', $status);   // 状态
-        $this->assign('message', $message);// 提示信息
+        $this->assign('message', $message); // 提示信息
         //保证输出不受静态缓存影响
         C('HTML_CACHE_ON', false);
         if ($status) { //发送成功信息
             // 成功操作后默认停留1秒
             $this->assign('waitSecond', '1');
-            // 默认操作成功自动返回操作前页面            
-            //if(!$this->get('jumpUrl')) 
+            // 默认操作成功自动返回操作前页面
+            //if(!$this->get('jumpUrl'))
                 $this->assign('jumpUrl', $_SERVER['HTTP_REFERER']);
 
             echo $this->fetch(THEME_PATH.'/success.html');
@@ -126,7 +126,7 @@ abstract class Hooks
             //发生错误时候默认停留3秒
             $this->assign('waitSecond', '5');
             // 默认发生错误的话自动返回上页
-            //if(!$this->get('jumpUrl'))  
+            //if(!$this->get('jumpUrl'))
                 $this->assign('jumpUrl', 'javascript:history.back(-1);');
 
             echo $this->fetch(THEME_PATH.'/success.html');

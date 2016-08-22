@@ -268,7 +268,7 @@ class Db extends Think
         // 记录操作结束时间
         if ($this->debug) {
             $runtime = number_format(microtime(true) - $this->beginTime, 6);
-            Log::record(' RunTime:'.$runtime.'s SQL = '.$this->queryStr, Log::SQL, true);//强行记录SQL知识
+            Log::record(' RunTime:'.$runtime.'s SQL = '.$this->queryStr, Log::SQL, true); //强行记录SQL知识
         }
     }
 
@@ -393,7 +393,7 @@ class Db extends Think
                 $whereStr .= '( ';
                 if (0 === strpos($key, '_')) {
                     // 解析特殊条件表达式
-                    $whereStr   .= $this->parseThinkWhere($key, $val);
+                    $whereStr .= $this->parseThinkWhere($key, $val);
                 } else {
                     $key = $this->addSpecialChar($key);
                     if (is_array($val)) {
@@ -407,7 +407,7 @@ class Db extends Think
                                 $whereStr .= $key.' '.strtoupper($val[0]).' ('.$zone.')';
                             } elseif (preg_match('/BETWEEN/i', $val[0])) { // BETWEEN运算
                                 $data = is_string($val[1]) ? explode(',', $val[1]) : $val[1];
-                                $whereStr .=  ' ('.$key.' BETWEEN '.$data[0].' AND '.$data[1].' )';
+                                $whereStr .= ' ('.$key.' BETWEEN '.$data[0].' AND '.$data[1].' )';
                             } else {
                                 throw_exception(L('_EXPRESS_ERROR_').':'.$val[0]);
                             }
@@ -419,7 +419,7 @@ class Db extends Think
                             } else {
                                 $rule = 'AND';
                             }
-                            for ($i = 0;$i < $count;$i++) {
+                            for ($i = 0; $i < $count; $i++) {
                                 $data = is_array($val[$i]) ? $val[$i][1] : $val[$i];
                                 if ('exp' == strtolower($val[$i][0])) {
                                     $whereStr .= '('.$key.' '.$data.') '.$rule.' ';
@@ -495,7 +495,7 @@ class Db extends Think
      */
     protected function parseLimit($limit)
     {
-        return !empty($limit) ?   ' LIMIT '.$limit.' ' : '';
+        return !empty($limit) ? ' LIMIT '.$limit.' ' : '';
     }
 
     /**
@@ -544,7 +544,7 @@ class Db extends Think
             $order = implode(',', $array);
         }
 
-        return !empty($order) ?  ' ORDER BY '.$order : '';
+        return !empty($order) ? ' ORDER BY '.$order : '';
     }
 
     /**
@@ -566,7 +566,7 @@ class Db extends Think
      */
     protected function parseHaving($having)
     {
-        return  !empty($having) ?   ' HAVING '.$having : '';
+        return  !empty($having) ? ' HAVING '.$having : '';
     }
 
     /**
@@ -577,7 +577,7 @@ class Db extends Think
      */
     protected function parseDistinct($distinct)
     {
-        return !empty($distinct) ?   ' DISTINCT ' : '';
+        return !empty($distinct) ? ' DISTINCT ' : '';
     }
 
     /**
@@ -597,7 +597,7 @@ class Db extends Think
             }
         }
         $sql = 'INSERT INTO '.$this->parseTable($options['table']).' ('.implode(',', $fields).') VALUES ('.implode(',', $values).')';
-        $sql   .= $this->parseLock(isset($options['lock']) ? $options['lock'] : false);
+        $sql .= $this->parseLock(isset($options['lock']) ? $options['lock'] : false);
 
         return $this->execute($sql);
     }
@@ -617,7 +617,7 @@ class Db extends Think
         }
         array_walk($fields, array($this, 'addSpecialChar'));
         $sql = 'INSERT INTO '.$this->parseTable($table).' ('.implode(',', $fields).') ';
-        $sql  .= str_replace(
+        $sql .= str_replace(
             array('%TABLE%', '%DISTINCT%', '%FIELDS%', '%JOIN%', '%WHERE%', '%GROUP%', '%HAVING%', '%ORDER%', '%LIMIT%'),
             array(
                 $this->parseTable($options['table']),
@@ -630,7 +630,7 @@ class Db extends Think
                 $this->parseOrder(isset($options['order']) ? $options['order'] : ''),
                 $this->parseLimit(isset($options['limit']) ? $options['limit'] : ''),
             ), $this->selectSql);
-        $sql   .= $this->parseLock(isset($options['lock']) ? $options['lock'] : false);
+        $sql .= $this->parseLock(isset($options['lock']) ? $options['lock'] : false);
 
         return $this->execute($sql);
     }
@@ -701,7 +701,7 @@ class Db extends Think
                 $this->parseOrder(isset($options['order']) ? $options['order'] : ''),
                 $this->parseLimit(isset($options['limit']) ? $options['limit'] : ''),
             ), $this->selectSql);
-        $sql   .= $this->parseLock(isset($options['lock']) ? $options['lock'] : false);
+        $sql .= $this->parseLock(isset($options['lock']) ? $options['lock'] : false);
 
         return $this->query($sql);
     }
@@ -716,7 +716,7 @@ class Db extends Think
     protected function addSpecialChar(&$value)
     {
         $value = trim($value);
-        if (false !== strpos($value, ' ') || false !== strpos($value, ',') || false !== strpos($value, '*') ||  false !== strpos($value, '(') || false !== strpos($value, '.') || false !== strpos($value, '`')) {
+        if (false !== strpos($value, ' ') || false !== strpos($value, ',') || false !== strpos($value, '*') || false !== strpos($value, '(') || false !== strpos($value, '.') || false !== strpos($value, '`')) {
             //如果包含* 或者 使用了sql方法 则不作处理
         } else {
             $value = '`'.$value.'`';

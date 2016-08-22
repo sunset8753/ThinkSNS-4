@@ -143,22 +143,22 @@ class App
             /* # 是否不是wap，强制访问pc SESSION记录 */
             $_SESSION['wap_to_normal'] != 1 and
             /* # 是否不是wap，强制访问pc SCOOKIE记录 */
-            cookie('wap_to_normal')    != 1 and
+            cookie('wap_to_normal') != 1 and
             /* # 是否请求参数带强制访问 */
             $_REQUEST['wap_to_normal'] != 1 and
             /* # 默认iPad不跳转，目前iPad显示PC页面不宽 */
-            !isiPad()                       and
+            !isiPad() and
             /* # 是否开启了移动端开关 */
             json_decode(json_encode(model('Xdata')->get('admin_Mobile:setting')), false)->switch and
-            in_array(APP_NAME, array('public', 'channel', 'weiba', 'square', 'people'))          and
-            MODULE_NAME != 'Widget'                                                              and
-            !in_array(strtolower(MODULE_NAME), array('message', 'register', 'feed'))             and
-            strtolower(ACTION_NAME) != 'message'                                                 and
+            in_array(APP_NAME, array('public', 'channel', 'weiba', 'square', 'people')) and
+            MODULE_NAME != 'Widget' and
+            !in_array(strtolower(MODULE_NAME), array('message', 'register', 'feed')) and
+            strtolower(ACTION_NAME) != 'message' and
             isMobile()
         ) {
             if (\Medz\Component\Filesystem\Filesystem::exists(TS_APPLICATION.'/h5') === true) {
                 Jumper::start();
-            } elseif (\Medz\Component\Filesystem\Filesystem::exists(TS_APPLICATION.'/w3g') === true)  {
+            } elseif (\Medz\Component\Filesystem\Filesystem::exists(TS_APPLICATION.'/w3g') === true) {
                 U('w3g/Public/home', '', true);
             }
         }
@@ -320,4 +320,4 @@ class App
             break;
       }
     }
-};//类定义结束
+}; //类定义结束

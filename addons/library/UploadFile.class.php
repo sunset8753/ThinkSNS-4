@@ -410,8 +410,8 @@ class UploadFile
             default:
                 $name = md5($file['savename']);
                 $dir = '';
-                for ($i = 0;$i < $this->hashLevel;$i++) {
-                    $dir   .=  $name{0}
+                for ($i = 0; $i < $this->hashLevel; $i++) {
+                    $dir .= $name{0}
                     .'/';
                 }
                 break;
