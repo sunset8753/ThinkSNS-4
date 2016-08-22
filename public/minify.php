@@ -2,8 +2,8 @@
 //已弃用该文件，如果启用，请删除下面这行代码exit;
 exit;
 
-/* 
-    load: css, js 静态文件 
+/*
+    load: css, js 静态文件
     启用 gz压缩、缓存处理、过期处理、文件合并等优化操作
 */
 if (extension_loaded('zlib')) {

@@ -636,8 +636,8 @@ if (isset($_GET['IMG'])) {
             imagearc($im, $centerX, $centerY, $diameter, $diameter, $start, $end, $color2);
             imageline($im, $centerX, $centerY, $centerX + cos(deg2rad($start)) * $r, $centerY + sin(deg2rad($start)) * $r, $color2);
             imageline($im, $centerX, $centerY, $centerX + cos(deg2rad($start + 1)) * $r, $centerY + sin(deg2rad($start)) * $r, $color2);
-            imageline($im, $centerX, $centerY, $centerX + cos(deg2rad($end - 1))   * $r, $centerY + sin(deg2rad($end))   * $r, $color2);
-            imageline($im, $centerX, $centerY, $centerX + cos(deg2rad($end))   * $r, $centerY + sin(deg2rad($end))   * $r, $color2);
+            imageline($im, $centerX, $centerY, $centerX + cos(deg2rad($end - 1)) * $r, $centerY + sin(deg2rad($end)) * $r, $color2);
+            imageline($im, $centerX, $centerY, $centerX + cos(deg2rad($end)) * $r, $centerY + sin(deg2rad($end)) * $r, $color2);
             imagefill($im, $centerX + $r * cos($w) / 2, $centerY + $r * sin($w) / 2, $color2);
         }
         if ($text) {
@@ -837,7 +837,7 @@ EOB;
                     "<tr class=tr-$m>",
                     '<td class=td-0><center>','<a href="',$dumpUrl,'">',$slabId,'</a>','</center></td>',
                     '<td class=td-last><b>Item count:</b> ',$slab['number'],'<br/><b>Age:</b>',duration($time - $slab['age']),'<br/> <b>Evicted:</b>',((isset($slab['evicted']) && $slab['evicted'] == 1) ? 'Yes' : 'No');
-                if ((isset($_GET['dumpslab']) && $_GET['dumpslab'] == $slabId) &&  (isset($_GET['server']) && $_GET['server'] == array_search($server, $MEMCACHE_SERVERS))) {
+                if ((isset($_GET['dumpslab']) && $_GET['dumpslab'] == $slabId) && (isset($_GET['server']) && $_GET['server'] == array_search($server, $MEMCACHE_SERVERS))) {
                     echo '<br/><b>Items: item</b><br/>';
                     $items = dumpCacheSlab($server, $slabId, $slab['number']);
                         // maybe someone likes to do a pagination here :)

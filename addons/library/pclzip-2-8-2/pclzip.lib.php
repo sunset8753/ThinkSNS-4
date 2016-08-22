@@ -68,7 +68,7 @@
 
   // ----- Optional threshold ratio for use of temporary files
   //       Pclzip sense the size of the file to add/extract and decide to
-  //       use or not temporary file. The algorythm is looking for 
+  //       use or not temporary file. The algorythm is looking for
   //       memory_limit of PHP and apply a ratio.
   //       threshold = memory_limit * ratio.
   //       Recommended values are under 0.5. Default 0.47.
@@ -978,7 +978,7 @@
   // Options :
   //   PCLZIP_OPT_BY_INDEX :
   //   PCLZIP_OPT_BY_NAME :
-  //   PCLZIP_OPT_BY_EREG : 
+  //   PCLZIP_OPT_BY_EREG :
   //   PCLZIP_OPT_BY_PREG :
   // Return Values :
   //   0 on failure,
@@ -1407,9 +1407,9 @@
       // ----- Look for next option
       switch ($p_options_list[$i]) {
         // ----- Look for options that request a path value
-        case PCLZIP_OPT_PATH :
-        case PCLZIP_OPT_REMOVE_PATH :
-        case PCLZIP_OPT_ADD_PATH :
+        case PCLZIP_OPT_PATH:
+        case PCLZIP_OPT_REMOVE_PATH:
+        case PCLZIP_OPT_ADD_PATH:
           // ----- Check the number of parameters
           if (($i + 1) >= $p_size) {
               // ----- Error log
@@ -1424,7 +1424,7 @@
           $i++;
         break;
 
-        case PCLZIP_OPT_TEMP_FILE_THRESHOLD :
+        case PCLZIP_OPT_TEMP_FILE_THRESHOLD:
           // ----- Check the number of parameters
           if (($i + 1) >= $p_size) {
               PclZip::privErrorLog(PCLZIP_ERR_MISSING_OPTION_VALUE, "Missing parameter value for option '".PclZipUtilOptionText($p_options_list[$i])."'");
@@ -1452,7 +1452,7 @@
           $i++;
         break;
 
-        case PCLZIP_OPT_TEMP_FILE_ON :
+        case PCLZIP_OPT_TEMP_FILE_ON:
           // ----- Check for incompatible options
           if (isset($v_result_list[PCLZIP_OPT_TEMP_FILE_OFF])) {
               PclZip::privErrorLog(PCLZIP_ERR_INVALID_PARAMETER, "Option '".PclZipUtilOptionText($p_options_list[$i])."' can not be used with option 'PCLZIP_OPT_TEMP_FILE_OFF'");
@@ -1463,7 +1463,7 @@
           $v_result_list[$p_options_list[$i]] = true;
         break;
 
-        case PCLZIP_OPT_TEMP_FILE_OFF :
+        case PCLZIP_OPT_TEMP_FILE_OFF:
           // ----- Check for incompatible options
           if (isset($v_result_list[PCLZIP_OPT_TEMP_FILE_ON])) {
               PclZip::privErrorLog(PCLZIP_ERR_INVALID_PARAMETER, "Option '".PclZipUtilOptionText($p_options_list[$i])."' can not be used with option 'PCLZIP_OPT_TEMP_FILE_ON'");
@@ -1480,7 +1480,7 @@
           $v_result_list[$p_options_list[$i]] = true;
         break;
 
-        case PCLZIP_OPT_EXTRACT_DIR_RESTRICTION :
+        case PCLZIP_OPT_EXTRACT_DIR_RESTRICTION:
           // ----- Check the number of parameters
           if (($i + 1) >= $p_size) {
               // ----- Error log
@@ -1500,7 +1500,7 @@
         break;
 
         // ----- Look for options that request an array of string for value
-        case PCLZIP_OPT_BY_NAME :
+        case PCLZIP_OPT_BY_NAME:
           // ----- Check the number of parameters
           if (($i + 1) >= $p_size) {
               // ----- Error log
@@ -1526,11 +1526,11 @@
         break;
 
         // ----- Look for options that request an EREG or PREG expression
-        case PCLZIP_OPT_BY_EREG :
+        case PCLZIP_OPT_BY_EREG:
           // ereg() is deprecated starting with PHP 5.3. Move PCLZIP_OPT_BY_EREG
           // to PCLZIP_OPT_BY_PREG
           $p_options_list[$i] = PCLZIP_OPT_BY_PREG;
-        case PCLZIP_OPT_BY_PREG :
+        case PCLZIP_OPT_BY_PREG:
         //case PCLZIP_OPT_CRYPT :
           // ----- Check the number of parameters
           if (($i + 1) >= $p_size) {
@@ -1555,9 +1555,9 @@
         break;
 
         // ----- Look for options that takes a string
-        case PCLZIP_OPT_COMMENT :
-        case PCLZIP_OPT_ADD_COMMENT :
-        case PCLZIP_OPT_PREPEND_COMMENT :
+        case PCLZIP_OPT_COMMENT:
+        case PCLZIP_OPT_ADD_COMMENT:
+        case PCLZIP_OPT_PREPEND_COMMENT:
           // ----- Check the number of parameters
           if (($i + 1) >= $p_size) {
               // ----- Error log
@@ -1587,7 +1587,7 @@
         break;
 
         // ----- Look for options that request an array of index
-        case PCLZIP_OPT_BY_INDEX :
+        case PCLZIP_OPT_BY_INDEX:
           // ----- Check the number of parameters
           if (($i + 1) >= $p_size) {
               // ----- Error log
@@ -1673,17 +1673,17 @@
         break;
 
         // ----- Look for options that request no value
-        case PCLZIP_OPT_REMOVE_ALL_PATH :
-        case PCLZIP_OPT_EXTRACT_AS_STRING :
-        case PCLZIP_OPT_NO_COMPRESSION :
-        case PCLZIP_OPT_EXTRACT_IN_OUTPUT :
-        case PCLZIP_OPT_REPLACE_NEWER :
-        case PCLZIP_OPT_STOP_ON_ERROR :
+        case PCLZIP_OPT_REMOVE_ALL_PATH:
+        case PCLZIP_OPT_EXTRACT_AS_STRING:
+        case PCLZIP_OPT_NO_COMPRESSION:
+        case PCLZIP_OPT_EXTRACT_IN_OUTPUT:
+        case PCLZIP_OPT_REPLACE_NEWER:
+        case PCLZIP_OPT_STOP_ON_ERROR:
           $v_result_list[$p_options_list[$i]] = true;
         break;
 
         // ----- Look for options that request an octal value
-        case PCLZIP_OPT_SET_CHMOD :
+        case PCLZIP_OPT_SET_CHMOD:
           // ----- Check the number of parameters
           if (($i + 1) >= $p_size) {
               // ----- Error log
@@ -1699,10 +1699,10 @@
         break;
 
         // ----- Look for options that request a call-back
-        case PCLZIP_CB_PRE_EXTRACT :
-        case PCLZIP_CB_POST_EXTRACT :
-        case PCLZIP_CB_PRE_ADD :
-        case PCLZIP_CB_POST_ADD :
+        case PCLZIP_CB_PRE_EXTRACT:
+        case PCLZIP_CB_POST_EXTRACT:
+        case PCLZIP_CB_PRE_ADD:
+        case PCLZIP_CB_POST_ADD:
         /* for futur use
         case PCLZIP_CB_PRE_DELETE :
         case PCLZIP_CB_POST_DELETE :
@@ -1735,7 +1735,7 @@
           $i++;
         break;
 
-        default :
+        default:
           // ----- Error log
           PclZip::privErrorLog(PCLZIP_ERR_INVALID_PARAMETER,
                                "Unknown parameter '"
@@ -1845,7 +1845,7 @@
 
       // ----- Look for attribute
       switch ($v_key) {
-        case PCLZIP_ATT_FILE_NAME :
+        case PCLZIP_ATT_FILE_NAME:
           if (!is_string($v_value)) {
               PclZip::privErrorLog(PCLZIP_ERR_INVALID_ATTRIBUTE_VALUE, 'Invalid type '.gettype($v_value).". String expected for attribute '".PclZipUtilOptionText($v_key)."'");
 
@@ -1862,7 +1862,7 @@
 
         break;
 
-        case PCLZIP_ATT_FILE_NEW_SHORT_NAME :
+        case PCLZIP_ATT_FILE_NEW_SHORT_NAME:
           if (!is_string($v_value)) {
               PclZip::privErrorLog(PCLZIP_ERR_INVALID_ATTRIBUTE_VALUE, 'Invalid type '.gettype($v_value).". String expected for attribute '".PclZipUtilOptionText($v_key)."'");
 
@@ -1878,7 +1878,7 @@
           }
         break;
 
-        case PCLZIP_ATT_FILE_NEW_FULL_NAME :
+        case PCLZIP_ATT_FILE_NEW_FULL_NAME:
           if (!is_string($v_value)) {
               PclZip::privErrorLog(PCLZIP_ERR_INVALID_ATTRIBUTE_VALUE, 'Invalid type '.gettype($v_value).". String expected for attribute '".PclZipUtilOptionText($v_key)."'");
 
@@ -1895,7 +1895,7 @@
         break;
 
         // ----- Look for options that takes a string
-        case PCLZIP_ATT_FILE_COMMENT :
+        case PCLZIP_ATT_FILE_COMMENT:
           if (!is_string($v_value)) {
               PclZip::privErrorLog(PCLZIP_ERR_INVALID_ATTRIBUTE_VALUE, 'Invalid type '.gettype($v_value).". String expected for attribute '".PclZipUtilOptionText($v_key)."'");
 
@@ -1905,7 +1905,7 @@
           $p_filedescr['comment'] = $v_value;
         break;
 
-        case PCLZIP_ATT_FILE_MTIME :
+        case PCLZIP_ATT_FILE_MTIME:
           if (!is_integer($v_value)) {
               PclZip::privErrorLog(PCLZIP_ERR_INVALID_ATTRIBUTE_VALUE, 'Invalid type '.gettype($v_value).". Integer expected for attribute '".PclZipUtilOptionText($v_key)."'");
 
@@ -1915,11 +1915,11 @@
           $p_filedescr['mtime'] = $v_value;
         break;
 
-        case PCLZIP_ATT_FILE_CONTENT :
+        case PCLZIP_ATT_FILE_CONTENT:
           $p_filedescr['content'] = $v_value;
         break;
 
-        default :
+        default:
           // ----- Error log
           PclZip::privErrorLog(PCLZIP_ERR_INVALID_PARAMETER,
                                    "Unknown parameter '".$v_key."'");
@@ -1958,7 +1958,7 @@
   //   or a string to be added as file. For any other type of files (link, other)
   //   just ignore the item.
   //   Then prepare the information that will be stored for that file.
-  //   When its a folder, expand the folder with all the files that are in that 
+  //   When its a folder, expand the folder with all the files that are in that
   //   folder (recursively).
   // Parameters :
   // Return Values :
@@ -2405,7 +2405,7 @@
   // Function : privAddFileList()
   // Description :
   // Parameters :
-  //   $p_filedescr_list : An array containing the file description 
+  //   $p_filedescr_list : An array containing the file description
   //                      or directory names to add in the zip
   //   $p_result_list : list of added files with their properties (specially the status field)
   // Return Values :
@@ -2488,7 +2488,7 @@
       return PclZip::errorCode();
     }
 
-    // ----- Look for a stored different filename 
+    // ----- Look for a stored different filename
     /* TBC : Removed
     if (isset($p_filedescr['stored_filename'])) {
       $v_stored_filename = $p_filedescr['stored_filename'];
@@ -3315,7 +3315,7 @@
 
       // ----- Look for extract by ereg rule
       // ereg() is deprecated with PHP 5.3
-      /* 
+      /*
       else if (   (isset($p_options[PCLZIP_OPT_BY_EREG]))
                && ($p_options[PCLZIP_OPT_BY_EREG] != "")) {
 
@@ -4462,8 +4462,8 @@
 
         // -----  Add the byte
         //$v_bytes = ($v_bytes << 8) | Ord($v_byte);
-        // Note we mask the old value down such that once shifted we can never end up with more than a 32bit number 
-        // Otherwise on systems where we have 64bit integers the check below for the magic number will fail. 
+        // Note we mask the old value down such that once shifted we can never end up with more than a 32bit number
+        // Otherwise on systems where we have 64bit integers the check below for the magic number will fail.
         $v_bytes = (($v_bytes & 0xFFFFFF) << 8) | Ord($v_byte);
 
         // ----- Compare the bytes
