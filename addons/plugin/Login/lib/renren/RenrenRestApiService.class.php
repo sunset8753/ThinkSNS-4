@@ -104,7 +104,7 @@
         $str = '';
         foreach ($arr as $k => $v) {
             $v = $this->convertEncoding($v, $this->_encode, 'utf-8');
-            $arr[$k] = $v;//转码，你懂得
+            $arr[$k] = $v; //转码，你懂得
                 $str .= $k.'='.$v;
         }
 

@@ -67,10 +67,10 @@
      * Execute calls
      * @param $url String
      * @param $method String
-     * @param $postFields String 
+     * @param $postFields String
      * @param $username String
      * @param $password String
-     * @param $contentType String 
+     * @param $contentType String
      * @return RESTClient
      */
     public function call($url, $method, $postFields = null, $username = null, $password = null, $contentType = null)
@@ -234,7 +234,7 @@
      /**
       * POST wrapper for insert data
       * @param $url String
-      * @param $params mixed 
+      * @param $params mixed
       * @param $username String
       * @param $password String
       * @param $contentType String
@@ -282,7 +282,7 @@
      /**
       * PUT wrapper for update data
       * @param $url String
-      * @param $params mixed 
+      * @param $params mixed
       * @param $username String
       * @param $password String
       * @param $contentType String
@@ -349,9 +349,9 @@
 
          switch ($ext) {
                 case 'json':
-                    $resp = json_decode($resp);break;
+                    $resp = json_decode($resp); break;
                 case 'xml':
-                    $resp = self::xml_decode($resp);break;
+                    $resp = self::xml_decode($resp); break;
         }
 
          return $resp;

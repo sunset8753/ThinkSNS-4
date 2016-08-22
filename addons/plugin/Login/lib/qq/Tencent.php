@@ -215,7 +215,7 @@ class Http
 {
     /**
      * 发起一个HTTP/HTTPS的请求
-     * @param $url 接口的URL 
+     * @param $url 接口的URL
      * @param $params 接口参数   array('content'=>'test', 'format'=>'json');
      * @param $method 请求类型    GET|POST
      * @param $multi 图片信息

@@ -57,7 +57,7 @@ class Google_REST
       if ($code != '200' && $code != '201' && $code != '204') {
           $decoded = json_decode($body, true);
           $err = 'Error calling '.$response->getRequestMethod().' '.$response->getUrl();
-          if ($decoded != null && isset($decoded['error']['message'])  && isset($decoded['error']['code'])) {
+          if ($decoded != null && isset($decoded['error']['message']) && isset($decoded['error']['code'])) {
               // if we're getting a json encoded error definition, use that instead of the raw response
         // body for improved readability
         $err .= ": ({$decoded['error']['code']}) {$decoded['error']['message']}";

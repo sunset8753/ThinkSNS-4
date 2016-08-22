@@ -185,7 +185,7 @@ class Google_OAuth2 extends Google_Auth
     if ($this->developerKey) {
         $requestUrl = $request->getUrl();
         $requestUrl .= (strpos($request->getUrl(), '?') === false) ? '?' : '&';
-        $requestUrl .=  'key='.urlencode($this->developerKey);
+        $requestUrl .= 'key='.urlencode($this->developerKey);
         $request->setUrl($requestUrl);
     }
     // Cannot sign the request without an OAuth access token.
