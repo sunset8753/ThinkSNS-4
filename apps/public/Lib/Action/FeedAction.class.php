@@ -330,7 +330,7 @@ class FeedAction extends Action
         $return = model('Feed')->doEditFeed($feed_id, 'delFeed', '', $this->mid);
         // 执行应用信息相关删除
         switch ($feed ['type']) {
-            case 'photo_post' :
+            case 'photo_post':
                 $photoList = D('photo')->where('feed_id='.$feed_id)->findAll();
                 foreach ($photoList as $photoInfo) {
                     $photoId = $photoInfo ['id'];
@@ -339,19 +339,19 @@ class FeedAction extends Action
                     }
                 }
                 break;
-            case 'vote_post' :
+            case 'vote_post':
                 $voteInfo = D('vote')->where('feed_id='.$feed_id)->find();
                 $voteId = $voteInfo ['id'];
                 if (D('Vote', 'vote')->doDeleteVote($voteId)) {
                     model('Credit')->setUserCredit($voteInfo ['uid'], 'delete_vote');
                 }
                 break;
-            case 'event_post' :
+            case 'event_post':
                 $eventInfo = D('event')->where('feed_id='.$feed_id)->find();
                 $eventId = $eventInfo ['id'];
                 D('Event', 'event')->doDeleteEvent($eventId);
                 break;
-            case 'blog_post' :
+            case 'blog_post':
                 $blogInfo = D('blog')->where('feed_id='.$feed_id)->find();
                 $blogId = $blogInfo ['id'];
                 $bmap ['id'] = $blogId;
@@ -359,7 +359,7 @@ class FeedAction extends Action
                     model('Credit')->setUserCredit($blogInfo ['uid'], 'delete_blog');
                 }
                 break;
-            case 'weiba_post' :
+            case 'weiba_post':
                 $postInfo = D('weiba_post')->where('feed_id='.$feed_id)->find();
                 $postId = $postInfo ['post_id'];
                 $weibaId = $postInfo ['weiba_id'];

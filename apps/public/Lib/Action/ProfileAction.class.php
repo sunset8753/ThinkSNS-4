@@ -427,10 +427,10 @@ class ProfileAction extends Action
                 $feedInfo ['from'] = getFromClient(6, $feedInfo ['app'], '3G版');
             } else {
                 switch ($feedInfo ['app']) {
-                    case 'weiba' :
+                    case 'weiba':
                         $feedInfo ['from'] = getFromClient(0, $feedInfo ['app'], '微吧');
                         break;
-                    default :
+                    default:
                         $feedInfo ['from'] = getFromClient($feedInfo ['from'], $feedInfo ['app']);
                         break;
                 }

@@ -1,7 +1,7 @@
 <?php
 /**
- * MentionAction 提到我的                              
- * @author jason <yangjs17@yeah.net> 
+ * MentionAction 提到我的
+ * @author jason <yangjs17@yeah.net>
  * @version TS3.0
  */
 class MentionAction extends Action

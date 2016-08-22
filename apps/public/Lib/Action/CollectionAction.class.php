@@ -1,7 +1,7 @@
 <?php
 /**
  * 收藏控制器
- * @author jason <yangjs17@yeah.net> 
+ * @author jason <yangjs17@yeah.net>
  * @version TS3.0
  */
 class CollectionAction extends Action

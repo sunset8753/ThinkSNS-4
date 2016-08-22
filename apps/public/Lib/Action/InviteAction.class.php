@@ -1,7 +1,7 @@
 <?php
 /**
  * 邀请控制器
- * @author jason <yangjs17@yeah.net> 
+ * @author jason <yangjs17@yeah.net>
  * @version TS3.0
  */
 class InviteAction extends Action

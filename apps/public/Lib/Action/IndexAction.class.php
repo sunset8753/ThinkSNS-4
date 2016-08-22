@@ -1,7 +1,7 @@
 <?php
 /**
  * 首页控制器
- * @author jason <yangjs17@yeah.net> 
+ * @author jason <yangjs17@yeah.net>
  * @version TS3.0
  */
 class IndexAction extends Action
@@ -105,31 +105,31 @@ class IndexAction extends Action
         $this->assign('title', $title);
         // 设置标题与关键字信息
         switch ($d ['type']) {
-            case 'all' :
+            case 'all':
                 $this->setTitle('朋友圈');
                 $this->setKeywords('朋友圈');
                 break;
-            case 'recommend' :
+            case 'recommend':
                 $this->setTitle('朋友圈-推荐动态');
                 $this->setKeywords('朋友圈-推荐动态');
                 break;
-            case 'following' :
+            case 'following':
                 $this->setTitle('朋友圈-我关注的动态');
                 $this->setKeywords('朋友圈-我关注的动态');
                 break;
-            case 'weiba' :
+            case 'weiba':
                 $this->setTitle('朋友圈-我关注的微吧');
                 $this->setKeywords('朋友圈-我关注的微吧');
                 break;
-            case 'channel' :
+            case 'channel':
                 $this->setTitle('朋友圈-我关注的频道');
                 $this->setKeywords('朋友圈-我关注的频道');
                 break;
-            case 'newall' :
+            case 'newall':
                 $this->setTitle('朋友圈-最新动态');
                 $this->setKeywords('朋友圈-最新动态');
                 break;
-            default :
+            default:
                 $this->setTitle(L('PUBLIC_INDEX_INDEX'));
                 $this->setKeywords(L('PUBLIC_INDEX_INDEX'));
         }
@@ -205,16 +205,16 @@ class IndexAction extends Action
         if ($key === '') {
             // 获取用户ID
             switch ($gid) {
-                case 0 :
+                case 0:
                     $followGroupList = model('Follow')->getFollowingsList($this->mid);
                     break;
-                case - 1 :
+                case - 1:
                     $followGroupList = model('Follow')->getFriendsList($this->mid);
                     break;
-                case - 2 :
+                case - 2:
                     $followGroupList = model('FollowGroup')->getDefaultGroupByPage($this->mid);
                     break;
-                default :
+                default:
                     $followGroupList = model('FollowGroup')->getUsersByGroupPage($this->mid, $gid);
             }
         } else {
@@ -553,7 +553,7 @@ class IndexAction extends Action
         $_POST['type'] = $type;
         switch ($type) {
             //@我的
-            case 'at' :
+            case 'at':
                 // 获取未读@Me的条数
                 $this->assign('unread_atme_count', model('UserData')->where('uid='.$this->mid." and `key`='unread_atme'")->getField('value'));
                 // 拼装查询条件
@@ -828,7 +828,7 @@ class IndexAction extends Action
         $limit = 10;
         $html = '';
         switch ($type) {
-            case 'msg' :
+            case 'msg':
                 $map ['uid'] = $this->mid;
                 $notifyList = D('notify_message')->where($map)->order('ctime DESC')->findPage($limit);
                 foreach ($notifyList ['data'] as $item) {
@@ -845,7 +845,7 @@ class IndexAction extends Action
                 }
                 model('Notify')->setRead($this->mid);
                 break;
-            case 'at' :
+            case 'at':
 
                 // $map['uid'] = $this->mid;
                 // $atList = model('Atme')->where($map)->order('atme_id DESC')->findPage($limit);
@@ -856,7 +856,7 @@ class IndexAction extends Action
                     foreach ($atList ['data'] as $item) {
                         $item ['row_id'] = $item ['old_row_id'];
                         switch (strtolower($item ['table'])) {
-                            case 'feed' :
+                            case 'feed':
                                 $data = model('Feed')->getFeedInfo($item ['row_id']);
                                 $space = '<a href="'.U('public/Profile/index', array(
                                         'uid' => $data ['uid'],
@@ -870,7 +870,7 @@ class IndexAction extends Action
                                 }
                                 $html .= '<li source-id="'.$item ['atme_id'].'">'.$space.'在分享中@我：'.$content.'</li>';
                                 break;
-                            case 'comment' :
+                            case 'comment':
                                 $data = model('Comment')->getCommentInfo($item ['row_id']);
                                 $space = '<a href="'.U('public/Profile/index', array(
                                         'uid' => $data ['uid'],
@@ -892,7 +892,7 @@ class IndexAction extends Action
                 }
                 model('UserCount')->resetUserCount($this->mid, 'unread_atme', 0);
                 break;
-            case 'com' :
+            case 'com':
 
                 // 收到的
                 // $map['_string'] = " (to_uid = '{$this->mid}' OR app_uid = '{$this->mid}') AND is_del = 0 AND uid !=".$this->mid;
@@ -938,7 +938,7 @@ class IndexAction extends Action
                 }
                 model('UserCount')->resetUserCount($this->mid, 'unread_comment', 0);
                 break;
-            case 'pmsg' :
+            case 'pmsg':
                 $messageList = model('Message')->getMessageListByUid($this->mid, array(
                         MessageModel::ONE_ON_ONE_CHAT,
                         MessageModel::MULTIPLAYER_CHAT,
@@ -986,14 +986,14 @@ class IndexAction extends Action
                 $map ['atme_id'] = $id;
                 $source = model('Atme')->where($map)->find();
                 switch (strtolower($source ['table'])) {
-                    case 'feed' :
+                    case 'feed':
                         $ownFeed = model('Feed')->get($source ['row_id']);
                         $share ['row_id'] = $ownFeed ['feed_id'];
                         $share ['app'] = $ownFeed ['app'];
                         $share ['table'] = 'feed';
                         $share ['to_uid'] = $ownFeed ['uid'];
                         break;
-                    case 'comment' :
+                    case 'comment':
                         $ownComment = model('Comment')->getCommentInfo($source ['row_id']);
                         $share ['row_id'] = $ownComment ['row_id'];
                         $share ['app'] = $ownComment ['app'];
@@ -1112,8 +1112,8 @@ class IndexAction extends Action
         $count = 0;
 
         switch ($type) {
-            case 'at' :
-            case 'com' :
+            case 'at':
+            case 'com':
                 $feed = model('Feed')->getFeedInfo($id);
 
                 $cmap ['app'] = $feed ['app'];
@@ -1180,7 +1180,7 @@ class IndexAction extends Action
                     }
                 }
                 break;
-            case 'pmsg' :
+            case 'pmsg':
                 $list = model('Message')->getMessageByListId($id, $this->mid, $sinceId, $maxId, 10);
                 if (! empty($list ['data'])) {
                     $status = 1;
