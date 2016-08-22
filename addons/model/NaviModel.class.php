@@ -1,7 +1,7 @@
 <?php
 /**
  * 导航模型 - 数据对象模型
- * @author jason <renjianchao@zhishisoft.com> 
+ * @author jason <renjianchao@zhishisoft.com>
  * @version TS3.0
  */
 class NaviModel extends Model
@@ -11,7 +11,7 @@ class NaviModel extends Model
 
     /**
      * 获取头部导航
-     * @return array 头部导航 
+     * @return array 头部导航
      */
     public function getTopNav()
     {

@@ -27,7 +27,7 @@ class InviteModel extends Model
         if (empty($uid) || empty($num) || empty($type)) {
             return false;
         }
-        
+
         // 邀请码数组
         $inviteCodes = array();
         $insertDatas = array();
@@ -50,8 +50,10 @@ class InviteModel extends Model
 
         if (count($insertDatas)) {
             Capsule::table('invite_code')->insert($insertDatas);
+
             return $inviteCodes;
         }
+
         return false;
     }
 

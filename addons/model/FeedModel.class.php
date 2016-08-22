@@ -881,7 +881,7 @@ class FeedModel extends Model
             $video_config = model('Xdata')->get('admin_Content:video_config');
             $video_server = $video_config['video_server'] ? $video_config['video_server'] : SITE_URL;
 
-            $var['flashimg'] = $video_server.$var['image_path'];//'__THEME__/image/video.png';
+            $var['flashimg'] = $video_server.$var['image_path']; //'__THEME__/image/video.png';
             $var['flashvar'] = $video_server.$var['video_path'];
             $var['flashvar_part'] = $video_server.$var['video_part_path'];
             $var['flash_width'] = $var['image_width'] ? $var['image_width'] : 430;
@@ -1181,7 +1181,7 @@ class FeedModel extends Model
                 $where .= " AND c.feed_data LIKE '%".t($key)."%'";
                 $feedlist = $this->table($table)->where($where)->field('a.feed_id')->order('a.publish_time DESC')->findPage($limit);
                 break;
-            case 'union' :
+            case 'union':
                 $buid = $GLOBALS ['ts'] ['uid'];
                 $table = "{$this->tablePrefix}feed AS a 
 				LEFT JOIN {$this->tablePrefix}feed_data AS c ON a.feed_id = c.feed_id";
@@ -1557,7 +1557,7 @@ class FeedModel extends Model
      * 分享到分享
      * @param string content 内容
      * @param int uid 分享者uid
-     * @param mixed attach_ids 附件ID  
+     * @param mixed attach_ids 附件ID
      * @return int feed_id 分享ID
      */
     public function shareToFeed($content, $uid, $attach_ids, $from)

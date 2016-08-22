@@ -639,7 +639,7 @@ class PassportModel
     /**
      * UC注销登录
      * @param  int    $uid
-     * @return string 退出登录的返回信息 
+     * @return string 退出登录的返回信息
      */
     private function ucLogout($uid)
     {

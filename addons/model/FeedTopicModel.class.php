@@ -163,7 +163,7 @@ class FeedTopicModel extends Model
         // $info = $this->where($map)->find();
         // if ($info['topic_id']) {
         // 	return $info['topic_id'];
-        // } 
+        // }
         // if( $add ){
         // 	$map['count'] = 0;
         // 	$map['ctime'] = time();
