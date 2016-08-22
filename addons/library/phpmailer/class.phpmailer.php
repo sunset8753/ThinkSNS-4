@@ -972,7 +972,7 @@ class PHPMailer
 
       $line = explode($this->LE, $message);
       $message = '';
-      for ($i = 0 ;$i < count($line); $i++) {
+      for ($i = 0 ; $i < count($line); $i++) {
           $line_part = explode(' ', $line[$i]);
           $buf = '';
           for ($e = 0; $e < count($line_part); $e++) {
@@ -2278,7 +2278,7 @@ class PHPMailer
   {
       $tmp = '';
       $line = '';
-      for ($i = 0;$i < strlen($txt);$i++) {
+      for ($i = 0; $i < strlen($txt); $i++) {
           $ord = ord($txt[$i]);
           if (((0x21 <= $ord) && ($ord <= 0x3A)) || $ord == 0x3C || ((0x3E <= $ord) && ($ord <= 0x7E))) {
               $line .= $txt[$i];
