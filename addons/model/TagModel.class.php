@@ -1,7 +1,7 @@
 <?php
 /**
  * 标签模型 - 数据对象模型
- * @author jason <yangjs17@yeah.net> 
+ * @author jason <yangjs17@yeah.net>
  * @version TS3.0
  */
 class TagModel extends Model
@@ -314,7 +314,7 @@ class TagModel extends Model
     }
 
     /**
-     * 获取热门标签 
+     * 获取热门标签
      * @param  int   $limit  结果集数目，默认为15
      * @param  int   $expire 缓存时间，默认为3600
      * @return array 热门标签列表

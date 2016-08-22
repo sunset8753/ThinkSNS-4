@@ -36,7 +36,7 @@ class SmsModel extends Model
     protected $resultCode;
 
     /**
-     * 发送方式 
+     * 发送方式
      * type [auto,post,get] auto标识get+post并存
      *
      * @var string
@@ -327,7 +327,7 @@ class SmsModel extends Model
     /**
      * undocumented function
      *
-     * @author 
+     * @author
      **/
     protected function buildParam()
     {
@@ -342,10 +342,10 @@ class SmsModel extends Model
 
             $url = '';
             $this->url['scheme'] and $url .= $this->url['scheme'].'://';
-            $this->url['host']   and $url .= $this->url['host'];
-            $this->url['port']   and $url .= ':'.$this->url['port'];
-            $this->url['path']   and $url .= $this->url['path'];
-            $this->url['query']  and $url .= '?'.$this->url['query'];
+            $this->url['host'] and $url .= $this->url['host'];
+            $this->url['port'] and $url .= ':'.$this->url['port'];
+            $this->url['path'] and $url .= $this->url['path'];
+            $this->url['query'] and $url .= '?'.$this->url['query'];
             $this->url = $url;
             unset($url);
         }
