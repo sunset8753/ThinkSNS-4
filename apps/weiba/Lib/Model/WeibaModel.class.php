@@ -1,7 +1,7 @@
 <?php
 /**
  * 微吧模型 - 数据对象模型
- * @author jason <yangjs17@yeah.net> 
+ * @author jason <yangjs17@yeah.net>
  * @version TS3.0
  */
 class WeibaModel extends Model
@@ -96,7 +96,7 @@ class WeibaModel extends Model
     }
     /**
      * 获取微吧列表，后台可以根据条件查询
-     * 
+     *
      * @param  int   $limit
      *                      结果集数目，默认为20
      * @param  array $map
@@ -151,7 +151,7 @@ class WeibaModel extends Model
 
     /**
      * 获取微吧的Hash数组
-     * 
+     *
      * @param  string $k
      *                   Hash数组的Key值字段
      * @param  string $v
@@ -171,7 +171,7 @@ class WeibaModel extends Model
 
     /**
      * 获取帖子列表，后台可以根据条件查询
-     * 
+     *
      * @param  int   $limit
      *                      结果集数目，默认为20
      * @param  array $map
@@ -233,7 +233,7 @@ class WeibaModel extends Model
 
     /**
      * 根据微吧ID获取微吧信息
-     * 
+     *
      * @param  int   $weiba_id
      *                         微吧ID
      * @return array 微吧信息
@@ -250,7 +250,7 @@ class WeibaModel extends Model
 
     /**
      * 关注微吧
-     * 
+     *
      * @param
      *        	integer uid 用户UID
      * @param
@@ -284,7 +284,7 @@ class WeibaModel extends Model
 
     /**
      * 取消关注微吧
-     * 
+     *
      * @param
      *        	integer uid 用户UID
      * @param
@@ -319,7 +319,7 @@ class WeibaModel extends Model
 
     /**
      * 判断是否关注某个微吧
-     * 
+     *
      * @param
      *        	integer uid 用户UID
      * @param
@@ -341,7 +341,7 @@ class WeibaModel extends Model
 
     /**
      * 批量获取微吧关注状态
-     * 
+     *
      * @param
      *        	integer uid 用户UID
      * @param
@@ -363,7 +363,7 @@ class WeibaModel extends Model
 
     /**
      * 格式化，用户的关注数据
-     * 
+     *
      * @param  int   $uid
      *                            用户ID
      * @param  array $fids
@@ -391,7 +391,7 @@ class WeibaModel extends Model
 
     /**
      * 获取微吧列表
-     * 
+     *
      * @param
      *        	integer limit 每页显示条数
      * @param
@@ -428,11 +428,11 @@ class WeibaModel extends Model
                 $whoCanPost = $v ['who_can_post'];
                 CheckPermission('core_admin', 'admin_login') && $whoCanPost = 0;
                 switch ($whoCanPost) {
-                    case 0 :
+                    case 0:
                         $postStatus ['status'] = 1;
                         $postStatus ['msg'] = '具有此贴吧的发帖权限';
                         break;
-                    case 1 :
+                    case 1:
                         if ($v ['followstate'] == 1) {
                             $postStatus ['status'] = 1;
                             $postStatus ['msg'] = '具有此贴吧的发帖权限';
@@ -441,7 +441,7 @@ class WeibaModel extends Model
                             $postStatus ['msg'] = '该贴吧关注后才能发帖';
                         }
                         break;
-                    case 2 :
+                    case 2:
                         $map ['weiba_id'] = $weiba_id;
                         $map ['level'] = array(
                                 'in',
@@ -456,7 +456,7 @@ class WeibaModel extends Model
                             $postStatus ['msg'] = '该贴吧只有圈主能发帖';
                         }
                         break;
-                    case 3 :
+                    case 3:
                         $weiba_super_admin = D('weiba_follow')->where('level=3 and weiba_id='.$v ['weiba_id'])->getField('follower_uid');
                         if ($this->mid == $weiba_super_admin) {
                             $postStatus ['status'] = 1;
@@ -476,7 +476,7 @@ class WeibaModel extends Model
 
     /**
      * 获取帖子列表
-     * 
+     *
      * @param
      *        	integer limit 每页显示条数
      * @param
@@ -510,7 +510,7 @@ class WeibaModel extends Model
 
     /**
      * 获取我的帖子
-     * 
+     *
      * @param
      *        	integer limit 每页显示条数
      * @param
@@ -529,11 +529,11 @@ class WeibaModel extends Model
         $start = ($page - 1) * $limit;
         $end = $limit;
         switch ($type) {
-            case 'myPost' :
+            case 'myPost':
                 $map ['post_uid'] = $uid;
                 $postList = D('weiba_post')->where($map)->limit("{$start},{$end}")->order('post_time desc')->findAll();
                 break;
-            case 'myReply' :
+            case 'myReply':
                 $myreply = D('weiba_reply')->where('uid='.$uid)->order('ctime desc')->field('post_id')->findAll();
                 $map ['post_id'] = array(
                         'in',
@@ -541,7 +541,7 @@ class WeibaModel extends Model
                 );
                 $postList = D('weiba_post')->where($map)->limit("{$start},{$end}")->order('last_reply_time desc')->findAll();
                 break;
-            case 'myFollow' :
+            case 'myFollow':
                 $myFollow = D('weiba_follow')->where('follower_uid='.$uid)->findAll();
                 $map ['weiba_id'] = array(
                         'in',
@@ -549,7 +549,7 @@ class WeibaModel extends Model
                 );
                 $postList = D('weiba_post')->where($map)->limit("{$start},{$end}")->order('top desc,post_time desc')->findAll();
                 break;
-            case 'myFavorite' :
+            case 'myFavorite':
                 $myFavorite = D('weiba_favorite')->where('uid='.$uid)->order('id desc')->findAll();
                 $map ['post_id'] = array(
                         'in',
@@ -571,7 +571,7 @@ class WeibaModel extends Model
 
     /**
      * 搜索微吧
-     * 
+     *
      * @param
      *        	varchar keyword 搜索关键字
      * @param
@@ -620,7 +620,7 @@ class WeibaModel extends Model
 
     /**
      * 搜索帖子
-     * 
+     *
      * @param
      *        	varchar keyword 搜索关键字
      * @param

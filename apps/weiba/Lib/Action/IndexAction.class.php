@@ -1,7 +1,7 @@
 <?php
 /**
  * 微吧控制器
- * @author 
+ * @author
  * @version TS3.0
  */
 class IndexAction extends Action
@@ -464,7 +464,7 @@ class IndexAction extends Action
     {
         $res = D('weiba')->doFollowWeiba($this->mid, intval($_REQUEST['weiba_id']));
         //清理插件缓存
-        $key = '_getRelatedGroup_'.$this->mid.'_'.date('Ymd');//达人
+        $key = '_getRelatedGroup_'.$this->mid.'_'.date('Ymd'); //达人
         S($key, null);
         $this->ajaxReturn($res, D('weiba')->getError(), false !== $res);
     }
@@ -542,7 +542,7 @@ class IndexAction extends Action
                 $map['weiba_id'] = $weibaid;
                 $map['level'] = 3;
                 $weiba_admin = D('weiba_follow')->where($map)->order('level desc')->field('follower_uid,level')->find();
-                if ($this->mid != $weiba_admin['follower_uid']  && !CheckPermission('core_admin', 'admin_login')) {
+                if ($this->mid != $weiba_admin['follower_uid'] && !CheckPermission('core_admin', 'admin_login')) {
                     echo 3;
                 }
                 break;
@@ -620,7 +620,7 @@ class IndexAction extends Action
                     $map['weiba_id'] = $weibaid;
                     $map['level'] = 3;
                     $weiba_admin = D('weiba_follow')->where($map)->order('level desc')->field('follower_uid')->find();
-                    if ($this->mid != $weiba_admin['follower_uid']  && !CheckPermission('core_admin', 'admin_login')) {
+                    if ($this->mid != $weiba_admin['follower_uid'] && !CheckPermission('core_admin', 'admin_login')) {
                         $this->error('对不起，您没有发帖权限，仅限该吧吧主发帖！', $type);
                     }
                     break;
@@ -2084,7 +2084,7 @@ class IndexAction extends Action
             $data['city'] = $_POST['city'];
             $data['area'] = $_POST['area'];
         }
-        $data['status'] = 0;//创建添加审核
+        $data['status'] = 0; //创建添加审核
         $data['who_can_post'] = intval($_POST['who_can_post']);
         if (true) {
             $data['admin_uid'] = $this->mid;

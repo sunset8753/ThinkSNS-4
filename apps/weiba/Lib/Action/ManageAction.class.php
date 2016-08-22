@@ -1,7 +1,7 @@
 <?php
 /**
  * 前台微吧管理控制器
- * @author 
+ * @author
  * @version TS3.0
  */
 class ManageAction extends Action

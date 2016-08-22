@@ -87,8 +87,8 @@ class Image
                     imagestring($im, 3, 5, 5, $text, $tc);
                 }
                 if ($info['type'] == 'png' || $info['type'] == 'gif') {
-                    imagealphablending($im, false);//取消默认的混色模式
-                imagesavealpha($im, true);//设定保存完整的 alpha 通道信息
+                    imagealphablending($im, false); //取消默认的混色模式
+                imagesavealpha($im, true); //设定保存完整的 alpha 通道信息
                 }
                 header('Content-type: '.$info['mime']);
                 $ImageFun($im);
@@ -148,8 +148,8 @@ class Image
 
             // 新建PNG缩略图通道透明处理
             if ('png' == $type) {
-                imagealphablending($thumbImg, false);//取消默认的混色模式
-                imagesavealpha($thumbImg, true);//设定保存完整的 alpha 通道信息
+                imagealphablending($thumbImg, false); //取消默认的混色模式
+                imagesavealpha($thumbImg, true); //设定保存完整的 alpha 通道信息
             } elseif ('gif' == $type) {
                 // 新建GIF缩略图预处理，保证透明效果不失效
                 $background_color = imagecolorallocate($thumbImg,  0, 255, 0);  //  指派一个绿色
@@ -197,7 +197,7 @@ class Image
         return false;
     }
     /**
-     
+
      +----------------------------------------------------------
      * 生成缩略图
      +----------------------------------------------------------
@@ -253,8 +253,8 @@ class Image
 
             // 新建PNG缩略图通道透明处理
             if ('png' == $type) {
-                imagealphablending($thumbImg, false);//取消默认的混色模式
-                imagesavealpha($thumbImg, true);//设定保存完整的 alpha 通道信息
+                imagealphablending($thumbImg, false); //取消默认的混色模式
+                imagesavealpha($thumbImg, true); //设定保存完整的 alpha 通道信息
             } elseif ('gif' == $type) {
                 // 新建GIF缩略图预处理，保证透明效果不失效
                 $background_color = imagecolorallocate($thumbImg,  0, 255, 0);  //  指派一个绿色
@@ -345,11 +345,11 @@ class Image
         if (!empty($disturb)) {
             // 添加干扰
             if ($disturb = 1 || $disturb = 3) {
-                for ($i = 0;$i < 25;$i++) {
+                for ($i = 0; $i < 25; $i++) {
                     imagesetpixel($im, mt_rand(0, $width), mt_rand(0, $height), $pointColor);
                 }
             } elseif ($disturb = 2 || $disturb = 3) {
-                for ($i = 0;$i < 10;$i++) {
+                for ($i = 0; $i < 10; $i++) {
                     imagearc($im, mt_rand(-10, $width), mt_rand(-10, $height), mt_rand(30, 300), mt_rand(20, 200), 55, 44, $pointColor);
                 }
             }
@@ -398,15 +398,15 @@ class Image
         @imagerectangle($im, 0, 0, $width - 1, $height - 1, $borderColor);
         $stringColor = imagecolorallocate($im, mt_rand(0, 200), mt_rand(0, 120), mt_rand(0, 120));
         // 干扰
-        for ($i = 0;$i < 10;$i++) {
+        for ($i = 0; $i < 10; $i++) {
             $fontcolor = imagecolorallocate($im, mt_rand(0, 255), mt_rand(0, 255), mt_rand(0, 255));
             imagearc($im, mt_rand(-10, $width), mt_rand(-10, $height), mt_rand(30, 300), mt_rand(20, 200), 55, 44, $fontcolor);
         }
-        for ($i = 0;$i < 25;$i++) {
+        for ($i = 0; $i < 25; $i++) {
             $fontcolor = imagecolorallocate($im, mt_rand(0, 255), mt_rand(0, 255), mt_rand(0, 255));
             imagesetpixel($im, mt_rand(0, $width), mt_rand(0, $height), $pointColor);
         }
-        for ($i = 0;$i < $length;$i++) {
+        for ($i = 0; $i < $length; $i++) {
             imagestring($im, 5, $i * 10 + 5, mt_rand(1, 8), $randval{$i}, $stringColor);
         }
 //        @imagestring($im, 5, 5, 3, $randval, $stringColor);
@@ -426,18 +426,18 @@ class Image
         imagefill($im, 0, 0, $bkcolor);
         @imagerectangle($im, 0, 0, $width - 1, $height - 1, $borderColor);
         // 干扰
-        for ($i = 0;$i < 15;$i++) {
+        for ($i = 0; $i < 15; $i++) {
             $fontcolor = imagecolorallocate($im, mt_rand(0, 255), mt_rand(0, 255), mt_rand(0, 255));
             imagearc($im, mt_rand(-10, $width), mt_rand(-10, $height), mt_rand(30, 300), mt_rand(20, 200), 55, 44, $fontcolor);
         }
-        for ($i = 0;$i < 255;$i++) {
+        for ($i = 0; $i < 255; $i++) {
             $fontcolor = imagecolorallocate($im, mt_rand(0, 255), mt_rand(0, 255), mt_rand(0, 255));
             imagesetpixel($im, mt_rand(0, $width), mt_rand(0, $height), $fontcolor);
         }
         if (!is_file($fontface)) {
             $fontface = dirname(__FILE__).'/'.$fontface;
         }
-        for ($i = 0;$i < $length;$i++) {
+        for ($i = 0; $i < $length; $i++) {
             $fontcolor = imagecolorallocate($im, mt_rand(0, 120), mt_rand(0, 120), mt_rand(0, 120)); //这样保证随机出来的颜色较深。
             $codex = String::msubstr($code, $i, 1);
             imagettftext($im, mt_rand(16, 20), mt_rand(-60, 60), 40 * $i + 20, mt_rand(30, 35), $fontcolor, $fontface, $codex);
@@ -481,7 +481,7 @@ class Image
                 }
                 $out .= "<br>\n";
             }
-            $out .=  '</span>';
+            $out .= '</span>';
             imagedestroy($im);
 
             return $out;
@@ -567,7 +567,7 @@ class Image
         $ncode = '0'.$code;
         $even = 0;
         $odd = 0;
-        for ($x = 0;$x < 12;$x++) {
+        for ($x = 0; $x < 12; $x++) {
             if ($x % 2) {
                 $odd += $ncode[$x];
             } else {
@@ -578,11 +578,11 @@ class Image
         /* Create the bar encoding using a binary string */
         $bars = $ends;
         $bars .= $Lencode[$code[0]];
-        for ($x = 1;$x < 6;$x++) {
+        for ($x = 1; $x < 6; $x++) {
             $bars .= $Lencode[$code[$x]];
         }
         $bars .= $center;
-        for ($x = 6;$x < 12;$x++) {
+        for ($x = 6; $x < 12; $x++) {
             $bars .= $Rencode[$code[$x]];
         }
         $bars .= $ends;
@@ -596,7 +596,7 @@ class Image
         $bg = ImageColorAllocate($im, 255, 255, 255);
         ImageFilledRectangle($im, 0, 0, $lw * 95 + 30, $hi + 30, $bg);
         $shift = 10;
-        for ($x = 0;$x < strlen($bars);$x++) {
+        for ($x = 0; $x < strlen($bars); $x++) {
             if (($x < 10) || ($x >= 45 && $x < 50) || ($x >= 85)) {
                 $sh = 10;
             } else {
@@ -611,7 +611,7 @@ class Image
         }
         /* Add the Human Readable Label */
         ImageString($im, 4, 5, $hi - 5, $code[0], $fg);
-        for ($x = 0;$x < 5;$x++) {
+        for ($x = 0; $x < 5; $x++) {
             ImageString($im, 5, $lw * (13 + $x * 6) + 15, $hi + 5, $code[$x + 1], $fg);
             ImageString($im, 5, $lw * (53 + $x * 6) + 15, $hi + 5, $code[$x + 6], $fg);
         }
@@ -658,12 +658,12 @@ if (!function_exists('ImageCreateFrombmp')) {
 
         $img = imagecreatetruecolor($info_header['biWidth'], $info_header['biHeight']);
         switch ($info_header['biBitCountLbiCompression']) {
-        case 4 :
+        case 4:
             $colorset = unpack('L*', substr($buf, 54, 64));
-            for ($y = 0;$y < $info_header['biHeight'];$y++) {
+            for ($y = 0; $y < $info_header['biHeight']; $y++) {
                 $colors = array();
                 $y_pos = $y * $line_len + $file_header['bfOffBits'];
-                for ($x = 0;$x < $info_header['biWidth'];$x++) {
+                for ($x = 0; $x < $info_header['biWidth']; $x++) {
                     if ($x % 2) {
                         $colors[] = $colorset[(ord($buf[$y_pos + ($x + 1) / 2]) & 0xf) + 1];
                     } else {
@@ -676,10 +676,10 @@ if (!function_exists('ImageCreateFrombmp')) {
             break;
         case 8:
             $colorset = unpack('L*', substr($buf, 54, 1024));
-            for ($y = 0;$y < $info_header['biHeight'];$y++) {
+            for ($y = 0; $y < $info_header['biHeight']; $y++) {
                 $colors = array();
                 $y_pos = $y * $line_len + $file_header['bfOffBits'];
-                for ($x = 0;$x < $info_header['biWidth'];$x++) {
+                for ($x = 0; $x < $info_header['biWidth']; $x++) {
                     $colors[] = $colorset[ord($buf[$y_pos + $x]) + 1];
                 }
                 imagesetstyle($img, $colors);
@@ -687,10 +687,10 @@ if (!function_exists('ImageCreateFrombmp')) {
             }
             break;
         case 16:
-            for ($y = 0;$y < $info_header['biHeight'];$y++) {
+            for ($y = 0; $y < $info_header['biHeight']; $y++) {
                 $colors = array();
                 $y_pos = $y * $line_len + $file_header['bfOffBits'];
-                for ($x = 0;$x < $info_header['biWidth'];$x++) {
+                for ($x = 0; $x < $info_header['biWidth']; $x++) {
                     $i = $x * 2;
                     $color = ord($buf[$y_pos + $i]) | (ord($buf[$y_pos + $i + 1]) << 8);
                     $colors[] = imagecolorallocate($img, (($color >> 10) & 0x1f) * 0xff / 0x1f, (($color >> 5) & 0x1f) * 0xff / 0x1f, ($color & 0x1f) * 0xff / 0x1f);
@@ -700,10 +700,10 @@ if (!function_exists('ImageCreateFrombmp')) {
             }
             break;
         case 24:
-            for ($y = 0;$y < $info_header['biHeight'];$y++) {
+            for ($y = 0; $y < $info_header['biHeight']; $y++) {
                 $colors = array();
                 $y_pos = $y * $line_len + $file_header['bfOffBits'];
-                for ($x = 0;$x < $info_header['biWidth'];$x++) {
+                for ($x = 0; $x < $info_header['biWidth']; $x++) {
                     $i = $x * 3;
                     $colors[] = imagecolorallocate($img, ord($buf[$y_pos + $i + 2]), ord($buf[$y_pos + $i + 1]), ord($buf[$y_pos + $i]));
                 }

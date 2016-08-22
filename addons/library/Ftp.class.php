@@ -25,7 +25,7 @@ class Ftp
 
     /**
      初始化类
-     
+
      **/
     public function start($data)
     {

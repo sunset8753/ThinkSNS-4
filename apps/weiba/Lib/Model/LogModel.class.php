@@ -1,10 +1,10 @@
 <?php
 /**
  * 微吧管理知识模型 - 数据对象模型
- * @author jason <yangjs17@yeah.net> 
+ * @author jason <yangjs17@yeah.net>
  * @version TS3.0
  */
-class LogModel    extends    Model
+class LogModel extends Model
 {
     protected $tableName = 'weiba_log';
     protected $error = '';

@@ -21,24 +21,24 @@ namespace Config;
  * 用于配置key/value存储，支持File、Memcache、Redis
  * 生产环境建议用Redis存储，即配置Store::$driver=self::DRIVER_REDIS;
  * 默认是File存储，存储在本地磁盘上
- * 
+ *
  * 作用：此存储用于存储Gateway进程的内部通讯地址，以及每个客户端client_id
  *            对应的Gateway地址。
  *            当Gateway启动后每个gateway进程会将自己的内部通讯地址放到这个存储里面
  *            当BusinessWorker进程启动后，会从这个存储中读取所有Gateway通讯地址，
  *            并与其通过socket相连，这样Gateway与BusinessWorker便可以通讯了
- * 
+ *
  * 如果有多个GatewayWorker应用时，每个应用的这个配置都应该不同，
  * 否则会导致多个应用间数据互通
  * 如果有多个GatewayWorker应用时，配置细节如下
  *     当Store::$driver=self::DRIVER_FILE时，每个应用的Store::$storePath应该不同
  *     当Store::$driver=self::DRIVER_MC/DRIVER_REDIS时，每个应用的
  *     Store::$gateway的ip或者端口应该不同
- *     
+ *
  * 注意：当使用Redis存储时，Redis服务端redis-server的timeout配置成0
  *           redis扩展git地址https://github.com/phpredis/phpredis
  *           redis扩展安装方法 pecl install redis
- *           
+ *
  * @author walkor
  */
 class Store

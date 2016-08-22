@@ -144,7 +144,6 @@ if (!function_exists('dump')) {
     }
 }
 
-
 // 设置cookie
 if (!function_exists('cookie')) {
     function cookie($name, $value = '', $option = null)
@@ -191,11 +190,11 @@ if (!function_exists('cookie')) {
 
         if ('' === $value) {
             //return isset($_COOKIE[$name]) ? unserialize($_COOKIE[$name]) : null;// 获取指定Cookie
-            return isset($_COOKIE[$name]) ? ($_COOKIE[$name]) : null;// 获取指定Cookie
+            return isset($_COOKIE[$name]) ? ($_COOKIE[$name]) : null; // 获取指定Cookie
         } else {
             if (is_null($value)) {
                 setcookie($name, '', time() - 3600, $config['path'], $config['domain']);
-                unset($_COOKIE[$name]);// 删除指定cookie
+                unset($_COOKIE[$name]); // 删除指定cookie
             } else {
                 // 设置cookie
                 $expire = !empty($config['expire']) ? time() + intval($config['expire']) : 0;
@@ -231,7 +230,6 @@ $isGuest = ($uid == -1 || $uid == 0) ? 1 : 0;
 $isIntranet = (substr($ip, 0, 2) == '10.') ? 1 : 0;
 $cTime = time();
 $ext = '';
-
 
 //记录在线统计.
 if ($_GET['action'] == 'trace') {
