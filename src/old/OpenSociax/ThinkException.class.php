@@ -88,11 +88,11 @@ class ThinkException extends Exception
         $error['message'] = $this->message;
         $error['type'] = $this->type;
         $error['detail'] = L('_MODULE_').'['.MODULE_NAME.'] '.L('_ACTION_').'['.ACTION_NAME.']'."\n";
-        $error['detail']   .=   ($this->line - 2).': '.$file[$this->line - 3];
-        $error['detail']   .=   ($this->line - 1).': '.$file[$this->line - 2];
-        $error['detail']   .=   '<font color="#FF6600" >'.($this->line).': <b>'.$file[$this->line - 1].'</b></font>';
-        $error['detail']   .=   ($this->line + 1).': '.$file[$this->line];
-        $error['detail']   .=   ($this->line + 2).': '.$file[$this->line + 1];
+        $error['detail'] .= ($this->line - 2).': '.$file[$this->line - 3];
+        $error['detail'] .= ($this->line - 1).': '.$file[$this->line - 2];
+        $error['detail'] .= '<font color="#FF6600" >'.($this->line).': <b>'.$file[$this->line - 1].'</b></font>';
+        $error['detail'] .= ($this->line + 1).': '.$file[$this->line];
+        $error['detail'] .= ($this->line + 2).': '.$file[$this->line + 1];
         $error['class'] = $this->class;
         $error['function'] = $this->function;
         $error['file'] = $this->file;
