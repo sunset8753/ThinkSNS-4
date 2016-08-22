@@ -53,8 +53,8 @@ function ts_add_ucenter_user_ref($uid, $uc_uid, $uc_username = '', $uc_email = '
 //更新ThinkSNS与UCenter的用户映射
 function ts_update_ucenter_user_ref($uid, $uc_uid, $uc_username = '')
 {
-    $uid         &&    $map['uid'] = intval($uid);
-    $uc_uid     && $map['uc_uid'] = intval($uc_uid);
+    $uid && $map['uid'] = intval($uid);
+    $uc_uid && $map['uc_uid'] = intval($uc_uid);
     if (empty($uc_username)) {
         return;
     }
@@ -303,7 +303,7 @@ class uc_note
             $user = M('user')->where("uid={$uc_user_ref['uid']}")->find();
             if ($user) {
                 echo $user['uid'];
-                /*cookie('LOGGED_USER',jiami('thinksns.'.$user['uid']),(3600*2))*/;
+                /*cookie('LOGGED_USER',jiami('thinksns.'.$user['uid']),(3600*2))*/
             }
         } else {
             $data = 'http://dev.thinksns.com/ts/2.0/public/themes/classic2';

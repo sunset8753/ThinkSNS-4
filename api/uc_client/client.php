@@ -240,7 +240,7 @@ function uc_fopen($url, $limit = 0, $post = '', $cookie = '', $bysocket = false,
         $status = stream_get_meta_data($fp);
         if (!$status['timed_out']) {
             while (!feof($fp)) {
-                if (($header = @fgets($fp)) && ($header == "\r\n" ||  $header == "\n")) {
+                if (($header = @fgets($fp)) && ($header == "\r\n" || $header == "\n")) {
                     break;
                 }
             }
@@ -758,8 +758,8 @@ function ts_add_ucenter_user_ref($uid, $uc_uid, $uc_username = '', $uc_email = '
 //更新ThinkSNS与UCenter的用户映射
 function ts_update_ucenter_user_ref($uid, $uc_uid, $uc_username = '')
 {
-    $uid         &&    $map['uid'] = intval($uid);
-    $uc_uid     && $map['uc_uid'] = intval($uc_uid);
+    $uid && $map['uid'] = intval($uid);
+    $uc_uid && $map['uc_uid'] = intval($uc_uid);
     if (empty($uc_username)) {
         return;
     }

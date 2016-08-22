@@ -144,7 +144,7 @@ class notemodel
 
         $returnsucceed = $response != '' && ($response == 1 || is_array(xml_unserialize($response)));
 
-        $closedsqladd = $this->_close_note($note, $this->apps, $returnsucceed, $appid) ? ",closed='1'" : '';//
+        $closedsqladd = $this->_close_note($note, $this->apps, $returnsucceed, $appid) ? ",closed='1'" : ''; //
 
         if ($returnsucceed) {
             if ($this->operations[$note['operation']][2]) {

@@ -126,7 +126,7 @@ class miscmodel
             $status = stream_get_meta_data($fp);
             if (!$status['timed_out']) {
                 while (!feof($fp)) {
-                    if (($header = @fgets($fp)) && ($header == "\r\n" ||  $header == "\n")) {
+                    if (($header = @fgets($fp)) && ($header == "\r\n" || $header == "\n")) {
                         break;
                     }
                 }
