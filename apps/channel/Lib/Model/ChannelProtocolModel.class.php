@@ -1,6 +1,6 @@
 <?php
 /**
-     * ChannelProtocolModel 
+     * ChannelProtocolModel
      * 提供给TS核心调用的协议类
      *
      */
