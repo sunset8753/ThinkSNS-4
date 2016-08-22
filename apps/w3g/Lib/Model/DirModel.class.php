@@ -12,13 +12,13 @@ class DirModel extends Model
         if (empty($fileInfo)) {
             return false;
         }
-        @unlink($fileInfo['fileurl']);        //删除文件	
+        @unlink($fileInfo['fileurl']);        //删除文件
         return $this->where('id='.$id)->delete();
     }
 
     //获取文件
     /**
-   * getGroupList 
+   * getGroupList
     *
    */
   public function getFileList($html = 1, $map = null, $fields = null, $order = null, $limit = null, $isDel = 0)
@@ -61,7 +61,7 @@ class DirModel extends Model
             // 积分
 //         X('Credit')->setUserCredit($v['uid'], 'group_delete_file');
           }
-      //处理附件			
+      //处理附件
       model('Attach')->doEditAttach($attachIds, 'delAttach');
 
           return true;

@@ -28,10 +28,10 @@ class CacheFile extends Cache
         if (!empty($options)) {
             $this->options = $options;
         }
-        $this->options['temp'] = !empty($options['temp']) ?   $options['temp']    :   C('DATA_CACHE_PATH');
-        $this->options['prefix'] = isset($options['prefix']) ?  $options['prefix']  :   C('DATA_CACHE_PREFIX');
-        $this->options['expire'] = isset($options['expire']) ?  $options['expire']  :   C('DATA_CACHE_TIME');
-        $this->options['length'] = isset($options['length']) ?  $options['length']  :   0;
+        $this->options['temp'] = !empty($options['temp']) ? $options['temp'] : C('DATA_CACHE_PATH');
+        $this->options['prefix'] = isset($options['prefix']) ? $options['prefix'] : C('DATA_CACHE_PREFIX');
+        $this->options['expire'] = isset($options['expire']) ? $options['expire'] : C('DATA_CACHE_TIME');
+        $this->options['length'] = isset($options['length']) ? $options['length'] : 0;
         if (substr($this->options['temp'], -1) != '/') {
             $this->options['temp'] .= '/';
         }
@@ -69,8 +69,8 @@ class CacheFile extends Cache
         if (C('DATA_CACHE_SUBDIR')) {
             // 使用子目录
             $dir = '';
-            for ($i = 0;$i < C('DATA_PATH_LEVEL');$i++) {
-                $dir    .=    $name{$i}
+            for ($i = 0; $i < C('DATA_PATH_LEVEL'); $i++) {
+                $dir .= $name{$i}
                 .'/';
             }
             if (!is_dir($this->options['temp'].$dir)) {

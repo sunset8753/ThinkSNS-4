@@ -29,9 +29,9 @@ class CacheApc extends Cache
         if (!function_exists('apc_cache_info')) {
             throw_exception(L('_NOT_SUPPERT_').':Apc');
         }
-        $this->options['prefix'] = isset($options['prefix']) ?  $options['prefix']  :   C('DATA_CACHE_PREFIX');
-        $this->options['length'] = isset($options['length']) ?  $options['length']  :   0;
-        $this->options['expire'] = isset($options['expire']) ?  $options['expire']  :   C('DATA_CACHE_TIME');
+        $this->options['prefix'] = isset($options['prefix']) ? $options['prefix'] : C('DATA_CACHE_PREFIX');
+        $this->options['length'] = isset($options['length']) ? $options['length'] : 0;
+        $this->options['expire'] = isset($options['expire']) ? $options['expire'] : C('DATA_CACHE_TIME');
     }
 
      /**

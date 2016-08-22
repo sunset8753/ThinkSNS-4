@@ -29,9 +29,9 @@ class CacheWincache extends Cache
         if (!function_exists('wincache_ucache_info')) {
             throw_exception(L('_NOT_SUPPERT_').':WinCache');
         }
-        $this->options['expire'] = isset($options['expire']) ?  $options['expire']  :   C('DATA_CACHE_TIME');
-        $this->options['prefix'] = isset($options['prefix']) ?  $options['prefix']  :   C('DATA_CACHE_PREFIX');
-        $this->options['length'] = isset($options['length']) ?  $options['length']  :   0;
+        $this->options['expire'] = isset($options['expire']) ? $options['expire'] : C('DATA_CACHE_TIME');
+        $this->options['prefix'] = isset($options['prefix']) ? $options['prefix'] : C('DATA_CACHE_PREFIX');
+        $this->options['length'] = isset($options['length']) ? $options['length'] : 0;
     }
 
     /**

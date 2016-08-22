@@ -313,8 +313,8 @@ class PeopleAction extends BaseAction
 //		$this->assign('sex', $sex);
 //		$this->assign('area', $area);
 //		$this->assign('verify', $verify);
-//		$this->assign('limit', $limit); 
-//		$this->assign('lastuid', $lastuid); 
+//		$this->assign('limit', $limit);
+//		$this->assign('lastuid', $lastuid);
 //		// 页面类型
 //		$type = isset($_GET['type']) ? t($_GET['type']) : $conf['findPeople'][0];
 //		$this->assign('type', $type);
@@ -340,7 +340,7 @@ class PeopleAction extends BaseAction
 //                if($cid){
 //                    $category = model('UserCategory')->where('user_category_id='.$cid)->find();
 //                    if($category){
-//                    $_title = $category['title'];                   	
+//                    $_title = $category['title'];
 //                    }
 //                }
 //        		break;

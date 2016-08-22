@@ -31,7 +31,7 @@ class CacheMemcache extends Cache
         }
 
         $hosts = array(); //服务器列表
-        $servers = explode(',', C('MEMCACHE_HOST'));//支持多服务器配置
+        $servers = explode(',', C('MEMCACHE_HOST')); //支持多服务器配置
         foreach ($servers as $k => $host) {
             list($host, $port) = explode(':', $host, 2);
             $hosts[] = array(
@@ -49,9 +49,9 @@ class CacheMemcache extends Cache
             );
         }
         $this->options = $options;
-        $this->options['expire'] = isset($options['expire']) ?  $options['expire']  :   C('DATA_CACHE_TIME');
-        $this->options['prefix'] = isset($options['prefix']) ?  $options['prefix']  :   C('DATA_CACHE_PREFIX');
-        $this->options['length'] = isset($options['length']) ?  $options['length']  :   0;
+        $this->options['expire'] = isset($options['expire']) ? $options['expire'] : C('DATA_CACHE_TIME');
+        $this->options['prefix'] = isset($options['prefix']) ? $options['prefix'] : C('DATA_CACHE_PREFIX');
+        $this->options['length'] = isset($options['length']) ? $options['length'] : 0;
         $func = $options['persistent'] ? 'pconnect' : 'connect';
         $this->handler = new Memcache;
         //Memcache集群支持

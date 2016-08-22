@@ -12,7 +12,7 @@
 defined('THINK_PATH') or exit();
 
 /**
- * Redis缓存驱动 
+ * Redis缓存驱动
  * 要求安装phpredis扩展：https://github.com/nicolasff/phpredis
  * @category   Extend
  * @package  Extend
@@ -40,9 +40,9 @@ class CacheRedis extends Cache
             );
         }
         $this->options = $options;
-        $this->options['expire'] = isset($options['expire']) ?  $options['expire']  :   C('DATA_CACHE_TIME');
-        $this->options['prefix'] = isset($options['prefix']) ?  $options['prefix']  :   C('DATA_CACHE_PREFIX');
-        $this->options['length'] = isset($options['length']) ?  $options['length']  :   0;
+        $this->options['expire'] = isset($options['expire']) ? $options['expire'] : C('DATA_CACHE_TIME');
+        $this->options['prefix'] = isset($options['prefix']) ? $options['prefix'] : C('DATA_CACHE_PREFIX');
+        $this->options['length'] = isset($options['length']) ? $options['length'] : 0;
         $func = $options['persistent'] ? 'pconnect' : 'connect';
         $this->handler = new Redis;
         $options['timeout'] === false ?

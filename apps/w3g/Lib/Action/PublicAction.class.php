@@ -181,7 +181,7 @@ class PublicAction extends Action
         } else {
             $str = "<meta http-equiv='Refresh' content='{$time};URL={$url}'>";
             if ($time != 0) {
-                $str   .=   $msg;
+                $str .= $msg;
             }
         }
         $this->assign('msg', $str);
@@ -265,9 +265,9 @@ class PublicAction extends Action
         $uname_correct = $service->isValidName($uname);
         $password_correct = $service->isValidPassword($_POST['password'], $_POST['repassword']);
         if (
-            ($email && (!$email_correct || !$verify_correct))    ||
-            ($phone && (!$phone_correct && !$regCode_correct))    ||
-            !$uname_correct                                    ||
+            ($email && (!$email_correct || !$verify_correct)) ||
+            ($phone && (!$phone_correct && !$regCode_correct)) ||
+            !$uname_correct ||
             !$password_correct
         ) {
             $re['flag'] = 0;
@@ -299,8 +299,8 @@ class PublicAction extends Action
         $openid = session('openid');
         empty($openid) || $map['openid'] = $openid;
 
-        $map['city']   = 0;
-        $map['area']   = 0;
+        $map['city'] = 0;
+        $map['area'] = 0;
         $map['is_del'] = 0;
 
         // 审核状态： 0-需要审核；1-通过审核

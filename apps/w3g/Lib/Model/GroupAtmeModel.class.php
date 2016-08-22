@@ -12,7 +12,7 @@ class GroupAtmeModel extends Model
     private $_app = null;                       // 所属应用
     private $_app_table = null;                 // 所属资源表
     private $_app_pk_field = null;              // 应用主键字段
-    private $_at_regex = "/@(.+?)([\s|:]|$)/is";//"/@{uid=([^}]*)}/";    // @正则规则
+    private $_at_regex = "/@(.+?)([\s|:]|$)/is"; //"/@{uid=([^}]*)}/";    // @正则规则
     private $_at_field = 'uid';                 // @的资源字段
 
     /**
@@ -212,7 +212,7 @@ class GroupAtmeModel extends Model
 //         $config['publish_time'] = date('Y-m-d H:i:s',$content['ctime']);
 //         $config['feed_url'] = U('public/Profile/feed',array('feed_id'=>$content['row_id'],'uid'=>$content['uid']));
 //         $config['name'] = $author['uname'];
-//         $config['space_url'] = $author['space_url'];   
+//         $config['space_url'] = $author['space_url'];
 //         $config['face'] = $author['avatar_middle'];
 //         foreach($suid as $u_v) {
 //             model('Notify')->sendNotify($u_v, 'atme', $config);
