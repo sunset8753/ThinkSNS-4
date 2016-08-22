@@ -549,13 +549,13 @@ class AccountAction extends Action
         }
 
         switch ($verifyInfo ['verified']) {
-            case '1' :
+            case '1':
                 $status = '<i class="ico-ok"></i>已认证 <a href="javascript:void(0);" onclick="delverify()">注销认证</a>';
                 break;
-            case '0' :
+            case '0':
                 $status = '<i class="ico-wait"></i>已提交认证，等待审核';
                 break;
-            case '-1' :
+            case '-1':
                 // 安全过滤
                 $type = t($_GET ['type']);
                 if ($type == 'edit') {
@@ -568,7 +568,7 @@ class AccountAction extends Action
                             )).'">请修改资料后重新提交</a>';
                 }
                 break;
-            default :
+            default:
                 // $verifyInfo['usergroup_id'] = 5;
                 $status = '未认证';
                 break;
@@ -1126,7 +1126,7 @@ class AccountAction extends Action
             switch ($type) {
                 case 0: $res['request_url'] = $this->alipay($data); break;
                 case 1: $res['request_url'] = $this->weixin($data); break;
-                default : $res['request_url'] = '';
+                default: $res['request_url'] = '';
             }
         } else {
             $res ['status'] = 0;
