@@ -1,8 +1,8 @@
 <?php
 /**
   * 评论发布/显示框
-  * @example W('GroupComment',array('tpl'=>'detail','row_id'=>72,'order'=>'DESC','app_uid'=>'14983','cancomment'=>1,'cancomment_old'=>0,'showlist'=>1,'canrepost'=>1))                                  
-  * @author jason <yangjs17@yeah.net> 
+  * @example W('GroupComment',array('tpl'=>'detail','row_id'=>72,'order'=>'DESC','app_uid'=>'14983','cancomment'=>1,'cancomment_old'=>0,'showlist'=>1,'canrepost'=>1))
+  * @author jason <yangjs17@yeah.net>
   * @version TS3.0
   */
 class GroupCommentWidget extends Widget
@@ -42,7 +42,7 @@ class GroupCommentWidget extends Widget
             if ($userPrivacy['comment_weibo'] == 1) {
                 $return = array('status' => 0, 'data' => L('PUBLIC_CONCENT_TIPES'));
 
-                return $var['isAjax'] == 1 ?  json_encode($return) : $return['data'];
+                return $var['isAjax'] == 1 ? json_encode($return) : $return['data'];
             }
         }
         if ($var['showlist'] == 1) { //默认只取出前10条

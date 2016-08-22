@@ -1,12 +1,12 @@
 <?php
     /**
-     * SmileModel 
+     * SmileModel
      * 表情数据库
      * @uses BaseModel
-     * @package 
+     * @package
      * @version $id$
-     * @copyright 2009-2011 SamPeng 
-     * @author SamPeng <sampeng87@gmail.com> 
+     * @copyright 2009-2011 SamPeng
+     * @author SamPeng <sampeng87@gmail.com>
      * @license PHP Version 5.2 {@link www.sampeng.cn}
      */
     class SmileModel extends Model

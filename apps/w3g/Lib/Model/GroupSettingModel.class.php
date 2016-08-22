@@ -13,14 +13,14 @@ class GroupSettingModel extends Model
         }
         return $setting;
     }
-    
-    
+
+
     function add($setting) {
         if(!is_array($setting)) return false;
         foreach ($setting as $k=>$v) {
-            
+
             $this->where("name='$k'")->setField("value",$v);
-            
+
         }
         return true;
     }*/

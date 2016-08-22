@@ -6,8 +6,8 @@ class PostModel extends Model
 
      // 获取文件
       /**
-      * getGroupList 
-    
+      * getGroupList
+
      */
      public function getPostList($html = 1, $map = null, $fields = null, $order = null, $limit = null, $isDel = 0)
      {

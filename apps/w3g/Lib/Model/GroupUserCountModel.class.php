@@ -1,7 +1,7 @@
 <?php
 /**
  * 用户统计模型
- * 
+ *
  * @author nonant
  */
 class GroupUserCountModel extends Model
@@ -10,7 +10,7 @@ class GroupUserCountModel extends Model
 
     /**
      * 添加统计数据
-     * 
+     *
      * @param int|array $uid    用户ID
      * @param string    $type   统计的项目
      * @param int       $IncNum 变化值  默认1
@@ -44,7 +44,7 @@ class GroupUserCountModel extends Model
 
     /**
      * 归0
-     * 
+     *
      * @param int|array $uid  用户ID
      * @param string    $type 统计的项目
      */
@@ -57,7 +57,7 @@ class GroupUserCountModel extends Model
 
     /**
      * 归0
-     * 
+     *
      * @param int|array $uid  用户ID
      * @param string    $type 统计的项目
      */
@@ -71,7 +71,7 @@ class GroupUserCountModel extends Model
 
     /**
      * 获取统计值
-     * 
+     *
      * @param  int|array $uid  用户ID
      * @param  string    $type 统计的项目，为空将返回所有统计项目结果
      * @return mixed
@@ -92,7 +92,7 @@ class GroupUserCountModel extends Model
 
     /**
      * 获取某群内统计值
-     * 
+     *
      * @param  int|array $uid  用户ID
      * @param  string    $type 统计的项目，为空将返回所有统计项目结果
      * @return mixed

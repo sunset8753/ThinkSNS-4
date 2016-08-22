@@ -1,6 +1,6 @@
 <?php
 /**
- * 
+ *
  */
 class FaceWidget extends Widget
 {

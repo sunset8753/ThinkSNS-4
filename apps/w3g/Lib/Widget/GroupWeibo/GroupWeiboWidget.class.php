@@ -1,14 +1,14 @@
 <?php
 /**
  * 发布分享Widget
- * 
+ *
  * @author daniel <desheng.young@gmail.com>
  */
 class GroupWeiboWidget extends Widget
 {
     /**
      * 发布分享Widget, 用法包括分享等
-     * 
+     *
      * $data接受的参数:
      * <code>
      * array(
@@ -28,15 +28,15 @@ class GroupWeiboWidget extends Widget
      * 										  	'is_success_status' => 1,		   // 或0. 状态是否为成功. 当has_status=1时有效.
      * 										  	'status_title' 		=> '状态的标题', // 状态的标题, 如"发布成功", "发布失败"等. 当has_status=1时有效.
      * 										  )
-     * 
+     *
      * @see Widget::render()
      */
     public function render($data)
     {
         // 默认值
-        $data['page_title'] = isset($data['page_title'])        ? $data['page_title']        : '分享';
-        $data['button_title'] = isset($data['button_title'])        ? $data['button_title']        : '发布';
-        $data['status_title'] = isset($data['status_title'])        ? t($data['status_title'])    : '';
+        $data['page_title'] = isset($data['page_title']) ? $data['page_title'] : '分享';
+        $data['button_title'] = isset($data['button_title']) ? $data['button_title'] : '发布';
+        $data['status_title'] = isset($data['status_title']) ? t($data['status_title']) : '';
 
         $data['url'] = U('group/WeiboOperate/weibo', array('button_title' => urlencode($data['button_title']), 'tpl_name' => $data['tpl_name']));
 
