@@ -232,6 +232,8 @@ class RegisterAction extends Action
             $map['search_key'] = $map['uname'];
         }
 
+        $map['domain'] = '';
+
         $uid = $this->_user_model->add($map);
         if ($uid) {
 
