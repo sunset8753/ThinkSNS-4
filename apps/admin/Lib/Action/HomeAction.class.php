@@ -384,7 +384,7 @@ class HomeAction extends AdministratorAction
     public function doDeleteSchedule()
     {
         $return = array('status' => 1, 'data' => L('PUBLIC_DELETE_SUCCESS'));
-        $ids = is_array($_POST ['id']) ? $_POST['id'] : array(intval($_POST['id']));
+        $ids = is_array($_REQUEST ['id']) ? $_REQUEST['id'] : array(intval($_REQUEST['id']));
         $res = model('Schedule')->delSchedule($ids);
         if ($res) {
             //TODO:记录知识
