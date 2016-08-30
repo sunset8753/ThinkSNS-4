@@ -1,5 +1,5 @@
 {
-    "name": "medz/thinksns-4",
+    "name": "medz/thinksns",
     "type": "project",
     "description": "A extensable social networing system.",
     "keywords": ["sns", "think", "ts", "thinksns", "t4", "ts4"],
