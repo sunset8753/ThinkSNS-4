@@ -523,17 +523,6 @@ function D($name = '', $app = '@', $inclueCommonFunction = true)
     $OriClassName = $name;
     $className = $name.'Model';
 
-    //优先载入核心的 所以不要和核心的model重名
-    if (file_exists(ADDON_PATH.'/model/'.$className.'.class.php')) {
-        tsload(ADDON_PATH.'/model/'.$className.'.class.php');
-    } elseif (file_exists(APPS_PATH.'/'.$app.'/Lib/Model/'.$className.'.class.php')) {
-        $common = APPS_PATH.'/'.$app.'/Common/common.php';
-        if (file_exists($common) && $inclueCommonFunction) {
-            tsload($common);
-        }
-        tsload(APPS_PATH.'/'.$app.'/Lib/Model/'.$className.'.class.php');
-    }
-
     if (class_exists($className)) {
         $model = new $className();
     } else {
