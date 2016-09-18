@@ -46,7 +46,6 @@ class Cache
         }
         $type = strtolower(trim($type));
         $class = 'Cache'.ucwords($type);
-        tsload(ADDON_PATH.'/library/cache/'.$class.'.class.php');
         if (class_exists($class)) {
             $cache = new $class($options);
         } else {

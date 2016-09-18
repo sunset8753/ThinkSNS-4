@@ -158,11 +158,6 @@ if (file_exists(sprintf('%s/bootstrap.php', APP_PATH))) {
     Ts::import(APP_COMMON_PATH, 'common', '.php');
 }
 
-//载入应用函数库
-// if (file_exists(APP_COMMON_PATH.'/common.php')) {
-//     tsload(APP_COMMON_PATH.'/common.php');
-// }
-
 //合并应用配置
 if (file_exists(APP_CONFIG_PATH.'/config.php')) {
     tsconfig(include APP_CONFIG_PATH.'/config.php');

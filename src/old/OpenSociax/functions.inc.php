@@ -492,6 +492,11 @@ function D($name = '', $app = '@')
     $OriClassName = $name;
     $className = $name.'Model';
 
+    //优先载入核心的 所以不要和核心的model重名
+    if (!class_exists($className) && file_exists(APPS_PATH.'/'.$app.'/Lib/Model/'.$className.'.class.php')) {
+        tsload(APPS_PATH.'/'.$app.'/Lib/Model/'.$className.'.class.php');
+    }
+
     if (class_exists($className)) {
         $model = new $className();
     } else {

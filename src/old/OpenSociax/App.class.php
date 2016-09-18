@@ -26,12 +26,6 @@ class App
 
         // 加载所有插件
         if (C('APP_PLUGIN_ON')) {
-            tsload(CORE_LIB_PATH.'/addons.class.php');
-            tsload(CORE_LIB_PATH.'/addons/Hooks.class.php');
-            tsload(CORE_LIB_PATH.'/addons/AbstractAddons.class.php');
-            tsload(CORE_LIB_PATH.'/addons/NormalAddons.class.php');
-            tsload(CORE_LIB_PATH.'/addons/SimpleAddons.class.php');
-            tsload(CORE_LIB_PATH.'/addons/TagsAbstract.class.php');
             Addons::loadAllValidAddons();
         }
     }
@@ -253,18 +247,14 @@ class App
             die('illegal request.');
         }
 
-        //include_once (ADDON_PATH.'/widget/'.MODULE_NAME.'Widget/'.MODULE_NAME.'Widget.class.php');
-        //$className = MODULE_NAME.'Widget';
-        if (file_exists(ADDON_PATH.'/widget/'.MODULE_NAME.'Widget/'.MODULE_NAME.'Widget.class.php') && !isset($_GET['app_widget'])) {
-            tsload(ADDON_PATH.'/widget/'.MODULE_NAME.'Widget/'.MODULE_NAME.'Widget.class.php');
-        } else {
+        $className = MODULE_NAME.'Widget';
+        if (!class_exists($className)) {
             if (file_exists(APP_PATH.'/Lib/Widget/'.MODULE_NAME.'Widget/'.MODULE_NAME.'Widget.class.php')) {
                 tsload(APP_PATH.'/Lib/Widget/'.MODULE_NAME.'Widget/'.MODULE_NAME.'Widget.class.php');
             } else {
                 tsload(APPS_PATH.'/'.$_GET['app_widget'].'/Lib/Widget/'.MODULE_NAME.'Widget/'.MODULE_NAME.'Widget.class.php');
             }
         }
-        $className = MODULE_NAME.'Widget';
 
         $module = new $className();
 
