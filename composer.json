@@ -85,12 +85,13 @@
             "src/old/OpenSociax/functions.inc.php"
         ],
         "classmap": [
-            "addons/utility/MedzValidator.php",
-            "addons/utility/MedzZip.php",
+            "addons/utility/",
+            "addons/model/",
+            "addons/diywidget/",
+            "addons/library/",
+            "addons/widget/",
             "src/Ts.php",
-            "src/old/OpenSociax/App.class.php",
-            "src/old/OpenSociax/Api.class.php",
-            "src/old/OpenSociax/Think.class.php"
+            "src/old/OpenSociax/"
         ],
         "psr-4": {
             "Ts\\": "src/",

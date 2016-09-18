@@ -114,23 +114,7 @@ tsdefine('TOKEN', 'ts_wx');
  */
 function tsload($filename)
 {
-    static $_importFiles = array();    //已载入的文件列表缓存
-
-    $key = strtolower($filename);
-
-    if (!isset($_importFiles[$key])) {
-        if (is_file($filename)) {
-            require_once $filename;
-            $_importFiles[$key] = true;
-        } elseif (file_exists(CORE_LIB_PATH.'/'.$filename.'.class.php')) {
-            require_once CORE_LIB_PATH.'/'.$filename.'.class.php';
-            $_importFiles[$key] = true;
-        } else {
-            $_importFiles[$key] = false;
-        }
-    }
-
-    return $_importFiles[$key];
+    return Ts::import($filename, '');
 }
 
 /**
@@ -139,7 +123,6 @@ function tsload($filename)
  */
 function tsautoload($classname)
 {
-
     // 检查是否存在别名定义
     if (tsload($classname)) {
         return ;
@@ -147,27 +130,13 @@ function tsautoload($classname)
 
     // 自动加载当前项目的Actioon类和Model类
     if (substr($classname, -5) == 'Model') {
-        if (!tsload(ADDON_PATH.'/model/'.$classname.'.class.php')) {
-            tsload(APP_LIB_PATH.'/Model/'.$classname.'.class.php');
-        }
+        tsload(APP_LIB_PATH.'/Model/'.$classname.'.class.php');
     } elseif (substr($classname, -6) == 'Action') {
         tsload(APP_LIB_PATH.'/Action/'.$classname.'.class.php');
     } elseif (substr($classname, -6) == 'Widget') {
-        if (!tsload(ADDON_PATH.'/widget/'.$classname.'.class.php')) {
-            tsload(APP_LIB_PATH.'/Widget/'.$classname.'.class.php');
-        }
+        tsload(APP_LIB_PATH.'/Widget/'.$classname.'.class.php');
     } elseif (substr($classname, -6) == 'Addons') {
-        if (!tsload(ADDON_PATH.'/plugin/'.$classname.'.class.php')) {
-            tsload(APP_LIB_PATH.'/Plugin/'.$classname.'.class.php');
-        }
-    } else {
-        $paths = array(ADDON_PATH.'/library');
-        foreach ($paths as $path) {
-            if (tsload($path.'/'.$classname.'.class.php')) {
-                // 如果加载类成功则返回
-                return ;
-            }
-        }
+        tsload(APP_LIB_PATH.'/Plugin/'.$classname.'.class.php');
     }
 
     return ;
