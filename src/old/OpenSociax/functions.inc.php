@@ -1002,11 +1002,7 @@ function X($name, $params = array(), $domain = 'model')
     }
 
     $class = $name.$domain;
-    if (file_exists(APP_LIB_PATH.$domain.'/'.$class.'.class.php')) {
-        tsload(APP_LIB_PATH.$domain.'/'.$class.'.class.php');
-    } else {
-        tsload(ADDON_PATH.'/'.strtolower($domain).'/'.$class.'.class.php', true);
-    }
+
     //服务不可用时 记录知识 或 抛出异常
     if (class_exists($class)) {
         $obj = new $class($params);
