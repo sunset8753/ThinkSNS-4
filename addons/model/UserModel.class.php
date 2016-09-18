@@ -1,6 +1,6 @@
 <?php
 
-use Ts\Model;
+use Ts\Models;
 use Medz\Component\EmojiFormat;
 
 /**
@@ -8,7 +8,7 @@ use Medz\Component\EmojiFormat;
  * @author jason <yangjs17@yeah.net>
  * @version TS3.0
  */
-class UserModel extends \Model
+class UserModel extends Model
 {
     protected $tableName = 'user';
     protected $error = '';
@@ -61,11 +61,11 @@ class UserModel extends \Model
     public function hasUser($user, $isUid = false)
     {
         if ($isUid) {
-            $users = Model\User::existent()->audit()->byUid($user)->get();
+            $users = Models\User::existent()->audit()->byUid($user)->get();
         } elseif (MedzValidator::isEmail($user)) {
-            $users = Model\User::existent()->audit()->byEmail($user)->get();
+            $users = Models\User::existent()->audit()->byEmail($user)->get();
         } else {
-            $users = Model\User::existent()
+            $users = Models\User::existent()
                 ->audit()
                 ->where('uid', '=', intval($user))
                 ->orWhere('uname', '=', EmojiFormat::en($user))

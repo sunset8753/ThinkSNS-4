@@ -111,7 +111,7 @@ class App
         $mid = $_SESSION['mid'] ?: $_SESSION['uid'];
         // var_dump($openid);exit;
         if ($openid) {
-            $login = Ts\Model\Login::byType('weixin')
+            $login = Ts\Models\Login::byType('weixin')
                 ->byVendorId($openid)
                 ->orderBy('login_id', 'desc')
                 ->first()

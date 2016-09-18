@@ -1,8 +1,8 @@
 <?php
 
-namespace Ts\Model;
+namespace Ts\Models;
 
-use Ts\Base\Model;
+use Ts\Bases\Model;
 
 /**
  * 咨询列表数据模型

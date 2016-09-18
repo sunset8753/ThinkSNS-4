@@ -1,14 +1,14 @@
 <?php
 
-namespace Ts\Model;
+namespace Ts\Models;
 
-use Ts\Base\Model;
+use Ts\Bases\Model;
 use Medz\Component\EmojiFormat;
 
 /**
  * 用户数据模型
  *
- * @package Ts\Model\User
+ * @package Ts\Models\User
  * @author Seven Du <lovevipdsw@outlook.com>
  **/
 class User extends Model

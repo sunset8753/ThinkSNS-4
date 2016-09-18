@@ -221,8 +221,8 @@ class RegisterModel extends Model
             return false;
         }
 
-        $old_user = \Ts\Model\User::existent()->byUserName($old_name)->first();
-        $user = \Ts\Model\User::existent()->byUserName($name)->first();
+        $old_user = \Ts\Models\User::existent()->byUserName($old_name)->first();
+        $user = \Ts\Models\User::existent()->byUserName($name)->first();
         if (
             $name != $old_name &&
             $old_name &&
