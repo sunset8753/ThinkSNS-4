@@ -1083,11 +1083,6 @@ function fetch($templateFile = '', $tvar = array(), $charset = 'utf-8', $content
     } else {
         tshook('tpl_compile', array('templateFile', $templateFile));
 
-        // 缓存无效 重新编译
-        tsload(CORE_LIB_PATH.'/Template.class.php');
-        tsload(CORE_LIB_PATH.'/TagLib.class.php');
-        tsload(CORE_LIB_PATH.'/TagLib/TagLibCx.class.php');
-
         $tpl = Template::getInstance();
         // 编译并加载模板文件
         $tpl->load($templateFile, $tvar, $charset);
