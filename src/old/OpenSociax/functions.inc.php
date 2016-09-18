@@ -927,13 +927,9 @@ function F($name, $value = '', $path = false)
 function W($name, $data = array(), $return = false)
 {
     $class = $name.'Widget';
-    if (file_exists(APP_WIDGET_PATH.'/'.$class.'/'.$class.'.class.php')) {
-        tsload(APP_WIDGET_PATH.'/'.$class.'/'.$class.'.class.php');
-    } elseif (!empty($data['widget_appname']) && file_exists(APPS_PATH.'/'.$data['widget_appname'].'/Lib/Widget/'.$class.'/'.$class.'.class.php')) {
+    if (!empty($data['widget_appname']) && file_exists(APPS_PATH.'/'.$data['widget_appname'].'/Lib/Widget/'.$class.'/'.$class.'.class.php')) {
         addLang($data['widget_appname']);
         tsload(APPS_PATH.'/'.$data['widget_appname'].'/Lib/Widget/'.$class.'/'.$class.'.class.php');
-    } else {
-        tsload(ADDON_PATH.'/widget/'.$class.'/'.$class.'.class.php');
     }
     if (!class_exists($class)) {
         throw_exception(L('_CLASS_NOT_EXIST_').':'.$class);
