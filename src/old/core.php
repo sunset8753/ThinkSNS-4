@@ -97,11 +97,7 @@ if (function_exists('spl_autoload_register')) {
 }
 
 //载入核心运行时文件
-if (file_exists(CORE_PATH.'/'.CORE_MODE.'Runtime.php') && !$ts['_debug']) {
-    include CORE_PATH.'/'.CORE_MODE.'Runtime.php';
-} else {
-    include CORE_LIB_PATH.'/'.CORE_MODE.'.php';
-}
+include CORE_LIB_PATH.'/'.CORE_MODE.'.php';
 
 tsdefine('NOW_TIME', $_SERVER ['REQUEST_TIME']);
 tsdefine('REQUEST_METHOD', $_SERVER ['REQUEST_METHOD']);
