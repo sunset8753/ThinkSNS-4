@@ -2003,9 +2003,6 @@ function getFromClient($type = 0, $app = 'public', $app_name = '')
  */
 function desencrypt($input, $key)
 {
-
-    //使用新版的加密方式
-    tsload(ADDON_PATH.'/library/DES_MOBILE.php');
     $desc = new DES_MOBILE();
 
     return $desc->setKey($key)->encrypt($input);
@@ -2019,8 +2016,6 @@ function desencrypt($input, $key)
  */
 function desdecrypt($encrypted, $key)
 {
-    //使用新版的加密方式
-    tsload(ADDON_PATH.'/library/DES_MOBILE.php');
     $desc = new DES_MOBILE();
 
     return $desc->setKey($key)->decrypt($encrypted);
