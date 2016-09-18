@@ -468,7 +468,7 @@ function M($name = '', $app = '@')
  * @param string app Model所在项目
  * @return object
  */
-function D($name = '', $app = '@', $inclueCommonFunction = true)
+function D($name = '', $app = '@')
 {
     static $_model = array();
 
