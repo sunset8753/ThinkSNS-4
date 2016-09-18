@@ -382,37 +382,6 @@ function get_instance_of($name, $method = '', $args = array())
 }
 
 /**
- * 自动加载类
- * @param string $name 类名
- */
-function __autoload($name)
-{
-    // 检查是否存在别名定义
-    if (import($name)) {
-        return ;
-    }
-    // 自动加载当前项目的Actioon类和Model类
-    if (substr($name, -5) == 'Model') {
-        import(APP_LIB_PATH.'Model/'.ucfirst($name).'.class.php');
-    } elseif (substr($name, -6) == 'Action') {
-        import(APP_LIB_PATH.'Action/'.ucfirst($name).'.class.php');
-    } else {
-        // 根据自动加载路径设置进行尝试搜索
-        if (C('APP_AUTOLOAD_PATH')) {
-            $paths = explode(',', C('APP_AUTOLOAD_PATH'));
-            foreach ($paths as $path) {
-                if (import($path.'/'.$name.'.class.php')) {
-                    // 如果加载类成功则返回
-                    return ;
-                }
-            }
-        }
-    }
-
-    return ;
-}
-
-/**
  * 导入类库
  * @param  string $name 类名
  * @return bool
