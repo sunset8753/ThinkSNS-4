@@ -7,19 +7,19 @@ A extensable social networing system.
 # 如何获得ThinkSNS
 >* Composer
 ```shell
-composer create-project medz/thinksns-4
+composer create-project medz/thinksns
 ```
 >
 >* git
 ```shell
-git clone https://github.com/medz/ThinkSNS-4.git
+git clone https://github.com/medz/thinksns.git
 ```
 > 克隆下来后，使用composer初始化~
 ```shell
 composer install
 ```
 >* Download
-https://github.com/medz/ThinkSNS-4/releases
+https://github.com/medz/thinksns/releases
 下载的zip档案是进过composer初始化后的包，可以直接解压使用，无需使用composer初始化，如果需要升级，请执行
 ```shell
 composer update
