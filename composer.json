@@ -99,6 +99,9 @@
             "App\\": "apps/"
         }
     },
+    "scripts": {
+        "php-cs-fixer": "php src/vendor/bin/php-cs-fixer"
+    },
     "support": {
         "email": "support@zhishisoft.com",
         "forum": "http://demo.thinksns.com",
