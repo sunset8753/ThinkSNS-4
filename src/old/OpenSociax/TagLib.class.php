@@ -348,4 +348,3 @@ class TagLib
         return $parseStr;
     }
 }//类定义结束
-;
