@@ -134,7 +134,8 @@ function tsautoload($classname)
     } elseif (substr($classname, -6) == 'Action') {
         tsload(APP_LIB_PATH.'/Action/'.$classname.'.class.php');
     } elseif (substr($classname, -6) == 'Widget') {
-        tsload(APP_LIB_PATH.'/Widget/'.$classname.'.class.php');
+        $filename = sprintf('%s/Widget/%s/%s.class.php', APP_LIB_PATH, $classname, $classname);
+        tsload($filename);
     } elseif (substr($classname, -6) == 'Addons') {
         tsload(APP_LIB_PATH.'/Plugin/'.$classname.'.class.php');
     }
