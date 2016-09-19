@@ -43,7 +43,6 @@ enabled:
   - whitespacy_lines
   - single_quote
   - include
-  - lowercase_constants
   - lowercase_keywords
   - eof_ending
   - elseif
