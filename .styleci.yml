@@ -43,7 +43,6 @@ enabled:
   - whitespacy_lines
   - single_quote
   - include
-  - elseif
   - unalign_double_arrow
   - unalign_equals
   - ternary_spaces
