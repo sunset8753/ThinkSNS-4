@@ -14,7 +14,6 @@ finder:
   path:
     - ""
 enabled:
-  - double_arrow_multiline_whitespaces
   - duplicate_semicolon
   - blankline_after_open_tag
   - array_element_white_space_after_comm
