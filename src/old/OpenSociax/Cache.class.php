@@ -94,7 +94,6 @@ class Cache
      * @param  string $key 队列名
      * @return mixed
      */
-    //
     protected function queue($key)
     {
         static $_handler = array(
