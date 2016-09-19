@@ -27,7 +27,7 @@ return \Symfony\CS\Config\Config::create()
         'no_blank_lines_after_class_opening',
         'object_operator',
         'phpdoc_indent',
-        'phpdoc_no_acces',
+        'phpdoc_no_access',
         'phpdoc_no_empty_return',
         'phpdoc_params',
         'phpdoc_scalar',
