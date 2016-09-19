@@ -16,7 +16,6 @@
          * mid
          * 访问者的id
          * @var mixed
-         * @access protected
          */
         protected $mid;
         public function setMid($mid)
@@ -29,7 +28,6 @@
          * 时间换算成时间戳返回
          * @param mixed $stime
          * @param mixed $etime
-         * @access public
          */
         public function DateToTimeStemp($stime, $etime)
         {
@@ -67,7 +65,6 @@
          * 处理归档查询的时间格式
          * @param string $findTime 200903这样格式的参数
          * @static
-         * @access protected
          */
         protected function paramData($findTime)
         {

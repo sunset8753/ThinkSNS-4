@@ -942,7 +942,7 @@ class LoginHooks extends Hooks
         }
 
         $haveName = M('User')->where("`uname`='".t($_POST['uname'])."'")->find();
-        if (is_array($haveName) && sizeof($haveName) > 0) {
+        if (is_array($haveName) && count($haveName) > 0) {
             $this->_loginFailureOnClient('昵称已被使用');
         }
 

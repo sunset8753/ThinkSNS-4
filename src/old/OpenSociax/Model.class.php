@@ -56,7 +56,6 @@ class Model extends Think
      * 架构函数
      * 取得DB类的实例对象 字段检查
      * @param string $name 模型名称
-     * @access public
      */
     public function __construct($name = '')
     {
@@ -89,7 +88,6 @@ class Model extends Think
 
     /**
      * 自动检测数据表信息
-     * @access protected
      */
     protected function _checkTableInfo()
     {
@@ -116,7 +114,6 @@ class Model extends Think
 
     /**
      * 获取字段信息并缓存
-     * @access public
      */
     public function flush()
     {
@@ -148,7 +145,6 @@ class Model extends Think
 
     /**
      * 动态切换扩展模型
-     * @access public
      * @param  string $type 模型类型名称
      * @param  mixed  $vars 要传入扩展模型的属性变量
      * @return Model
@@ -173,7 +169,6 @@ class Model extends Think
 
     /**
      * 设置数据对象的值
-     * @access public
      * @param string $name  名称
      * @param mixed  $value 值
      */
@@ -185,7 +180,6 @@ class Model extends Think
 
     /**
      * 获取数据对象的值
-     * @access public
      * @param  string $name 名称
      * @return mixed
      */
@@ -196,7 +190,6 @@ class Model extends Think
 
     /**
      * 检测数据对象的值
-     * @access public
      * @param  string $name 名称
      * @return bool
      */
@@ -207,7 +200,6 @@ class Model extends Think
 
     /**
      * 销毁数据对象的值
-     * @access public
      * @param string $name 名称
      */
     public function __unset($name)
@@ -217,7 +209,6 @@ class Model extends Think
 
     /**
      * 利用__call方法实现一些特殊的Model方法
-     * @access public
      * @param  string $method 方法名称
      * @param  array  $args   调用参数
      * @return mixed
@@ -254,7 +245,6 @@ class Model extends Think
 
      /**
       * 对保存到数据库的数据进行处理
-      * @access protected
       * @param mixed $data 要操作的数据
       * @return bool
       */
@@ -288,7 +278,6 @@ class Model extends Think
 
     /**
      * 新增数据
-     * @access public
      * @param  mixed $data    数据
      * @param  array $options 表达式
      * @return mixed
@@ -339,7 +328,6 @@ class Model extends Think
 
     /**
      * 通过Select方式添加记录
-     * @access public
      * @param  string $fields  要插入的数据表字段名
      * @param  string $table   要插入的数据表名
      * @param  array  $options 表达式
@@ -363,7 +351,6 @@ class Model extends Think
 
     /**
      * 保存数据
-     * @access public
      * @param  mixed $data    数据
      * @param  array $options 表达式
      * @return bool
@@ -422,7 +409,6 @@ class Model extends Think
 
     /**
      * 删除数据
-     * @access public
      * @param  mixed $options 表达式
      * @return mixed
      */
@@ -468,7 +454,6 @@ class Model extends Think
 
     /**
      * 查询数据集
-     * @access public
      * @param  array $options 表达式参数
      * @return mixed
      */
@@ -553,7 +538,6 @@ class Model extends Think
     }
     /**
      * 分析表达式
-     * @access private
      * @param  array $options 表达式参数
      * @return array
      */
@@ -597,7 +581,6 @@ class Model extends Think
 
      /**
       * 查询数据
-      * @access public
       * @param mixed $options 表达式参数
       * @return mixed
       */
@@ -633,7 +616,6 @@ class Model extends Think
     /**
      * 设置记录的某个字段值
      * 支持使用数据库字段和方法
-     * @access public
      * @param  string|array $field     字段名
      * @param  string|array $value     字段值
      * @param  mixed        $condition 条件
@@ -658,7 +640,6 @@ class Model extends Think
 
     /**
      * 字段值增长
-     * @access public
      * @param  string $field     字段名
      * @param  mixed  $condition 条件
      * @param  int    $step      增长值
@@ -671,7 +652,6 @@ class Model extends Think
 
     /**
      * 字段值减少
-     * @access public
      * @param  string $field     字段名
      * @param  mixed  $condition 条件
      * @param  int    $step      减少值
@@ -684,7 +664,6 @@ class Model extends Think
 
     /**
      * 获取一条记录的某个字段值
-     * @access public
      * @param  string $field     字段名
      * @param  mixed  $condition 查询条件
      * @param  string $spea      字段数据间隔符号
@@ -728,7 +707,6 @@ class Model extends Think
 
      /**
       * 创建数据对象 但不保存到数据库
-      * @access public
       * @param mixed $data 创建数据
       * @param string $type 状态
       * @return mixed
@@ -807,7 +785,6 @@ class Model extends Think
 
     /**
      * 使用正则验证数据
-     * @access public
      * @param  string $value 要验证的数据
      * @param  string $rule  验证规则
      * @return bool
@@ -835,7 +812,6 @@ class Model extends Think
 
     /**
      * 自动表单处理
-     * @access public
      * @param  array  $data 创建数据
      * @param  string $type 创建类型
      * @return mixed
@@ -883,7 +859,6 @@ class Model extends Think
 
     /**
      * 自动表单验证
-     * @access public
      * @param  array  $data 创建数据
      * @param  string $type 创建类型
      * @return bool
@@ -942,7 +917,6 @@ class Model extends Think
 
     /**
      * 根据验证因子验证字段
-     * @access public
      * @param  array  $data 创建数据
      * @param  string $val  验证规则
      * @return bool
@@ -993,7 +967,6 @@ class Model extends Think
 
     /**
      * SQL查询
-     * @access public
      * @param  mixed $sql SQL指令
      * @return mixed
      */
@@ -1012,7 +985,6 @@ class Model extends Think
 
     /**
      * 执行SQL语句
-     * @access public
      * @param  string $sql SQL指令
      * @return false  | integer
      */
@@ -1031,7 +1003,6 @@ class Model extends Think
 
     /**
      * 得到当前的数据对象名称
-     * @access public
      * @return string
      */
     public function getModelName()
@@ -1046,7 +1017,6 @@ class Model extends Think
 
     /**
      * 得到完整的数据表名
-     * @access public
      * @return string
      */
     public function getTableName()
@@ -1073,7 +1043,6 @@ class Model extends Think
      *
      * 开启事务的同时先提交其他Sql,
      *
-     * @access public
      */
     public function startTrans()
     {
@@ -1083,7 +1052,6 @@ class Model extends Think
 
     /**
      * 提交事务
-     * @access public
      * @return bool
      */
     public function commit()
@@ -1093,7 +1061,6 @@ class Model extends Think
 
     /**
      * 事务回滚
-     * @access public
      * @return bool
      */
     public function rollback()
@@ -1103,7 +1070,6 @@ class Model extends Think
 
     /**
      * 返回模型的错误信息
-     * @access public
      * @return string
      */
     public function getError()
@@ -1117,7 +1083,6 @@ class Model extends Think
 
     /**
      * 返回数据库的错误信息
-     * @access public
      * @return string
      */
     public function getDbError()
@@ -1128,7 +1093,6 @@ class Model extends Think
 
     /**
      * 返回最后插入的ID
-     * @access public
      * @return string
      */
     public function getLastInsID()
@@ -1138,7 +1102,6 @@ class Model extends Think
 
     /**
      * 返回最后执行的sql语句
-     * @access public
      * @return string
      */
     public function getLastSql()
@@ -1148,7 +1111,6 @@ class Model extends Think
 
     /**
      * 获取主键名称
-     * @access public
      * @return string
      */
     public function getPk()
@@ -1162,7 +1124,6 @@ class Model extends Think
 
     /**
      * 获取数据表字段信息
-     * @access public
      * @return array
      */
     public function getDbFields()
@@ -1172,7 +1133,6 @@ class Model extends Think
 
     /**
      * 设置数据对象值
-     * @access public
      * @param  mixed $data 数据
      * @return Model
      */
@@ -1190,7 +1150,6 @@ class Model extends Think
 
     /**
      * 查询SQL组装 join
-     * @access public
      * @param  mixed $join
      * @return Model
      */
@@ -1207,7 +1166,6 @@ class Model extends Think
 
     /**
      * 设置模型的属性值
-     * @access public
      * @param  string $name  名称
      * @param  mixed  $value 值
      * @return Model
@@ -1223,7 +1181,6 @@ class Model extends Think
 
     /**
      * 统计满足条件的记录个数
-     * @access public
      * @param  mixed  $condition 条件
      * @param  string $field     要统计的字段 默认为*
      * @return int
@@ -1246,7 +1203,6 @@ class Model extends Think
 
     /**
      * 分页查询数据
-     * @access public
      * @param  mixed $options 表达式参数
      * @param  mixed $pageopt 分页参数
      * @return mixed
@@ -1316,7 +1272,6 @@ class Model extends Think
 
     /**
      * 通过SQL语句，分页查询数据
-     * @access public
      * @param  mixed $options 表达式参数
      * @param  mixed $pageopt 分页参数
      * @return mixed
@@ -1376,7 +1331,6 @@ class Model extends Think
 
     /**
      * 执行SQL文件
-     * @access public
      * @param  string $file       要执行的sql文件路径
      * @param  bool   $stop       遇错是否停止  默认为true
      * @param  string $db_charset 数据库编码 默认为utf-8
@@ -1431,7 +1385,6 @@ class Model extends Think
 
     /**
      * 清理缓存
-     * @access public
      * @param  mixed $param
      * @return bool
      */

@@ -362,7 +362,7 @@ class OldVideoModel extends Model
     public function getQqOutsideVideoInfo($link)
     {
         if (extension_loaded('zlib')) {
-            $content = file_get_contents('compress.zlib://'.$link);//获取
+            $content = file_get_contents('compress.zlib://'.$link); //获取
         }
 
         if (!$content) {
@@ -376,6 +376,7 @@ class OldVideoModel extends Model
         $return['title'] = $title[1];
         $return['image_url'] = $img[1];
         $return['flash_url'] = $flash_url;
+
         return $return;
     }
 
@@ -383,7 +384,7 @@ class OldVideoModel extends Model
     {
         $contents = file_get_contents($link);
         if (extension_loaded('zlib')) {
-            $content = file_get_contents('compress.zlib://'.$link);//获取
+            $content = file_get_contents('compress.zlib://'.$link); //获取
         }
 
         if (!$content) {
@@ -398,6 +399,7 @@ class OldVideoModel extends Model
         $return['title'] = $title;
         $return['image_url'] = $image;
         $return['flash_url'] = $baseurl.$vid[0];
+
         return $return;
     }
 
@@ -631,8 +633,7 @@ class OldVideoModel extends Model
             $flash_url = 'http://player.yinyuetai.com/video/player/'.$flashvar[1].'/v_0.swf';
             $base = base64_encode(file_get_contents($img[1]));
             $img[1] = 'data:image/jpeg;base64,'.$base;
-        }
-        elseif ('le.com' == $host) {
+        } elseif ('le.com' == $host) {
             echo $content;
             exit();
         }

@@ -1,4 +1,5 @@
 <?php
+
 // +----------------------------------------------------------------------
 // | ThinkSNS
 // +----------------------------------------------------------------------
@@ -434,7 +435,6 @@ class ScheduleModel extends Model
             } elseif (in_array(strtoupper($schedule['modifier']), array('FIRST', 'SECOND', 'THIRD', 'FOURTH', 'LAST'))) {
                 //modifier为FIRST,SECOND,THIRD,FOURTH,LAST之一时，dirlist必须在MON～SUN、*中
                 if ($schedule['dirlist'] == '*') {
-                    ;
                 } else {
                     $flag = true;
                     $dirlist = explode(',', str_replace(' ', '', $schedule['dirlist']));
@@ -573,7 +573,6 @@ class ScheduleModel extends Model
             if (in_array(date('D'), $schedule['dirlist'])) {
                 //判断今天是否已经执行过当前计划。如果否，根据基准时间计算执行时间（DATE为今天，TIME来自基准时间）
                 if (($base_time_type == 'last_run_time') && (date('Y-m-d', $date) == date('Y-m-d'))) {
-                    ;
                 } else {
                     return mktime(date('H', $date), date('i', $date), date('s', $date), date('m'), date('d'), date('Y'));
                 }
@@ -608,7 +607,6 @@ class ScheduleModel extends Model
             if (in_array(date('M'), $schedule['month']) && $this->_isLastDayOfMonth()) {
                 //判断今天是否已经执行过当前计划。如果否，根据基准时间计算执行时间（DATE为今天，TIME来自基准时间）
                 if (($base_time_type == 'last_run_time') && (date('Y-m-d', $date) == date('Y-m-d'))) {
-                    ;
                 } else {
                     return mktime(date('H', $date), date('i', $date), date('s', $date), date('m'), date('d'), date('Y'));
                 }
@@ -630,7 +628,6 @@ class ScheduleModel extends Model
                     if ($this->_isDayIDOfMonth($schedule['modifier'])) {
                         //判断今天是否已经执行过当前计划。如果否，根据基准时间计算执行时间（DATE为今天，TIME来自基准时间）
                         if (($base_time_type == 'last_run_time') && (date('Y-m-d', $date) == date('Y-m-d'))) {
-                            ;
                         } else {
                             return mktime(date('H', $date), date('i', $date), date('s', $date), date('m'), date('d'), date('Y'));
                         }
@@ -652,7 +649,6 @@ class ScheduleModel extends Model
                 if (in_array(date('d'), $schedule['dirlist']) || in_array(date('j'), $schedule['dirlist'])) {
                     //判断今天是否已经执行过当前计划。如果否，根据基准时间计算执行时间（DATE为今天，TIME来自基准时间）
                     if (($base_time_type == 'last_run_time') && (date('Y-m-d', $date) == date('Y-m-d'))) {
-                        ;
                     } else {
                         return mktime(date('H', $date), date('i', $date), date('s', $date), date('m'), date('d'), date('Y'));
                     }

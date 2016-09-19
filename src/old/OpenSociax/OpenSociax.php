@@ -61,8 +61,8 @@ if (isset($_POST['PHPSESSID'])) {
 //session 设置
 ini_set('session.cookie_httponly', 1);
 
-ini_set('session.gc_maxlifetime',   3600);
-ini_set('session.cookie_lifetime',  7 * 86400);
+ini_set('session.gc_maxlifetime', 3600);
+ini_set('session.cookie_lifetime', 7 * 86400);
 //设置session路径到本地
 if (strtolower(ini_get('session.save_handler')) == 'files') {
     $session_dir = DATA_PATH.'/session';
@@ -165,12 +165,12 @@ if (file_exists(APP_CONFIG_PATH.'/config.php')) {
 
 //根据应用配置重定义以下常量
 if (C('THEME_NAME')) {
-    tsdefine('THEME_NAME',        C('THEME_NAME'));
+    tsdefine('THEME_NAME', C('THEME_NAME'));
 }
 
 //根据应用配置重定义以下常量
 if (C('APP_TPL_PATH')) {
-    tsdefine('APP_TPL_PATH',    C('APP_TPL_PATH'));
+    tsdefine('APP_TPL_PATH', C('APP_TPL_PATH'));
 }
 
 //如果是部署模式、则如下定义

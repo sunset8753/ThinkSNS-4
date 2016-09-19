@@ -43,7 +43,6 @@ class SessionDb
 
     /**
      * 打开Session
-     * @access public
      * @param string $savePath
      * @param mixed  $sessName
      */
@@ -114,7 +113,6 @@ class SessionDb
 
    /**
     * 关闭Session
-    * @access public
     */
    public function close()
    {
@@ -130,7 +128,6 @@ class SessionDb
 
    /**
     * 读取Session
-    * @access public
     * @param string $sessID
     */
    public function read($sessID)
@@ -148,7 +145,6 @@ class SessionDb
 
    /**
     * 写入Session
-    * @access public
     * @param string $sessID
     * @param String $sessData
     */
@@ -166,7 +162,6 @@ class SessionDb
 
    /**
     * 删除Session
-    * @access public
     * @param string $sessID
     */
    public function destroy($sessID)
@@ -182,7 +177,6 @@ class SessionDb
 
    /**
     * Session 垃圾回收
-    * @access public
     * @param string $sessMaxLifeTime
     */
    public function gc($sessMaxLifeTime)
@@ -195,7 +189,6 @@ class SessionDb
 
     /**
      * 打开Session
-     * @access public
      */
     public function execute()
     {

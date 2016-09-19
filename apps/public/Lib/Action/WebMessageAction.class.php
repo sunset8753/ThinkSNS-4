@@ -133,7 +133,7 @@ class WebMessageAction extends Action
             $list['data'][$k]['sourceImage'] = $sourceImage;
             $list['data'][$k]['sourceUrl'] = $sourceUrl;
         }
-        model('UserCount')->resetUserCount($this->mid, 'unread_comment',  0);
+        model('UserCount')->resetUserCount($this->mid, 'unread_comment', 0);
         $this->assign('list', $list);
         $this->setTitle($keyword.'的评论');                    // 我的评论
         $userInfo = model('User')->getUserInfo($this->mid);

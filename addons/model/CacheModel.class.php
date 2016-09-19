@@ -145,7 +145,6 @@ class CacheModel
 
     /**
      * 清除缓存
-     * @access public
      * @return boolen
      */
     public function clear()

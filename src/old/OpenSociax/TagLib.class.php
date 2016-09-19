@@ -11,42 +11,36 @@ class TagLib
     /**
      * 标签库定义XML文件
      * @var string
-     * @access protected
      */
     protected $xml = '';
 
     /**
      * 标签库名称
      * @var string
-     * @access protected
      */
     protected $tagLib = '';
 
     /**
      * 标签库标签列表
      * @var string
-     * @access protected
      */
     protected $tagList = array();
 
     /**
      * 标签库分析数组
      * @var string
-     * @access protected
      */
     protected $parse = array();
 
     /**
      * 标签库是否有效
      * @var string
-     * @access protected
      */
     protected $valid = false;
 
     /**
      * 当前模板对象
      * @var object
-     * @access protected
      */
     protected $tpl;
 
@@ -54,7 +48,6 @@ class TagLib
 
     /**
      * 架构函数
-     * @access public
      */
     public function __construct()
     {
@@ -89,7 +82,6 @@ class TagLib
     /**
      * 分析TagLib文件的信息是否有效
      * 有效则转换成数组
-     * @access public
      * @param  mixed  $name  数据
      * @param  string $value 数据表名
      * @return string
@@ -101,7 +93,6 @@ class TagLib
 
     /**
      * 获取TagLib名称
-     * @access public
      * @return string
      */
     public function getTagLib()
@@ -111,7 +102,6 @@ class TagLib
 
     /**
      * 获取Tag列表
-     * @access public
      * @return string
      */
     public function getTagList()
@@ -167,7 +157,6 @@ class TagLib
 
     /**
      * 获取某个Tag属性的信息
-     * @access public
      * @return string
      */
     public function getTagAttrList($tagName)
@@ -210,7 +199,6 @@ class TagLib
 
     /**
      * TagLib标签属性分析 返回标签属性数组
-     * @access public
      * @param  string $tagStr 标签内容
      * @return array
      */
@@ -240,7 +228,6 @@ class TagLib
 
     /**
      * 解析条件表达式
-     * @access public
      * @param  string $condition 表达式标签内容
      * @return array
      */
@@ -264,7 +251,6 @@ class TagLib
 
     /**
      * 自动识别构建变量
-     * @access public
      * @param  string $name 变量描述
      * @return string
      */
@@ -309,7 +295,6 @@ class TagLib
     /**
      * 用于标签属性里面的特殊模板变量解析
      * 格式 以 Think. 打头的变量属于特殊模板变量
-     * @access public
      * @param  string $varStr 变量字符串
      * @return string
      */

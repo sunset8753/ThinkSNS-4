@@ -2,7 +2,6 @@
 
 /** *  * @author jason * */require_once 'BaseApi.class.php';class UserApi extends BaseApi
 {
-
     //获取用户信息    public function profile()
     {
         if (empty($this->data['uid'])) {
@@ -10,7 +9,9 @@
         }
 
         $content = $this->getContentFormDiscuz('profile', '&uid='.$this->data['uid']);
-        $content = $content['space'];        //dump($content);        $data['uid'] = $content['uid'];
+        $content = $content['space'];        //dump($content);
+
+        $data['uid'] = $content['uid'];
         $data['username'] = $content['username'];
         $data['avatar_small'] = $this->discuzURl.'/uc_server/avatar.php?uid='.$content['uid'].'&size=small';
         $data['avatar_middle'] = $this->discuzURl.'/uc_server/avatar.php?uid='.$content['uid'].'&size=middle';
@@ -18,7 +19,9 @@
         $data['thread_count'] = $content['threads'];
         $data['following_count'] = $content['following'];
         $data['follower_count'] = $content['follower'];
-        $data['feed_count'] = $content['feeds'];        //$data['sex'] = '';  //TODO 待补充        $data['user_group'] = array(0 => array(            'user_group_id' => $content['groupid'],            'user_group_name' => $content['group']['grouptitle'],            'user_group_icon' => $content['group']['icon']        ));        //$data['medals'] = array(); //TODO 待补充        return $data;
+        $data['feed_count'] = $content['feeds'];        //$data['sex'] = '';  //TODO 待补充        $data['user_group'] = array(0 => array(            'user_group_id' => $content['groupid'],            'user_group_name' => $content['group']['grouptitle'],            'user_group_icon' => $content['group']['icon']        ));        //$data['medals'] = array(); //TODO 待补充
+
+        return $data;
     }
 
     /**	 * 上传头像 API	 * 传入的头像变量 $_FILES['Filedata']	 */    public function upload_face()

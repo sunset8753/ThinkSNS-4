@@ -1,4 +1,5 @@
 <?php
+
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK IT ]
 // +----------------------------------------------------------------------
@@ -22,7 +23,6 @@ class CacheMemcache extends Cache
     /**
      * 架构函数
      * @param array $options 缓存参数
-     * @access public
      */
     public function __construct($options = array())
     {
@@ -71,7 +71,6 @@ class CacheMemcache extends Cache
 
     /**
      * 读取缓存
-     * @access public
      * @param  string $name 缓存变量名
      * @return mixed
      */
@@ -84,7 +83,6 @@ class CacheMemcache extends Cache
 
     /**
      * 批量读取缓存
-     * @access public
      * @param  string $prefix 缓存前缀
      * @return mixed
      */
@@ -108,7 +106,6 @@ class CacheMemcache extends Cache
 
     /**
      * 写入缓存
-     * @access public
      * @param  string $name   缓存变量名
      * @param  mixed  $value  存储数据
      * @param  int    $expire 有效时间（秒）
@@ -135,7 +132,6 @@ class CacheMemcache extends Cache
 
     /**
      * 删除缓存
-     * @access public
      * @param  string $name 缓存变量名
      * @return boolen
      */
@@ -150,7 +146,6 @@ class CacheMemcache extends Cache
 
     /**
      * 清除缓存
-     * @access public
      * @return boolen
      */
     public function clear()

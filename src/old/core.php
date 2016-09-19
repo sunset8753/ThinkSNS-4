@@ -54,33 +54,33 @@ if (!defined('_PHP_FILE_')) {
 // 网站URL根目录
 if (!defined('__ROOT__')) {
     $_root = dirname(_PHP_FILE_);
-    define('__ROOT__',  (($_root == '/' || $_root == '\\') ? '' : rtrim($_root, '/')));
+    define('__ROOT__', (($_root == '/' || $_root == '\\') ? '' : rtrim($_root, '/')));
 }
 
 //基本常量定义
-tsdefine('ROOT_FILE',    basename(_PHP_FILE_) == 'api.php' ? 'index.php' : basename(_PHP_FILE_));
-tsdefine('CORE_PATH',    dirname(__FILE__));
-tsdefine('THINK_PATH',    CORE_PATH.'/ThinkPHP');
+tsdefine('ROOT_FILE', basename(_PHP_FILE_) == 'api.php' ? 'index.php' : basename(_PHP_FILE_));
+tsdefine('CORE_PATH', dirname(__FILE__));
+tsdefine('THINK_PATH', CORE_PATH.'/ThinkPHP');
 
-tsdefine('SITE_DOMAIN',    strip_tags($_SERVER['HTTP_HOST']));
-tsdefine('SITE_URL',    (IS_HTTPS ? 'https:' : 'http:').'//'.SITE_DOMAIN.__ROOT__);
+tsdefine('SITE_DOMAIN', strip_tags($_SERVER['HTTP_HOST']));
+tsdefine('SITE_URL', (IS_HTTPS ? 'https:' : 'http:').'//'.SITE_DOMAIN.__ROOT__);
 
-tsdefine('CONF_PATH',    SITE_PATH.'/config');
+tsdefine('CONF_PATH', SITE_PATH.'/config');
 
-tsdefine('APPS_PATH',    SITE_PATH.'/apps');
-tsdefine('APPS_URL',    SITE_URL.'/apps');    # 应用内部图标 等元素
+tsdefine('APPS_PATH', SITE_PATH.'/apps');
+tsdefine('APPS_URL', SITE_URL.'/apps');    # 应用内部图标 等元素
 
-tsdefine('ADDON_PATH',    SITE_PATH.'/addons');
-tsdefine('ADDON_URL',    SITE_URL.'/addons');
+tsdefine('ADDON_PATH', SITE_PATH.'/addons');
+tsdefine('ADDON_URL', SITE_URL.'/addons');
 
-tsdefine('DATA_PATH',    SITE_PATH.'/data');
-tsdefine('DATA_URL',    SITE_URL.'/data');
+tsdefine('DATA_PATH', SITE_PATH.'/data');
+tsdefine('DATA_URL', SITE_URL.'/data');
 
-tsdefine('UPLOAD_PATH',    SITE_PATH.'/data/upload');
-tsdefine('UPLOAD_URL',    SITE_URL.'/data/upload');
+tsdefine('UPLOAD_PATH', SITE_PATH.'/data/upload');
+tsdefine('UPLOAD_URL', SITE_URL.'/data/upload');
 
-tsdefine('PUBLIC_PATH',    SITE_PATH.'/public');
-tsdefine('PUBLIC_URL',    SITE_URL.'/public');
+tsdefine('PUBLIC_PATH', SITE_PATH.'/public');
+tsdefine('PUBLIC_URL', SITE_URL.'/public');
 
 //载入核心模式: 默认是OpenSociax. 也支持ThinkPHP
 if (!defined('CORE_MODE')) {

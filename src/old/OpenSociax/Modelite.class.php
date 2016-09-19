@@ -1,4 +1,5 @@
 <?php
+
 // +----------------------------------------------------------------------
 // | OpenSociax [ Social business software! ]
 // +----------------------------------------------------------------------
@@ -26,7 +27,6 @@ abstract class Modelite
      * 架构函数
      * 取得DB类的实例对象 字段检查
      * @param string $name 模型名称
-     * @access public
      */
     public function __construct($name = '')
     {

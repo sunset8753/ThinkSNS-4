@@ -793,8 +793,8 @@ class RegisterAction extends Action
         $html = '';
         foreach ($related_user as $k => $v) {
             $html .= '<li><div style="position:relative;width:80px;height:80px"><div class="selected"><i class="ico-ok-mark"></i></div>
-					  <a event-node="bulkDoFollowData" value="' .$v['userInfo']['uid'].'" class="face_part" href="javascript:void(0);">
-					  <img src="' .$v['userInfo']['avatar_big'].'" /></a></div><span class="name">'.$v['userInfo']['uname'].'</span></li>';
+					  <a event-node="bulkDoFollowData" value="'.$v['userInfo']['uid'].'" class="face_part" href="javascript:void(0);">
+					  <img src="'.$v['userInfo']['avatar_big'].'" /></a></div><span class="name">'.$v['userInfo']['uname'].'</span></li>';
         }
         echo $html;
     }

@@ -653,9 +653,9 @@ if (isset($_GET['IMG'])) {
     $image = imagecreate($size + 50, $size + 10);
 
     $col_white = imagecolorallocate($image, 0xFF, 0xFF, 0xFF);
-    $col_red = imagecolorallocate($image, 0xD0, 0x60,  0x30);
+    $col_red = imagecolorallocate($image, 0xD0, 0x60, 0x30);
     $col_green = imagecolorallocate($image, 0x60, 0xF0, 0x60);
-    $col_black = imagecolorallocate($image,   0,   0,   0);
+    $col_black = imagecolorallocate($image, 0, 0, 0);
 
     imagecolortransparent($image, $col_white);
 

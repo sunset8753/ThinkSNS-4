@@ -1,4 +1,5 @@
 <?php
+
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK IT ]
 // +----------------------------------------------------------------------
@@ -31,7 +32,6 @@ class Image
      *
      +----------------------------------------------------------
      * @static
-     * @access public
      +----------------------------------------------------------
      * @param string $image 图像文件名
      +----------------------------------------------------------
@@ -64,7 +64,6 @@ class Image
      * 支持URL方式
      +----------------------------------------------------------
      * @static
-     * @access public
      +----------------------------------------------------------
      * @param string $imgFile 图像文件名
      * @param string $text    文字字符串
@@ -112,7 +111,6 @@ class Image
      * 切割图片
      +----------------------------------------------------------
      * @static
-     * @access public
      +----------------------------------------------------------
      * @param string $image     原图
      * @param string $cutfile   切割后的图片
@@ -152,7 +150,7 @@ class Image
                 imagesavealpha($thumbImg, true); //设定保存完整的 alpha 通道信息
             } elseif ('gif' == $type) {
                 // 新建GIF缩略图预处理，保证透明效果不失效
-                $background_color = imagecolorallocate($thumbImg,  0, 255, 0);  //  指派一个绿色
+                $background_color = imagecolorallocate($thumbImg, 0, 255, 0);  //  指派一个绿色
                 imagecolortransparent($thumbImg, $background_color);  //  设置为透明色，若注释掉该行则输出绿色的图
             }
 
@@ -174,7 +172,7 @@ class Image
             if (function_exists('ImageCopyResampled')) {
                 ImageCopyResampled($thumbImg, $srcImg, 0, 0, $x, $y, $maxWidth, $maxHeight, $width, $height);
             } else {
-                ImageCopyResized($thumbImg, $srcImg, 0, 0, $x, $y, $maxWidth, $maxHeight,  $width, $height);
+                ImageCopyResized($thumbImg, $srcImg, 0, 0, $x, $y, $maxWidth, $maxHeight, $width, $height);
             }
             ImageDestroy($srcImg);
 
@@ -202,7 +200,6 @@ class Image
      * 生成缩略图
      +----------------------------------------------------------
      * @static
-     * @access public
      +----------------------------------------------------------
      * @param string $image     原图
      * @param string $type      图像格式
@@ -257,7 +254,7 @@ class Image
                 imagesavealpha($thumbImg, true); //设定保存完整的 alpha 通道信息
             } elseif ('gif' == $type) {
                 // 新建GIF缩略图预处理，保证透明效果不失效
-                $background_color = imagecolorallocate($thumbImg,  0, 255, 0);  //  指派一个绿色
+                $background_color = imagecolorallocate($thumbImg, 0, 255, 0);  //  指派一个绿色
                 imagecolortransparent($thumbImg, $background_color);  //  设置为透明色，若注释掉该行则输出绿色的图
             }
 
@@ -265,7 +262,7 @@ class Image
             if (function_exists('ImageCopyResampled')) {
                 imagecopyresampled($thumbImg, $srcImg, 0, 0, 0, 0, $width, $height, $srcWidth, $srcHeight);
             } else {
-                imagecopyresized($thumbImg, $srcImg, 0, 0, 0, 0, $width, $height,  $srcWidth, $srcHeight);
+                imagecopyresized($thumbImg, $srcImg, 0, 0, 0, 0, $width, $height, $srcWidth, $srcHeight);
             }
             /*if('gif'==$type || 'png'==$type) {
                 //imagealphablending($thumbImg, false);//取消默认的混色模式
@@ -298,7 +295,6 @@ class Image
      * 根据给定的字符串生成图像
      +----------------------------------------------------------
      * @static
-     * @access public
      +----------------------------------------------------------
      * @param string $string  字符串
      * @param string $size    图像大小 width,height 或者 array(width,height)
@@ -362,7 +358,6 @@ class Image
      * 生成图像验证码
      +----------------------------------------------------------
      * @static
-     * @access public
      +----------------------------------------------------------
      * @param string $length 位数
      * @param string $mode   类型
@@ -450,7 +445,6 @@ class Image
      * 把图像转换成字符显示
      +----------------------------------------------------------
      * @static
-     * @access public
      +----------------------------------------------------------
      * @param string $image 要显示的图像
      * @param string $type  图像类型，默认自动获取
@@ -495,7 +489,6 @@ class Image
      * 生成高级图像验证码
      +----------------------------------------------------------
      * @static
-     * @access public
      +----------------------------------------------------------
      * @param string $type   图像格式
      * @param string $width  宽度

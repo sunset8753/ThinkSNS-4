@@ -106,7 +106,6 @@ class TagWidget extends Widget
 
     /**
      * 获取标签的ID
-     * @access public
      */
     public function getTagId()
     {

@@ -209,7 +209,7 @@ class MessageAction extends BaseAction
         }
         $_POST['to'] = trim(t($_POST['to']), ',');
         $to_num = explode(',', $_POST['to']);
-        if (sizeof($to_num) > 10) {
+        if (count($to_num) > 10) {
             $return['data'] = '';
             $return['status'] = 0;
             echo json_encode($return);

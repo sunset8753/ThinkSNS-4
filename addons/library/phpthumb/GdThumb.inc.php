@@ -583,13 +583,13 @@ class GdThumb extends ThumbBase
         }
 
         // make sure the directory is writeable
-        if (!is_writeable(dirname($fileName))) {
+        if (!is_writable(dirname($fileName))) {
             // try to correct the permissions
             if ($this->options['correctPermissions'] === true) {
                 @chmod(dirname($fileName), 0777);
 
                 // throw an exception if not writeable
-                if (!is_writeable(dirname($fileName))) {
+                if (!is_writable(dirname($fileName))) {
                     throw new RuntimeException('File is not writeable, and could not correct permissions: '.$fileName);
                 }
             }
@@ -636,7 +636,7 @@ class GdThumb extends ThumbBase
         }
 
         // we've yet to init the default options, so create them here
-        if (sizeof($this->options) == 0) {
+        if (count($this->options) == 0) {
             $defaultOptions = array(
                 'resizeUp' => false,
                 'jpegQuality' => 100,

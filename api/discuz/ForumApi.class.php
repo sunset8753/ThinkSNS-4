@@ -2,7 +2,6 @@
 
 /** *  * @author jason * */require_once 'BaseApi.class.php';class ForumApi extends BaseApi
 {
-
     //获取全部版块    public function forumindex()
     {
         $content = $this->getContentFormDiscuz('forumindex');
@@ -39,7 +38,9 @@
         $page = $this->data['page'] ? $this->data['page'] : 1;
         $limit = $this->data['limit'] ? $this->data['limit'] : 20;
         $submodule = $this->data['submodule'] ? $this->data['submodule'] : 'checkpost';
-        $order = $this->data['order'] ? $this->data['order'] : 'lastpost'; // lastpost 最后回复  dateline 发贴时间        $opt = '&fid='.$fid.'&page='.$page.'&tpp='.$limit.'&submodule='.$submodule.'&orderby='.$order;
+        $order = $this->data['order'] ? $this->data['order'] : 'lastpost'; // lastpost 最后回复  dateline 发贴时间
+
+        $opt = '&fid='.$fid.'&page='.$page.'&tpp='.$limit.'&submodule='.$submodule.'&orderby='.$order;
 
         $content = $this->getContentFormDiscuz('forumdisplay', $opt);
 

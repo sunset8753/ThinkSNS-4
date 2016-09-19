@@ -701,7 +701,7 @@ class IndexAction extends Action
                         $list['data'][$k]['hasComment'] = true;
                     }
                 }
-                model('UserCount')->resetUserCount($this->mid, 'unread_comment',  0);
+                model('UserCount')->resetUserCount($this->mid, 'unread_comment', 0);
                 //分页链接重写
                 $list['html'] = $this->messagePage($list['html']);
                 $this->assign('list', $list);

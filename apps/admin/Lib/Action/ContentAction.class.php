@@ -1,4 +1,5 @@
 <?php
+
 //+----------------------------------------------------------------------
 // | Sociax [ WE CAN DO IT JUST THINK IT ]
 // +----------------------------------------------------------------------
@@ -529,7 +530,7 @@ class ContentAction extends AdministratorAction
         $data = model('Denounce')->getFromList($map);
         $data['state'] = $map['state'];
         $this->assign($data);
-        if (is_array($map) && sizeof($map) == '1') {
+        if (is_array($map) && count($map) == '1') {
             unset($map);
         }
         $this->assign($_GET);

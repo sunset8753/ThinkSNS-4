@@ -4,7 +4,12 @@ ini_set('display_errors', true);
 error_reporting(E_ALL);
 class GroupAction extends BaseAction
 {
-    public $gid, $groupinfo, $config, $group, $ismember, $isadmin;
+    public $gid;
+    public $groupinfo;
+    public $config;
+    public $group;
+    public $ismember;
+    public $isadmin;
     public $topic;
     public $post;
     public $member;
@@ -861,7 +866,7 @@ class GroupAction extends BaseAction
         $weiboSet = model('Xdata')->get('admin_Config:feed');
         $this->assign($weiboSet);
         // 用户@Me未读数目重置
-        D('GroupUserCount')->setGroupZero($this->mid, $this->gid, 'atme',  0);
+        D('GroupUserCount')->setGroupZero($this->mid, $this->gid, 'atme', 0);
         $this->setTitle(L('PUBLIC_MENTION_INDEX'));
         $userInfo = model('User')->getUserInfo($this->mid);
         $this->setKeywords('@提到'.$userInfo['uname'].'的消息');
@@ -894,7 +899,7 @@ class GroupAction extends BaseAction
             // 收到的
             $map['_string'] = " (to_uid = '{$this->uid}' OR app_uid = '{$this->uid}') AND uid !=".$this->uid;
             $this->assign('hashtab', 'receive');
-            D('GroupUserCount')->setGroupZero($this->mid, $this->gid, 'comment',  0);
+            D('GroupUserCount')->setGroupZero($this->mid, $this->gid, 'comment', 0);
         }
         // 类型描述术语 TODO:放到统一表里面
         $d['tabHash'] = array(

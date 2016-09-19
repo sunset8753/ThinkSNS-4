@@ -889,7 +889,6 @@ class FeedModel extends Model
             $var['flashvar_part'] = $video_server.$var['video_part_path'];
             $var['flash_width'] = $var['image_width'] ? $var['image_width'] : 430;
             $var['flash_height'] = $var['image_height'] ? $var['image_height'] : 400;
-            
         }
         $var['uid'] = $_data['uid'];
         $var['actor'] = "<a href='{$user['space_url']}' class='name' event-node='face_card' uid='{$user['uid']}'>{$user['uname']}</a>";
