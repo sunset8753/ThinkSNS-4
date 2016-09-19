@@ -72,7 +72,7 @@ class AreasWidget extends Widget
 
         $list = model('Area')->getNetworkList(0);
         $data['list'] = json_encode($list);
-        // 模板选择		
+        // 模板选择
         $tpl = isset($_GET['tpl']) ? t($_GET['tpl']).'_' : 'loadArea_';
 
         echo $this->renderFile(dirname(__FILE__).'/'.$tpl.'.html', $data);

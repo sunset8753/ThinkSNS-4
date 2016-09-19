@@ -1,7 +1,7 @@
 <?php
 /**
  * 搜索模型 - 业务逻辑模型
- * @author jason <yangjs17@yeah.net> 
+ * @author jason <yangjs17@yeah.net>
  * @version TS3.0
  */
 class SearchModel

@@ -148,7 +148,6 @@ class CloudImageModel
 
     /**
      * 写入文件
-     * @access public
      * @param  string $filename    文件相对路径
      * @param  string $filecontent 文件数据
      * @return bool
@@ -172,7 +171,6 @@ class CloudImageModel
 
     /**
      * 删除文件
-     * @access public
      * @param  string $filename 文件相对路径
      * @return bool
      */
@@ -195,7 +193,6 @@ class CloudImageModel
 
     /**
      * 上传文件
-     * @access public
      * @param  string         $savePath 上传文件保存路径
      * @return string
      * @throws ThinkExecption
@@ -282,7 +279,6 @@ class CloudImageModel
 
     /**
      * 转换上传文件数组变量为正确的方式
-     * @access private
      * @param  array $files 上传的文件变量
      * @return array
      */
@@ -309,7 +305,6 @@ class CloudImageModel
 
     /**
      * 获取错误代码信息
-     * @access public
      * @param  string         $errorNo 错误号码
      * @throws ThinkExecption
      */
@@ -361,7 +356,6 @@ class CloudImageModel
 
     /**
      * 检查上传的文件
-     * @access private
      * @param  array $file 文件信息
      * @return bool
      */
@@ -407,7 +401,6 @@ class CloudImageModel
 
     /**
      * 检查上传的文件类型是否合法
-     * @access private
      * @param  string $type 数据
      * @return bool
      */
@@ -426,7 +419,6 @@ class CloudImageModel
 
     /**
      * 检查上传的文件后缀是否合法
-     * @access private
      * @param  string $ext 后缀名
      * @return bool
      */
@@ -445,7 +437,6 @@ class CloudImageModel
 
     /**
      * 检查文件大小是否合法
-     * @access private
      * @param  int  $size 数据
      * @return bool
      */
@@ -456,7 +447,6 @@ class CloudImageModel
 
     /**
      * 检查文件是否非法提交
-     * @access private
      * @param  string $filename 文件名
      * @return bool
      */
@@ -467,7 +457,6 @@ class CloudImageModel
 
     /**
      * 取得上传文件的后缀
-     * @access private
      * @param  string $filename 文件名
      * @return bool
      */
@@ -480,7 +469,6 @@ class CloudImageModel
 
     /**
      * 取得上传文件的信息
-     * @access public
      * @return array
      */
     public function getUploadFileInfo()
@@ -490,7 +478,6 @@ class CloudImageModel
 
     /**
      * 取得最后一次错误信息
-     * @access public
      * @return string
      */
     public function getErrorMsg()

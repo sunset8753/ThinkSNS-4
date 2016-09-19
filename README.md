@@ -2,24 +2,28 @@
 ThinkSNS v4开源社交系统 [Web page](http://www.thinksns.com)
 A extensable social networing system.
 
-[![Latest Stable Version](https://poser.pugx.org/medz/thinksns-4/v/stable)](https://packagist.org/packages/medz/thinksns-4) [![Total Downloads](https://poser.pugx.org/medz/thinksns-4/downloads)](https://packagist.org/packages/medz/thinksns-4) [![Latest Unstable Version](https://poser.pugx.org/medz/thinksns-4/v/unstable)](https://packagist.org/packages/medz/thinksns-4) [![License](https://poser.pugx.org/medz/thinksns-4/license)](https://packagist.org/packages/medz/thinksns-4)
+[![Latest Stable Version](https://poser.pugx.org/medz/thinksns-4/v/stable)](https://packagist.org/packages/medz/thinksns-4)
+[![Total Downloads](https://poser.pugx.org/medz/thinksns-4/downloads)](https://packagist.org/packages/medz/thinksns-4)
+[![Latest Unstable Version](https://poser.pugx.org/medz/thinksns-4/v/unstable)](https://packagist.org/packages/medz/thinksns-4)
+[![License](https://poser.pugx.org/medz/thinksns-4/license)](https://packagist.org/packages/medz/thinksns-4)
+[![StyleCI](https://styleci.io/repos/42001557/shield?branch=master)](https://styleci.io/repos/42001557)
 
 # 如何获得ThinkSNS
 >* Composer
 ```shell
-composer create-project medz/thinksns-4
+composer create-project medz/thinksns
 ```
 >
 >* git
 ```shell
-git clone https://github.com/medz/ThinkSNS-4.git
+git clone https://github.com/medz/thinksns.git
 ```
 > 克隆下来后，使用composer初始化~
 ```shell
 composer install
 ```
 >* Download
-https://github.com/medz/ThinkSNS-4/releases
+https://github.com/medz/thinksns/releases
 下载的zip档案是进过composer初始化后的包，可以直接解压使用，无需使用composer初始化，如果需要升级，请执行
 ```shell
 composer update
@@ -37,6 +41,7 @@ composer update
 * 为了情怀。
 
 ## 还有什么
-try-dev是官方会尝试性地开发新的东西并提交，如果，你在自己版本中有好的新特性，例如重构了model并且处理了原有代码的兼容方案，那么，将会合并到try-dev中，当测试没有问题后，会直接提交到主版本中，供众多的Tser使用。
-申请开发协作者没有条件，无论你是（前/钱/壕）端，后端，甚至全栈开发人员，只要喜欢，都欢迎。
-but，还是希望先fork版本，并做出自己的修改，让用户看到你的想法很好。
+TS中存在太多冗余的东西，尤其是js，不知道哪位愿意做清理工作呢？
+
+## LICENSE
+[ThinkSNS授权协议](http://www.thinksns.com/commercialAuthorizationa.htm)

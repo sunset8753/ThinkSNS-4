@@ -50,7 +50,7 @@ class DiyWidgetModel extends Model
         return $result;
     }
     /**
-     * 返回模块参数  $sign是数组 
+     * 返回模块参数  $sign是数组
      * @param  array $sign
      * @return mixed
      */

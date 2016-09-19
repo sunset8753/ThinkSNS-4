@@ -383,7 +383,7 @@ class MessageModel extends Model
 
     /**
      * 设置指定用户指定私信为已读
-     * @param array  $list_ids   私信列表ID数组 
+     * @param array  $list_ids   私信列表ID数组
      * @param [type] $member_uid 成员用户ID
      * @param int val 要设置的值
      * @return bool 是否设置成功
@@ -544,7 +544,7 @@ class MessageModel extends Model
     /**
      * 验证指定用户是否是指定私信列表的成员
      * @param  int   $list_id     私信列表ID
-     * @param  int   $uid         用户ID 
+     * @param  int   $uid         用户ID
      * @param  bool  $show_detail 是否显示详细，默认为false
      * @return array 如果是成员返回相关信息，不是则返回空数组
      */
@@ -937,10 +937,10 @@ class MessageModel extends Model
             // 原始模板，屏蔽，保留，参考
 /*    		$body = 'Hi , <a href="'.U('public/Profile/index',array('uid'=>$v['uid'])).'" style="color:#0000ff;text-decoration:none;">'.$v['uname'].'</a><br /><br />自从您上次登录<a style="text-decoration:none;color:#3366cc" href="'.SITE_URL.'">'.
                     $GLOBALS['ts']['site']['site_name']."</a>以后，发生了很多事：<br /><br />您共收到";
-                
+
 
             $body.=$unread_atme.'条@提到你的、'.$unread_comment.'条新的评论、'.$unread_message.'条私信，<br /><br />共有'.$new_folower_count.'人关注了你。<br/><br/><a href="'.SITE_URL.'" style="background:#0f8ca8;width:80px;display:block;padding:5px 10px;color:#fff;text-align:center;font-size:12px;text-decoration:none;">快去看看吧</a>';
-                
+
             $mailtitle = '您有新的动态';
             $mailbody = '<style>a.email_btn,a.email_btn:link,a.email_btn:visited{background:#0F8CA8;padding:5px 10px;color:#fff;width:80px;text-align:center;}</style><div style="width:540px;border:#0F8CA8 solid 2px;margin:0 auto"><div style="color:#bbb;background:#0f8ca8;padding:5px;overflow:hidden;zoom:1"><div style="float:right;height:15px;line-height:15px;padding:10px 0;display:none">2012年07月15日</div>
                     <div style="float:left;overflow:hidden;position:relative"><a><img style="border:0 none" src="'.$GLOBALS['ts']['site']['logo'].'"></a></div></div>

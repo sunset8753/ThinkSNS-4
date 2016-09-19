@@ -126,7 +126,7 @@ class UploadWidget extends Widget
         }
     }
 
-    /** 
+    /**
      * 编辑器图片上传
      * @return array 上传图片的路径及错误信息
      */

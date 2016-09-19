@@ -31,13 +31,13 @@ class SourceModel
             return $info;
         }
         switch ($table) {
-            case 'feed' :
+            case 'feed':
                 $info = $this->getInfoFromFeed($table, $row_id, $_forApi);
                 break;
-            case 'comment' :
+            case 'comment':
                 $info = $this->getInfoFromComment($table, $row_id, $_forApi);
                 break;
-            case 'poster' :
+            case 'poster':
                 $poster = D('poster')->where('id='.$row_id)->field('title,uid,pid')->find();
                 $info['title'] = $poster['title'];
                 $info ['source_user_info'] = model('User')->getUserInfo($poster ['uid']);
@@ -50,7 +50,7 @@ class SourceModel
                 $info['category_id'] = $poster['pid'];
                 $info['category_name'] = D('poster_type')->where('id='.$poster['pid'])->getField('name');
                 break;
-            case 'event' :
+            case 'event':
                 $event = D('event')->where('id='.$row_id)->field('title,uid,sTime,eTime,address,joinCount,attentionCount,coverId,feed_id')->find();
                 $info['source_user_info'] = model('User')->getUserInfo($event['uid']);
                 $info['source_url'] = U('event/Index/eventDetail', array('id' => $row_id, 'uid' => $event['uid']));
@@ -104,7 +104,7 @@ class SourceModel
                 $info['cover_image_path'] = getImageUrl($photo['savepath'], 200, 200, true);
                 $info['album_url'] = U('photo/Index/album', array('uid' => $photo['userId'], 'id' => $photo['albumId']));
                 break;
-            case 'vote' :
+            case 'vote':
                 $vote = D('vote')->where('id='.$row_id)->field('title, uid, vote_num, cTime,feed_id')->find();
                 $info['source_user_info'] = model('User')->getUserInfo($vote['uid']);
                 $info['source_url'] = U('vote/Index/pollDetail', array('id' => $row_id));
@@ -141,7 +141,7 @@ class SourceModel
                 $info['pic_url_medium'] = $editorImage['pic_url_medium'];
                 $info['pic_url'] = $editorImage['pic_url'];
                 break;
-            default :
+            default:
                 // 单独的内容，通过此路径获取资源信息
                 // 通过应用下的{$appname}ProtocolModel.Class.php模型里的getSourceInfo方法，来写各应用的来源数据获取方法
                 $appname = strtolower($appname);

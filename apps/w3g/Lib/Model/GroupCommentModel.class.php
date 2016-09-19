@@ -122,7 +122,7 @@ class GroupCommentModel extends Model
      * @param  bool  $forApi   是否用于API，默认为false
      * @param  bool  $notCount 是否统计到未读评论
      * @param  array $lessUids 除去@用户ID
-     * @return bool  是否添加评论成功 
+     * @return bool  是否添加评论成功
      */
     public function addComment($data, $forApi = false, $notCount = false, $lessUids = null)
     {
@@ -187,7 +187,7 @@ class GroupCommentModel extends Model
 //      		if($add['to_uid'] != $GLOBALS['ts']['mid'] || $add['app_uid'] != $GLOBALS['ts']['mid'] && $add['app_uid'] != '') {
 //                 $author = model('User')->getUserInfo($GLOBALS['ts']['mid']);
 //                 $config['name'] = $author['uname'];
-//                 $config['space_url'] = $author['space_url']; 
+//                 $config['space_url'] = $author['space_url'];
 //                 $config['face'] = $author['avatar_middle'];
 // 	        	$sourceInfo = model('Source')->getSourceInfo($add['table'], $add['row_id'], $forApi, $add['app']);
 //                 $config['content'] = parse_html($add['content']);
@@ -197,7 +197,7 @@ class GroupCommentModel extends Model
 //                 $config['source_ctime'] = date('Y-m-d H:i:s',$sourceInfo['ctime']);
 // 			    if(!empty($add['to_uid'])) {
 // 			    	// 回复
-//                     $config['comment_type'] = '回复 我 的评论:';                     
+//                     $config['comment_type'] = '回复 我 的评论:';
 //                     model('Notify')->sendNotify($add['to_uid'], 'comment', $config);
 
 //                 } else {
@@ -447,7 +447,7 @@ class GroupCommentModel extends Model
         $max_id = intval($max_id);
         $limit = intval($limit);
         $page = intval($page);
-        $where = empty($where) ?  ' is_del = 0 ' : $where.' AND is_del=0';
+        $where = empty($where) ? ' is_del = 0 ' : $where.' AND is_del=0';
         if (!empty($since_id) || !empty($max_id)) {
             !empty($since_id) && $where .= " AND comment_id > {$since_id}";
             !empty($max_id) && $where .= " AND comment_id < {$max_id}";

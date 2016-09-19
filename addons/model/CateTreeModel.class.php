@@ -213,7 +213,7 @@ class CateTreeModel
      */
     private function createTree()
     {
-        // 从数据库取树的数据 
+        // 从数据库取树的数据
         $data = $this->_getTreeData();
         if (empty($data)) {
             return array();

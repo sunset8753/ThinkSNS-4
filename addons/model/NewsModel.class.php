@@ -1,8 +1,8 @@
 <?php
 /**
  * 资讯业务逻辑(为了应付TS的Comment组件,从应用里复制的，纠了个结了)
- * 
- * @version TS3.0 
+ *
+ * @version TS3.0
  * @name NewsModel
  * @author 2013-4-11  Tomcat<707514663@qq.com>
  *
@@ -40,7 +40,7 @@ class NewsModel extends Model
 
     /**
      * 定义自动验证
-     * 
+     *
      * @var array
      */
     protected $_validate = array(
@@ -169,7 +169,7 @@ class NewsModel extends Model
             $data[$k]['image'] = $thumb ;
             $data[$k]['title_intro'] = msubstr($v['news_title'], 0, 30);
             $data[$k]['content_intro'] = msubstr(strip_tags($v['news_content']), 0, 100);
-            //获取评论数量 
+            //获取评论数量
             $data[$k]['comment_count'] = model('Comment')->where(array('app' => 'news', 'table' => 'news', 'is_del' => 0, 'row_id' => $v['news_id']))->count();
         }
         if ($findPage) {

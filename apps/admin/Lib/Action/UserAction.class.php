@@ -624,14 +624,14 @@ class UserAction extends AdministratorAction
             $data['password'] = md5(md5($password).$data['login_salt']);
         }
 
-        $sex   and $data['sex'] = $sex;
+        $sex and $data['sex'] = $sex;
         $uname and $data['uname'] = $uname;
         $data['phone'] = $phone;
         $data['email'] = $email;
 
         $uname and preg_match('/[\x7f-\xff]+/', $data['search_key'] = $uname) and $data['search_key'] .= ' '.model('PinYin')->Pinyin($uname);
 
-        $data  and $model->where('`uid` = '.$uid)->save($data);
+        $data and $model->where('`uid` = '.$uid)->save($data);
 
         $group = implode(',', $group);
         model('UserGroupLink')->domoveUsergroup($uid, $group);
@@ -690,6 +690,11 @@ class UserAction extends AdministratorAction
             $return['status'] = 1;
             $return['data'] = model('Register')->getLastError();
         }
+        M('user_credit')->add(array('uid' => $_POST['id'], 'score' => 0, 'experience' => 0));
+        // 添加积分
+        model('Credit')->setUserCredit($_POST['id'], 'init_default');
+        //清除缓存
+        model('User')->cleanCache($_POST['id']);
         echo json_encode($return);
         exit();
     }
@@ -938,7 +943,7 @@ class UserAction extends AdministratorAction
         $this->opt['form_type'] = model('UserProfile')->getUserProfileInputType();
 
         $detail = !empty($_GET['id']) ? D('UserProfileSetting')->where("field_id='{$_GET['id']}'")->find() : array();
-        $this->savePostUrl = !empty($detail) ?  U('admin/User/doSaveProfileField') :  U('admin/User/doAddProfileField');
+        $this->savePostUrl = !empty($detail) ? U('admin/User/doSaveProfileField') : U('admin/User/doAddProfileField');
 
         $this->notEmpty = array('field_key', 'field_name', 'field_type');
         $this->onsubmit = 'admin.checkProfile(this)';
@@ -973,7 +978,7 @@ class UserAction extends AdministratorAction
         $this->opt['form_type'] = model('UserProfile')->getUserProfileInputType();
 
         $detail = !empty($_GET['id']) ? D('UserProfileSetting')->where("field_id='{$_GET['id']}'")->find() : array();
-        $this->savePostUrl = !empty($detail) ?  U('admin/User/doSaveProfileField') :  U('admin/User/doAddProfileField');
+        $this->savePostUrl = !empty($detail) ? U('admin/User/doSaveProfileField') : U('admin/User/doAddProfileField');
 
         $this->notEmpty = array('field_key', 'field_name', 'field_type');
         $this->onsubmit = 'admin.checkProfile(this)';
@@ -1532,12 +1537,12 @@ class UserAction extends AdministratorAction
         }
         // preg_match_all('/./us', $data['reason'], $matchs);   //一个汉字也为一个字符
         // if(count($matchs[0])>140){
-        // 	$this->error('认证补充不能超过140个字符');	
-        // }  
+        // 	$this->error('认证补充不能超过140个字符');
+        // }
         // preg_match_all('/./us', $data['info'], $match);   //一个汉字也为一个字符
         // if(count($match[0])>140){
-        // 	$this->error('认证资料不能超过140个字符');	
-        // }       
+        // 	$this->error('认证资料不能超过140个字符');
+        // }
         $data['verified'] = 1;
         $res = D('user_verified')->add($data);
         $map['uid'] = $_POST['uname'];

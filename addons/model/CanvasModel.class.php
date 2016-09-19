@@ -31,7 +31,7 @@ class CanvasModel extends Model
         return $data;
     }
     /**
-     * 返回画布列表 
+     * 返回画布列表
      * @param  int    $limit
      * @param  array  $map
      * @param  string $fields

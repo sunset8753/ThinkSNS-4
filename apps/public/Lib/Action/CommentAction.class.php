@@ -1,7 +1,7 @@
 <?php
 /**
  * 我的评论控制器
- * @author jason <yangjs17@yeah.net> 
+ * @author jason <yangjs17@yeah.net>
  * @version TS3.0
  */
 class CommentAction extends Action
@@ -72,7 +72,7 @@ class CommentAction extends Action
                 $list['data'][$k]['hasComment'] = true;
             }
         }
-        model('UserCount')->resetUserCount($this->mid, 'unread_comment',  0);
+        model('UserCount')->resetUserCount($this->mid, 'unread_comment', 0);
         $this->assign('list', $list);
         // dump($list);exit;
         $this->setTitle($keyword.'的评论');                    // 我的评论
@@ -93,7 +93,7 @@ class CommentAction extends Action
         $var['comment_id'] = intval($_GET['comment_id']);
         $var['initNums'] = model('Xdata')->getConfig('weibo_nums', 'feed');
         $var['commentInfo'] = model('Comment')->getCommentInfo(intval($var['comment_id']), false);
-        $var['canrepost'] = $var['commentInfo']['table'] == 'feed'  ? 1 : 0;
+        $var['canrepost'] = $var['commentInfo']['table'] == 'feed' ? 1 : 0;
         $var['cancomment'] = 1;
         // 获取原作者信息
         $rowData = model('Feed')->get(intval($var['commentInfo']['row_id']));

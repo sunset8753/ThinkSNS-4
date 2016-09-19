@@ -1,18 +1,18 @@
 <?php
 /**
  * PhpThumb GD Thumb Class Definition File
- * 
+ *
  * This file contains the definition for the GdThumb object
- * 
+ *
  * PHP Version 5 with GD 2.0+
  * PhpThumb : PHP Thumb Library <http://phpthumb.gxdlabs.com>
  * Copyright (c) 2009, Ian Selby/Gen X Design
- * 
+ *
  * Author(s): Ian Selby <ian@gen-x-design.com>
- * 
+ *
  * Licensed under the MIT License
  * Redistributions of files must retain the above copyright notice.
- * 
+ *
  * @author Ian Selby <ian@gen-x-design.com>
  * @copyright Copyright (c) 2009 Gen X Design
  * @link http://phpthumb.gxdlabs.com
@@ -24,9 +24,9 @@
 
 /**
  * GdThumb Class Definition
- * 
+ *
  * This is the GD Implementation of the PHP Thumb library.
- * 
+ *
  * @package PhpThumb
  * @subpackage Core
  */
@@ -34,60 +34,60 @@ class GdThumb extends ThumbBase
 {
     /**
      * The prior image (before manipulation)
-     * 
+     *
      * @var resource
      */
     protected $oldImage;
     /**
      * The working image (used during manipulation)
-     * 
+     *
      * @var resource
      */
     protected $workingImage;
     /**
      * The current dimensions of the image
-     * 
+     *
      * @var array
      */
     protected $currentDimensions;
     /**
      * The new, calculated dimensions of the image
-     * 
+     *
      * @var array
      */
     protected $newDimensions;
     /**
      * The options for this class
-     * 
+     *
      * This array contains various options that determine the behavior in
-     * various functions throughout the class.  Functions note which specific 
+     * various functions throughout the class.  Functions note which specific
      * option key / values are used in their documentation
-     * 
+     *
      * @var array
      */
     protected $options;
     /**
      * The maximum width an image can be after resizing (in pixels)
-     * 
+     *
      * @var int
      */
     protected $maxWidth;
     /**
      * The maximum height an image can be after resizing (in pixels)
-     * 
+     *
      * @var int
      */
     protected $maxHeight;
     /**
      * The percentage to resize the image by
-     * 
+     *
      * @var int
      */
     protected $percent;
 
     /**
      * Class Constructor
-     * 
+     *
      * @return GdThumb
      * @param  string  $fileName
      */
@@ -128,7 +128,7 @@ class GdThumb extends ThumbBase
 
     /**
      * Class Destructor
-     * 
+     *
      */
     public function __destruct()
     {
@@ -147,11 +147,11 @@ class GdThumb extends ThumbBase
 
     /**
      * Resizes an image to be no larger than $maxWidth or $maxHeight
-     * 
+     *
      * If either param is set to zero, then that dimension will not be considered as a part of the resize.
      * Additionally, if $this->options['resizeUp'] is set to true (false by default), then this function will
      * also scale the image up to the maximum dimensions provided.
-     * 
+     *
      * @param  int     $maxWidth  The maximum width of the image in pixels
      * @param  int     $maxHeight The maximum height of the image in pixels
      * @return GdThumb
@@ -212,10 +212,10 @@ class GdThumb extends ThumbBase
 
     /**
      * Adaptively Resizes the Image
-     * 
-     * This function attempts to get the image to as close to the provided dimensions as possible, and then crops the 
+     *
+     * This function attempts to get the image to as close to the provided dimensions as possible, and then crops the
      * remaining overflow (from the center) to get the image to be the size specified
-     * 
+     *
      * @param  int     $maxWidth
      * @param  int     $maxHeight
      * @return GdThumb
@@ -223,7 +223,7 @@ class GdThumb extends ThumbBase
     public function adaptiveResize($width, $height)
     {
         // make sure our arguments are valid
-        if (!is_numeric($width) || $width  == 0) {
+        if (!is_numeric($width) || $width == 0) {
             throw new InvalidArgumentException('$width must be numeric and greater than zero');
         }
 
@@ -298,9 +298,9 @@ class GdThumb extends ThumbBase
 
     /**
      * Resizes an image by a given percent uniformly
-     * 
+     *
      * Percentage should be whole number representation (i.e. 1-100)
-     * 
+     *
      * @param  int     $percent
      * @return GdThumb
      */
@@ -344,9 +344,9 @@ class GdThumb extends ThumbBase
 
     /**
      * Crops an image from the center with provided dimensions
-     * 
+     *
      * If no height is given, the width will be used as a height, thus creating a square crop
-     * 
+     *
      * @param  int     $cropWidth
      * @param  int     $cropHeight
      * @return GdThumb
@@ -378,7 +378,7 @@ class GdThumb extends ThumbBase
 
     /**
      * Vanilla Cropping - Crops from x,y with specified width and height
-     * 
+     *
      * @param  int     $startX
      * @param  int     $startY
      * @param  int     $cropWidth
@@ -456,7 +456,7 @@ class GdThumb extends ThumbBase
 
     /**
      * Rotates image either 90 degrees clockwise or counter-clockwise
-     * 
+     *
      * @param string $direction
      * @retunrn GdThumb
      */
@@ -473,7 +473,7 @@ class GdThumb extends ThumbBase
 
     /**
      * Rotates image specified number of degrees
-     * 
+     *
      * @param  int     $degrees
      * @return GdThumb
      */
@@ -500,11 +500,11 @@ class GdThumb extends ThumbBase
 
     /**
      * Shows an image
-     * 
+     *
      * This function will show the current image by first sending the appropriate header
-     * for the format, and then outputting the image data. If headers have already been sent, 
-     * a runtime exception will be thrown 
-     * 
+     * for the format, and then outputting the image data. If headers have already been sent,
+     * a runtime exception will be thrown
+     *
      * @param  bool    $rawData Whether or not the raw image stream should be output
      * @return GdThumb
      */
@@ -560,15 +560,15 @@ class GdThumb extends ThumbBase
 
     /**
      * Saves an image
-     * 
+     *
      * This function will make sure the target directory is writeable, and then save the image.
-     * 
+     *
      * If the target directory is not writeable, the function will try to correct the permissions (if allowed, this
      * is set as an option ($this->options['correctPermissions']).  If the target cannot be made writeable, then a
      * RuntimeException is thrown.
-     * 
+     *
      * TODO: Create additional paramter for color matte when saving images with alpha to non-alpha formats (i.e. PNG => JPG)
-     * 
+     *
      * @param  string  $fileName The full path and filename of the image to save
      * @param  string  $format   The format to save the image in (optional, must be one of [GIF,JPG,PNG]
      * @return GdThumb
@@ -583,13 +583,13 @@ class GdThumb extends ThumbBase
         }
 
         // make sure the directory is writeable
-        if (!is_writeable(dirname($fileName))) {
+        if (!is_writable(dirname($fileName))) {
             // try to correct the permissions
             if ($this->options['correctPermissions'] === true) {
                 @chmod(dirname($fileName), 0777);
 
                 // throw an exception if not writeable
-                if (!is_writeable(dirname($fileName))) {
+                if (!is_writable(dirname($fileName))) {
                     throw new RuntimeException('File is not writeable, and could not correct permissions: '.$fileName);
                 }
             }
@@ -620,7 +620,7 @@ class GdThumb extends ThumbBase
 
     /**
      * Sets $this->options to $options
-     * 
+     *
      * @param array $options
      */
     public function setOptions($options = array())
@@ -636,7 +636,7 @@ class GdThumb extends ThumbBase
         }
 
         // we've yet to init the default options, so create them here
-        if (sizeof($this->options) == 0) {
+        if (count($this->options) == 0) {
             $defaultOptions = array(
                 'resizeUp' => false,
                 'jpegQuality' => 100,
@@ -818,7 +818,7 @@ class GdThumb extends ThumbBase
 
     /**
      * Calculates a new width and height for the image based on $this->maxWidth and the provided dimensions
-     * 
+     *
      * @return array
      * @param  int   $width
      * @param  int   $height
@@ -836,7 +836,7 @@ class GdThumb extends ThumbBase
 
     /**
      * Calculates a new width and height for the image based on $this->maxWidth and the provided dimensions
-     * 
+     *
      * @return array
      * @param  int   $width
      * @param  int   $height
@@ -854,7 +854,7 @@ class GdThumb extends ThumbBase
 
     /**
      * Calculates a new width and height for the image based on $this->percent and the provided dimensions
-     * 
+     *
      * @return array
      * @param  int   $width
      * @param  int   $height
@@ -872,9 +872,9 @@ class GdThumb extends ThumbBase
 
     /**
      * Calculates the new image dimensions
-     * 
+     *
      * These calculations are based on both the provided dimensions and $this->maxWidth and $this->maxHeight
-     * 
+     *
      * @param int $width
      * @param int $height
      */
@@ -905,8 +905,8 @@ class GdThumb extends ThumbBase
     }
 
     /**
-     * Calculates new image dimensions, not allowing the width and height to be less than either the max width or height 
-     * 
+     * Calculates new image dimensions, not allowing the width and height to be less than either the max width or height
+     *
      * @param int $width
      * @param int $height
      */
@@ -949,7 +949,7 @@ class GdThumb extends ThumbBase
 
     /**
      * Calculates new dimensions based on $this->percent and the provided dimensions
-     * 
+     *
      * @param int $width
      * @param int $height
      */
@@ -962,9 +962,9 @@ class GdThumb extends ThumbBase
 
     /**
      * Determines the file format by mime-type
-     * 
+     *
      * This function will throw exceptions for invalid images / mime-types
-     * 
+     *
      */
     protected function determineFormat()
     {
@@ -1007,7 +1007,7 @@ class GdThumb extends ThumbBase
 
     /**
      * Makes sure the correct GD implementation exists for the file type
-     * 
+     *
      */
     protected function verifyFormatCompatiblity()
     {
@@ -1040,13 +1040,13 @@ class GdThumb extends ThumbBase
 
     /**
      * Preserves the alpha or transparency for PNG and GIF files
-     * 
+     *
      * Alpha / transparency will not be preserved if the appropriate options are set to false.
-     * Also, the GIF transparency is pretty skunky (the results aren't awesome), but it works like a 
+     * Also, the GIF transparency is pretty skunky (the results aren't awesome), but it works like a
      * champ... that's the nature of GIFs tho, so no huge surprise.
-     * 
+     *
      * This functionality was originally suggested by commenter Aimi (no links / site provided) - Thanks! :)
-     *   
+     *
      */
     protected function preserveAlpha()
     {

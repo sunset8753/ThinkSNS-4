@@ -31,8 +31,8 @@ class TopicModel extends Model
     }
 
     //获取帖子列表
-      /**
-      * getTopicList 
+    /**
+     * getTopicList
      */
     public function getTopicList($html = 1, $map = null, $fields = null, $order = null, $limit = null, $isDel = 0)
     {
@@ -113,12 +113,12 @@ class TopicModel extends Model
      // 群组热贴
     public function getHotThread()
     {
-        // 1分钟锁缓存 
+        // 1分钟锁缓存
         if (!($cache = S('Cache_Hot_Thread'))) {
-            S('Cache_Hot_Thread_t', time()); //缓存未设置 先设置缓存设定时间	
+            S('Cache_Hot_Thread_t', time()); //缓存未设置 先设置缓存设定时间
         } else {
             if (!($cacheSetTime = S('Cache_Hot_Thread_t')) || $cacheSetTime + 60 <= time()) {
-                S('Cache_Hot_Thread_t', time()); //缓存未设置 先设置缓存设定时间	
+                S('Cache_Hot_Thread_t', time()); //缓存未设置 先设置缓存设定时间
             } else {
                 return $cache;
             }

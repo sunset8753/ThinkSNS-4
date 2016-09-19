@@ -41,10 +41,10 @@ class AlipaySubmit
 
         $mysign = '';
         switch (strtoupper(trim($this->alipay_config['sign_type']))) {
-            case 'MD5' :
+            case 'MD5':
                 $mysign = md5Sign($prestr, $this->alipay_config['key']);
                 break;
-            default :
+            default:
                 $mysign = '';
         }
 

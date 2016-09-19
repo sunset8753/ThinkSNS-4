@@ -1,7 +1,7 @@
 <?php
 /**
  * 公告模型 - 数据对象模型
- * @author jason <yangjs17@yeah.net> 
+ * @author jason <yangjs17@yeah.net>
  * @version TS3.0
  */
 class AnnouncementModel extends Model

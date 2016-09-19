@@ -47,25 +47,25 @@ class WeibaCheckInWidget extends Widget
         $var ['tpl'] && $data ['tpl'] = $var ['tpl'];
         $week = date('w');
         switch ($week) {
-            case '0' :
+            case '0':
                 $week = '周日';
                 break;
-            case '1' :
+            case '1':
                 $week = '周一';
                 break;
-            case '2' :
+            case '2':
                 $week = '周二';
                 break;
-            case '3' :
+            case '3':
                 $week = '周三';
                 break;
-            case '4' :
+            case '4':
                 $week = '周四';
                 break;
-            case '5' :
+            case '5':
                 $week = '周五';
                 break;
-            case '6' :
+            case '6':
                 $week = '周六';
                 break;
         }

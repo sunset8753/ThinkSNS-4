@@ -17,11 +17,11 @@ class EventModel extends BaseModel
     public function getConfig($key = null)
     {
         $config = model('Xdata')->lget('event');
-        $config['limitpage']    || $config['limitpage'] = 10;
+        $config['limitpage'] || $config['limitpage'] = 10;
         $config['canCreate'] === 0 || $config['canCreat'] = 1;
-        ($config['credit'] > 0   || '0' === $config['credit']) || $config['credit'] = 100;
-        $config['credit_type']  || $config['credit_type'] = 'experience';
-        ($config['limittime']   || $config['limittime'] === '0') || $config['limittime'] = 10;//换算为秒
+        ($config['credit'] > 0 || '0' === $config['credit']) || $config['credit'] = 100;
+        $config['credit_type'] || $config['credit_type'] = 'experience';
+        ($config['limittime'] || $config['limittime'] === '0') || $config['limittime'] = 10; //换算为秒
 
         if ($key) {
             return $config[$key];
@@ -60,7 +60,6 @@ class EventModel extends BaseModel
      * appendContent
      * 追加和反解析数据
      * @param mixed $data
-     * @access public
      */
     public function appendContent($data)
     {
@@ -102,7 +101,6 @@ class EventModel extends BaseModel
      * checkRoll
      * 检查权限
      * @param mixed $uid
-     * @access public
      */
     public function checkMember($eventAdmin, $opts, $mid)
     {
@@ -138,7 +136,6 @@ class EventModel extends BaseModel
      * 添加活动
      * @param mixed $map
      * @param mixed $feed
-     * @access public
      */
     public function doAddEvent($eventMap, $optsMap, $cover)
     {
@@ -191,7 +188,6 @@ class EventModel extends BaseModel
      * @param mixed $eventId
      * @param mixed $uid
      * @param mixed $mid
-     * @access public
      */
     public function getEventContent($eventId, $uid)
     {
@@ -253,7 +249,6 @@ class EventModel extends BaseModel
      * 工厂方法
      * @param mixed $name
      * @static
-     * @access private
      */
     public static function factoryModel($name)
     {
@@ -265,7 +260,6 @@ class EventModel extends BaseModel
      * 添加用户行为
      * @param mixed $data
      * @param mixed $allow
-     * @access public
      */
     public function doAddUser($data, $allow)
     {
@@ -364,7 +358,6 @@ class EventModel extends BaseModel
      * doArgeeUser
      * 同意申请
      * @param mixed $data
-     * @access public
      */
     public function doArgeeUser($data)
     {
@@ -390,7 +383,6 @@ class EventModel extends BaseModel
      * doDelUser
      * 取消关注或参加
      * @param mixed $data
-     * @access public
      */
     public function doDelUser($data)
     {
@@ -476,7 +468,6 @@ class EventModel extends BaseModel
      * 供后台管理获取列表的方法
      * @param mixed $order
      * @param mixed $limit
-     * @access public
      */
     public function getList($map, $order, $limit)
     {
@@ -493,7 +484,6 @@ class EventModel extends BaseModel
      * doDeleteEvent
      * 删除活动
      * @param mixed $eventId
-     * @access public
      */
     public function doDeleteEvent($eventId)
     {
@@ -529,7 +519,6 @@ class EventModel extends BaseModel
      * getConfig
      * 获取配置
      * @param mixed $index
-     * @access public
      */
     /*public function getConfig( $index ){
         $config = $this->config->$index;
@@ -541,7 +530,6 @@ class EventModel extends BaseModel
      * 设置推荐
      * @param mixed $map
      * @param mixed $act
-     * @access public
      */
     public function doIsHot($map, $act)
     {
@@ -572,7 +560,6 @@ class EventModel extends BaseModel
      * 推荐列表
      * @param mixed $map
      * @param mixed $act
-     * @access public
      */
     public function getHotList()
     {
@@ -596,7 +583,6 @@ class EventModel extends BaseModel
      * hasMember
      * 判断是否是有这个成员
      * @param mixed $uid
-     * @access public
      */
     public function hasMember($uid, $eventId)
     {

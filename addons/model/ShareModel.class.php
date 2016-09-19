@@ -1,14 +1,14 @@
 <?php
 /**
  * 分享模型 - 业务逻辑模型
- * @author jason <yangjs17@yeah.net> 
+ * @author jason <yangjs17@yeah.net>
  * @version TS3.0
  */
 class ShareModel
 {
     /**
      * 分享到分享
-     * 
+     *
      * @example 需要传入的$data值
      *          sid：转发的分享/资源ID
      *          app_name：app名称
@@ -128,10 +128,10 @@ class ShareModel
             $rdata ['app'] = $app;
             $rdata ['is_repost'] = 1;
             switch ($app) {
-                case 'weiba' :
+                case 'weiba':
                     $rdata ['from'] = getFromClient(0, $app, '微吧');
                     break;
-                default :
+                default:
                     $rdata ['from'] = getFromClient($from, $app);
                     break;
             }
@@ -159,7 +159,7 @@ class ShareModel
 
     /**
      * 分享给同事
-     * 
+     *
      * @example 需要传入的$data值
      *          uid：同事用户ID
      *          sid：转发的分享/资源ID

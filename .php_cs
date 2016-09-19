@@ -3,20 +3,21 @@
 $baseDir = dirname(__FILE__) . '/';
 
 $finder = \Symfony\CS\Finder\DefaultFinder::create()
+    ->exclude('data')
+    ->exclude('storage')
     ->exclude('vendor')
     ->exclude('.svn')
     ->exclude('.git')
-    ->exclude('src/Vendor')
+    ->exclude('src/vendor')
     ->in($baseDir)
 ;
 
-return Symfony\CS\Config\Config::create()
+return \Symfony\CS\Config\Config::create()
     ->level(Symfony\CS\FixerInterface::PSR2_LEVEL)
     ->fixers(array(
         'double_arrow_multiline_whitespaces',
         'duplicate_semicolon',
         'blankline_after_open_tag',
-        'array_element_white_space_after_comm',
         'concat_without_spaces',
         'function_typehint_space',
         'join_function',
@@ -26,7 +27,7 @@ return Symfony\CS\Config\Config::create()
         'no_blank_lines_after_class_opening',
         'object_operator',
         'phpdoc_indent',
-        'phpdoc_no_acces',
+        'phpdoc_no_access',
         'phpdoc_no_empty_return',
         'phpdoc_params',
         'phpdoc_scalar',

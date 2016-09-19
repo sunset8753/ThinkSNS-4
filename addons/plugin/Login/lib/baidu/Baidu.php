@@ -9,7 +9,7 @@ require_once 'BaiduOAuth2.php';
 require_once 'BaiduApiClient.php';
 require_once 'BaiduUtils.php';
 /**
- * 
+ *
  * @package Baidu
  * @author zhujianting(zhujianting@baidu.com)
  * @version v2.0.0
@@ -29,7 +29,7 @@ class BaiduAPI
     protected $clientSecret;
 
     /**
-     * Redirect uri of the app, where we will redirect to after user authorization. 
+     * Redirect uri of the app, where we will redirect to after user authorization.
      * @var string
      */
     protected $redirectUri;
@@ -37,7 +37,7 @@ class BaiduAPI
     /**
      * Storage for the user session related datas, like state, authorization code,
      * access token and so on.
-     * 
+     *
      * @var BaiduStore
      */
     protected $store = null;
@@ -60,7 +60,7 @@ class BaiduAPI
 
     /**
      * Constructor
-     * 
+     *
      * @param string     $clientId     The client_id of the app or access_key of the developer.
      * @param string     $clientSecret The client_secret of the app or secret_key of the developer.
      * @param string     $redirectUri  Redirect uri of the app.
@@ -75,7 +75,7 @@ class BaiduAPI
     }
     /**
      * Get an instance of BaiduOAuth2 class.
-     * 
+     *
      * @return BaiduOAuth2
      */
     public function getBaiduOAuth2Service()
@@ -90,7 +90,7 @@ class BaiduAPI
 
     /**
      * Get an instance of BaiduApiClient class.
-     * 
+     *
      * @param  string         $accessToken Access token for api calls.
      * @return BaiduApiClient
      */
@@ -101,7 +101,7 @@ class BaiduAPI
 
     /**
      * Get access token for openapi calls.
-     * 
+     *
      * @return string|false Returns access token if user has authorized the app, or false if not.
      */
     public function getAccessToken()
@@ -116,7 +116,7 @@ class BaiduAPI
 
     /**
      * Get refresh token.
-     * 
+     *
      * @return string|false Returns refresh token if app has, or false if not.
      */
     public function getRefreshToken()
@@ -131,7 +131,7 @@ class BaiduAPI
 
     /**
      * Get currently logged in user's uid.
-     * 
+     *
      * @return uint|false Return uid of the loggedin user, or return
      *                    false if user isn't loggedin.
      */
@@ -143,8 +143,8 @@ class BaiduAPI
         // If there's bd_sig & bd_user parameter in query parameters,
         // it must be an inside web app(app on baidu) loading request,
         // then we must check whether the uid passed from baidu is the
-        // same as we get from persistent data or from access token, 
-        // if it's not, we should clear all the persistent data and to 
+        // same as we get from persistent data or from access token,
+        // if it's not, we should clear all the persistent data and to
         // get an access token again.
         if (isset($_REQUEST['bd_sig']) && isset($_REQUEST['bd_user'])) {
             $params = array('bd_user' => $_REQUEST['bd_user']);
@@ -177,9 +177,9 @@ class BaiduAPI
 
     /**
      * Get the Logout URL suitable for use with redirects.
-     * 
+     *
      * @param string $next Url to go to after a successful logout.
-     * 
+     *
      * @return string
      */
     public function getLogoutUrl($next)
@@ -191,7 +191,7 @@ class BaiduAPI
 
     /**
      * Get user session info.
-     * 
+     *
      * @return array
      */
     public function getSession()
@@ -205,7 +205,7 @@ class BaiduAPI
 
     /**
      * Set user session.
-     * 
+     *
      * @param  array $session User session info.
      * @return Baidu
      */
@@ -223,7 +223,7 @@ class BaiduAPI
 
     /**
      * Get current user's uid and uname.
-     * 
+     *
      * @return array|false array('uid' => xx, 'uname' => xx)
      */
     protected function getUser()
@@ -238,7 +238,7 @@ class BaiduAPI
 
     /**
      * Set the session data storage instance.
-     * 
+     *
      * @param  BaiduStore $store
      * @return Baidu
      */
@@ -261,7 +261,7 @@ class BaiduAPI
 
     /**
      * Get session info from Baidu server or from the store in app server side.
-     * 
+     *
      * @return array|false
      */
     protected function doGetSession()

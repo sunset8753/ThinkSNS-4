@@ -1,4 +1,5 @@
 <?php
+
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK IT ]
 // +----------------------------------------------------------------------
@@ -21,17 +22,16 @@ class CacheFile extends Cache
 {
     /**
      * 架构函数
-     * @access public
      */
     public function __construct($options = array())
     {
         if (!empty($options)) {
             $this->options = $options;
         }
-        $this->options['temp'] = !empty($options['temp']) ?   $options['temp']    :   C('DATA_CACHE_PATH');
-        $this->options['prefix'] = isset($options['prefix']) ?  $options['prefix']  :   C('DATA_CACHE_PREFIX');
-        $this->options['expire'] = isset($options['expire']) ?  $options['expire']  :   C('DATA_CACHE_TIME');
-        $this->options['length'] = isset($options['length']) ?  $options['length']  :   0;
+        $this->options['temp'] = !empty($options['temp']) ? $options['temp'] : C('DATA_CACHE_PATH');
+        $this->options['prefix'] = isset($options['prefix']) ? $options['prefix'] : C('DATA_CACHE_PREFIX');
+        $this->options['expire'] = isset($options['expire']) ? $options['expire'] : C('DATA_CACHE_TIME');
+        $this->options['length'] = isset($options['length']) ? $options['length'] : 0;
         if (substr($this->options['temp'], -1) != '/') {
             $this->options['temp'] .= '/';
         }
@@ -40,7 +40,6 @@ class CacheFile extends Cache
 
     /**
      * 初始化检查
-     * @access private
      * @return boolen
      */
     private function init()
@@ -59,7 +58,6 @@ class CacheFile extends Cache
 
     /**
      * 取得变量的存储文件名
-     * @access private
      * @param  string $name 缓存变量名
      * @return string
      */
@@ -69,12 +67,12 @@ class CacheFile extends Cache
         if (C('DATA_CACHE_SUBDIR')) {
             // 使用子目录
             $dir = '';
-            for ($i = 0;$i < C('DATA_PATH_LEVEL');$i++) {
-                $dir    .=    $name{$i}
+            for ($i = 0; $i < C('DATA_PATH_LEVEL'); $i++) {
+                $dir .= $name{$i}
                 .'/';
             }
             if (!is_dir($this->options['temp'].$dir)) {
-                mkdir($this->options['temp'].$dir, 0777, true);
+                \Medz\Component\Filesystem\Filesystem::mkdir($this->options['temp'].$dir, 0777);
             }
             $filename = $dir.$this->options['prefix'].$name.'.php';
         } else {
@@ -86,7 +84,6 @@ class CacheFile extends Cache
 
     /**
      * 读取缓存
-     * @access public
      * @param  string $name 缓存变量名
      * @return mixed
      */
@@ -131,7 +128,6 @@ class CacheFile extends Cache
 
     /**
      * 写入缓存
-     * @access public
      * @param  string $name   缓存变量名
      * @param  mixed  $value  存储数据
      * @param  int    $expire 有效时间 0为永久
@@ -172,7 +168,6 @@ class CacheFile extends Cache
 
     /**
      * 删除缓存
-     * @access public
      * @param  string $name 缓存变量名
      * @return boolen
      */
@@ -185,7 +180,6 @@ class CacheFile extends Cache
 
     /**
      * 清除缓存
-     * @access public
      * @param  string $name 缓存变量名
      * @return boolen
      */

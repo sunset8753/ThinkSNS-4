@@ -1,8 +1,8 @@
 <?php
 /**
   * 评论发布/显示框
-  * @example W('Comment',array('tpl'=>'detail','row_id'=>72,'order'=>'DESC','app_uid'=>'14983','cancomment'=>1,'cancomment_old'=>0,'showlist'=>1,'canrepost'=>1))                                  
-  * @author jason <yangjs17@yeah.net> 
+  * @example W('Comment',array('tpl'=>'detail','row_id'=>72,'order'=>'DESC','app_uid'=>'14983','cancomment'=>1,'cancomment_old'=>0,'showlist'=>1,'canrepost'=>1))
+  * @author jason <yangjs17@yeah.net>
   * @version TS3.0
   */
 class CommentWidget extends Widget
@@ -161,6 +161,13 @@ class CommentWidget extends Widget
                 'data' => L('PUBLIC_CONCENT_IS_ERROR'),
         );
 
+        //检测用户是否被禁言
+        if ($isDisabled = model('DisableUser')->isDisableUser($this->mid, 'post')) {
+            return json_encode(array(
+                'status' => 0,
+                'data' => '您已经被禁言了',
+            ));
+        }
         // 获取接收数据
         $data ['app'] = t($_POST ['app_name']);
         $data ['table'] = t($_POST ['table_name']);
@@ -212,7 +219,7 @@ class CommentWidget extends Widget
         } else {
             $data['app_detail_summary'] = $data ['app_detail_summary'].'<a class="ico-details" href="'.$data['app_detail_url'].'"></a>';
         }
-        $data['from'] = 'feed';
+        // $data['from'] = 'feed';
         // 添加评论操作
         $data ['comment_id'] = model('Comment')->addComment($data);
         $return['sql'] = D()->getLastSql();

@@ -22,7 +22,7 @@ class CategoryModel extends Model
                 foreach ($c as $v) {
                     $cTree['t'] = $v['title'];
                     $cTree['a'] = $v['id'];
-                    $cTree['d'] = '';//$v['id'];
+                    $cTree['d'] = ''; //$v['id'];
                     $cTrees[] = $cTree;
                 }
             }
@@ -58,14 +58,14 @@ class CategoryModel extends Model
     public function _makeLiTree($pid)
     {
         if ($c = $this->where("pid='$pid'")->findAll()) {
-            $list    .=    '<ul>';
+            $list .= '<ul>';
             foreach ($c as $p) {
                 @extract($p);
 
                 $ptitle = "<span id='category_".$id."' title='".$title."'><a href='javascript:void(0)' onclick=\"edit('".$id."')\">".$title.'</a></span>';
                 $title = '['.$id.'] '.$ptitle;
 
-                $list    .=    '
+                $list .= '
 					<li id="li_'.$id.'">
 					<span style="float:right;">
 						<a href="javascript:void(0)" onclick="edit(\''.$id.'\')" style="font-size:9px">修改</a>
@@ -74,9 +74,9 @@ class CategoryModel extends Model
 					</li>
 					<hr style="height:1px;color:#ccc" />';
 
-                $list    .=    $this->_makeLiTree($id);
+                $list .= $this->_makeLiTree($id);
             }
-            $list    .=    '</ul>';
+            $list .= '</ul>';
         }
 
         return $list;
@@ -97,7 +97,7 @@ class CategoryModel extends Model
         return intval($pid);
     }
 
-    //解析分类 - new 
+    //解析分类 - new
     public function _digCateNew($array)
     {
         foreach ($array as $k => $v) {

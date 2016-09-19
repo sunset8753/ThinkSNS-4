@@ -1,7 +1,11 @@
 <?php
+
+use Ts\Models;
+use Medz\Component\EmojiFormat;
+
 /**
  * 用户模型 - 数据对象模型
- * @author jason <yangjs17@yeah.net> 
+ * @author jason <yangjs17@yeah.net>
  * @version TS3.0
  */
 class UserModel extends Model
@@ -51,25 +55,26 @@ class UserModel extends Model
      * 检查用户是否存在
      *
      * @param  strint $user 用户标识 uid|phone|uname|email
-     * @return bool
-     * @author Medz Seven <lovevipdsw@vip.qq.com>
+     * @return array
+     * @author Medz Seven <lovevipdsw@outlook.com>
      **/
     public function hasUser($user, $isUid = false)
     {
-        $map['is_del'] = 0;
         if ($isUid) {
-            $map['uid'] = $user;
-        } elseif (false !== strpos($user, '@')) {
-            $map['email'] = $user;
-        } elseif (preg_match('/^\+?[0\s]*[\d]{0,4}[\-\s]?\d{4,12}$/', $user)) {
-            $map['phone'] = $user;
-        } elseif (preg_match('/^[1-9]\d*$/', $user)) {
-            $map['uid|uname'] = $user;
+            $users = Models\User::existent()->audit()->byUid($user)->get();
+        } elseif (MedzValidator::isEmail($user)) {
+            $users = Models\User::existent()->audit()->byEmail($user)->get();
         } else {
-            $map['uname'] = $user;
+            $users = Models\User::existent()
+                ->audit()
+                ->where('uid', '=', intval($user))
+                ->orWhere('uname', '=', EmojiFormat::en($user))
+                ->orWhere('phone', '=', EmojiFormat::en($user))
+                ->get()
+            ;
         }
 
-        return $this->where($map)->field('`uid`')->count() > 0;
+        return $users;
     }
 
     /**
@@ -262,26 +267,6 @@ class UserModel extends Model
         }
 
         return $user;
-
-        // $uid = intval ( $uid );
-        // if ($uid <= 0) {
-        // 	$this->error = L ( 'PUBLIC_UID_INDEX_ILLEAGAL' ); // UID参数值不合法
-        // 	return false;
-        // }
-        // if ($user = static_cache ( 'user_info_' . $uid )) {
-        // 	return $user;
-        // }
-        // // 查询缓存数据
-        // $user = model ( 'Cache' )->get ( 'ui_' . $uid );
-
-        // if (! $user) {
-        // 	$this->error = L ( 'PUBLIC_GET_USERINFO_FAIL' ); // 获取用户信息缓存失败
-        // 	$map ['uid'] = $uid;
-        // 	$user = $this->_getUserInfo ( $map );
-        // }
-        // static_cache ( 'user_info_' . $uid, $user );
-
-        // return $user;
     }
 
     /**
@@ -307,25 +292,6 @@ class UserModel extends Model
         }
 
         return $user;
-
-        // $uid = intval ( $uid );
-        // if ($uid <= 0) {
-        // 	$this->error = L ( 'PUBLIC_UID_INDEX_ILLEAGAL' ); // UID参数值不合法
-        // 	return false;
-        // }
-        // if ($user = static_cache ( 'user_info_search' . $uid )) {
-        // 	return $user;
-        // }
-        // // 查询缓存数据
-        // $user = model ( 'Cache' )->get ( 'ui_' . $uid );
-        // if (! $user) {
-        // 	$this->error = L ( 'PUBLIC_GET_USERINFO_FAIL' ); // 获取用户信息缓存失败
-        // 	$map ['uid'] = $uid;
-        // 	$user = $this->_getUserInfo ( $map, $field );
-        // }
-        // static_cache ( 'user_info_search' . $uid, $user );
-
-        // return $user;
     }
 
     /**
@@ -463,7 +429,6 @@ class UserModel extends Model
             }
 
             return $category;
-
         }, array($category)))->select($uid))) {
             $this->error = L('PUBLIC_GET_USERPROFILE_FAIL'); // # 获取用户档案失败
             return false;
@@ -513,7 +478,7 @@ class UserModel extends Model
      */
     public function addUser(array $user)
     {
-        // # 判断用户名是否被注册 
+        // # 判断用户名是否被注册
         if ($user['uname'] and !$this->isChangeUserName($user['uname'])) {
             $this->error = '用户昵称已存在，请使用其他昵称';
 
@@ -952,6 +917,8 @@ class UserModel extends Model
             $user ['group_icon'] = implode('&nbsp;', $groupIcon);
             //$user ['auth_icon'] = implode ( ' ', $authIcon );
             $user ['credit_info'] = model('Credit')->getUserCredit($uid);
+            $user ['intro'] = $user['intro'] ? formatEmoji(false, $user['intro']) : '';
+            $user['uname'] = EmojiFormat::de($user['uname']);
 
             model('Cache')->set('ui_'.$uid, $user, 600);
             static_cache('user_info_'.$uid, $user);
@@ -1024,7 +991,7 @@ class UserModel extends Model
     {
         // 判断类型？
         switch ($type) {
-            case '' :
+            case '':
                 $where = " (search_key LIKE '%{$key}%')";
                 // 过滤未激活和未审核的用户
                 // if($atme == 'at') {

@@ -68,7 +68,7 @@ class DenouceWidget extends Widget
             $var[$k] = t($v);
         }
         $var['uid'] = $GLOBALS['ts']['mid'];
-        empty($var['app']) &&  $var['app'] = 'public';
+        empty($var['app']) && $var['app'] = 'public';
         $var['source'] = model('Source')->getSourceInfo($var['type'], $var['aid'], false, $var['app']);
 
         return $var;

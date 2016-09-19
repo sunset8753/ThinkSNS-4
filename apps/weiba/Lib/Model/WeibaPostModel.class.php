@@ -1,7 +1,7 @@
 <?php
 /**
  * 微吧模型 - 数据对象模型
- * @author jason <yangjs17@yeah.net> 
+ * @author jason <yangjs17@yeah.net>
  * @version TS3.0
  */
 class WeibaPostModel extends Model
@@ -37,7 +37,7 @@ class WeibaPostModel extends Model
      * @param int weiba_id 微吧ID
      * @param varchar title 帖子标题
      * @param varchar content 帖子内容
-     * @param int user_id 帖子作者 
+     * @param int user_id 帖子作者
      */
     public function createPostForApi($weiba_id, $title, $content, $uid)
     {

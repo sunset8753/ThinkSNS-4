@@ -1,6 +1,6 @@
 <?php
 
-namespace Ts\Base;
+namespace Ts\Bases;
 
 /**
  * 空控制器

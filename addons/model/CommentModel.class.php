@@ -160,7 +160,7 @@ class CommentModel extends Model
      * @param  bool  $forApi   是否用于API，默认为false
      * @param  bool  $notCount 是否统计到未读评论
      * @param  array $lessUids 除去@用户ID
-     * @return bool  是否添加评论成功 
+     * @return bool  是否添加评论成功
      */
     public function addComment($data, $forApi = false, $notCount = false, $lessUids = null)
     {
@@ -178,9 +178,11 @@ class CommentModel extends Model
 
         /* # 将Emoji编码 */
         $data['content'] = formatEmoji(true, $data['content']);
+        //检测评论来源
+        // $comment_from = $data['from'];
+
         // 检测数据安全性
-        $comment_from = $data['from'];
-        unset($data['from']);
+        // unset($data['from']);
         $add = $this->_escapeData($data);
         if ($add['content'] === '') {
             $this->error = L('PUBLIC_COMMENT_CONTENT_REQUIRED');        // 评论内容不可为空
@@ -220,9 +222,7 @@ class CommentModel extends Model
             $pk = D($add['table'])->getPk();
             $where = "`{$pk}`={$add['row_id']}";
             D($add['table'])->setInc('comment_count', $where);
-            //兼容旧版本app
-//            D($add['table'])->setInc('commentCount', $where);
-//            D($add['table'])->setInc('comment_all_count', $where);
+
             D($add['app'])->setInc('commentCount', $where);
             D($add['app'])->setInc('comment_all_count', $where);
             //评论时间
@@ -231,9 +231,10 @@ class CommentModel extends Model
             if ($GLOBALS['ts']['mid'] != $add['app_uid'] && $add['app_uid'] != '' && $add['app_uid'] != $add['to_uid']) {
                 // !$notCount && model('UserData')->updateKey('unread_comment', 1, true, $add['app_uid']);
                 /* 如果是微吧 */
-                if (!$notCount and $add['app'] == 'weiba' && $comment_from == 'weiba') {
-                    model('UserData')->updateKey('unread_comment_weiba', 1, true, $add['app_uid']);
-                } elseif (!$notCount && $comment_from == 'feed') {
+                if (!$notCount and $add['app'] == 'weiba') {
+                    //model('UserData')->updateKey('unread_comment_weiba', 1, true, $add['app_uid']);
+                    model('UserData')->updateKey('unread_comment', 1, true, $add['app_uid']);
+                } elseif (!$notCount) {
                     model('UserData')->updateKey('unread_comment', 1, true, $add['app_uid']);
                 }
             }
@@ -241,9 +242,10 @@ class CommentModel extends Model
             if (!empty($add['to_uid']) && $add['to_uid'] != $GLOBALS['ts']['mid']) {
                 // !$notCount && model('UserData')->updateKey('unread_comment', 1, true, $add['to_uid']);
                 /* 如果是微吧 */
-                if (!$notCount and $add['app'] == 'weiba' && $comment_from == 'weiba') {
-                    model('UserData')->updateKey('unread_comment_weiba', 1, true, $add['to_uid']);
-                } elseif (!$notCount &&  $comment_from == 'feed') {
+                if (!$notCount and $add['app'] == 'weiba') {
+                    //model('UserData')->updateKey('unread_comment_weiba', 1, true, $add['to_uid']);
+                    model('UserData')->updateKey('unread_comment', 1, true, $add['to_uid']);
+                } elseif (!$notCount) {
                     model('UserData')->updateKey('unread_comment', 1, true, $add['to_uid']);
                 }
             }
@@ -513,7 +515,7 @@ class CommentModel extends Model
         $max_id = intval($max_id);
         $limit = intval($limit);
         $page = intval($page);
-        $where = empty($where) ?  ' is_del = 0 ' : $where.' AND is_del=0';
+        $where = empty($where) ? ' is_del = 0 ' : $where.' AND is_del=0';
         if (!empty($since_id) || !empty($max_id)) {
             !empty($since_id) && $where .= " AND comment_id > {$since_id}";
             !empty($max_id) && $where .= " AND comment_id < {$max_id}";

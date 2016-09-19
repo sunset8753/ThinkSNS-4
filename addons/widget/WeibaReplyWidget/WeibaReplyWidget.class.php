@@ -1,8 +1,8 @@
 <?php
 /**
   * 评论发布/显示框
-  * @example W('Comment',array('tpl'=>'detail','row_id'=>72,'order'=>'DESC','app_uid'=>'14983','cancomment'=>1,'cancomment_old'=>0,'showlist'=>1,'canrepost'=>1))                                  
-  * @author jason <yangjs17@yeah.net> 
+  * @example W('Comment',array('tpl'=>'detail','row_id'=>72,'order'=>'DESC','app_uid'=>'14983','cancomment'=>1,'cancomment_old'=>0,'showlist'=>1,'canrepost'=>1))
+  * @author jason <yangjs17@yeah.net>
   * @version TS3.0
   */
 class WeibaReplyWidget extends Widget
@@ -76,6 +76,13 @@ class WeibaReplyWidget extends Widget
      */
     public function addReply()
     {
+        //检测用户是否被禁言
+        if ($isDisabled = model('DisableUser')->isDisableUser($this->mid, 'post')) {
+            exit(json_encode(array(
+                'status' => 0,
+                'data' => '您已经被禁言了',
+            )));
+        }
         //   echo $_POST['post_id'];exit;
          if (!$this->mid || !CheckPermission('weiba_normal', 'weiba_reply')) {
              return;
@@ -108,6 +115,9 @@ class WeibaReplyWidget extends Widget
             $return['data'] = '发布内容过于频繁，请稍后再试！';
             exit(json_encode($return));
         }
+
+        // 字段补充
+        $data['comment_id'] = 0;
 
         if ($data['reply_id'] = D('weiba_reply')->add($data)) {
 
@@ -144,7 +154,7 @@ class WeibaReplyWidget extends Widget
             $datas['uid'] = $this->mid;
             $datas['ctime'] = time();
             $datas['client_type'] = getVisitorClient();
-            $datas['from'] = 'weiba';
+            // $datas['from'] = 'weiba';
             $data['cancomment'] = 1;
             $data['list_count'] = intval($_POST['list_count']);
             // 解锁
@@ -155,6 +165,7 @@ class WeibaReplyWidget extends Widget
                 D('weiba_reply', 'weiba')->where('reply_id='.$data['reply_id'])->save($data1);
                 // 给应用UID添加一个未读的评论数
                 if ($GLOBALS['ts']['mid'] != $datas['app_uid'] && $datas['app_uid'] != '') {
+                    //!$notCount && model('UserData')->updateKey('unread_comment_weiba', 1, true, $datas['app_uid']);
                     !$notCount && model('UserData')->updateKey('unread_comment', 1, true, $datas['app_uid']);
                 }
                 model('Feed')->cleanCache($datas['row_id']);
@@ -254,7 +265,7 @@ class WeibaReplyWidget extends Widget
 
         $var['initNums'] = model('Xdata')->getConfig('weibo_nums', 'feed');
         $var['commentInfo'] = model('Comment')->getCommentInfo($var['comment_id'], false);
-        $var['canrepost'] = $var['commentInfo']['table'] == 'feed'  ? 1 : 0;
+        $var['canrepost'] = $var['commentInfo']['table'] == 'feed' ? 1 : 0;
         $var['cancomment'] = 1;
 
       // 获取原作者信息

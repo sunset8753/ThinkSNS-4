@@ -92,7 +92,7 @@ class TaskAction extends AdministratorAction
                 switch ($k) {
                         case 'endtime':
                             $endtime = explode('|', $condition->endtime);
-                            $condesc .=  '领取时间：'.$endtime[0].' - '.$endtime[1].'</br>';
+                            $condesc .= '领取时间：'.$endtime[0].' - '.$endtime[1].'</br>';
                             break;
                         case 'userlevel':
                             $condesc .= '用户等级：T( '.$condition->userlevel.' )'.'</br>' ;
@@ -186,7 +186,7 @@ class TaskAction extends AdministratorAction
         $this->displayConfig($data);
     }
     /**
-     * 
+     *
      * @param unknown_type $data
      */
     private function validate($data)
@@ -238,7 +238,7 @@ class TaskAction extends AdministratorAction
                     $data['share_card'] = $share_card.'|'.$sharecard_src['save_path'].$sharecard_src['save_name'];
                 }
 
-                $data['type'] = 3;//自定义任务勋章
+                $data['type'] = 3; //自定义任务勋章
                 $medal_id = model('Medal')->add($data);
             }
         }
@@ -248,7 +248,8 @@ class TaskAction extends AdministratorAction
         $task['num'] = $num;
         $task['task_condition'] = $taskcondition;
         $task['medal_id'] = $medal_id;
-        $task['reward'] = json_encode(array('exp' => $exp, 'score' => $score, 'medal' => array('id' => $medal_id, 'name' => $data['name'], 'src' => $src)));
+        //$task['reward'] = json_encode(array('exp' => $exp, 'score' => $score, 'medal' => array('id' => $medal_id, 'name' => $data['name'], 'src' => $src)));
+        $task['reward'] = addslashes(json_encode(array('exp' => $exp, 'score' => $score, 'medal' => array('id' => $medal_id, 'name' => $data['name'], 'src' => $src))));
 
         $condition = array();
         if ($_POST['end_time1'][0] || $_POST['end_time1'][1]) {
@@ -267,7 +268,8 @@ class TaskAction extends AdministratorAction
             $condition['topic'] = t($_POST['topic']);
         }
 
-        $task['condition'] = json_encode($condition);
+        //$task['condition'] = json_encode($condition);
+        $task['condition'] = addslashes(json_encode($condition));
 
         $res = D('task_custom')->add($task);
         if ($res) {
@@ -350,7 +352,8 @@ class TaskAction extends AdministratorAction
         $task['task_desc'] = $taskdesc;
         $task['num'] = $num;
         $task['task_condition'] = $taskcondition;
-        $task['reward'] = json_encode(array('exp' => $exp, 'score' => $score, 'medal' => array('id' => $medalid, 'name' => $medalname, 'src' => $medalsrc)));
+        //$task['reward'] = json_encode(array('exp' => $exp, 'score' => $score, 'medal' => array('id' => $medalid, 'name' => $medalname, 'src' => $medalsrc)));
+        $task['reward'] = addslashes(json_encode(array('exp' => $exp, 'score' => $score, 'medal' => array('id' => $medalid, 'name' => $medalname, 'src' => $medalsrc))));
 
         $iscondition = false;
         $condition = array();
@@ -379,7 +382,8 @@ class TaskAction extends AdministratorAction
             $this->error('请选择任务条件');
         }
 
-        $task['condition'] = json_encode($condition);
+        //$task['condition'] = json_encode($condition);
+        $task['condition'] = addslashes(json_encode($condition));
 
         $res = D('task_custom')->where('id='.intval($_POST['id']))->save($task);
         if ($res) {

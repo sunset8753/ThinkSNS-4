@@ -3,7 +3,7 @@
 tsload(APPS_PATH.'/admin/Lib/Action/AdministratorAction.class.php');
 /**
  * 后台应用管理
- * 
+ *
  * @author jason
  */
 class AppsAction extends AdministratorAction
@@ -139,6 +139,10 @@ class AppsAction extends AdministratorAction
             $this->error(L('PUBLIC_SYSTEM_APP_INSTALLERROR'));
         }
 
+        if (!isset($_POST['display_order']) || !$_POST['display_order']) {
+            $_POST['display_order'] = 1;
+        }
+
         $status = model('App')->saveApp($_POST);
 
         if ($status === true) {
@@ -229,7 +233,7 @@ class AppsAction extends AdministratorAction
             $data['rule'] = t($_POST['rule']);
             $data['ruleinfo'] = t($_POST['ruleinfo']);
 
-            if (empty($data['appname']) ||  empty($data['module']) || empty($data['rule'])) {
+            if (empty($data['appname']) || empty($data['module']) || empty($data['rule'])) {
                 $this->error(L('PUBLIC_APPLICATIONS_MODULE_RULES_NOEMPTY'));
                 exit();
             }
@@ -308,7 +312,7 @@ class AppsAction extends AdministratorAction
             $appName[$v['app_name']] = $v['app_name'];
         }
         unset($loadlist);
-        
+
         foreach ($list as $k=>&$v){
             if(in_array($v['app_name'], $appName)){
                 if($v['version']==$appVersion[$v['app_name']]){
@@ -320,17 +324,17 @@ class AppsAction extends AdministratorAction
                 $v['isUpdate'] = false; //未安装过的应用
             }
         }
-        
+
         $dirIsWritable = is_writable(APPS_PATH);
         $type = array('1'=>'模板','2'=>'插件','3'=>'应用'); //插件类型,1:模板皮肤;2:插件;3:应用
-        
+
         foreach ($list as &$vo){
             $vo['title'] = '<a href="'.$this->RemoteAppURL.'/index.php?app=develop&mod=Index&act=detail&id='.$vo['develop_id'].'" target="_blank">'.$vo['title'].'</a>';
             $vo['type'] = $type[$vo['type']];
             $vo['user'] = '<a href="'.$this->RemoteAppURL.'/index.php?app=public&mod=Profile&act=index&uid='.$vo['uid'].'" target="_blank">'.$vo['user'].'</a>';
             unset($vo['uid']);
             $vo['option'] = '<a href="'.$this->RemoteAppURL.'/index.php?app=develop&mod=Index&act=download&id='.$vo['develop_id'].'">下载</a> ';
-            
+
             if($dirIsWritable){
                 if($vo['isUpdate']){
                     $vo['option'] .= '<a href="'.U('admin/Apps/downloadAndInstall', array('develop_id'=>$vo['develop_id'])).'">一键更新</a>';
@@ -338,14 +342,14 @@ class AppsAction extends AdministratorAction
                     $vo['option'] .= '<a href="'.U('admin/Apps/downloadAndInstall', array('develop_id'=>$vo['develop_id'])).'">一键安装</a>';
                 }
             }
-            
+
         }
         //dump($list);
-        
+
         $this->pageKeyList = array('title','type','download_count','user','option');
-        
+
         $listData['data']= $list;
-        
+
         $this->allSelected = false;
         $this->displayList($listData);
     }*/

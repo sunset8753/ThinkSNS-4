@@ -396,10 +396,10 @@ class GroupFeedModel extends Model
         $return['body'] = trim((string) $result[0]->body);
         // $return['sbody'] = trim((string) $result[0]->sbody);
         $return['info'] = trim((string) $result[0]['info']);
-        //$return['title'] =  parse_html($return['title']); 
+        //$return['title'] =  parse_html($return['title']);
         // $return['body']  =  parse_html($return['body']);
         $return['body'] = $this->parseHtml($return['body']);
-        // $return['sbody'] =  parse_html($return['sbody']); 
+        // $return['sbody'] =  parse_html($return['sbody']);
         $return['actions'] = $actions['@attributes'];
         //验证转发的原信息是否存在
         // if(!$this->_notDel($_data['app'],$_data['type'],$_data['app_row_id'])) {

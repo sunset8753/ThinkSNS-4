@@ -2,7 +2,7 @@
 /**
  * 个人空间数据统计
  * @example {:W('MySpaceCount')}
- * @version TS3.0 
+ * @version TS3.0
  */
 class MySpaceCountWidget extends Widget
 {

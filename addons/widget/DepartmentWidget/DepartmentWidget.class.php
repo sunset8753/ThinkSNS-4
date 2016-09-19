@@ -15,7 +15,7 @@ class DepartmentWidget extends Widget
      * @param string tpl 部门选择类型 admin:下拉形式  input:表单输入形式   menu:菜单形式
      * @param string inputName 表单输入的值，只针对tpl=input
      * @param int sid 当前选择的部门ID
-     * @param int canChange 是否可修改，只针对tpl=input有效 
+     * @param int canChange 是否可修改，只针对tpl=input有效
      * @param srting defaultName 默认的部门名称，只针对tpl=input有效
      * @param string defaultId 默认的部门ID，只针对tpl=input有效
      * @param string callback 选择部门之后的回调函数，只针对tpl=menu有效

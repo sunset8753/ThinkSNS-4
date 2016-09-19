@@ -10,7 +10,7 @@ require_once dirname(__FILE__).'/BaiduUtils.php';
 
 /**
  * Client for Baidu OAuth2.0 service.
- * 
+ *
  * @package Baidu
  * @author zhujianting(zhujianting@baidu.com)
  * @version v2.0.0
@@ -32,7 +32,7 @@ class BaiduOAuth2
 
     /**
      * Constructor
-     * 
+     *
      * @param string $clientId     Client_id of the baidu thirdparty app or access_key of the developer.
      * @param string $clientSecret Client_secret of the baidu thirdparty app or secret_key of the developer.
      */
@@ -44,7 +44,7 @@ class BaiduOAuth2
 
     /**
      * Set the redirect uri for the app.
-     * 
+     *
      * @param $redirectUri Where to redirect after user authorization.
      * @return BaiduOAuth2
      */
@@ -60,7 +60,7 @@ class BaiduOAuth2
 
     /**
      * Get the redirect uri for the app.
-     * 
+     *
      * @return string
      */
     public function getRedirectUri()
@@ -70,7 +70,7 @@ class BaiduOAuth2
 
     /**
      * Get a Logout URL suitable for use with redirects.
-     * 
+     *
      * @param  string $accessToken Access token for current user
      * @param  string $next        Url to go to after a successful logout
      * @return String The URL for the logout flow
@@ -85,7 +85,7 @@ class BaiduOAuth2
 
     /**
      * Get baidu oauth2's authorization granting url.
-     * 
+     *
      * @param  string $responseType Response type, 'code' or 'token'
      * @param  string $scope        blank space separated list of requested extended perms
      * @param  string $display      Authorization page style, 'page', 'popup', 'touch' or 'mobile'
@@ -108,7 +108,7 @@ class BaiduOAuth2
 
     /**
      * Get access token ifno by authorization code.
-     * 
+     *
      * @param  string      $code Authorization code
      * @return array|false returns access token info if success, or false if failed
      */
@@ -127,7 +127,7 @@ class BaiduOAuth2
 
     /**
      * Get access token info by client credentials.
-     * 
+     *
      * @param  string      $scope Extend permissions delimited by blank space
      * @return array|false returns access token info if success, or false if failed.
      */
@@ -162,7 +162,7 @@ class BaiduOAuth2
 
     /**
      * Refresh access token by refresh token.
-     * 
+     *
      * @param  string      $refreshToken The refresh token
      * @param  string      $scope        Extend permissions delimited by blank space
      * @return array|false returns access token info if success, or false if failed.
@@ -182,7 +182,7 @@ class BaiduOAuth2
 
     /**
      * Make an oauth access token request
-     * 
+     *
      * The parameters:
      * - client_id: The client identifier, just use api key
      * - response_type: 'token' or 'code'
@@ -190,7 +190,7 @@ class BaiduOAuth2
      * - scope: The scope of the access request expressed as a list of space-delimited, case sensitive strings.
      * - state: An opaque value used by the client to maintain state between the request and callback.
      * - display: login page style, 'page', 'popup', 'touch' or 'mobile'
-     * 
+     *
      * @param  array $params oauth request parameters
      * @return mixed returns access token info if success, or false if failed
      */

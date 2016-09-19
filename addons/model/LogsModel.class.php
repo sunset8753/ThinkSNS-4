@@ -11,8 +11,8 @@
  * logsArchive()					归档1个月之前的知识
  * dellogs($id, $date)				删除某张表中的某条记录
  * getMenuList($app)				获取应用下的知识节点
- * 请直接使用函数库中的LogRecord($type, $action, $data, $isAdmin);进行知识存储                          
- * @author jason <yangjs17@yeah.net> 
+ * 请直接使用函数库中的LogRecord($type, $action, $data, $isAdmin);进行知识存储
+ * @author jason <yangjs17@yeah.net>
  * @version TS3.0
  */
 class LogsModel extends Model

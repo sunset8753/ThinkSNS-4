@@ -142,11 +142,11 @@ class IndexAction extends BaseAction
         foreach ($this->tVar ['weibolist'] as $key => $value) { // optimize data
             if ((($this->tVar ['weibolist'] [$key] ['type'] === 'repost' && $this->tVar ['weibolist'] [$key] ['api_source'] ['is_del'] === '0') || ($this->tVar ['weibolist'] [$key] ['type'] === 'repost' && $this->tVar ['weibolist'] [$key] ['transpond_data'] ['api_source'] ['is_del'] === '0')) && isset($this->tVar ['weibolist'] [$key] ['transpond_data'] ['feed_content'])) {
                 switch ($this->tVar ['weibolist'] [$key] ['transpond_data'] ['type']) {
-                    case 'postimage' :
+                    case 'postimage':
                         $this->tVar ['weibolist'] [$key] ['type'] = 'repost-postimage';
                         break;
 
-                    case 'postfile' :
+                    case 'postfile':
                         $this->tVar ['weibolist'] [$key] ['type'] = 'repost-postfile';
                         foreach ($this->tVar ['weibolist'] [$key] ['transpond_data'] ['attach'] as $k => $v) {
                             if ($v ['size'] > 1024 && $v ['size'] < 1024 * 1024) {
@@ -159,7 +159,7 @@ class IndexAction extends BaseAction
                         }
                         break;
 
-                    case 'postvideo' :
+                    case 'postvideo':
                         $this->tVar ['weibolist'] [$key] ['type'] = 'repost-postvideo';
                         break;
                 }
@@ -260,11 +260,11 @@ class IndexAction extends BaseAction
 
         if ((($detail ['type'] === 'repost' && $detail ['api_source'] ['is_del'] === '0') || ($detail ['type'] === 'repost' && $detail ['transpond_data'] ['api_source'] ['is_del'] === '0')) && isset($detail ['transpond_data'] ['feed_content'])) {
             switch ($detail ['transpond_data'] ['type']) {
-                case 'postimage' :
+                case 'postimage':
                     $detail ['type'] = 'repost-postimage';
                     break;
 
-                case 'postfile' :
+                case 'postfile':
                     $detail ['type'] = 'repost-postfile';
                     foreach ($detail ['transpond_data'] ['attach'] as $k => $v) {
                         if ($v ['size'] > 1024 && $v ['size'] < 1024 * 1024) {
@@ -277,7 +277,7 @@ class IndexAction extends BaseAction
                     }
                     break;
 
-                case 'postvideo' :
+                case 'postvideo':
                     $detail ['type'] = 'repost-postvideo';
                     break;
             }
@@ -499,11 +499,11 @@ class IndexAction extends BaseAction
             foreach ($this->tVar ['weibolist'] as $key => $value) { // optimize data
                 if ((($this->tVar ['weibolist'] [$key] ['type'] === 'repost' && $this->tVar ['weibolist'] [$key] ['api_source'] ['is_del'] === '0') || ($this->tVar ['weibolist'] [$key] ['type'] === 'repost' && $this->tVar ['weibolist'] [$key] ['transpond_data'] ['api_source'] ['is_del'] === '0')) && isset($this->tVar ['weibolist'] [$key] ['transpond_data'] ['feed_content'])) {
                     switch ($this->tVar ['weibolist'] [$key] ['transpond_data'] ['type']) {
-                        case 'postimage' :
+                        case 'postimage':
                             $this->tVar ['weibolist'] [$key] ['type'] = 'repost-postimage';
                             break;
 
-                        case 'postfile' :
+                        case 'postfile':
                             $this->tVar ['weibolist'] [$key] ['type'] = 'repost-postfile';
                             foreach ($this->tVar ['weibolist'] [$key] ['transpond_data'] ['attach'] as $k => $v) {
                                 if ($v ['size'] > 1024 && $v ['size'] < 1024 * 1024) {
@@ -583,11 +583,11 @@ class IndexAction extends BaseAction
         foreach ($this->$weibolist as $key => $value) { // optimize data
             if ((($this->$weibolist [$key] ['type'] === 'repost' && $weibolist [$key] ['api_source'] ['is_del'] === '0') || ($this->$weibolist [$key] ['type'] === 'repost' && $this->$weibolist [$key] ['transpond_data'] ['api_source'] ['is_del'] === '0')) && isset($weibolist [$key] ['transpond_data'] ['feed_content'])) {
                 switch ($weibolist [$key] ['transpond_data'] ['type']) {
-                    case 'postimage' :
+                    case 'postimage':
                         $this->$weibolist [$key] ['type'] = 'repost-postimage';
                         break;
 
-                    case 'postfile' :
+                    case 'postfile':
                         $weibolist [$key] ['type'] = 'repost-postfile';
                         foreach ($weibolist [$key] ['transpond_data'] ['attach'] as $k => $v) {
                             if ($v ['size'] > 1024 && $v ['size'] < 1024 * 1024) {
@@ -600,7 +600,7 @@ class IndexAction extends BaseAction
                         }
                         break;
 
-                    case 'postvideo' :
+                    case 'postvideo':
                         $weibolist [$key] ['type'] = 'repost-postvideo';
                         break;
                 }
@@ -997,7 +997,7 @@ class IndexAction extends BaseAction
             }
             $weibolist [$k] ['userGroupData'] = $this->_usergroup($v ['uid']);
             switch ($v ['app']) {
-                case 'blog' :
+                case 'blog':
                     unset($weibolist [$k]);
                     continue;
                     /*
@@ -1038,7 +1038,7 @@ class IndexAction extends BaseAction
                      * }
                      */
                     break;
-                case 'public' :
+                case 'public':
                     if ($v ['feed_id']) {
                         $weibolist [$k] ['weibo_id'] = $weibolist [$k] ['feed_id'];
                         // $weibolist[$k]['content'] = wapFormatContent($v['content'], true, $self_url);
@@ -1072,7 +1072,7 @@ class IndexAction extends BaseAction
                         }
                     }
                     break;
-                case 'weiba' :
+                case 'weiba':
                     $weiba_post = D('WeibaPost', 'weiba')->where('post_id='.$v ['app_row_id'])->find();
                     $weibolist [$k] ['weibo_id'] = $weibolist [$k] ['feed_id'];
                     $weibolist [$k] ['transpond_data'] = $weiba_post;
@@ -1081,7 +1081,7 @@ class IndexAction extends BaseAction
                     $weibolist [$k] ['transpond_data'] ['uid'] = $weiba_post ['post_uid'];
                     break;
 
-                default :
+                default:
 
                     // code...
                     break;
@@ -1179,11 +1179,11 @@ class IndexAction extends BaseAction
 
         if ((($detail ['type'] === 'repost' && $detail ['api_source'] ['is_del'] === '0') || ($detail ['type'] === 'repost' && $detail ['transpond_data'] ['api_source'] ['is_del'] === '0')) && isset($detail ['transpond_data'] ['feed_content'])) {
             switch ($detail ['transpond_data'] ['type']) {
-                case 'postimage' :
+                case 'postimage':
                     $detail ['type'] = 'repost-postimage';
                     break;
 
-                case 'postfile' :
+                case 'postfile':
                     $detail ['type'] = 'repost-postfile';
                     foreach ($detail ['transpond_data'] ['attach'] as $k => $v) {
                         if ($v ['size'] > 1024 && $v ['size'] < 1024 * 1024) {
@@ -1196,7 +1196,7 @@ class IndexAction extends BaseAction
                     }
                     break;
 
-                case 'postvideo' :
+                case 'postvideo':
                     $detail ['type'] = 'repost-postvideo';
                     break;
             }
@@ -1515,7 +1515,7 @@ class IndexAction extends BaseAction
 
     /**
      * 发布分享操作，用于AJAX
-     * 
+     *
      * @return json 发布分享后的结果信息JSON数据
      */
     public function feedPost()
@@ -1652,7 +1652,7 @@ class IndexAction extends BaseAction
 
     /**
      * 添加评论接口，目前只支持分享与微吧
-     * 
+     *
      * @return int 返回状态
      */
     public function doComment()
@@ -1986,13 +1986,13 @@ class IndexAction extends BaseAction
         // optimize data
         if ((($detail ['type'] === 'repost' && $detail ['api_source'] ['is_del'] === '0') || ($detail ['type'] === 'repost' && $detail ['transpond_data'] ['api_source'] ['is_del'] === '0')) && isset($detail ['transpond_data'] ['feed_content'])) {
             switch ($detail ['transpond_data'] ['type']) {
-                case 'postimage' :
+                case 'postimage':
                     $detail ['type'] = 'repost-postimage';
                     break;
-                case 'postvideo' :
+                case 'postvideo':
                     $detail ['type'] = 'repost-postvideo';
                     break;
-                case 'postfile' :
+                case 'postfile':
                     $detail ['type'] = 'repost-postfile';
                     foreach ($detail ['transpond_data'] ['attach'] as $k => $v) {
                         if ($v ['size'] > 1024 && $v ['size'] < 1024 * 1024) {
@@ -2066,7 +2066,7 @@ class IndexAction extends BaseAction
         $res = api('WeiboStatuses')->data($data)->destroy();
         // 微吧帖子删除
         switch ($type) {
-            case 'weiba_post' :
+            case 'weiba_post':
                 $postInfo = D('weiba_post')->where('feed_id='.$weibo_id)->find();
                 $postId = $postInfo ['post_id'];
                 $weibaId = $postInfo ['weiba_id'];
@@ -2331,11 +2331,11 @@ class IndexAction extends BaseAction
         foreach ($this->tVar ['weibolist'] as $key => $value) { // optimize data
             if ((($this->tVar ['weibolist'] [$key] ['type'] === 'repost' && $this->tVar ['weibolist'] [$key] ['api_source'] ['is_del'] === '0') || ($this->tVar ['weibolist'] [$key] ['type'] === 'repost' && $this->tVar ['weibolist'] [$key] ['transpond_data'] ['api_source'] ['is_del'] === '0')) && isset($this->tVar ['weibolist'] [$key] ['transpond_data'] ['feed_content'])) {
                 switch ($this->tVar ['weibolist'] [$key] ['transpond_data'] ['type']) {
-                    case 'postimage' :
+                    case 'postimage':
                         $this->tVar ['weibolist'] [$key] ['type'] = 'repost-postimage';
                         break;
 
-                    case 'postfile' :
+                    case 'postfile':
                         $this->tVar ['weibolist'] [$key] ['type'] = 'repost-postfile';
                         foreach ($this->tVar ['weibolist'] [$key] ['transpond_data'] ['attach'] as $k => $v) {
                             if ($v ['size'] > 1024 && $v ['size'] < 1024 * 1024) {
@@ -2348,7 +2348,7 @@ class IndexAction extends BaseAction
                         }
                         break;
 
-                    case 'postvideo' :
+                    case 'postvideo':
                         $this->tVar ['weibolist'] [$key] ['type'] = 'repost-postvideo';
                         break;
                 }
@@ -2420,7 +2420,7 @@ class IndexAction extends BaseAction
 
     /**
      * 发送私信弹窗
-     * 
+     *
      */
     public function sendmsg()
     {

@@ -125,8 +125,8 @@ class MessageAction extends BaseAction
         $message['to'] = array();
         // 添加发送用户ID
         foreach ($message['member'] as $index => $v) {
-            $message['member'][$index]['user_info']['space_link'] = '';//TODO:change link
-            $message['member'][$index]['user_info']['space_link_no'] = '';//TODO:change link
+            $message['member'][$index]['user_info']['space_link'] = ''; //TODO:change link
+            $message['member'][$index]['user_info']['space_link_no'] = ''; //TODO:change link
             $this->mid != $v['member_uid'] && $message['to'][] = $message['member'][$index];
         }
         $r['to'] = $message['to'];
@@ -209,7 +209,7 @@ class MessageAction extends BaseAction
         }
         $_POST['to'] = trim(t($_POST['to']), ',');
         $to_num = explode(',', $_POST['to']);
-        if (sizeof($to_num) > 10) {
+        if (count($to_num) > 10) {
             $return['data'] = '';
             $return['status'] = 0;
             echo json_encode($return);

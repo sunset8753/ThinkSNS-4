@@ -3,7 +3,7 @@
  * 积分模型 - 数据对象模型
  * @example
  * $credit = model('Credit')->setUserCredit($uid,'weibo_demo');
- * @author jason <yangjs17@yeah.net> 
+ * @author jason <yangjs17@yeah.net>
  * @version TS3.0
  */
 class CreditModel extends Model
@@ -17,10 +17,8 @@ class CreditModel extends Model
      * +----------------------------------------------------------
      * 架构函数
      * +----------------------------------------------------------
-     * 
+     *
      * @author melec制作
-     * @access public
-     *         +----------------------------------------------------------
      */
     public function __construct()
     {
@@ -32,7 +30,7 @@ class CreditModel extends Model
 
     /**
      * 获取积分设置信息
-     * 
+     *
      * @return array 积分设置信息
      */
     public function getSetData()
@@ -84,7 +82,7 @@ class CreditModel extends Model
 
         if (!$userCreditInfo) {
             $data['uid'] = $uid;
-            M('credit_user')->add($data);// 用户积分
+            M('credit_user')->add($data); // 用户积分
         }
 
         foreach ($this->creditType as $v) {
@@ -131,7 +129,7 @@ class CreditModel extends Model
 
     /**
      * 获取积分类型列表
-     * 
+     *
      * @param  string $return
      *                        返回类型，默认为has
      * @return [type] [description]
@@ -148,7 +146,7 @@ class CreditModel extends Model
 
     /**
      * 获取积分等级规则
-     * 
+     *
      * @return array 积分等级规则信息
      */
     public function getLevel()
@@ -174,7 +172,7 @@ class CreditModel extends Model
 
     /**
      * 添加任务积分
-     * 
+     *
      * @param int $exp
      * @param int $score
      * @param int $uid
@@ -190,7 +188,7 @@ class CreditModel extends Model
 
     /**
      * TS2兼容方法：获取积分类型列表
-     * 
+     *
      * @return array 积分类型列表
      */
     public function getCreditType()

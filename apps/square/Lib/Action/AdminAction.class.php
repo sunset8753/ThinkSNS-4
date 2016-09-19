@@ -231,7 +231,7 @@ class AdminAction extends AdministratorAction
         $this->displayConfig();
     }
     /**
-     * 添加微吧分类数据 
+     * 添加微吧分类数据
      */
     public function doAddWeibaCate()
     {
@@ -863,7 +863,7 @@ class AdminAction extends AdministratorAction
         }
         foreach ($listData['data'] as $k => $v) {
             $listData['data'][$k]['weiba_name'] = '<a target="_blank" href="'.U('weiba/Index/detail', array('weiba_id' => $v['weiba_id'])).'">'.$v['weiba_name'].'</a>';
-            $listData['data'][$k]['logo'] &&  $listData['data'][$k]['logo'] = '<img src="'.getImageUrlByAttachId($v['logo']).'" width="50" height="50">';
+            $listData['data'][$k]['logo'] && $listData['data'][$k]['logo'] = '<img src="'.getImageUrlByAttachId($v['logo']).'" width="50" height="50">';
             $create_uid = model('User')->getUserInfoByUids($v['uid']);
             $listData['data'][$k]['uid'] = $create_uid[$v['uid']]['space_link'];
             $listData['data'][$k]['uinfo'] = $create_uid[$v['uid']]['group_icon'];

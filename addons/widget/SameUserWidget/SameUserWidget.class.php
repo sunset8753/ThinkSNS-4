@@ -38,7 +38,7 @@ class SameUserWidget extends Widget
      */
     public function getOneSameUser()
     {
-        for ($i = 0;$i <= 20;$i++) {
+        for ($i = 0; $i <= 20; $i++) {
             $oneSameUser = model('RelatedUser')->getRelatedUserByType(t($_POST['type']), 1);
             if ($oneSameUser[0]['userInfo']['uid'] && !in_array($oneSameUser[0]['userInfo']['uid'], $_POST['user'])) {
                 $html = '<li id="user_'.$oneSameUser[0]['userInfo']['uid'].'" value="'.$oneSameUser[0]['userInfo']['uid'].'">

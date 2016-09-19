@@ -151,4 +151,4 @@ require_once 'lib/uccode.class.php';
 $this->uccode = new uccode();
 echo $this->uccode->complie($str);
 
-*/;
+*/

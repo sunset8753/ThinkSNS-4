@@ -87,7 +87,7 @@ class WeibaAction extends BaseAction
         if ($_GET['type'] == 'digest') {
             $maps['digest'] = 1;
         }
-        $list = D('weiba_post', 'weiba')->where($maps)->order($order)->findpage(20, false, array(), true);//print_r($list);
+        $list = D('weiba_post', 'weiba')->where($maps)->order($order)->findpage(20, false, array(), true); //print_r($list);
         ! $topPostList && $topPostList = array();
         ! $innerTop && $innerTop = array();
         ! $list ['data'] && $list ['data'] = array();
@@ -246,7 +246,7 @@ class WeibaAction extends BaseAction
         $weiba = D('weiba', 'weiba')->where('weiba_id='.$weibaid)->find();
         if (! CheckPermission('core_admin', 'admin_login')) {
             switch ($weiba ['who_can_post']) {
-                case 1 :
+                case 1:
                     $map ['weiba_id'] = $weibaid;
                     $map ['follower_uid'] = $this->mid;
                     $res = D('weiba_follow')->where($map)->find();
@@ -254,7 +254,7 @@ class WeibaAction extends BaseAction
                         $this->error('对不起，您没有发帖权限，请关注该微吧！', true);
                     }
                     break;
-                case 2 :
+                case 2:
                     $map ['weiba_id'] = $weibaid;
                     $map ['level'] = array(
                             'in',
@@ -265,7 +265,7 @@ class WeibaAction extends BaseAction
                         $this->error('对不起，您没有发帖权限，仅限管理员发帖！', true);
                     }
                     break;
-                case 3 :
+                case 3:
                     $map ['weiba_id'] = $weibaid;
                     $map ['level'] = 3;
                     $weiba_admin = D('weiba_follow')->where($map)->order('level desc')->field('follower_uid')->find();
@@ -507,7 +507,7 @@ class WeibaAction extends BaseAction
     {
         $res = D('weiba', 'weiba')->doFollowWeiba($this->mid, intval($_REQUEST['weiba_id']));
         //清理插件缓存
-        $key = '_getRelatedGroup_'.$this->mid.'_'.date('Ymd');//达人
+        $key = '_getRelatedGroup_'.$this->mid.'_'.date('Ymd'); //达人
         S($key, null);
         $this->ajaxReturn($res, D('weiba', 'weiba')->getError(), false !== $res);
     }

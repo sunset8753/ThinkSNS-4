@@ -29,9 +29,9 @@ class XdataModel extends Model
         $result = false;
         // 格式化数据
         if (is_array($listData)) {
-            $insert_sql    .=    'REPLACE INTO __TABLE__ (`list`,`key`,`value`,`mtime`) VALUES ';
+            $insert_sql .= 'REPLACE INTO __TABLE__ (`list`,`key`,`value`,`mtime`) VALUES ';
             foreach ($listData as $key => $data) {
-                $insert_sql    .= " ('$listName','$key','".addslashes(serialize($data))."','".date('Y-m-d H:i:s')."') ,";
+                $insert_sql .= " ('$listName','$key','".addslashes(serialize($data))."','".date('Y-m-d H:i:s')."') ,";
             }
             $insert_sql = rtrim($insert_sql, ',');
             // 插入数据列表
@@ -99,7 +99,7 @@ class XdataModel extends Model
             $insert_sql = 'INSERT INTO __TABLE__ ';
         }
 
-        $insert_sql    .= "(`list`,`key`,`value`,`mtime`) VALUES ('$keys[0]','$keys[1]','$data','".date('Y-m-d H:i:s')."')";
+        $insert_sql .= "(`list`,`key`,`value`,`mtime`) VALUES ('$keys[0]','$keys[1]','$data','".date('Y-m-d H:i:s')."')";
         $result = $this->execute($insert_sql);
 
         $cache_id = '_xdata_lget_'.$keys[0];

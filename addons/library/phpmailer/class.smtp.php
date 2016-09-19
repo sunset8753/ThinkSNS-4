@@ -82,7 +82,6 @@ class SMTP
 
   /**
    * Initialize the class so that the data is in a known state.
-   * @access public
    */
   public function __construct()
   {
@@ -107,7 +106,6 @@ class SMTP
    *
    * SMTP CODE SUCCESS: 220
    * SMTP CODE FAILURE: 421
-   * @access public
    * @return bool
    */
   public function Connect($host, $port = 0, $tval = 30)
@@ -167,7 +165,6 @@ class SMTP
    * SMTP CODE 220 Ready to start TLS
    * SMTP CODE 501 Syntax error (no parameters allowed)
    * SMTP CODE 454 TLS not available due to temporary reason
-   * @access public
    * @return bool success
    */
   public function StartTLS()
@@ -180,7 +177,7 @@ class SMTP
         return false;
     }
 
-      fputs($this->smtp_conn, 'STARTTLS'.$this->CRLF);
+      fwrite($this->smtp_conn, 'STARTTLS'.$this->CRLF);
 
       $rply = $this->get_lines();
       $code = substr($rply, 0, 3);
@@ -212,13 +209,12 @@ class SMTP
   /**
    * Performs SMTP authentication.  Must be run after running the
    * Hello() method.  Returns true if successfully authenticated.
-   * @access public
    * @return bool
    */
   public function Authenticate($username, $password)
   {
       // Start authentication
-    fputs($this->smtp_conn, 'AUTH LOGIN'.$this->CRLF);
+    fwrite($this->smtp_conn, 'AUTH LOGIN'.$this->CRLF);
 
       $rply = $this->get_lines();
       $code = substr($rply, 0, 3);
@@ -236,7 +232,7 @@ class SMTP
       }
 
     // Send encoded username
-    fputs($this->smtp_conn, base64_encode($username).$this->CRLF);
+    fwrite($this->smtp_conn, base64_encode($username).$this->CRLF);
 
       $rply = $this->get_lines();
       $code = substr($rply, 0, 3);
@@ -254,7 +250,7 @@ class SMTP
       }
 
     // Send encoded password
-    fputs($this->smtp_conn, base64_encode($password).$this->CRLF);
+    fwrite($this->smtp_conn, base64_encode($password).$this->CRLF);
 
       $rply = $this->get_lines();
       $code = substr($rply, 0, 3);
@@ -276,7 +272,6 @@ class SMTP
 
   /**
    * Returns true if connected to a server otherwise false
-   * @access public
    * @return bool
    */
   public function Connected()
@@ -303,7 +298,6 @@ class SMTP
    * Closes the socket and cleans up the state of the class.
    * It is not considered good to use this function without
    * first trying to use QUIT.
-   * @access public
    */
   public function Close()
   {
@@ -336,7 +330,6 @@ class SMTP
    *     SMTP CODE FAILURE: 552,554,451,452
    * SMTP CODE FAILURE: 451,554
    * SMTP CODE ERROR  : 500,501,503,421
-   * @access public
    * @return bool
    */
   public function Data($msg_data)
@@ -350,7 +343,7 @@ class SMTP
         return false;
     }
 
-      fputs($this->smtp_conn, 'DATA'.$this->CRLF);
+      fwrite($this->smtp_conn, 'DATA'.$this->CRLF);
 
       $rply = $this->get_lines();
       $code = substr($rply, 0, 3);
@@ -439,12 +432,12 @@ class SMTP
                   $line_out = '.'.$line_out;
               }
           }
-          fputs($this->smtp_conn, $line_out.$this->CRLF);
+          fwrite($this->smtp_conn, $line_out.$this->CRLF);
       }
     }
 
     // message data has been sent
-    fputs($this->smtp_conn, $this->CRLF.'.'.$this->CRLF);
+    fwrite($this->smtp_conn, $this->CRLF.'.'.$this->CRLF);
 
       $rply = $this->get_lines();
       $code = substr($rply, 0, 3);
@@ -477,7 +470,6 @@ class SMTP
    *
    * SMTP CODE SUCCESS: 250
    * SMTP CODE ERROR  : 500, 501, 504, 421
-   * @access public
    * @return bool
    */
   public function Hello($host = '')
@@ -509,12 +501,11 @@ class SMTP
 
   /**
    * Sends a HELO/EHLO command.
-   * @access private
    * @return bool
    */
   private function SendHello($hello, $host)
   {
-      fputs($this->smtp_conn, $hello.' '.$host.$this->CRLF);
+      fwrite($this->smtp_conn, $hello.' '.$host.$this->CRLF);
 
       $rply = $this->get_lines();
       $code = substr($rply, 0, 3);
@@ -551,7 +542,6 @@ class SMTP
    * SMTP CODE SUCCESS: 250
    * SMTP CODE SUCCESS: 552,451,452
    * SMTP CODE SUCCESS: 500,501,421
-   * @access public
    * @return bool
    */
   public function Mail($from)
@@ -566,7 +556,7 @@ class SMTP
     }
 
       $useVerp = ($this->do_verp ? 'XVERP' : '');
-      fputs($this->smtp_conn, 'MAIL FROM:<'.$from.'>'.$useVerp.$this->CRLF);
+      fwrite($this->smtp_conn, 'MAIL FROM:<'.$from.'>'.$useVerp.$this->CRLF);
 
       $rply = $this->get_lines();
       $code = substr($rply, 0, 3);
@@ -598,7 +588,6 @@ class SMTP
    *
    * SMTP CODE SUCCESS: 221
    * SMTP CODE ERROR  : 500
-   * @access public
    * @return bool
    */
   public function Quit($close_on_error = true)
@@ -613,7 +602,7 @@ class SMTP
     }
 
     // send the quit command to the server
-    fputs($this->smtp_conn, 'quit'.$this->CRLF);
+    fwrite($this->smtp_conn, 'quit'.$this->CRLF);
 
     // get any good-bye messages
     $byemsg = $this->get_lines();
@@ -653,7 +642,6 @@ class SMTP
    * SMTP CODE SUCCESS: 250,251
    * SMTP CODE FAILURE: 550,551,552,553,450,451,452
    * SMTP CODE ERROR  : 500,501,503,421
-   * @access public
    * @return bool
    */
   public function Recipient($to)
@@ -667,7 +655,7 @@ class SMTP
         return false;
     }
 
-      fputs($this->smtp_conn, 'RCPT TO:<'.$to.'>'.$this->CRLF);
+      fwrite($this->smtp_conn, 'RCPT TO:<'.$to.'>'.$this->CRLF);
 
       $rply = $this->get_lines();
       $code = substr($rply, 0, 3);
@@ -700,7 +688,6 @@ class SMTP
    *
    * SMTP CODE SUCCESS: 250
    * SMTP CODE ERROR  : 500,501,504,421
-   * @access public
    * @return bool
    */
   public function Reset()
@@ -714,7 +701,7 @@ class SMTP
         return false;
     }
 
-      fputs($this->smtp_conn, 'RSET'.$this->CRLF);
+      fwrite($this->smtp_conn, 'RSET'.$this->CRLF);
 
       $rply = $this->get_lines();
       $code = substr($rply, 0, 3);
@@ -751,7 +738,6 @@ class SMTP
    * SMTP CODE SUCCESS: 250
    * SMTP CODE SUCCESS: 552,451,452
    * SMTP CODE SUCCESS: 500,501,502,421
-   * @access public
    * @return bool
    */
   public function SendAndMail($from)
@@ -765,7 +751,7 @@ class SMTP
         return false;
     }
 
-      fputs($this->smtp_conn, 'SAML FROM:'.$from.$this->CRLF);
+      fwrite($this->smtp_conn, 'SAML FROM:'.$from.$this->CRLF);
 
       $rply = $this->get_lines();
       $code = substr($rply, 0, 3);
@@ -799,7 +785,6 @@ class SMTP
    * SMTP CODE SUCCESS: 250
    * SMTP CODE FAILURE: 502
    * SMTP CODE ERROR  : 500, 503
-   * @access public
    * @return bool
    */
   public function Turn()
@@ -815,7 +800,6 @@ class SMTP
 
   /**
    * Get the current error
-   * @access public
    * @return array
    */
   public function getError()
@@ -833,7 +817,6 @@ class SMTP
    * With SMTP we can tell if we have more lines to read if the
    * 4th character is '-' symbol. If it is a space then we don't
    * need to read anything else.
-   * @access private
    * @return string
    */
   private function get_lines()

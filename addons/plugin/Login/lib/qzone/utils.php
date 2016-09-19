@@ -117,11 +117,11 @@ function do_get($url, $appid, $appkey, $access_token, $access_token_secret, $ope
     unset($params['oauth_signature']);
     //参数按照字母升序做序列化
     $normalized_str = get_normalized_string($params);
-    $sigstr        .= rawurlencode($normalized_str);
+    $sigstr .= rawurlencode($normalized_str);
     //签名,确保php版本支持hash_hmac函数
     $key = $appkey.'&'.$access_token_secret;
     $signature = get_signature($sigstr, $key);
-    $url      .= '?'.$normalized_str.'&'.'oauth_signature='.rawurlencode($signature);
+    $url .= '?'.$normalized_str.'&'.'oauth_signature='.rawurlencode($signature);
     //echo "$url\n";
     return file_get_contents($url);
 }
@@ -246,12 +246,12 @@ function get_request_token($appid, $appkey)
     $params['oauth_consumer_key'] = $appid;
     //对参数按照字母升序做序列化
     $normalized_str = get_normalized_string($params);
-    $sigstr        .= rawurlencode($normalized_str);
+    $sigstr .= rawurlencode($normalized_str);
     //签名,需要确保php版本支持hash_hmac函数
     $key = $appkey.'&';
     $signature = get_signature($sigstr, $key);
     //构造请求url
-    $url      .= $normalized_str.'&'.'oauth_signature='.rawurlencode($signature);
+    $url .= $normalized_str.'&'.'oauth_signature='.rawurlencode($signature);
     //echo "$sigstr\n";
     //echo "$url\n";
     return file_get_contents($url);
@@ -285,13 +285,13 @@ function get_access_token($appid, $appkey, $request_token, $request_token_secret
     $params['oauth_vericode'] = $vericode;
     //对参数按照字母升序做序列化
     $normalized_str = get_normalized_string($params);
-    $sigstr        .= rawurlencode($normalized_str);
+    $sigstr .= rawurlencode($normalized_str);
     //echo "sigstr = $sigstr";
     //签名,确保php版本支持hash_hmac函数
     $key = $appkey.'&'.$request_token_secret;
     $signature = get_signature($sigstr, $key);
     //构造请求url
-    $url      .= $normalized_str.'&'.'oauth_signature='.rawurlencode($signature);
+    $url .= $normalized_str.'&'.'oauth_signature='.rawurlencode($signature);
 
     return file_get_contents($url);
 }

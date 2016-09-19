@@ -94,7 +94,7 @@ class DenounceModel extends Model
     }
 
     /**
-     * 获取指定资源已经被举报且进入回收站的资源ID 
+     * 获取指定资源已经被举报且进入回收站的资源ID
      * @param  string       $from 资源类型
      * @param  string       $type 是输出数组还是字符串，默认为字符串
      * @return array|string 回收站中的举报资源ID

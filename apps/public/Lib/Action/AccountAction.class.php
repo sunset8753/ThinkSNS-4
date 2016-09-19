@@ -47,7 +47,7 @@ class AccountAction extends Action
         ); // 申请认证
         $tab_list_score [] = array(
             'field_key' => 'scoredetail',
-            'field_name' => L('积分规则'),
+            'field_name' => '积分规则',
         ); // 积分规则
         $tab_list_preference [] = array(
             'field_key' => 'privacy',
@@ -157,7 +157,7 @@ class AccountAction extends Action
         if (!empty($_POST ['sex'])) {
             $save ['sex'] = 1 == intval($_POST ['sex']) ? 1 : 2;
             // $save['lang'] = t($_POST['lang']);
-            $save ['intro'] = t($_POST ['intro']);
+            $save ['intro'] = $_POST ['intro'] ? formatEmoji(true, t($_POST ['intro'])) : '';
 
             /* # 检查用户简介是否超出字数限制 */
             if (get_str_length($save['intro']) > 150) {
@@ -549,13 +549,13 @@ class AccountAction extends Action
         }
 
         switch ($verifyInfo ['verified']) {
-            case '1' :
+            case '1':
                 $status = '<i class="ico-ok"></i>已认证 <a href="javascript:void(0);" onclick="delverify()">注销认证</a>';
                 break;
-            case '0' :
+            case '0':
                 $status = '<i class="ico-wait"></i>已提交认证，等待审核';
                 break;
-            case '-1' :
+            case '-1':
                 // 安全过滤
                 $type = t($_GET ['type']);
                 if ($type == 'edit') {
@@ -568,7 +568,7 @@ class AccountAction extends Action
                             )).'">请修改资料后重新提交</a>';
                 }
                 break;
-            default :
+            default:
                 // $verifyInfo['usergroup_id'] = 5;
                 $status = '未认证';
                 break;
@@ -1126,7 +1126,7 @@ class AccountAction extends Action
             switch ($type) {
                 case 0: $res['request_url'] = $this->alipay($data); break;
                 case 1: $res['request_url'] = $this->weixin($data); break;
-                default : $res['request_url'] = '';
+                default: $res['request_url'] = '';
             }
         } else {
             $res ['status'] = 0;
@@ -1145,8 +1145,8 @@ class AccountAction extends Action
         $configs['seller_email'] = $chargeConfigs['alipay_email'];
         $configs['key'] = $chargeConfigs['alipay_key'];
         $parameter = array(
-            'notify_url' => SITE_URL.'/public/pay/alipay_notify.php',
-            'return_url' => SITE_URL.'/public/pay/alipay_return.php',
+            'notify_url' => SITE_URL.'/alipay_notify.php',
+            'return_url' => SITE_URL.'/alipay_return.php',
             'out_trade_no' => $data['serial_number'],
             'subject' => '积分充值:'.$data['charge_sroce'].'积分',
             'total_fee' => $data['charge_value'],
@@ -1163,6 +1163,8 @@ class AccountAction extends Action
 
     public function alipayReturn()
     {
+        unset($_GET['app'], $_GET['mod'], $_GET['act']);
+        unset($_REQUEST['app'], $_REQUEST['mod'], $_REQUEST['act']);
         require_once ADDON_PATH.'/library/alipay/alipay.php';
         $chargeConfigs = model('Xdata')->get('admin_Config:charge');
         $configs = array(
@@ -1170,7 +1172,6 @@ class AccountAction extends Action
             'seller_email' => $chargeConfigs['alipay_email'],
             'key' => $chargeConfigs['alipay_key'],
         );
-        unset($_GET['app'], $_GET['mod'], $_GET['act']);
         if (verifyAlipayReturn($configs)) {
             if (model('Credit')->charge_success(t($_GET['out_trade_no']))) {
                 $this->assign('jumpUrl', U('public/Account/scoredetail'));
@@ -1191,6 +1192,8 @@ class AccountAction extends Action
     }
     public function alipayNotify()
     {
+        unset($_GET['app'], $_GET['mod'], $_GET['act']);
+        unset($_REQUEST['app'], $_REQUEST['mod'], $_REQUEST['act']);
         header('Content-type:text/html;charset=utf-8');
         require_once ADDON_PATH.'/library/alipay/alipay.php';
         $chargeConfigs = model('Xdata')->get('admin_Config:charge');
@@ -1199,7 +1202,6 @@ class AccountAction extends Action
             'seller_email' => $chargeConfigs['alipay_email'],
             'key' => $chargeConfigs['alipay_key'],
         );
-        unset($_GET['app'], $_GET['mod'], $_GET['act']);
         if (verifyAlipayNotify($configs)) {
             model('Credit')->charge_success(t($_POST['out_trade_no']));
         }

@@ -135,10 +135,10 @@ class AlipayNotify
 
         $isSgin = false;
         switch (strtoupper(trim($this->alipay_config['sign_type']))) {
-            case 'MD5' :
+            case 'MD5':
                 $isSgin = md5Verify($prestr, $sign, $this->alipay_config['key']);
                 break;
-            default :
+            default:
                 $isSgin = false;
         }
 
@@ -150,7 +150,7 @@ class AlipayNotify
      * @param $notify_id 通知校验ID
      * @return 服务器ATN结果
      *                            验证结果集：
-     *                            invalid命令参数不对 出现这个错误，请检测返回处理中partner和key是否为空 
+     *                            invalid命令参数不对 出现这个错误，请检测返回处理中partner和key是否为空
      *                            true 返回正确信息
      *                            false 请检查防火墙或者是服务器阻止端口问题以及验证时间是否超过一分钟
      */

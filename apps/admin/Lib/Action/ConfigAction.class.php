@@ -1,7 +1,7 @@
 <?php
 /**
  * 后台，系统配置控制器
- * @author jason <yangjs17@yeah.net> 
+ * @author jason <yangjs17@yeah.net>
  * @version TS3.0
  */
 // 加载后台控制器
@@ -42,6 +42,9 @@ class ConfigAction extends AdministratorAction
         $this->pageTitle ['editSeo'] = '编辑SEO';
         $this->pageTitle ['setUcenter'] = 'Ucenter配置';
         $this->pageTitle ['charge'] = '充值配置';
+
+        $this->pageTitle ['attachimage'] = '图片配置';
+
         parent::_initialize();
     }
 
@@ -149,15 +152,15 @@ class ConfigAction extends AdministratorAction
         $this->opt['need_active'] = array(1 => L('PUBLIC_OPEN'), 0 => L('PUBLIC_CLOSE'));
 /*		$this->opt ['photo_open'] = array (
                 1 => L ( 'PUBLIC_OPEN' ),
-                0 => L ( 'PUBLIC_CLOSE' ) 
+                0 => L ( 'PUBLIC_CLOSE' )
         );
         $this->opt ['need_photo'] = array (
                 1 => '是，强制上传 ',
-                0 => '否，可跳过 ' 
+                0 => '否，可跳过 '
         );
         $this->opt ['tag_open'] = array (
                 1 => L ( 'PUBLIC_OPEN' ),
-                0 => L ( 'PUBLIC_CLOSE' ) 
+                0 => L ( 'PUBLIC_CLOSE' )
         );*/
         $this->opt['personal_open'] = array(1 => L('PUBLIC_OPEN'), 0 => L('PUBLIC_CLOSE'));
         $this->opt['personal_required'] = array('face' => '头像', 'location' => '地区', 'tag' => '标签', 'intro' => '简介');
@@ -181,7 +184,7 @@ class ConfigAction extends AdministratorAction
      */
     /**
      * 初始化邀请Tab项目
-     * 
+     *
      */
     private function _initTabInvite()
     {
@@ -248,7 +251,7 @@ class ConfigAction extends AdministratorAction
 
     /**
      * 系统配置 - 邀请配置
-     * 
+     *
      */
     public function invite()
     {
@@ -262,7 +265,7 @@ class ConfigAction extends AdministratorAction
 
     /**
      * 邮件邀请 - 管理员
-     * 
+     *
      */
     public function inviteEmail()
     {
@@ -282,7 +285,7 @@ class ConfigAction extends AdministratorAction
 
     /**
      * 管理员邮件邀请操作
-     * 
+     *
      * @return json 操作后的相关数据
      */
     public function doInvite()
@@ -300,7 +303,7 @@ class ConfigAction extends AdministratorAction
 
     /**
      * 连接邀请 - 管理员
-     * 
+     *
      */
     public function inviteLink()
     {
@@ -317,7 +320,7 @@ class ConfigAction extends AdministratorAction
 
     /**
      * 获取邀请码接口
-     * 
+     *
      * @return json 操作后的相关数据
      */
     public function getInviteCode()
@@ -337,7 +340,7 @@ class ConfigAction extends AdministratorAction
 
     /**
      * 已邀请用户列表
-     * 
+     *
      * @return html 显示已邀请用户列表
      */
     public function getInviteAdminList()
@@ -727,7 +730,7 @@ class ConfigAction extends AdministratorAction
 
     /**
      * 保存敏感词设置，敏感词单独存放
-     * 
+     *
      * @return [type] [description]
      */
     public function doaudit()
@@ -753,7 +756,7 @@ class ConfigAction extends AdministratorAction
 
         $listData = model('SensitiveWord')->getSensitiveWordList();
         foreach ($listData['data'] as &$value) {
-            $value['sensitive_category'] = $value['sensitive_category']['title'];
+            $value['sensitive_category'] = $value['sensitive_category'];
             if (in_array($value['type'], array(1, 2))) {
                 $value['replace'] = '<span style="color:blue;cursor:auto;">无</span>';
             }
@@ -1760,13 +1763,13 @@ class ConfigAction extends AdministratorAction
         $jumpUrl = U('admin/Config/lang');
         $this->assign('jumpUrl', $jumpUrl);
         switch ($result) {
-            case 0 :
+            case 0:
                 $this->error(L('PUBLIC_ADMIN_OPRETING_ERROR'));
                 break;
-            case 1 :
+            case 1:
                 $this->success(L('PUBLIC_ADMIN_OPRETING_SUCCESS'));
                 break;
-            case 2 :
+            case 2:
                 $this->error(L('PUBLIC_LANGUAGE_CONFIGURATION_ALREADY_EXIST'));
                 break;
         }
@@ -2179,16 +2182,16 @@ class ConfigAction extends AdministratorAction
         $detail ['keywords'] = $data ['keywords'];
         $detail ['des'] = $data ['des'];
         switch ($key) {
-            case 'feed_topic' :
+            case 'feed_topic':
                 $detail ['note'] = '{topicName}:话题名称，{topicNote}:话题注释，{topicDes}:话题描述，{lastTopic}:最近一条话题';
                 break;
-            case 'feed_detail' :
+            case 'feed_detail':
                 $detail ['note'] = '{content}:分享内容，{uname}:用户昵称';
                 break;
-            case 'user_profile' :
+            case 'user_profile':
                 $detail ['note'] = '{uname}:用户昵称，{lastFeed}:最后一条分享';
                 break;
-            default :
+            default:
                 $detail ['note'] = '';
                 break;
         }

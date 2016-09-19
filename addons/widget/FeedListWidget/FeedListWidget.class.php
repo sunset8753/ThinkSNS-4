@@ -61,7 +61,7 @@ class FeedListWidget extends Widget
                 // $var['channel'] = $num;
                 // unset($sql, $num);
 
-                $var['channel'] = \Ts\Model\ChannelCategory::whereHas('follows', function ($q) use ($uid) {
+                $var['channel'] = \Ts\Models\ChannelCategory::whereHas('follows', function ($q) use ($uid) {
                     $q->where('uid', $uid);
                 })->count();
             }
@@ -210,7 +210,7 @@ class FeedListWidget extends Widget
         $type = $var ['new'] ? 'new'.$var ['type'] : $var ['type']; // 最新的分享与默认分享类型一一对应
 
         switch ($type) {
-            case 'following' : // 我关注的
+            case 'following': // 我关注的
                 if (! empty($var ['feed_key'])) {
                     // 关键字匹配 采用搜索引擎兼容函数搜索 后期可能会扩展为搜索引擎
                     $list = model('Feed')->searchFeed($var ['feed_key'], 'following', $var ['loadId'], $this->limitnums);
@@ -229,11 +229,11 @@ class FeedListWidget extends Widget
                         }
                     }
                     // 设定可查看的关注分享总数，可以提高大数据量下的查询效率
-                    $max = null;//1000;
+                    $max = null; //1000;
                     $list = model('Feed')->getFollowingFeed($where, $this->limitnums, '', $var ['fgid'], $max);
                 }
                 break;
-            case 'union' : // 我的人脉
+            case 'union': // 我的人脉
                 if (! empty($var ['feed_key'])) {
                     // 关键字匹配 采用搜索引擎兼容函数搜索 后期可能会扩展为搜索引擎
                     $list = model('Feed')->searchFeed($var ['feed_key'], 'union', $var ['loadId'], $this->limitnums);
@@ -252,11 +252,11 @@ class FeedListWidget extends Widget
                         }
                     }
                     // 设定可查看的关注分享总数，可以提高大数据量下的查询效率
-                    $max = null;//1000;
+                    $max = null; //1000;
                     $list = model('Feed')->getUnionFeed($where, $this->limitnums, '', $var ['fgid'], $max);
                 }
                 break;
-            case 'all' : // 所有的 --正在发生的
+            case 'all': // 所有的 --正在发生的
                 if (! empty($var ['feed_key'])) {
                     // 关键字匹配 采用搜索引擎兼容函数搜索 后期可能会扩展为搜索引擎
                     $list = model('Feed')->searchFeed($var ['feed_key'], 'all', $var ['loadId'], $this->limitnums);
@@ -276,11 +276,11 @@ class FeedListWidget extends Widget
                     }
 
                     // 设定可查看的全站分享总数，可以提高大数据量下的查询效率
-                    $max = null;//10000;
+                    $max = null; //10000;
                     $list = model('Feed')->getList($where, $this->limitnums, '', $max);
                 }
                 break;
-            case 'newfollowing' : // 关注的人的最新分享
+            case 'newfollowing': // 关注的人的最新分享
                 $where = '( a.is_audit=1 OR ( a.is_audit=0 AND a.uid='.$GLOBALS ['ts'] ['mid'].') ) AND a.is_del = 0 ';
                 if ($var ['maxId'] > 0) {
                     $where .= " AND a.feed_id > '".intval($var ['maxId'])."'";
@@ -288,7 +288,7 @@ class FeedListWidget extends Widget
                     $content ['count'] = $list ['count'];
                 }
                 break;
-            case 'newall' : // 所有人最新分享 -- 正在发生的
+            case 'newall': // 所有人最新分享 -- 正在发生的
                 if ($var ['maxId'] > 0) {
                     $map ['feed_id'] = array(
                             'gt',
@@ -305,7 +305,7 @@ class FeedListWidget extends Widget
                 $content ['count'] = $list ['count'];
 
                 break;
-            case 'space' : // 用户个人空间
+            case 'space': // 用户个人空间
                 if ($var ['feed_key'] !== '') {
                     // 关键字匹配 采用搜索引擎兼容函数搜索 后期可能会扩展为搜索引擎
                     $list = model('Feed')->searchFeed($var ['feed_key'], 'space', $var ['loadId'], $this->limitnums, '', $var ['feed_type']);
@@ -323,7 +323,7 @@ class FeedListWidget extends Widget
                     $list = model('Feed')->getUserList($map, $GLOBALS ['ts'] ['uid'], $var ['feedApp'], $var ['feed_type'], $this->limitnums);
                 }
                 break;
-            case 'channel' :
+            case 'channel':
                 $where = ' (c.is_audit=1 OR c.is_audit=0) AND c.is_del = 0 ';
                 if ($var ['loadId'] > 0) { // 非第一次
                     $where .= " AND c.feed_id < '".intval($var ['loadId'])."'";
@@ -339,13 +339,13 @@ class FeedListWidget extends Widget
                 $list = D('ChannelFollow', 'channel')->getFollowingFeed($where, $this->limitnums, '', $var ['fgid']);
                 $content ['count'] = $list ['count'];
                 break;
-            case 'one' :
+            case 'one':
                 $where = ' (is_audit=1 OR is_audit=0 AND uid='.$GLOBALS ['ts'] ['mid'].') AND is_del = 0 AND feed_id = '.$var ['feed_id'];
                 // 设定可查看的全站分享总数，可以提高大数据量下的查询效率
-                $max = null;//10000;
+                $max = null; //10000;
                 $list = model('Feed')->getList($where, $this->limitnums, '', $max);
                 break;
-            case 'love' :
+            case 'love':
                 $ids = M('Collection')->where('uid='.$GLOBALS ['ts'] ['mid'].' and source_table_name="feed"')->findAll();
                 $map ['feed_id'] = array(
                         'in',
@@ -358,11 +358,11 @@ class FeedListWidget extends Widget
                 $list = model('Feed')->getList($map, $this->limitnums, '', $max);
                 // $list = model ( 'Feed' )->getUserList ( $map, $GLOBALS ['ts'] ['uid'], $var ['feedApp'], $var ['feed_type'], $this->limitnums );
                 break;
-            case 'recommend' : // 推荐
+            case 'recommend': // 推荐
 // 				if ($var ['maxId'] > 0) {
 // 					$map ['feed_id'] = array (
 // 							'gt',
-// 							intval ( $var ['maxId'] ) 
+// 							intval ( $var ['maxId'] )
 // 					);
 // 				}
                 if ($var ['loadId'] > 0) { // 非第一次
@@ -383,7 +383,7 @@ class FeedListWidget extends Widget
                 $list = model('Feed')->getList($map, 10, 'feed_id desc,recommend_time desc');
                 $content ['count'] = $list ['count'];
                 break;
-            case 'weiba' : // 推荐
+            case 'weiba': // 推荐
 // 					if ($var ['maxId'] > 0) {
 // 						$map ['feed_id'] = array (
 // 								'gt',
@@ -422,16 +422,16 @@ class FeedListWidget extends Widget
             $uids = array();
             foreach ($var ['data'] as &$v) {
                 switch ($v ['app']) {
-                    case 'weiba' :
+                    case 'weiba':
                         $v ['from'] = getFromClient(0, $v ['app'], '微吧');
                         break;
-                    case 'tipoff' :
+                    case 'tipoff':
                         $v ['from'] = getFromClient(0, $v ['app'], '爆料');
                         break;
-                    case 'w3g' :
+                    case 'w3g':
                         $v ['from'] = getFromClient(6, $v ['app'], '3G版');
                         break;
-                    default :
+                    default:
                         $v ['from'] = getFromClient($v ['from'], $v ['app']);
                         break;
                 }

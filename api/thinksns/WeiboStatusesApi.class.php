@@ -1,4 +1,5 @@
 <?php
+
 //分享Api接口
 
 class WeiboStatusesApi extends Api
@@ -212,13 +213,13 @@ class WeiboStatusesApi extends Api
         $info = model('Attach')->upload($d, $d);
         $data = $this->data;
         if ($info['status']) {
-            $data['type'] = 'postimage';//图片类型分享
+            $data['type'] = 'postimage'; //图片类型分享
             //$data['attach_id'] = array($info['info'][0]['attach_id']);
         $data['attach_id'] = getSubByKey($info['info'], 'attach_id');
 
             return $this->update($data);
         } else {
-            return 0;//上传失败
+            return 0; //上传失败
         }
     }
     //视频发布接口
@@ -226,7 +227,7 @@ class WeiboStatusesApi extends Api
     {
         $info = model('Video')->upload($this->data['from'], $this->data['timeline']);
         if ($info['status']) {
-            $data['type'] = 'postvideo';//视频类型分享
+            $data['type'] = 'postvideo'; //视频类型分享
             $data['video_id'] = intval($info['video_id']);
             $data['video_path'] = t($info['video_path']);
             $data['video_mobile_path'] = t($info['video_mobile_path']);
@@ -239,7 +240,7 @@ class WeiboStatusesApi extends Api
 
             return $this->update($data);
         } else {
-            return 0;//上传失败
+            return 0; //上传失败
         }
     }
 
@@ -332,7 +333,7 @@ class WeiboStatusesApi extends Api
         return model('Comment')->getCommentListForApi($where, $this->since_id, $this->max_id, $this->count, $this->page, true);
     }
 
-    //删除评论接口 
+    //删除评论接口
     public function comment_destroy()
     {
         $comment_id = intval($this->data['comment_id']);

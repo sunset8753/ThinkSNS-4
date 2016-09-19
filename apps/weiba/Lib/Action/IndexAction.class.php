@@ -1,7 +1,7 @@
 <?php
 /**
  * 微吧控制器
- * @author 
+ * @author
  * @version TS3.0
  */
 class IndexAction extends Action
@@ -464,7 +464,7 @@ class IndexAction extends Action
     {
         $res = D('weiba')->doFollowWeiba($this->mid, intval($_REQUEST['weiba_id']));
         //清理插件缓存
-        $key = '_getRelatedGroup_'.$this->mid.'_'.date('Ymd');//达人
+        $key = '_getRelatedGroup_'.$this->mid.'_'.date('Ymd'); //达人
         S($key, null);
         $this->ajaxReturn($res, D('weiba')->getError(), false !== $res);
     }
@@ -542,7 +542,7 @@ class IndexAction extends Action
                 $map['weiba_id'] = $weibaid;
                 $map['level'] = 3;
                 $weiba_admin = D('weiba_follow')->where($map)->order('level desc')->field('follower_uid,level')->find();
-                if ($this->mid != $weiba_admin['follower_uid']  && !CheckPermission('core_admin', 'admin_login')) {
+                if ($this->mid != $weiba_admin['follower_uid'] && !CheckPermission('core_admin', 'admin_login')) {
                     echo 3;
                 }
                 break;
@@ -572,6 +572,13 @@ class IndexAction extends Action
      */
     public function doPost()
     {
+        //检测用户是否被禁言
+        if ($isDisabled = model('DisableUser')->isDisableUser($this->mid, 'post')) {
+            return array(
+                'status' => 0,
+                'msg' => '您已经被禁言了',
+            );
+        }
         if ($_GET['post_type'] == 'index') {
             $type = false;
         } else {
@@ -613,7 +620,7 @@ class IndexAction extends Action
                     $map['weiba_id'] = $weibaid;
                     $map['level'] = 3;
                     $weiba_admin = D('weiba_follow')->where($map)->order('level desc')->field('follower_uid')->find();
-                    if ($this->mid != $weiba_admin['follower_uid']  && !CheckPermission('core_admin', 'admin_login')) {
+                    if ($this->mid != $weiba_admin['follower_uid'] && !CheckPermission('core_admin', 'admin_login')) {
                         $this->error('对不起，您没有发帖权限，仅限该吧吧主发帖！', $type);
                     }
                     break;
@@ -662,6 +669,7 @@ class IndexAction extends Action
         $data['post_time'] = time();
         $data['last_reply_uid'] = $this->mid;
         $data['last_reply_time'] = $data['post_time'];
+        $data['feed_id'] = 0;
 
         /* # 格式化emoji */
         $data['title'] = formatEmoji(true, $data['title']);
@@ -677,8 +685,7 @@ class IndexAction extends Action
         if (!$filterContentStatus['status']) {
             $this->error($filterContentStatus['data'], $type);
         }
-        $data['content'] = $filterContentStatus['data'];
-
+        $data['content'] = addslashes($filterContentStatus['data']);
         $res = D('weiba_post')->add($data);
         if ($res) {
             D('Weiba')->setNewcount($weibaid);
@@ -735,7 +742,6 @@ class IndexAction extends Action
                 $post_detail['attachInfo'][$ak] = $_attach;
             }
         }
-
         /* # 解析表情 */
         $post_detail['content'] = preg_replace_callback('/\[.+?\]/is', '_parse_expression', $post_detail['content']);
         /* # 解析emoji’ */
@@ -878,6 +884,7 @@ class IndexAction extends Action
         $post_id = intval($_GET['post_id']);
 
         $post_detail = D('weiba_post')->where('post_id='.$post_id)->find();
+        $post_detail['title'] = htmlspecialchars($post_detail['title']);
         //获得圈主uid
         $map['weiba_id'] = $post_detail['weiba_id'];
         $map['level'] = array('in', '2,3');
@@ -2077,7 +2084,7 @@ class IndexAction extends Action
             $data['city'] = $_POST['city'];
             $data['area'] = $_POST['area'];
         }
-        $data['status'] = 0;//创建添加审核
+        $data['status'] = 0; //创建添加审核
         $data['who_can_post'] = intval($_POST['who_can_post']);
         if (true) {
             $data['admin_uid'] = $this->mid;

@@ -121,7 +121,7 @@ class AttachModel extends Model
             if ($type == 'deleteAttach') {
                 // 彻底删除操作
                 $res = D('Attach')->where($map)->delete();
-                // TODO:删除附件文件 
+                // TODO:删除附件文件
             } else {
                 // 假删除或者恢复操作
                 $res = D('Attach')->where($map)->save($save);
@@ -309,7 +309,7 @@ class AttachModel extends Model
     {
         $data = array(
             'table' => t($data['table']),
-            'row_id' => t($data['row_id']),
+            'row_id' => $data['row_id'] ? intval($data['row_id']) : 0,
             'app_name' => t($data['app_name']),
             'attach_type' => t($options['attach_type']),
             'uid' => (int) $data['uid'] ? $data['uid'] : $GLOBALS['ts']['mid'],

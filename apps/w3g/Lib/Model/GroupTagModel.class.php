@@ -131,12 +131,12 @@ class GroupTagModel extends Model
 
             return $hot_tags;
         } else {
-            // 1小时锁缓存 
+            // 1小时锁缓存
             if (!($cache = S('Cache_Hot_Tags'))) {
-                S('Cache_Hot_Tags_t', time()); //缓存未设置 先设置缓存设定时间	
+                S('Cache_Hot_Tags_t', time()); //缓存未设置 先设置缓存设定时间
             } else {
                 if (!($cacheSetTime = S('Cache_Hot_Tags_t')) || $cacheSetTime + 3600 <= time()) {
-                    S('Cache_Hot_Tags_t', time()); //缓存未设置 先设置缓存设定时间	
+                    S('Cache_Hot_Tags_t', time()); //缓存未设置 先设置缓存设定时间
                 } else {
                     return $cache;
                 }
@@ -161,7 +161,7 @@ class GroupTagModel extends Model
         if ($keyinfo && $k ) {
             $list = $this->where("tag_id=".$keyinfo['tag_id'])->field('gid')->findPage();
             $gids = getSubByKey($list['data'], 'gid');
-            
+
             //缓存用户的资料, 粉丝数, 关注数, Tag列表
             $group_model 	  = D('Group', 'home');
             $group_count_model = model('GroupCount');
@@ -169,7 +169,7 @@ class GroupTagModel extends Model
             $group_count_model->setGroupFollowerCount($gids);
             $group_count_model->setGroupFollowingCount($gids);
             $this->setGroupTagObjectCache($gids);
-            
+
             foreach ($list['data'] as $k => $v) {
                 $list['data'][$k]['group']        = $group_model->getGroupByIdentifier($v['gid']);
                 $list['data'][$k]['taglist'] 	 = $this->getGroupTagList($v['gid']);
@@ -180,16 +180,16 @@ class GroupTagModel extends Model
         }else {
             $list['count'] = 0;
         }
-        
+
         return $list;
     }
-    
+
     //获取感兴趣的Tag列表
     function getFavTageList($gid){
         $db_prefix = C('DB_PREFIX');
-        $sql = "SELECT a.* FROM {$db_prefix}tag a 
-            LEFT JOIN {$db_prefix}user_tag b  ON a.tag_id = b.tag_id  
-            WHERE b.uid != {$uid} AND a.tag_id >= ((SELECT MAX(tag_id) FROM {$db_prefix}tag)-(SELECT MIN(tag_id) FROM {$db_prefix}tag)) * RAND() + (SELECT MIN(tag_id) FROM {$db_prefix}tag) 			
+        $sql = "SELECT a.* FROM {$db_prefix}tag a
+            LEFT JOIN {$db_prefix}user_tag b  ON a.tag_id = b.tag_id
+            WHERE b.uid != {$uid} AND a.tag_id >= ((SELECT MAX(tag_id) FROM {$db_prefix}tag)-(SELECT MIN(tag_id) FROM {$db_prefix}tag)) * RAND() + (SELECT MIN(tag_id) FROM {$db_prefix}tag)
             LIMIT 10";
         return $this->query($sql);
     }
@@ -212,7 +212,7 @@ class GroupTagModel extends Model
         }else{
             $return['code'] = '0';
         }
-        
+
         return json_encode( $return );
     }*/
 }

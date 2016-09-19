@@ -2,8 +2,8 @@
 /**
  * 调整关注用户分组Widget
  * @example {:W('FollowGroup', array('uid'=>$_following['uid'], 'fid'=>$_following['fid'], 'follow_group_status' => $follow_group_status)}
- * @author jason <yangjs17@yeah.net> 
- * @version TS3.0 
+ * @author jason <yangjs17@yeah.net>
+ * @version TS3.0
  */
 class FollowGroupWidget extends Widget
 {

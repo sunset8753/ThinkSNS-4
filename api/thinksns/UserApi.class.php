@@ -1,6 +1,6 @@
 <?php
 /**
- * 
+ *
  * @author jason
  *
  */
@@ -8,7 +8,7 @@ class UserApi extends Api
 {
     /**
      * 按用户UID或昵称返回用户资料，同时也将返回用户的最新发布的分享
-     * 
+     *
      */
     public function show()
     {
@@ -339,7 +339,7 @@ class UserApi extends Api
 
     /**
      * 获取用户的朋友列表
-     * 
+     *
      */
     public function user_friends()
     {
@@ -551,13 +551,13 @@ class UserApi extends Api
     // 按地理位置搜索邻居
     public function neighbors()
     {
-        //经度latitude 
+        //经度latitude
         //纬度longitude
         //距离distance
         $latitude = floatval($this->data['latitude']);
         $longitude = floatval($this->data['longitude']);
         //根据经度、纬度查询周边用户 1度是 111 公里
-        //根据ts_mobile_user 表查找，经度和纬度在一个范围内。  
+        //根据ts_mobile_user 表查找，经度和纬度在一个范围内。
         //latitude < ($latitude + 1) AND latitude > ($latitude - 1)
         //longitude < ($longitude + 1) AND longitude > ($longitude - 1)
         $limit = 20;

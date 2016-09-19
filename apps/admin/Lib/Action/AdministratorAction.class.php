@@ -80,7 +80,7 @@ class AdministratorAction extends Action
 
     /**
      * 列表页在分页栏的按钮
-     * 例子：$this->pageButton[] = array('title'=>'搜索','onclick'=>"admin.fold('search_form')");	
+     * 例子：$this->pageButton[] = array('title'=>'搜索','onclick'=>"admin.fold('search_form')");
      * @var array
      */
     protected $pageButton = array();
@@ -132,7 +132,7 @@ class AdministratorAction extends Action
         $this->submitAlias = L('PUBLIC_SAVE');
         $this->assign('isAdmin', 1);
         $this->onload[] = 'admin.bindTrOn()';
-        $this->getSearchPost(); //默认初始化post查询   
+        $this->getSearchPost(); //默认初始化post查询
 
         if (!isIpAccess('adminipaccess')) {
             $this->error('你的IP已被管理中心禁止');

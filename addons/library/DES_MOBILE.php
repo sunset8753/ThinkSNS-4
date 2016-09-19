@@ -1,5 +1,7 @@
 <?php
-    # 可与java object 兼容
+
+// # 可与java object 兼容
+
 class DES_MOBILE
 {
     public $key = '12345678';

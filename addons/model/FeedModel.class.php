@@ -29,6 +29,13 @@ class FeedModel extends Model
      */
     public function put($uid, $app = 'public', $type = '', $data = array(), $app_id = 0, $app_table = 'feed', $extUid = null, $lessUids = null, $isAtMe = true, $is_repost = 0)
     {
+
+        //检测用户是否被禁言
+        if ($isDisabled = model('DisableUser')->isDisableUser($uid, 'post')) {
+            $this->error = '您已经被禁言了..';
+
+            return false;
+        }
         if (isSubmitLocked()) {
             $this->error = '发布内容过于频繁，请稍后再试';
 
@@ -534,7 +541,6 @@ class FeedModel extends Model
         } else {
             $feedlist = $this->findPage($limit);
         }
-// 		dump($feedlist);
         $feed_ids = getSubByKey($feedlist['data'], 'feed_id');
         $feedlist['data'] = $this->getFeeds($feed_ids);
 
@@ -875,14 +881,14 @@ class FeedModel extends Model
             $video_config = model('Xdata')->get('admin_Content:video_config');
             $video_server = $video_config['video_server'] ? $video_config['video_server'] : SITE_URL;
 
-            $var['flashimg'] = $video_server.$var['image_path'];//'__THEME__/image/video.png';
-            $var['flashvar'] = $video_server.$var['video_path'];
-            $var['flashvar_part'] = $video_server.$var['video_part_path'];
-            $var['flash_width'] = $var['image_width'] ? $var['image_width'] : 430;
-            $var['flash_height'] = $var['image_height'] ? $var['image_height'] : 400;
+            $var['flashimg'] = $video_server.$var['image_path']; //'__THEME__/image/video.png';\
             if ($var['transfer_id'] && !D('video_transfer')->where('transfer_id='.$var['transfer_id'])->getField('status')) {
                 $var['transfering'] = 1;
             }
+            $var['flashvar'] = !$var['transfering'] ? $video_server.$var['video_mobile_path'] : $video_server.$var['video_path'];
+            $var['flashvar_part'] = $video_server.$var['video_part_path'];
+            $var['flash_width'] = $var['image_width'] ? $var['image_width'] : 430;
+            $var['flash_height'] = $var['image_height'] ? $var['image_height'] : 400;
         }
         $var['uid'] = $_data['uid'];
         $var['actor'] = "<a href='{$user['space_url']}' class='name' event-node='face_card' uid='{$user['uid']}'>{$user['uname']}</a>";
@@ -1175,7 +1181,7 @@ class FeedModel extends Model
                 $where .= " AND c.feed_data LIKE '%".t($key)."%'";
                 $feedlist = $this->table($table)->where($where)->field('a.feed_id')->order('a.publish_time DESC')->findPage($limit);
                 break;
-            case 'union' :
+            case 'union':
                 $buid = $GLOBALS ['ts'] ['uid'];
                 $table = "{$this->tablePrefix}feed AS a 
 				LEFT JOIN {$this->tablePrefix}feed_data AS c ON a.feed_id = c.feed_id";
@@ -1551,7 +1557,7 @@ class FeedModel extends Model
      * 分享到分享
      * @param string content 内容
      * @param int uid 分享者uid
-     * @param mixed attach_ids 附件ID  
+     * @param mixed attach_ids 附件ID
      * @return int feed_id 分享ID
      */
     public function shareToFeed($content, $uid, $attach_ids, $from)

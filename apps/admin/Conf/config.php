@@ -26,7 +26,7 @@ $menu = array(
                 '群发消息' => U('admin/Home/message'),
                 // L('PUBLIC_MESSAGE_NOTIFY')         => U('admin/Home/message'),
                 L('PUBLIC_SCHEDULED_TASK_NEWCREATE') => U('admin/Home/schedule'),
-                //'数据字典'                         => U('admin/Home/systemdata'),	
+                //'数据字典'                         => U('admin/Home/systemdata'),
                 L('PUBLIC_CLEANCACHE') => U('admin/Tool/cleancache'),
                 '缓存配置' => U('admin/Home/cacheConfig'),
                 '数据备份' => U('admin/Tool/backup'),
@@ -119,7 +119,7 @@ $menu = array(
         // 	'微信管理' => array(
    //  			'所有插件列表' => U('admin/Addons/index','is_weixin=1'),
    //  		),
-        // ),		
+        // ),
         'mobile' => array(
             '3G版设置' => array(
                 '常规设置' => U('admin/Mobile/setting'),

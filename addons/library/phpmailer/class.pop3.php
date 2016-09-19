@@ -125,7 +125,6 @@ class POP3
 
   /**
    * Constructor, sets the initial values
-   * @access public
    * @return POP3
    */
   public function __construct()
@@ -137,7 +136,6 @@ class POP3
 
   /**
    * Combination of public events - connect, login, disconnect
-   * @access public
    * @param string $host
    * @param int $port
    * @param int $tval
@@ -190,7 +188,6 @@ class POP3
 
   /**
    * Connect to the POP3 server
-   * @access public
    * @param string $host
    * @param int $port
    * @param int $tval
@@ -267,7 +264,6 @@ class POP3
 
   /**
    * Login to the POP3 server (does not support APOP yet)
-   * @access public
    * @param string $username
    * @param string $password
    * @return bool
@@ -314,7 +310,6 @@ class POP3
 
   /**
    * Disconnect from the POP3 server
-   * @access public
    */
   public function Disconnect()
   {
@@ -330,7 +325,6 @@ class POP3
   /**
    * Get the socket response back.
    * $size is the maximum number of bytes to retrieve
-   * @access private
    * @param int $size
    * @return string
    */
@@ -343,7 +337,6 @@ class POP3
 
   /**
    * Send a string down the open socket connection to the POP3 server
-   * @access private
    * @param string $string
    * @return int
    */
@@ -356,7 +349,6 @@ class POP3
 
   /**
    * Checks the POP3 server response for +OK or -ERR
-   * @access private
    * @param string $string
    * @return bool
    */
@@ -381,7 +373,6 @@ class POP3
 
   /**
    * If debug is enabled, display the error message array
-   * @access private
    */
   private function displayErrors()
   {
@@ -396,7 +387,6 @@ class POP3
 
   /**
    * Takes over from PHP for the socket warning handler
-   * @access private
    * @param int $errno
    * @param string $errstr
    * @param string $errfile

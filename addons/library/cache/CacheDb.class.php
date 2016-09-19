@@ -1,4 +1,5 @@
 <?php
+
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK IT ]
 // +----------------------------------------------------------------------
@@ -29,7 +30,6 @@ class CacheDb extends Cache
     /**
      * 架构函数
      * @param array $options 缓存参数
-     * @access public
      */
     public function __construct($options = array())
     {
@@ -39,16 +39,15 @@ class CacheDb extends Cache
             );
         }
         $this->options = $options;
-        $this->options['prefix'] = isset($options['prefix']) ?  $options['prefix']  :   C('DATA_CACHE_PREFIX');
-        $this->options['length'] = isset($options['length']) ?  $options['length']  :   0;
-        $this->options['expire'] = isset($options['expire']) ?  $options['expire']  :   C('DATA_CACHE_TIME');
+        $this->options['prefix'] = isset($options['prefix']) ? $options['prefix'] : C('DATA_CACHE_PREFIX');
+        $this->options['length'] = isset($options['length']) ? $options['length'] : 0;
+        $this->options['expire'] = isset($options['expire']) ? $options['expire'] : C('DATA_CACHE_TIME');
         import('Db');
         $this->handler = DB::getInstance();
     }
 
     /**
      * 读取缓存
-     * @access public
      * @param  string $name 缓存变量名
      * @return mixed
      */
@@ -81,7 +80,6 @@ class CacheDb extends Cache
 
     /**
      * 写入缓存
-     * @access public
      * @param  string $name   缓存变量名
      * @param  mixed  $value  存储数据
      * @param  int    $expire 有效时间（秒）
@@ -105,7 +103,7 @@ class CacheDb extends Cache
         if (is_null($expire)) {
             $expire = $this->options['expire'];
         }
-        $expire = ($expire == 0) ? 0 : (time() + $expire) ;//缓存有效期为0表示永久缓存
+        $expire = ($expire == 0) ? 0 : (time() + $expire) ; //缓存有效期为0表示永久缓存
         $result = $this->handler->query('select `cachekey` from `'.$this->options['table'].'` where `cachekey`=\''.$name.'\' limit 0,1');
         if (!empty($result)) {
             //更新记录
@@ -128,7 +126,6 @@ class CacheDb extends Cache
 
     /**
      * 删除缓存
-     * @access public
      * @param  string $name 缓存变量名
      * @return boolen
      */
@@ -141,7 +138,6 @@ class CacheDb extends Cache
 
     /**
      * 清除缓存
-     * @access public
      * @return boolen
      */
     public function clear()

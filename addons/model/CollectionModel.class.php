@@ -1,7 +1,7 @@
 <?php
 /**
  * 收藏模型 - 数据对象模型
- * @author jason <yangjs17@yeah.net> 
+ * @author jason <yangjs17@yeah.net>
  * @version TS3.0
  */
 class CollectionModel extends Model
@@ -43,7 +43,7 @@ class CollectionModel extends Model
         // 	$this->error = L('PUBLIC_RESOURCE_ERROR');			// 资源ID,资源所在表名,资源所在应用不能为空
         // 	return false;
         // }
-        // // 判断是否已收藏 
+        // // 判断是否已收藏
         // $isExist = $this->getCollection($data['source_id'], $data['source_table_name']);
         // if(!empty($isExist)) {
         // 	$this->error = L('PUBLIC_FAVORITE_ALREADY');		// 您已经收藏过了

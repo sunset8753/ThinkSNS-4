@@ -200,9 +200,9 @@ class GroupModel extends Model
         }
 
         $map = 'g.status=1 AND g.is_del=0';
-        $_tag_id      && $map .= ' AND (t.tag_id IN ('.implode(',', $_tag_id).')';
-        $_tag_id      && $map .= $_tag_in_name;
-        $_tag_id      && $map .= $_tag_in_intro.')';
+        $_tag_id && $map .= ' AND (t.tag_id IN ('.implode(',', $_tag_id).')';
+        $_tag_id && $map .= $_tag_in_name;
+        $_tag_id && $map .= $_tag_in_intro.')';
         $_my_group_id && $map .= ' AND g.id NOT IN ('.implode(',', $_my_group_id).')';
 
         $group_count = $this->field('count(DISTINCT(g.id)) AS count')
@@ -254,12 +254,12 @@ class GroupModel extends Model
      */
     public function getHotList($reset = false)
     {
-        // 1分钟锁缓存 
+        // 1分钟锁缓存
         if (!($cache = S('Cache_Group_Hot_list')) || $reset) {
-            S('Cache_Group_Hot_list_t', time()); //缓存未设置 先设置缓存设定时间	
+            S('Cache_Group_Hot_list_t', time()); //缓存未设置 先设置缓存设定时间
         } else {
             if (!($cacheSetTime = S('Cache_Group_Hot_list_t')) || $cacheSetTime + 60 <= time()) {
-                S('Cache_Group_Hot_list_t', time()); //缓存未设置 先设置缓存设定时间	
+                S('Cache_Group_Hot_list_t', time()); //缓存未设置 先设置缓存设定时间
             } else {
                 return $cache;
             }
@@ -388,7 +388,7 @@ class GroupModel extends Model
 
         /**
          * getGroupList
-         
+
          */
         public function getGroupList($html = 1, $map = array(), $fields = null, $order = null, $limit = null, $isDel = 0)
         {

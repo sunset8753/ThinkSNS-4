@@ -419,7 +419,7 @@ class ToolAction extends AdministratorAction
     {
         // 清文件缓存
         $dirs = array(
-                './_runtime/',
+            TS_ROOT.TS_STORAGE.'/temp/',
         );
 
         // 清理缓存
@@ -427,12 +427,12 @@ class ToolAction extends AdministratorAction
             $this->_rmdirr($value);
             echo "<div style='border:2px solid green; background:#f1f1f1; padding:20px;margin:20px;width:800px;font-weight:bold;color:green;text-align:center;'>\"".$value.'" 文件缓存目录已经删除! </div> <br /><br />';
         }
-
-        @mkdir('_runtime', 0777, true);
+        \Medz\Component\Filesystem\Filesystem::mkdir(TS_ROOT.TS_STORAGE.'/temp', 0777);
 
         //其它缓存清理
         model('Cache')->clear();
     }
+
     public function _rmdirr($dirname)
     {
         if (! file_exists($dirname)) {

@@ -1,4 +1,5 @@
 <?php
+
 // +----------------------------------------------------------------------
 // | ThinkSNS
 // +----------------------------------------------------------------------
@@ -135,7 +136,7 @@ class ScheduleModel extends Model
         $this->saveSchedule($schedule);
         $str_log = "schedule_id = {$schedule['id']} 的任务已运行。";
         if (C('APP_DEBUG')) {
-            $str_log  .= "任务url为: {$schedule['task_to_run']} ，任务描述为: {$schedule['info']} 。";
+            $str_log .= "任务url为: {$schedule['task_to_run']} ，任务描述为: {$schedule['info']} 。";
         }
         $this->_log($str_log);
     }
@@ -434,7 +435,6 @@ class ScheduleModel extends Model
             } elseif (in_array(strtoupper($schedule['modifier']), array('FIRST', 'SECOND', 'THIRD', 'FOURTH', 'LAST'))) {
                 //modifier为FIRST,SECOND,THIRD,FOURTH,LAST之一时，dirlist必须在MON～SUN、*中
                 if ($schedule['dirlist'] == '*') {
-                    ;
                 } else {
                     $flag = true;
                     $dirlist = explode(',', str_replace(' ', '', $schedule['dirlist']));
@@ -573,7 +573,6 @@ class ScheduleModel extends Model
             if (in_array(date('D'), $schedule['dirlist'])) {
                 //判断今天是否已经执行过当前计划。如果否，根据基准时间计算执行时间（DATE为今天，TIME来自基准时间）
                 if (($base_time_type == 'last_run_time') && (date('Y-m-d', $date) == date('Y-m-d'))) {
-                    ;
                 } else {
                     return mktime(date('H', $date), date('i', $date), date('s', $date), date('m'), date('d'), date('Y'));
                 }
@@ -608,7 +607,6 @@ class ScheduleModel extends Model
             if (in_array(date('M'), $schedule['month']) && $this->_isLastDayOfMonth()) {
                 //判断今天是否已经执行过当前计划。如果否，根据基准时间计算执行时间（DATE为今天，TIME来自基准时间）
                 if (($base_time_type == 'last_run_time') && (date('Y-m-d', $date) == date('Y-m-d'))) {
-                    ;
                 } else {
                     return mktime(date('H', $date), date('i', $date), date('s', $date), date('m'), date('d'), date('Y'));
                 }
@@ -630,7 +628,6 @@ class ScheduleModel extends Model
                     if ($this->_isDayIDOfMonth($schedule['modifier'])) {
                         //判断今天是否已经执行过当前计划。如果否，根据基准时间计算执行时间（DATE为今天，TIME来自基准时间）
                         if (($base_time_type == 'last_run_time') && (date('Y-m-d', $date) == date('Y-m-d'))) {
-                            ;
                         } else {
                             return mktime(date('H', $date), date('i', $date), date('s', $date), date('m'), date('d'), date('Y'));
                         }
@@ -652,7 +649,6 @@ class ScheduleModel extends Model
                 if (in_array(date('d'), $schedule['dirlist']) || in_array(date('j'), $schedule['dirlist'])) {
                     //判断今天是否已经执行过当前计划。如果否，根据基准时间计算执行时间（DATE为今天，TIME来自基准时间）
                     if (($base_time_type == 'last_run_time') && (date('Y-m-d', $date) == date('Y-m-d'))) {
-                        ;
                     } else {
                         return mktime(date('H', $date), date('i', $date), date('s', $date), date('m'), date('d'), date('Y'));
                     }
@@ -725,7 +721,7 @@ class ScheduleModel extends Model
     //返回自2007年01月01日来的周数
     protected function _getWeekID($date = '')
     {
-        $date_base = strtotime('2007-01-01');//2007-01-01为周一，定为第一周
+        $date_base = strtotime('2007-01-01'); //2007-01-01为周一，定为第一周
         //输入日期为空时，使用当前时间
         if (empty($date)) {
             $date = strtotime(date('Y-m-d'));

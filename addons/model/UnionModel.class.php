@@ -703,17 +703,17 @@ class UnionModel extends Model
             );
             $gid = empty($gid) ? 0 : intval($gid);
             switch ($gid) {
-                case 0 :
+                case 0:
                     $list = D()->table('`'.C('DB_PREFIX').'user_union` AS a LEFT JOIN `'.C('DB_PREFIX').'user` AS b ON a.`fid` = b.`uid`')->field('a.`fid`')->where($map)->findPage($limit);
                     break;
-                case - 1 :
+                case - 1:
                     $map ['c.`uid`'] = array(
                             'EXP',
                             'IS NOT NULL',
                     );
                     $list = D()->table('`'.C('DB_PREFIX').'user_union` AS a LEFT JOIN `'.C('DB_PREFIX').'user_union` AS c ON a.`uid` = c.`fid` AND c.`uid` = a.`fid` LEFT JOIN `'.C('DB_PREFIX').'user` AS b ON a.`fid` = b.`uid`')->field('a.fid')->where($map)->order('a.union_id DESC')->findPage($limit);
                     break;
-                case - 2 :
+                case - 2:
 
                     // $uid = intval ( $uid );
                     // $map ['c.`fid`'] = array (
@@ -722,7 +722,7 @@ class UnionModel extends Model
                     // );
                     // $list = $this->table ( '`' . C ( 'DB_PREFIX' ) . 'user_union` AS a LEFT JOIN `' . C ( 'DB_PREFIX' ) . 'user_union_group_link` AS c ON a.`fid` = c.`fid` LEFT JOIN `' . C ( 'DB_PREFIX' ) . 'user` AS b ON a.`fid` = b.`uid`' )->field ( 'a.fid' )->where ( $map )->order ( 'a.union_id DESC' )->findPage ( $limit );
                     break;
-                default :
+                default:
                 // $map ['c.`union_group_id`'] = $gid;
                 // $list = $this->table ( '`' . C ( 'DB_PREFIX' ) . 'user_union` AS a LEFT JOIN `' . C ( 'DB_PREFIX' ) . 'user_union_group_link` AS c ON a.union_id=c.union_id AND a.uid=c.uid LEFT JOIN `' . C ( 'DB_PREFIX' ) . 'user` AS b ON a.`fid` = b.`uid`' )->field ( 'a.fid' )->where ( $map )->order ( 'a.union_id DESC' )->findPage ( $limit );
             }

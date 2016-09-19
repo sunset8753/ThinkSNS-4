@@ -99,6 +99,8 @@ final class Ts
         self::$capsule->setAsGlobal();
         // Setup the Eloquent ORM... (optional; unless you've used setEventDispatcher())
         self::$capsule->bootEloquent();
+        // 关闭日志功能
+        self::$capsule->connection()->disableQueryLog();
     }
 
     /**
@@ -117,19 +119,17 @@ final class Ts
         $name = implode(self::DS, $name);
         $name .= $ext;
         unset($ext);
-        $name = 'file://'.$name;
-        /* 是否已经加载过了 */
-        if (in_array($name, self::$_files)) {
-            return true;
 
-        /* 加载文件，并插入到记录 */
-        } elseif (file_exists($name)) {
-            array_push(self::$_files, $name);
-
-            return include $name;
+        if (isset(self::$_files[$name])) {
+            return self::$_files[$name];
+        } elseif (file_exists($name) && is_file($name)) {
+            self::$_files[$name] = true;
+            include_once $name;
+        } else {
+            self::$_files[$name] = false;
         }
 
-        return false;
+        return self::$_files[$name];
     }
 
     /**

@@ -3,7 +3,7 @@
  * 视频服务模型
  *
  * @package ThinkSNS\Addnons\Model\Video
- * @author Seven Du <lovevipdsw@vip.qq.com> 
+ * @author Seven Du <lovevipdsw@vip.qq.com>
  **/
 class VideoModel extends OldVideoModel
 {
@@ -127,10 +127,8 @@ class OldVideoModel extends Model
         $video_config = model('Xdata')->get('admin_Content:video_config');
         $videoinfo = pathinfo($_FILES['Filedata']['name']);
         $video_ext = $videoinfo['extension'];
-
         $allowExts = $video_config['video_ext'] ? explode(',', $video_config['video_ext']) : array('mp4');
         $uploadCondition = $_FILES['Filedata'] && in_array(strtolower($video_ext), $allowExts, true);
-
         //如果视频上传正确.
         if ($uploadCondition) {
             $savePath = SITE_PATH.$this->_getSavePath(); //网页视频文件夹
@@ -155,7 +153,6 @@ class OldVideoModel extends Model
                 } else {     //Windows
                     $ffmpegpath = SITE_PATH.$video_config['ffmpeg_path'];
                 }
-
                 //处理视频格式--转为h264格式
                 if ($video_config['video_transfer_async']) {  //后台处理
                     $transfer['sourceSavePath'] = $this->_getSavePath().'/source';
@@ -264,6 +261,7 @@ class OldVideoModel extends Model
                 $ffmpegpath = SITE_PATH.$data['ffmpeg_path'];
             }
         }
+
         $command = "$ffmpegpath -i $input -an -ss 00:00:$fromdurasec -r 1 -vframes 1 -f mjpeg -y $output";
         exec($command);
     }
@@ -300,7 +298,7 @@ class OldVideoModel extends Model
     //转码
     public function video_transfer()
     {
-        $video_list = D('video_transfer')->where('status=0')->order('transfer_id Asc')->limit(10)->findAll();
+        $video_list = D('video_transfer')->where('status=0')->order('transfer_id Asc')->limit(3)->findAll();
         // dump($video_list);exit;
         if ($video_list) {
             set_time_limit(0);
@@ -359,6 +357,50 @@ class OldVideoModel extends Model
         }
 
         return $typedata;
+    }
+
+    public function getQqOutsideVideoInfo($link)
+    {
+        if (extension_loaded('zlib')) {
+            $content = file_get_contents('compress.zlib://'.$link); //获取
+        }
+
+        if (!$content) {
+            $content = file_get_contents($link);
+        }
+        preg_match('/vid:\s*"(.+?)",/i', $content, $flashvar);
+        preg_match('/itemprop=\"image\" content=\"(.+?)\"/i', $content, $img);
+        preg_match("/<title>(.*?)<\/title>/", $content, $title);
+        $flash_url = 'http://static.video.qq.com/TPout.swf?vid='.$flashvar[1].'&auto=1';
+        $return = array();
+        $return['title'] = $title[1];
+        $return['image_url'] = $img[1];
+        $return['flash_url'] = $flash_url;
+
+        return $return;
+    }
+
+    public function getLeOutsideVideoInfo($link)
+    {
+        $contents = file_get_contents($link);
+        if (extension_loaded('zlib')) {
+            $content = file_get_contents('compress.zlib://'.$link); //获取
+        }
+
+        if (!$content) {
+            $content = file_get_contents($link);
+        }
+        preg_match_all('/(vid:(\d+)\)/is', $content, $vid);
+        // preg_match_all('/<[\s]*meta[\s]*property="?og\:([^>"]*)"?[\s]*content="?([^>"]*)"?[\s]*[\/]?[\s]*>/si', $contents, $match);
+        preg_match_all('/(title:(.*)\)/is', $conetnt, $title);
+        preg_match_all('/(videoPic:(.*)\)/is', $content, $images);
+        $baseurl = 'http://img1.c0.letv.com/ptv/player/swfPlayer.swf?autoPlay=1&isPlayerAd=0&id=';
+        $return = array();
+        $return['title'] = $title;
+        $return['image_url'] = $image;
+        $return['flash_url'] = $baseurl.$vid[0];
+
+        return $return;
     }
 
     /**
@@ -482,7 +524,12 @@ class OldVideoModel extends Model
             case 'yinyuetai.com':
                 $return = $this->getYinyuetaiOutsideVideoInfo($link);
                 break;
-
+            case 'le.com':
+                $return = $this->getLeOutsideVideoInfo($link);
+                break;
+            case 'qq.com':
+                $return = $this->getQqOutsideVideoInfo($link);
+                break;
             default:
                 $return = null;
                 break;
@@ -516,14 +563,13 @@ class OldVideoModel extends Model
             }
         } else {
             if (extension_loaded('zlib')) {
-                $content = file_get_contents('compress.zlib://'.$link);//获取
+                $content = file_get_contents('compress.zlib://'.$link); //获取
             }
 
             if (!$content) {
                 $content = file_get_contents($link);
             }//有些站点无法获取
         }
-
         if ('ku6.com' == $host) {
             // 2012/3/7 修复ku6链接和图片抓去
             preg_match("/\/([\w\-\.]+)\.html/", $link, $flashvar);
@@ -587,8 +633,10 @@ class OldVideoModel extends Model
             $flash_url = 'http://player.yinyuetai.com/video/player/'.$flashvar[1].'/v_0.swf';
             $base = base64_encode(file_get_contents($img[1]));
             $img[1] = 'data:image/jpeg;base64,'.$base;
+        } elseif ('le.com' == $host) {
+            echo $content;
+            exit();
         }
-
         $return['title'] = is_array($title) ? t($title[1]) : $title;
         $return['flash_url'] = t($flash_url);
         $return['image_url'] = is_array($img) ? t($img[1]) : $img;
@@ -614,7 +662,7 @@ class OldVideoModel extends Model
             if ($type == 'deleteVideo') {
                 // 彻底删除操作
                 $res = D('Video')->where($map)->delete();
-                // TODO:删除附件文件 
+                // TODO:删除附件文件
             } else {
                 // 假删除或者恢复操作
                 $res = D('Video')->where($map)->save($save);

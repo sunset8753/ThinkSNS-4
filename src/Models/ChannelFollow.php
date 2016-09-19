@@ -1,14 +1,14 @@
 <?php
 
-namespace Ts\Model;
+namespace Ts\Models;
 
-use Ts\Base\Model;
+use Ts\Bases\Model;
 
 /**
  * 频道粉丝模型
  *
- * @package Ts\Model\ChannelFollow
- * @author Seven Du <lovevipdsw@outlook.com> 
+ * @package Ts\Models\ChannelFollow
+ * @author Seven Du <lovevipdsw@outlook.com>
  **/
 class ChannelFollow extends Model
 {
@@ -50,6 +50,6 @@ class ChannelFollow extends Model
      */
     public function cate()
     {
-        return $this->belongsTo('Ts\\Model\\ChannelCategory', 'channel_category_id');
+        return $this->belongsTo('Ts\\Models\\ChannelCategory', 'channel_category_id');
     }
 } // END class ChannelFollow extends Model

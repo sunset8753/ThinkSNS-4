@@ -16,7 +16,7 @@ class LoginHooks extends Hooks
             //"twitter"  => array("twitter_key", "twitter_secret"),
         );
     //可同步发布动态的站点
-    private static $validPublish = array('sina', 'qq', 'qzone');//, 'renren'); 暂时关闭人人网同步-不知道哪里抽风审核不过
+    private static $validPublish = array('sina', 'qq', 'qzone'); //, 'renren'); 暂时关闭人人网同步-不知道哪里抽风审核不过
     //应用名称
     private static $validAlias = array(
             'sina' => '新浪分享',
@@ -201,13 +201,13 @@ class LoginHooks extends Hooks
             return;
         }
         switch ($_REQUEST ['connectMod']) {
-        case 'bind' :
+        case 'bind':
             $this->_bindaccunt($type, $result);
             break;
-        case 'createNew' :
+        case 'createNew':
             $this->_register($type, $result);
             break;
-        default :
+        default:
             $result ['status'] = 0;
             $result ['info'] = '非法参数';
         }
@@ -297,6 +297,12 @@ class LoginHooks extends Hooks
         //             $this->error("该同步操作管理员已关闭");
         //         }
         $type = strtolower($param['type']);
+
+        if (!in_array($type, array_keys(self::$validLogin))) {
+            echo '<dl class="pop_sync"><dt></dt>请求的第三方账户类型不存在！</dl>';
+            exit;
+        }
+
         // 展示"开始绑定"按钮
         $map ['uid'] = $this->mid;
         $map ['type'] = $type;
@@ -417,7 +423,7 @@ class LoginHooks extends Hooks
             // foreach($sync as $key=>$v){
             //     $sync[$key] = "'{$v}'";
             // }
-            // 
+            //
             $opt = M('login')->where('uid='.intval($data['uid']).' and is_sync=1')->findAll();
 
             // Url格式化问题
@@ -533,6 +539,7 @@ class LoginHooks extends Hooks
             $platform = new $type ();
             $platform->checkUser('login');
             $userinfo = $platform->userInfo();
+            // var_dump($userinfo);exit();
             // 检查是否成功获取用户信息
             if (empty($userinfo ['id']) || empty($userinfo ['uname'])) {
                 $result ['status'] = 0;
@@ -935,7 +942,7 @@ class LoginHooks extends Hooks
         }
 
         $haveName = M('User')->where("`uname`='".t($_POST['uname'])."'")->find();
-        if (is_array($haveName) && sizeof($haveName) > 0) {
+        if (is_array($haveName) && count($haveName) > 0) {
             $this->_loginFailureOnClient('昵称已被使用');
         }
 

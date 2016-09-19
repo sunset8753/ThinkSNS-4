@@ -214,12 +214,12 @@ class PeopleModel extends model
             case '3':
                 !empty($data['area']) && $map['area'] = intval($data['area']);
                 break;
-            
+
             default:
                 # code...
                 break;
         }
-        
+
         !empty($data['sex']) && $map['sex'] = intval($data['sex']);
 
         $list['data'] = D()->table($table)
@@ -263,7 +263,7 @@ class PeopleModel extends model
         // 			continue;
         // 		}
         // 		$uids_arr[] = $v;
-        // 	}			
+        // 	}
         // }
         // $map['u.uid'] = array('in', $uids_arr);
         $data['lastUid'] && $map['uid'] = array('lt', $data['lastUid']);

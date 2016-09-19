@@ -16,9 +16,9 @@ class OtherPostWidget extends Widget
     public function render($data)
     {
         $list = $this->_getRelatedGroup($data);
-        $var['uid'] = $data['uid'];
-        $var['post_id'] = $data['post_id'];
-        $var['max'] = $data['max'];
+        $var['uid'] = intval($data['uid']);
+        $var['post_id'] = intval($data['post_id']);
+        $var['max'] = intval($data['max']);
         $var['topic_list'] = $list;
         $var['title'] = '热门帖子';
         $content = $this->renderFile(dirname(__FILE__).'/index.html', $var);
@@ -33,9 +33,9 @@ class OtherPostWidget extends Widget
      */
     public function changeRelate()
     {
-        $var['uid'] = $data['uid'] = $_POST['uid'];
-        $var['post_id'] = $data['post_id'] = $_POST['post_id'];
-        $var['max'] = $data['max'] = $_POST['max'];
+        $var['uid'] = $data['uid'] = intval(t($_POST['uid']));
+        $var['post_id'] = $data['post_id'] = intval(t($_POST['post_id']));
+        $var['max'] = $data['max'] = intval(t($_POST['max']));
         $list = $this->_getRelatedGroup($data);
         $var['topic_list'] = $list;
         $var['title'] = $data['title'];

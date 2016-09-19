@@ -22,7 +22,7 @@ class IndexAction extends AdministratorAction
         $this->assign('nav', $nav);
         $this->setTitle(L('PUBLIC_SYSTEM_MANAGEMENT'));
         $this->assign('channel', C('admin_channel'));
-        $this->assign('menu',    C('admin_menu'));
+        $this->assign('menu', C('admin_menu'));
         $this->display();
     }
 }

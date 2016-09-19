@@ -52,7 +52,7 @@ class CommentDiggModel extends Model
 
             //增加积分
             // model('Credit')->setUserCredit($mid, 'digg_weibo');
-            // model('Credit')->setUserCredit($feed['uid'], 'digged_weibo');	
+            // model('Credit')->setUserCredit($feed['uid'], 'digged_weibo');
 
             $this->setDiggCache($mid, $comment_id, 'add');
         }

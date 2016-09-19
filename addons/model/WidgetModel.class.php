@@ -261,7 +261,7 @@ class WidgetModel extends Model
                 $attrDesc = unserialize($attrs['attrs']);
                 $diy = unserialize($attrs['diyattrs']);
                 empty($attrDesc) && $attrDesc = array();
-                empty($diy)    && $diy = array();        // 默认
+                empty($diy) && $diy = array();        // 默认
 
                 $userset = isset($info['widget_diyatts'][$v['appname'].':'.$v['name']]) ? $info['widget_diyatts'][$v['appname'].':'.$v['name']] : array();
                 $attr = array_merge($diy, $userset);

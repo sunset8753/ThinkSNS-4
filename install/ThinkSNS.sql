@@ -6437,6 +6437,7 @@ CREATE TABLE IF NOT EXISTS `ts_message_list` (
   `from_uid` int(11) unsigned NOT NULL COMMENT '私信发起者UID',
   `type` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '私信类别，1：一对一；2：多人',
   `title` varchar(255) DEFAULT NULL COMMENT '标题',
+  `logo` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '群聊logo',
   `member_num` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '参与者数量',
   `min_max` varchar(255) DEFAULT NULL COMMENT '参与者UID正序排列，以下划线“_”链接',
   `mtime` int(11) unsigned NOT NULL COMMENT '发起时间戳',

@@ -36,7 +36,7 @@ class SmsModel extends Model
     protected $resultCode;
 
     /**
-     * 发送方式 
+     * 发送方式
      * type [auto,post,get] auto标识get+post并存
      *
      * @var string
@@ -327,7 +327,7 @@ class SmsModel extends Model
     /**
      * undocumented function
      *
-     * @author 
+     * @author
      **/
     protected function buildParam()
     {
@@ -342,10 +342,10 @@ class SmsModel extends Model
 
             $url = '';
             $this->url['scheme'] and $url .= $this->url['scheme'].'://';
-            $this->url['host']   and $url .= $this->url['host'];
-            $this->url['port']   and $url .= ':'.$this->url['port'];
-            $this->url['path']   and $url .= $this->url['path'];
-            $this->url['query']  and $url .= '?'.$this->url['query'];
+            $this->url['host'] and $url .= $this->url['host'];
+            $this->url['port'] and $url .= ':'.$this->url['port'];
+            $this->url['path'] and $url .= $this->url['path'];
+            $this->url['query'] and $url .= '?'.$this->url['query'];
             $this->url = $url;
             unset($url);
         }
@@ -439,7 +439,7 @@ class SmsModel extends Model
      **/
     public function CheckCaptcha($phone, $code)
     {
-        $data = $this->where('`phone` = '.floatval($phone).' AND `message` = \'\' AND `code` != 0 AND `time` > '.time() - 1800)->field('code')->order('`time` DESC')->getField('code');
+        $data = $this->where('`phone` = '.floatval($phone).' AND `message` = \'\' AND `code` != 0 AND `time` > '.(time() - 1800))->field('code')->order('`time` DESC')->getField('code');
         $code = intval($code);
         /* # 判断验证码是否为空 */
         if (!$code) {

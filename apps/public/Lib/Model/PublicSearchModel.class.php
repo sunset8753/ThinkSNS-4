@@ -1,7 +1,7 @@
 <?php
 /**
  * 搜索引擎模型 - 核心应用
- * @author jason <yangjs17@yeah.net> 
+ * @author jason <yangjs17@yeah.net>
  * @version TS3.0
  */
 class PublicSearchModel extends Model
@@ -269,7 +269,7 @@ class PublicSearchModel extends Model
      * string01:动态title
      * int01: 0 表示应用为核心
      * int02: 2 表示feed数据
-     * int03: feed_id 
+     * int03: feed_id
      * int04: type
      * int05: uid
      * int06: publish_time

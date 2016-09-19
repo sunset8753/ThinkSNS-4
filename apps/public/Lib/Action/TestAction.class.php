@@ -62,7 +62,7 @@ class TestAction extends Action
             }else{
                 $str .= $vo['COLUMN_NAME'].';';
             }
-            
+
         }
         echo($str); */
     }
@@ -192,7 +192,7 @@ class TestAction extends Action
 
     public function data()
     {
-        $nums = 1000;//测试数
+        $nums = 1000; //测试数
         $add = array();
         $add['version'] = 1;
         $add['language'] = 'all';
@@ -200,7 +200,7 @@ class TestAction extends Action
         $add['creator_uid'] = $this->mid;
         $add['create_time'] = time();
         $add['comment_count'] = 0;
-        for ($i = 0;$i < $nums;$i++) {
+        for ($i = 0; $i < $nums; $i++) {
             $add['status'] = rand(0, 2);
             $add['active'] = rand(0, 1);
             $add['category_id'] = rand(1, 4);
@@ -228,14 +228,14 @@ class TestAction extends Action
 
         //  - model-
         // $filePath[] = ADDON_PATH.'/model';
-        // 
+        //
         // - view -
 //		$filePath[] = ADDON_PATH.'/theme/stv1/public';
 //		$filePath[] = ADDON_PATH.'/theme/stv1/task';
 //		$filePath[] = ADDON_PATH.'/theme/stv1/support';
 //		$filePath[] = ADDON_PATH.'/theme/stv1/contact';
 //		$filePath[] = ADDON_PATH.'/theme/stv1/admin';
-        // 
+        //
         // - app -
  $filePath[] = SITE_PATH.'/apps/public';
         $filePath[] = SITE_PATH.'/apps/support';
@@ -258,7 +258,7 @@ class TestAction extends Action
                 $data = file_get_contents($v);
 
                 if ($ext == 'php' || $ext == 'js') {
-                    $data = preg_replace("!((/\*)[\s\S]*?(\*/))|(//.*)!", '', $data);//去掉注释里的中文
+                    $data = preg_replace("!((/\*)[\s\S]*?(\*/))|(//.*)!", '', $data); //去掉注释里的中文
                 }
                 preg_match_all('/([\x{4e00}-\x{9fa5}])+/u', $data, $result);
                 if (!empty($result[0])) {
@@ -466,7 +466,7 @@ class TestAction extends Action
         // 	$map['filetype'] = 1;
         // 	$map['key'] = $k;
         // 	$save['en'] = $v;
-        // 	D('')->table('sociax_lang')->where($map)->save($save);			
+        // 	D('')->table('sociax_lang')->where($map)->save($save);
         // }
 
         // $lang = include(CONF_PATH.'/lang/public_zh-cn.js-');
@@ -475,7 +475,7 @@ class TestAction extends Action
         // 	$map['filetype'] = 1;
         // 	$map['key'] = $k;
         // 	$save['zh-cn'] = $v;
-        // 	D('')->table('sociax_lang')->where($map)->save($save);			
+        // 	D('')->table('sociax_lang')->where($map)->save($save);
         // }
 
         // $lang = include(CONF_PATH.'/lang/public_zh-tw.js');
@@ -528,7 +528,7 @@ class TestAction extends Action
     {
         // $file = fopen(CONF_PATH.'/lang/t.php','r');
         // while(!feof($file)){
-        // 	$d = fgets($file,'4096'); 
+        // 	$d = fgets($file,'4096');
         // 	$data[] = trim($d)."',";
         // }
         // fclose($file);
