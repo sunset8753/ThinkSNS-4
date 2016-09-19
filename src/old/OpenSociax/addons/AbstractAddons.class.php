@@ -26,14 +26,12 @@ interface AddonsInterface
     /**
      * setUp
      * 启动插件时的接口
-     * @access public
      */
     public function install();
 
     /**
      * setDown
      * 卸载插件时的接口;
-     * @access public
      */
     public function uninstall();
 

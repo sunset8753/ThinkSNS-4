@@ -2680,7 +2680,6 @@ function tsauthcode($string, $operation = 'DECODE', $key = '')
  * 字符串截取，支持中文和其它编码
  +----------------------------------------------------------
  * @static
- * @access public
  +----------------------------------------------------------
  * @param string $str     需要转换的字符串
  * @param string $length  截取长度
@@ -2699,7 +2698,6 @@ function mStr($str, $length, $charset = 'utf-8', $suffix = true)
  * 字符串截取，支持中文和其它编码
  +----------------------------------------------------------
  * @static
- * @access public
  +----------------------------------------------------------
  * @param string $str     需要转换的字符串
  * @param string $start   开始位置
@@ -3129,7 +3127,7 @@ function RemoveXSS($val)
     $found = true; // keep replacing as long as the previous round replaced something
     while ($found == true) {
         $val_before = $val;
-        for ($i = 0; $i < sizeof($ra); $i++) {
+        for ($i = 0; $i < count($ra); $i++) {
             $pattern = '/';
             for ($j = 0; $j < strlen($ra[$i]); $j++) {
                 if ($j > 0) {

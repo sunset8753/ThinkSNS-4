@@ -18,7 +18,6 @@ abstract class Widget
     /**
      * 渲染输出 render方法是Widget唯一的接口
      * 使用字符串返回 不能有任何输出
-     * @access public
      * @param  mixed  $data 要渲染的数据
      * @return string
      */
@@ -27,7 +26,6 @@ abstract class Widget
     /**
      * 架构函数,处理核心变量
      * 使用字符串返回 不能有任何输出
-     * @access public
      */
     public function __construct()
     {
@@ -64,7 +62,6 @@ abstract class Widget
 
     /**
      * 渲染模板输出 供render方法内部调用
-     * @access public
      * @param  string $templateFile 模板文件
      * @param  mixed  $var          模板变量
      * @param  string $charset      模板编码

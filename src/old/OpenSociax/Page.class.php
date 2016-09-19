@@ -14,71 +14,61 @@ class Page
     /**
      * 分页起始行数
      * @var int
-     * @access protected
      */
     public $firstRow ;
 
     /**
      * 列表每页显示行数
      * @var int
-     * @access protected
      */
     public $listRows ;
 
     /**
      * 页数跳转时要带的参数
      * @var int
-     * @access protected
      */
     public $parameter  ;
 
     /**
      * 分页总页面数
      * @var int
-     * @access protected
      */
     public $totalPages  ;
 
     /**
      * 总行数
      * @var int
-     * @access protected
      */
     public $totalRows  ;
 
     /**
      * 当前页数
      * @var int
-     * @access protected
      */
     public $nowPage    ;
 
     /**
      * 分页的栏的总页数
      * @var int
-     * @access protected
      */
     public $coolPages   ;
 
     /**
      * 分页栏每页显示的页数
      * @var int
-     * @access protected
      */
     public $rollPage   ;
 
-/**
- * 分页记录名称
- * @var int
- * @access protected
- */
+    /**
+     * 分页记录名称
+     * @var int
+     */
 
     // 分页显示定制
     public $config = array('header' => '条记录', 'prev' => '上一页', 'next' => '下一页', 'first' => '第一页', 'last' => '最后一页');
 
     /**
      * 架构函数
-     * @access public
      * @param array $totalRows 总的记录数
      * @param array $firstRow  起始记录位置
      * @param array $listRows  每页显示记录数
@@ -113,7 +103,6 @@ class Page
     /**
      * 分页显示
      * 用于在页面显示的分页栏的输出
-     * @access public
      * @return string
      */
     public function show($isArray = false)
@@ -240,7 +229,6 @@ class Page
     /**
      * 手机端分页显示
      * 用于在页面显示的分页栏的输出
-     * @access public
      * @return string
      */
     public function wapShow($isArray = false)
@@ -354,4 +342,3 @@ class Page
         return $pageStr;
     }
 }//类定义结束
-;

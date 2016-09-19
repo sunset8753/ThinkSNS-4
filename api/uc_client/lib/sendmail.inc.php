@@ -45,7 +45,7 @@ if ($mail_setting['mailsend'] == 1 && function_exists('mail')) {
         return false;
     }
 
-    fputs($fp, ($mail_setting['mailauth'] ? 'EHLO' : 'HELO')." discuz\r\n");
+    fwrite($fp, ($mail_setting['mailauth'] ? 'EHLO' : 'HELO')." discuz\r\n");
     $lastmessage = fgets($fp, 512);
     if (substr($lastmessage, 0, 3) != 220 && substr($lastmessage, 0, 3) != 250) {
         return false;
@@ -59,19 +59,19 @@ if ($mail_setting['mailsend'] == 1 && function_exists('mail')) {
     }
 
     if ($mail_setting['mailauth']) {
-        fputs($fp, "AUTH LOGIN\r\n");
+        fwrite($fp, "AUTH LOGIN\r\n");
         $lastmessage = fgets($fp, 512);
         if (substr($lastmessage, 0, 3) != 334) {
             return false;
         }
 
-        fputs($fp, base64_encode($mail_setting['mailauth_username'])."\r\n");
+        fwrite($fp, base64_encode($mail_setting['mailauth_username'])."\r\n");
         $lastmessage = fgets($fp, 512);
         if (substr($lastmessage, 0, 3) != 334) {
             return false;
         }
 
-        fputs($fp, base64_encode($mail_setting['mailauth_password'])."\r\n");
+        fwrite($fp, base64_encode($mail_setting['mailauth_password'])."\r\n");
         $lastmessage = fgets($fp, 512);
         if (substr($lastmessage, 0, 3) != 235) {
             return false;
@@ -80,10 +80,10 @@ if ($mail_setting['mailsend'] == 1 && function_exists('mail')) {
         $email_from = $mail_setting['mailfrom'];
     }
 
-    fputs($fp, 'MAIL FROM: <'.preg_replace("/.*\<(.+?)\>.*/", '\\1', $email_from).">\r\n");
+    fwrite($fp, 'MAIL FROM: <'.preg_replace("/.*\<(.+?)\>.*/", '\\1', $email_from).">\r\n");
     $lastmessage = fgets($fp, 512);
     if (substr($lastmessage, 0, 3) != 250) {
-        fputs($fp, 'MAIL FROM: <'.preg_replace("/.*\<(.+?)\>.*/", '\\1', $email_from).">\r\n");
+        fwrite($fp, 'MAIL FROM: <'.preg_replace("/.*\<(.+?)\>.*/", '\\1', $email_from).">\r\n");
         $lastmessage = fgets($fp, 512);
         if (substr($lastmessage, 0, 3) != 250) {
             return false;
@@ -94,10 +94,10 @@ if ($mail_setting['mailsend'] == 1 && function_exists('mail')) {
     foreach (explode(',', $mail['email_to']) as $touser) {
         $touser = trim($touser);
         if ($touser) {
-            fputs($fp, 'RCPT TO: <'.preg_replace("/.*\<(.+?)\>.*/", '\\1', $touser).">\r\n");
+            fwrite($fp, 'RCPT TO: <'.preg_replace("/.*\<(.+?)\>.*/", '\\1', $touser).">\r\n");
             $lastmessage = fgets($fp, 512);
             if (substr($lastmessage, 0, 3) != 250) {
-                fputs($fp, 'RCPT TO: <'.preg_replace("/.*\<(.+?)\>.*/", '\\1', $touser).">\r\n");
+                fwrite($fp, 'RCPT TO: <'.preg_replace("/.*\<(.+?)\>.*/", '\\1', $touser).">\r\n");
                 $lastmessage = fgets($fp, 512);
 
                 return false;
@@ -105,7 +105,7 @@ if ($mail_setting['mailsend'] == 1 && function_exists('mail')) {
         }
     }
 
-    fputs($fp, "DATA\r\n");
+    fwrite($fp, "DATA\r\n");
     $lastmessage = fgets($fp, 512);
     if (substr($lastmessage, 0, 3) != 354) {
         return false;
@@ -113,18 +113,18 @@ if ($mail_setting['mailsend'] == 1 && function_exists('mail')) {
 
     $headers .= 'Message-ID: <'.gmdate('YmdHs').'.'.substr(md5($mail['message'].microtime()), 0, 6).rand(100000, 999999).'@'.$_SERVER['HTTP_HOST'].">{$maildelimiter}";
 
-    fputs($fp, 'Date: '.gmdate('r')."\r\n");
-    fputs($fp, 'To: '.$mail['email_to']."\r\n");
-    fputs($fp, 'Subject: '.$mail['subject']."\r\n");
-    fputs($fp, $headers."\r\n");
-    fputs($fp, "\r\n\r\n");
-    fputs($fp, "$mail[message]\r\n.\r\n");
+    fwrite($fp, 'Date: '.gmdate('r')."\r\n");
+    fwrite($fp, 'To: '.$mail['email_to']."\r\n");
+    fwrite($fp, 'Subject: '.$mail['subject']."\r\n");
+    fwrite($fp, $headers."\r\n");
+    fwrite($fp, "\r\n\r\n");
+    fwrite($fp, "$mail[message]\r\n.\r\n");
     $lastmessage = fgets($fp, 512);
     if (substr($lastmessage, 0, 3) != 250) {
         return false;
     }
 
-    fputs($fp, "QUIT\r\n");
+    fwrite($fp, "QUIT\r\n");
 
     return true;
 } elseif ($mail_setting['mailsend'] == 3) {

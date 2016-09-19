@@ -120,4 +120,3 @@ class CryptDES
 //$encrypt	=	$crypt->encrypt($input,'java');
 //echo "Encode:".$encrypt."<br/>";
 //echo "Decode:".$crypt->decrypt($encrypt,'java');
-;

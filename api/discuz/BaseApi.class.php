@@ -41,7 +41,9 @@
             $cookieStr .= $k.'='.URLencode($v).'; ';
         }
 
-        $cookieStr = rtrim($cookieStr, '; ');      //dump('**********************');      //dump($cookieStr);exit;      curl_setopt($tuCurl, CURLOPT_HEADER, 0);
+        $cookieStr = rtrim($cookieStr, '; ');      //dump('**********************');      //dump($cookieStr);exit;
+
+      curl_setopt($tuCurl, CURLOPT_HEADER, 0);
 
         curl_setopt($tuCurl, CURLOPT_COOKIE, $cookieStr);
 

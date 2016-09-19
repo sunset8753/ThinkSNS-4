@@ -250,7 +250,6 @@ class Api
 
     /**
      * 运行控制器
-     * @access public
      */
     public static function run()
     {
@@ -329,7 +328,6 @@ class Api
 
     /**
      * app异常处理
-     * @access public
      */
     public static function appException($e)
     {
@@ -338,7 +336,6 @@ class Api
 
     /**
      * 自定义错误处理
-     * @access public
      * @param int    $errno   错误类型
      * @param string $errstr  错误信息
      * @param string $errfile 错误文件

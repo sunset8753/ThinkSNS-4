@@ -11,7 +11,6 @@ class App
 {
     /**
      * App初始化
-     * @access public
      */
     public static function init()
     {
@@ -32,7 +31,6 @@ class App
 
     /**
      * 运行控制器
-     * @access public
      */
     public static function run()
     {
@@ -91,7 +89,6 @@ class App
 
     /**
      * 执行App控制器
-     * @access public
      */
     public static function execApp()
     {
@@ -194,7 +191,6 @@ class App
 
     /**
      * 执行Api控制器
-     * @access public
      */
     public static function execApi()
     {
@@ -237,7 +233,6 @@ class App
 
     /**
      * 执行Widget控制器
-     * @access public
      */
     public static function execWidget()
     {
@@ -277,7 +272,6 @@ class App
 
     /**
      * app异常处理
-     * @access public
      */
     public static function appException($e)
     {
@@ -286,7 +280,6 @@ class App
 
     /**
      * 自定义错误处理
-     * @access public
      * @param int    $errno   错误类型
      * @param string $errstr  错误信息
      * @param string $errfile 错误文件
@@ -310,4 +303,4 @@ class App
             break;
       }
     }
-}; //类定义结束
+} //类定义结束

@@ -32,7 +32,6 @@ class Log
     /**
      * 记录知识 并且会过滤未经设置的级别
      * @static
-     * @access public
      * @param string $message 知识信息
      * @param string $level   知识级别
      * @param bool   $record  是否强制记录
@@ -48,7 +47,6 @@ class Log
     /**
      * 知识保存
      * @static
-     * @access public
      * @param int    $type        知识记录方式
      * @param string $destination 写入目标
      * @param string $extra       额外参数
@@ -74,7 +72,6 @@ class Log
     /**
      * 知识直接写入
      * @static
-     * @access public
      * @param string $message     知识信息
      * @param string $level       知识级别
      * @param int    $type        知识记录方式

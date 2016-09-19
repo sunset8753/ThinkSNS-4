@@ -1,4 +1,5 @@
 <?php
+
 //分享Api接口
 
 class WeiboStatusesApi extends Api

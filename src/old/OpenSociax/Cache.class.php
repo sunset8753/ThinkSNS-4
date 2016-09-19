@@ -1,4 +1,5 @@
 <?php
+
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK IT ]
 // +----------------------------------------------------------------------
@@ -21,20 +22,17 @@ class Cache
     /**
      * 操作句柄
      * @var string
-     * @access protected
      */
     protected $handler    ;
 
     /**
      * 缓存连接参数
      * @var int
-     * @access protected
      */
     protected $options = array();
 
     /**
      * 连接缓存
-     * @access public
      * @param  string $type    缓存类型
      * @param  array  $options 配置数组
      * @return object
@@ -82,7 +80,6 @@ class Cache
     /**
      * 取得缓存类实例
      * @static
-     * @access public
      * @return mixed
      */
     public static function getInstance()
@@ -92,12 +89,11 @@ class Cache
         return get_instance_of(__CLASS__, 'connect', $param);
     }
 
-/**
- * 队列缓存
- * @access protected
- * @param  string $key 队列名
- * @return mixed
- */
+    /**
+     * 队列缓存
+     * @param  string $key 队列名
+     * @return mixed
+     */
     //
     protected function queue($key)
     {

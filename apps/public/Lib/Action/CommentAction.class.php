@@ -72,7 +72,7 @@ class CommentAction extends Action
                 $list['data'][$k]['hasComment'] = true;
             }
         }
-        model('UserCount')->resetUserCount($this->mid, 'unread_comment',  0);
+        model('UserCount')->resetUserCount($this->mid, 'unread_comment', 0);
         $this->assign('list', $list);
         // dump($list);exit;
         $this->setTitle($keyword.'的评论');                    // 我的评论

@@ -49,7 +49,6 @@ class Db extends Think
     protected $selectSql = 'SELECT%DISTINCT% %FIELDS% FROM %TABLE%%JOIN%%WHERE%%GROUP%%HAVING%%ORDER%%LIMIT%';
     /**
      * 架构函数
-     * @access public
      * @param array $config 数据库配置数组
      */
     public function __construct($config = '')
@@ -78,7 +77,6 @@ class Db extends Think
 
     /**
      * 分析数据库配置信息，支持数组和DSN
-     * @access private
      * @param  mixed  $db_config 数据库配置信息
      * @return string
      */
@@ -108,7 +106,6 @@ class Db extends Think
      +----------------------------------------------------------
      * 增加数据库连接(相同类型的)
      +----------------------------------------------------------
-     * @access protected
      +----------------------------------------------------------
      * @param mixed $config  数据库连接信息
      * @param mixed $linkNum 创建的连接序号
@@ -133,7 +130,6 @@ class Db extends Think
      +----------------------------------------------------------
      * 切换数据库连接
      +----------------------------------------------------------
-     * @access protected
      +----------------------------------------------------------
      * @param int $linkNum 创建的连接序号
      +----------------------------------------------------------
@@ -155,7 +151,6 @@ class Db extends Think
      +----------------------------------------------------------
      * 初始化数据库连接
      +----------------------------------------------------------
-     * @access protected
      +----------------------------------------------------------
      * @param bool $master 主服务器
      +----------------------------------------------------------
@@ -178,7 +173,6 @@ class Db extends Think
      +----------------------------------------------------------
      * 连接分布式服务器
      +----------------------------------------------------------
-     * @access protected
      +----------------------------------------------------------
      * @param bool $master 主服务器
      +----------------------------------------------------------
@@ -225,7 +219,6 @@ class Db extends Think
      * DSN解析
      * 格式： mysql://username:passwd@localhost:3306/DbName
      * @static
-     * @access public
      * @param  string $dsnStr
      * @return array
      */
@@ -261,7 +254,6 @@ class Db extends Think
 
     /**
      * 数据库调试 记录当前SQL
-     * @access protected
      */
     protected function debug()
     {
@@ -274,7 +266,6 @@ class Db extends Think
 
     /**
      * 设置锁机制
-     * @access protected
      * @return string
      */
     protected function parseLock($lock = false)
@@ -288,7 +279,6 @@ class Db extends Think
 
     /**
      * set分析
-     * @access protected
      * @param  array  $data
      * @return string
      */
@@ -306,7 +296,6 @@ class Db extends Think
 
     /**
      * value分析
-     * @access protected
      * @param  mixed  $value
      * @return string
      */
@@ -325,7 +314,6 @@ class Db extends Think
 
     /**
      * field分析
-     * @access protected
      * @param  mixed  $fields
      * @return string
      */
@@ -354,7 +342,6 @@ class Db extends Think
 
     /**
      * table分析
-     * @access protected
      * @param  mixed  $table
      * @return string
      */
@@ -370,7 +357,6 @@ class Db extends Think
 
     /**
      * where分析
-     * @access protected
      * @param  mixed  $where
      * @return string
      */
@@ -450,7 +436,6 @@ class Db extends Think
 
     /**
      * 特殊条件分析
-     * @access protected
      * @param  string $key
      * @param  mixed  $val
      * @return string
@@ -489,7 +474,6 @@ class Db extends Think
 
     /**
      * limit分析
-     * @access protected
      * @param  mixed  $lmit
      * @return string
      */
@@ -500,7 +484,6 @@ class Db extends Think
 
     /**
      * join分析
-     * @access protected
      * @param  mixed  $join
      * @return string
      */
@@ -526,7 +509,6 @@ class Db extends Think
 
     /**
      * order分析
-     * @access protected
      * @param  mixed  $order
      * @return string
      */
@@ -549,7 +531,6 @@ class Db extends Think
 
     /**
      * group分析
-     * @access protected
      * @param  mixed  $group
      * @return string
      */
@@ -560,7 +541,6 @@ class Db extends Think
 
     /**
      * having分析
-     * @access protected
      * @param  string $having
      * @return string
      */
@@ -571,7 +551,6 @@ class Db extends Think
 
     /**
      * distinct分析
-     * @access protected
      * @param  mixed  $distinct
      * @return string
      */
@@ -582,7 +561,6 @@ class Db extends Think
 
     /**
      * 插入记录
-     * @access public
      * @param  mixed $data    数据
      * @param  array $options 参数表达式
      * @return false | integer
@@ -604,7 +582,6 @@ class Db extends Think
 
     /**
      * 通过Select方式插入记录
-     * @access public
      * @param  string $fields 要插入的数据表字段名
      * @param  string $table  要插入的数据表名
      * @param  array  $option 查询数据参数
@@ -637,7 +614,6 @@ class Db extends Think
 
     /**
      * 更新记录
-     * @access public
      * @param  mixed $data    数据
      * @param  array $options 表达式
      * @return false | integer
@@ -657,7 +633,6 @@ class Db extends Think
 
     /**
      * 删除记录
-     * @access public
      * @param  array $options 表达式
      * @return false | integer
      */
@@ -675,7 +650,6 @@ class Db extends Think
 
     /**
      * 查找记录
-     * @access public
      * @param  array $options 表达式
      * @return array
      */
@@ -709,7 +683,6 @@ class Db extends Think
     /**
      * 字段和表名添加`
      * 保证指令中使用关键字不出错 针对mysql
-     * @access protected
      * @param  mixed $value
      * @return mixed
      */
@@ -727,7 +700,6 @@ class Db extends Think
 
     /**
      * 查询次数更新或者查询
-     * @access public
      * @param mixed $times
      */
     public function Q($times = '')
@@ -744,7 +716,6 @@ class Db extends Think
 
     /**
      * 写入次数更新或者查询
-     * @access public
      * @param mixed $times
      */
     public function W($times = '')
@@ -761,7 +732,6 @@ class Db extends Think
 
     /**
      * 获取最近一次查询的sql语句
-     * @access public
      * @return string
      */
     public function getLastSql()
@@ -771,7 +741,6 @@ class Db extends Think
 
     /**
      * 连接数据库方法
-     * @access public
      * @throws ThinkExecption
      */
     public function connect($config = '', $linkNum = 0)
@@ -812,7 +781,6 @@ class Db extends Think
 
     /**
      * 释放查询结果
-     * @access public
      */
     public function free()
     {
@@ -823,7 +791,6 @@ class Db extends Think
     /**
      * 执行查询 主要针对 SELECT, SHOW 等指令
      * 返回数据集
-     * @access protected
      * @param  string         $str sql指令
      * @return mixed
      * @throws ThinkExecption
@@ -873,7 +840,6 @@ class Db extends Think
 
     /**
      * 执行语句 针对 INSERT, UPDATE 以及DELETE
-     * @access protected
      * @param  string         $str sql指令
      * @return int
      * @throws ThinkExecption
@@ -919,7 +885,6 @@ class Db extends Think
 
     /**
      * 启动事务
-     * @access public
      * @throws ThinkExecption
      */
     public function startTrans()
@@ -940,7 +905,6 @@ class Db extends Think
 
     /**
      * 用于非自动提交状态下面的查询提交
-     * @access public
      * @return boolen
      * @throws ThinkExecption
      */
@@ -960,7 +924,6 @@ class Db extends Think
 
     /**
      * 事务回滚
-     * @access public
      * @return boolen
      * @throws ThinkExecption
      */
@@ -979,7 +942,6 @@ class Db extends Think
 
     /**
      * 获得所有的查询数据
-     * @access public
      * @return array
      * @throws ThinkExecption
      */
@@ -999,7 +961,6 @@ class Db extends Think
 
     /**
      * 获取以传入的参数的数据结果集合
-     * @access public
      * @return array
      * @throws ThinkExecption
      */
@@ -1024,7 +985,6 @@ class Db extends Think
 
     /**
      * 获取以hashkey作为键值的hash数组
-     * @access public
      * @return array
      * @throws ThinkExecption
      */
@@ -1053,7 +1013,6 @@ class Db extends Think
 
     /**
      * 取得数据表的字段信息
-     * @access public
      */
     public function getFields($tableName)
     {
@@ -1077,7 +1036,6 @@ class Db extends Think
 
     /**
      * 取得数据库的表信息
-     * @access public
      */
     public function getTables($dbName = '')
     {
@@ -1097,7 +1055,6 @@ class Db extends Think
 
     /**
      * 替换记录
-     * @access public
      * @param  mixed $data    数据
      * @param  array $options 参数表达式
      * @return false | integer
@@ -1120,7 +1077,6 @@ class Db extends Think
      +----------------------------------------------------------
      * 插入记录
      +----------------------------------------------------------
-     * @access public
      +----------------------------------------------------------
      * @param mixed $datas   数据
      * @param array $options 参数表达式
@@ -1153,7 +1109,6 @@ class Db extends Think
 
     /**
      * 关闭数据库
-     * @access public
      * @throws ThinkExecption
      */
     public function close()
@@ -1170,7 +1125,6 @@ class Db extends Think
     /**
      * 数据库错误信息
      * 并显示当前的SQL语句
-     * @access public
      * @return string
      */
     public function error()
@@ -1185,7 +1139,6 @@ class Db extends Think
 
     /**
      * SQL指令安全过滤
-     * @access public
      * @param  string $str SQL字符串
      * @return string
      */
@@ -1199,7 +1152,6 @@ class Db extends Think
 
     /**
      * 析构方法
-     * @access public
      */
     public function __destruct()
     {
@@ -1207,4 +1159,3 @@ class Db extends Think
         $this->close();
     }
 }//类定义结束
-;

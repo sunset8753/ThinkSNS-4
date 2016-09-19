@@ -205,7 +205,6 @@ class Addons
      * @param mixed $hooks
      * @param mixed $param
      * @static
-     * @access public
      */
     public static function createAddonShow($name, $hooks, $param = null)
     {

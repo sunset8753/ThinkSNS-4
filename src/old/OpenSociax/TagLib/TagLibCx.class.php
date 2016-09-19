@@ -1,4 +1,5 @@
 <?php
+
 // +----------------------------------------------------------------------
 // | ThinkPHP
 // +----------------------------------------------------------------------
@@ -42,7 +43,6 @@ class TagLibCx extends TagLib
      +----------------------------------------------------------
      * comment标签解析
      +----------------------------------------------------------
-     * @access public
      +----------------------------------------------------------
      * @param string $attr 标签属性
      +----------------------------------------------------------
@@ -58,7 +58,6 @@ class TagLibCx extends TagLib
      +----------------------------------------------------------
      * php标签解析
      +----------------------------------------------------------
-     * @access public
      +----------------------------------------------------------
      * @param string $attr    标签属性
      * @param string $content 标签内容
@@ -82,7 +81,6 @@ class TagLibCx extends TagLib
      * {user.email}
      * </iterate>
      +----------------------------------------------------------
-     * @access public
      +----------------------------------------------------------
      * @param string $attr    标签属性
      * @param string $content 标签内容
@@ -234,7 +232,6 @@ class TagLibCx extends TagLib
      * </if>
      * 表达式支持 eq neq gt egt lt elt == > >= < <= or and || &&
      +----------------------------------------------------------
-     * @access public
      +----------------------------------------------------------
      * @param string $attr    标签属性
      * @param string $content 标签内容
@@ -256,7 +253,6 @@ class TagLibCx extends TagLib
      * else标签解析
      * 格式：见if标签
      +----------------------------------------------------------
-     * @access public
      +----------------------------------------------------------
      * @param string $attr    标签属性
      * @param string $content 标签内容
@@ -277,7 +273,6 @@ class TagLibCx extends TagLib
      +----------------------------------------------------------
      * else标签解析
      +----------------------------------------------------------
-     * @access public
      +----------------------------------------------------------
      * @param string $attr 标签属性
      +----------------------------------------------------------
@@ -301,7 +296,6 @@ class TagLibCx extends TagLib
      * <default />other
      * </switch>
      +----------------------------------------------------------
-     * @access public
      +----------------------------------------------------------
      * @param string $attr    标签属性
      * @param string $content 标签内容
@@ -328,7 +322,6 @@ class TagLibCx extends TagLib
      +----------------------------------------------------------
      * case标签解析 需要配合switch才有效
      +----------------------------------------------------------
-     * @access public
      +----------------------------------------------------------
      * @param string $attr    标签属性
      * @param string $content 标签内容
@@ -370,7 +363,6 @@ class TagLibCx extends TagLib
      * default标签解析 需要配合switch才有效
      * 使用： <default />ddfdf
      +----------------------------------------------------------
-     * @access public
      +----------------------------------------------------------
      * @param string $attr    标签属性
      * @param string $content 标签内容
@@ -391,7 +383,6 @@ class TagLibCx extends TagLib
      * 用于值的比较 支持 eq neq gt lt egt elt heq nheq 默认是eq
      * 格式： <compare name="" type="eq" value="" >content</compare>
      +----------------------------------------------------------
-     * @access public
      +----------------------------------------------------------
      * @param string $attr    标签属性
      * @param string $content 标签内容
@@ -478,7 +469,6 @@ class TagLibCx extends TagLib
      * 如果某个变量已经设置 则输出内容
      * 格式： <present name="" >content</present>
      +----------------------------------------------------------
-     * @access public
      +----------------------------------------------------------
      * @param string $attr    标签属性
      * @param string $content 标签内容
@@ -502,7 +492,6 @@ class TagLibCx extends TagLib
      * 如果某个变量没有设置，则输出内容
      * 格式： <notpresent name="" >content</notpresent>
      +----------------------------------------------------------
-     * @access public
      +----------------------------------------------------------
      * @param string $attr    标签属性
      * @param string $content 标签内容
@@ -526,7 +515,6 @@ class TagLibCx extends TagLib
      * 如果某个session变量已经设置 则输出内容
      * 格式： <session name="" >content</session>
      +----------------------------------------------------------
-     * @access public
      +----------------------------------------------------------
      * @param string $attr    标签属性
      * @param string $content 标签内容
@@ -567,7 +555,6 @@ class TagLibCx extends TagLib
      * 如果某个session变量没有设置 则输出内容
      * 格式： <notsession name="" >content</notsession>
      +----------------------------------------------------------
-     * @access public
      +----------------------------------------------------------
      * @param string $attr    标签属性
      * @param string $content 标签内容
@@ -612,4 +599,3 @@ class TagLibCx extends TagLib
         return $parseStr;
     }
 }//类定义结束
-;

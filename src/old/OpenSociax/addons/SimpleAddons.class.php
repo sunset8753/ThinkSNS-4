@@ -13,7 +13,6 @@ abstract class SimpleAddons extends AbstractAddons
     /**
      * getHooksList
      * 获取该插件的所有钩子列表
-     * @access public
      */
     public function getHooksList($name)
     {

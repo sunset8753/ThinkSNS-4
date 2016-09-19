@@ -1,4 +1,5 @@
 <?php
+
 //清文件缓存
 $dirs = array('./storage/temp');
 

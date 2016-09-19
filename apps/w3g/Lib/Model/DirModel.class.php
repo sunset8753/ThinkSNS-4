@@ -17,9 +17,9 @@ class DirModel extends Model
     }
 
     //获取文件
-    /**
+  /**
    * getGroupList
-    *
+   *
    */
   public function getFileList($html = 1, $map = null, $fields = null, $order = null, $limit = null, $isDel = 0)
   {

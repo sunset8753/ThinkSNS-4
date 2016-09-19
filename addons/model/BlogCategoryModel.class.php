@@ -14,7 +14,6 @@ class BlogCategoryModel extends BaseModel
     /**
      * getCategory
      * 获取所有分类
-     * @access public
      */
     public function getCategory($uid = 0)
     {
@@ -50,7 +49,6 @@ class BlogCategoryModel extends BaseModel
      * addCategory
      * 增加分类
      * @param mixed $map
-     * @access public
      */
     public function addCategory($map, $dao = null)
     {
@@ -93,7 +91,6 @@ class BlogCategoryModel extends BaseModel
      * deleteCategory
      * 删除分类
      * @param mixed $map
-     * @access public
      */
     public function deleteCategory($map, $formCate = null, $obj = null)
     {
@@ -139,7 +136,6 @@ class BlogCategoryModel extends BaseModel
      * editCategory
      * 编辑分类
      * @param mixed $map
-     * @access public
      */
     public function editCategory($data)
     {
@@ -162,7 +158,6 @@ class BlogCategoryModel extends BaseModel
      * getCategoryName
      * 通过id获得名字
      * @param mixed $id
-     * @access public
      */
     public function getCategoryName($id)
     {
@@ -176,7 +171,6 @@ class BlogCategoryModel extends BaseModel
      * getUserCategory
      * 获得用户的分类
      * @param mixed $uid
-     * @access public
      */
     public function getUserCategory($uid)
     {

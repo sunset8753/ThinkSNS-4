@@ -10,7 +10,6 @@ class Think
 
     /**
      * 自动变量设置
-     * @access public
      * @param $name 属性名称
      * @param $value  属性值
      */
@@ -23,7 +22,6 @@ class Think
 
     /**
      * 自动变量获取
-     * @access public
      * @param $name 属性名称
      * @return mixed
      */

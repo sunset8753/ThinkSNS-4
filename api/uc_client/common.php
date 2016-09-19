@@ -457,7 +457,7 @@ class uc_note
         fclose($fp);
 
         //note 写配置文件
-        if (is_writeable($this->appdir.'./uc_client/uc_config.inc.php')) {
+        if (is_writable($this->appdir.'./uc_client/uc_config.inc.php')) {
             $configfile = trim(file_get_contents($this->appdir.'./uc_client/uc_config.inc.php'));
             $configfile = substr($configfile, -2) == '?>' ? substr($configfile, 0, -2) : $configfile;
             $configfile = preg_replace("/define\('UC_API',\s*'.*?'\);/i", "define('UC_API', '$UC_API');", $configfile);

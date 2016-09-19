@@ -22,7 +22,6 @@ class Template
     /**
      * 取得模板实例对象
      * 静态方法
-     * @access public
      * @return ThinkTemplate
      */
     public static function getInstance()
@@ -32,7 +31,6 @@ class Template
 
     /**
      * 架构函数
-     * @access public
      * @param array $config 模板引擎配置数组
      */
     public function __construct()
@@ -103,7 +101,6 @@ class Template
 
     /**
      * 加载主模板并缓存
-     * @access public
      * @param  string         $tmplTemplateFile 模板文件
      * @param  string         $varPrefix        模板变量前缀
      * @return string
@@ -152,7 +149,6 @@ class Template
 
     /**
      * 编译模板文件内容
-     * @access protected
      * @param  mixed  $tmplContent 模板内容
      * @return string
      */
@@ -187,7 +183,6 @@ class Template
     /**
      * 模板解析入口
      * 支持普通标签和TagLib解析 支持自定义标签库
-     * @access public
      * @param  string $content 要解析的模板内容
      * @return string
      */
@@ -325,7 +320,6 @@ class Template
 
     /**
      * 分析XML属性
-     * @access private
      * @param  string $attrs XML属性字符串
      * @return array
      */
@@ -344,7 +338,6 @@ class Template
 
     /**
      * 替换页面中的literal标签
-     * @access private
      * @param  string       $content 模板内容
      * @return string|false
      */
@@ -363,7 +356,6 @@ class Template
 
     /**
      * 还原被替换的literal标签
-     * @access private
      * @param  string       $tag literal标签序号
      * @return string|false
      */
@@ -380,7 +372,6 @@ class Template
     /**
      * 搜索模板页面中包含的TagLib库
      * 并返回列表
-     * @access public
      * @param  string       $content 模板内容
      * @return string|false
      */
@@ -401,7 +392,6 @@ class Template
 
     /**
      * TagLib库解析
-     * @access public
      * @param  string $tagLib  要解析的标签库
      * @param  string $content 要解析的模板内容
      * @param  boolen $hide    是否隐藏标签库前缀
@@ -487,7 +477,6 @@ class Template
     /**
      * 解析标签库的标签
      * 需要调用对应的标签库文件解析类
-     * @access public
      * @param  string       $tagLib  标签库名称
      * @param  string       $tag     标签名
      * @param  string       $attr    标签属性
@@ -515,7 +504,6 @@ class Template
     /**
      * 模板标签解析
      * 格式： {TagName:args [|content] }
-     * @access public
      * @param  string $tagStr 标签内容
      * @return string
      */
@@ -616,7 +604,6 @@ class Template
      * 加载js或者css文件
      * {load:__PUBLIC__/Js/Think/ThinkAjax.js} 加载js文件
      * {load:__PUBLIC__/Css/style.css} 加载css文件
-     * @access public
      * @param  string $params 参数
      * @return string
      */
@@ -636,7 +623,6 @@ class Template
     /**
      * 模板变量解析,支持使用函数
      * 格式： {$varname|function1|function2=arg1,arg2}
-     * @access public
      * @param  string $varStr 变量数据
      * @return string
      */
@@ -705,7 +691,6 @@ class Template
     /**
      * 对模板变量使用函数
      * 格式 {$varname|function1|function2=arg1,arg2}
-     * @access public
      * @param  string $name     变量名
      * @param  array  $varArray 函数列表
      * @return string
@@ -746,7 +731,6 @@ class Template
     /**
      * 特殊模板变量解析
      * 格式 以 $Think. 打头的变量属于特殊模板变量
-     * @access public
      * @param  string $varStr 变量字符串
      * @return string
      */
@@ -822,7 +806,6 @@ class Template
 
     /**
      * 加载公共模板并缓存 和当前模板在同一路径，否则使用相对路径
-     * @access private
      * @param  string $tmplPublicName 公共模板文件名
      * @param  array  $vars           要传递的变量列表
      * @return string

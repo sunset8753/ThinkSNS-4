@@ -19,8 +19,6 @@ class CreditModel extends Model
      * +----------------------------------------------------------
      *
      * @author melec制作
-     * @access public
-     *         +----------------------------------------------------------
      */
     public function __construct()
     {

@@ -15,7 +15,6 @@ class IndexAction extends Action
      * __initialize
      * 初始化
      *
-     * @access public
      */
     public function _initialize()
     {
@@ -24,7 +23,6 @@ class IndexAction extends Action
      * index
      * 好友的广场
      *
-     * @access public
      */
     public function index()
     {

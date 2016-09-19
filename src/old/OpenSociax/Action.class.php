@@ -32,7 +32,6 @@ abstract class Action
 
     /**
      * 架构函数 取得模板对
-     * @access public
      */
     public function __construct()
     {
@@ -54,7 +53,6 @@ abstract class Action
 
     /**
      * 站点信息初始化
-     * @access private
      */
     private function initSite()
     {
@@ -170,7 +168,6 @@ abstract class Action
     /**
      * 应用信息初始化
      *
-     * @access private
      */
     private function initApp()
     {
@@ -205,7 +202,6 @@ abstract class Action
 
     /**
      * 用户信息初始化
-     * @access private
      */
     private function initUser()
     {
@@ -376,7 +372,6 @@ abstract class Action
 
     /**
      * 魔术方法 有不存在的操作的时候
-     * @access public
      * @param  string $method 方法名
      * @param  array  $parms
      * @return mix
@@ -416,7 +411,6 @@ abstract class Action
 
     /**
      * 模板Title
-     * @access public
      * @param mixed $input 要
      * @return
      */
@@ -428,7 +422,6 @@ abstract class Action
 
     /**
      * 模板keywords
-     * @access public
      * @param mixed $input 要
      * @return
      */
@@ -439,7 +432,6 @@ abstract class Action
 
     /**
      * 模板description
-     * @access public
      * @param mixed $input 要
      * @return
      */
@@ -450,7 +442,6 @@ abstract class Action
 
     /**
      * 模板变量赋
-     * @access protected
      * @param mixed $name  要显示的模板变量
      * @param mixed $value 变量的
      */
@@ -469,7 +460,6 @@ abstract class Action
 
     /**
      * 魔术方法：注册模版变量
-     * @access protected
      * @param  string $name  模版变量
      * @param  mix    $value 变量值
      * @return mixed
@@ -481,7 +471,6 @@ abstract class Action
 
     /**
      * 取得模板显示变量的值
-     * @access protected
      * @param  string $name 模板显示变量
      * @return mixed
      */
@@ -496,7 +485,6 @@ abstract class Action
 
     /**
      * Trace变量赋值
-     * @access protected
      * @param mixed $name  要显示的模板变量
      * @param mixed $value 变量的值
      */
@@ -512,7 +500,6 @@ abstract class Action
     /**
      * 模板显示
      * 调用内置的模板引擎显示方法
-     * @access protected
      * @param  string $templateFile 指定要调用的模板文件
      *                              默认为空 由系统自动定位模板文件
      * @param  string $charset      输出编码
@@ -527,7 +514,6 @@ abstract class Action
     /**
      *  获取输出页面内容
      * 调用内置的模板引擎fetch方法
-     * @access protected
      * @param  string $templateFile 指定要调用的模板文件
      *                              默认为空 由系统自动定位模板文件
      * @param  string $charset      输出编码
@@ -549,7 +535,6 @@ abstract class Action
 
     /**
      *  输出静态化内容
-     * @access protected
      * @param  string $content 模板内容
      * @return boolen
      */
@@ -571,7 +556,6 @@ abstract class Action
 
     /**
      * 操作错误跳转的快捷方
-     * @access protected
      * @param  string  $message 错误信息
      * @param  Boolean $ajax    是否为Ajax方
      * @return voi
@@ -590,7 +574,6 @@ abstract class Action
     }
     /**
      * 操作成功跳转的快捷方
-     * @access protected
      * @param  string  $message 提示信息
      * @param  Boolean $ajax    是否为Ajax方
      * @return voi
@@ -603,7 +586,6 @@ abstract class Action
 
     /**
      * Ajax方式返回数据到客户端
-     * @access protected
      * @param mixed  $data   要返回的数据
      * @param String $info   提示信息
      * @param bool   $status 返回状态
@@ -641,7 +623,6 @@ abstract class Action
 
     /**
      * Action跳转(URL重定向） 支持指定模块和延时跳转
-     * @access protected
      * @param string $url    跳转的URL表达式
      * @param array  $params 其它URL参数
      * @param int    $delay  延时跳转的时间 单位为秒
@@ -663,7 +644,6 @@ abstract class Action
      * @param string  $message 提示信息
      * @param Boolean $status  状态
      * @param Boolean $ajax    是否为Ajax方式
-     * @access private
      */
     private function _dispatch_jump($message, $status = 1, $ajax = false)
     {
@@ -723,7 +703,6 @@ abstract class Action
 
     /**
      * 是否AJAX请求
-     * @access protected
      * @return bool
      */
     protected function isAjax()
@@ -740,4 +719,4 @@ abstract class Action
 
         return false;
     }
-}; //类定义结束
+} //类定义结束
