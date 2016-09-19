@@ -18,7 +18,6 @@ return \Symfony\CS\Config\Config::create()
         'double_arrow_multiline_whitespaces',
         'duplicate_semicolon',
         'blankline_after_open_tag',
-        'array_element_white_space_after_comm',
         'concat_without_spaces',
         'function_typehint_space',
         'join_function',
