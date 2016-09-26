@@ -146,8 +146,8 @@ class PublicAction extends Action
         $_SESSION['mid'] = $uid;
         $_SESSION['uname'] = $uname;
         $remember ?
-            cookie('LOGGED_USER', jiami('thinksns.'.$uid), (3600 * 24 * 365)) :
-            cookie('LOGGED_USER', jiami('thinksns.'.$uid), (3600 * 2));
+            cookie('TSV4_LOGGED_USER', jiami('thinksns.'.$uid), (3600 * 24 * 365)) :
+            cookie('TSV4_LOGGED_USER', jiami('thinksns.'.$uid), (3600 * 2));
     }
 
     //登录记录

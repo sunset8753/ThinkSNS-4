@@ -189,7 +189,7 @@ function ts_synclogout()
 {
     session_start();
     unset($_SESSION['mid'], $_SESSION['SITE_KEY']); // 注销session
-    _setcookie('TSV3_LOGGED_USER', null);    // 注销cookie
+    _setcookie('TSV4_LOGGED_USER', null);    // 注销cookie
 }
 
 //note 使用该函数前需要 require_once $this->appdir.'./uc_client/uc_config.inc.php';
