@@ -314,7 +314,7 @@ class PassportModel
         return $user['uid'] > 0 ? $this->_recordLogin($user['uid'], $is_remember_me) : false;
     }
 
-    
+
     //兼容旧版错误
     public function loginLocalWhitoutPassword($login, $is_remember_me = false)
     {
