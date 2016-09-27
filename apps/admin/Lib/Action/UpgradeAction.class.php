@@ -55,6 +55,10 @@ class UpgradeAction extends AdministratorAction
 
         $data or $this->showError('您的服务器无法从升级服务器获取升级数据！');
 
+        // 保存线上包详情
+        $filename = DATA_PATH.'/'.'upgrade/upgrade.json';
+        file_put_contents($filename, $data);
+
         $data = json_decode($data, false);
 
         function_exists('json_decode') or $this->showError('你的服务器不支持json_decode函数');
@@ -173,6 +177,15 @@ PS：手动升级覆盖文件后千万不要刷新本页面，直接点击上方
         is_dir(dirname($path)) or mkdir(dirname($path), 0777, true);
         file_put_contents($path, file_get_contents($downUrl));
         file_exists($path) or $this->showError('下载升级包失败，请检查'.dirname($path).'目录是否可写，如果可写，请刷新重试！');
+
+        // 验证hash判断包是否合法。
+        $filename = dirname($path).'/upgrade.json';
+        $data = file_get_contents($filename);
+        $data = json_decode($data, false);
+        if (md5_file($path) != $data->md5) {
+            $this->showError('更新包校验失败，请重新执行升级.');
+        }
+
 
         $sqlPath = dirname($path).'/'.'upgrade.sql';
         $delFile = dirname($path).'/'.'deleteFiles.php';
