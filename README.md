@@ -1,5 +1,6 @@
-# thinksns
+# ThinkSNS
 ThinkSNS v4开源社交系统 [Web page](http://www.thinksns.com)
+
 A extensable social networing system.
 
 [![Latest Stable Version](https://poser.pugx.org/medz/thinksns/v/stable)](https://packagist.org/packages/medz/thinksns)
