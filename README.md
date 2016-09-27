@@ -6,7 +6,7 @@ A extensable social networing system.
 [![Latest Stable Version](https://poser.pugx.org/medz/thinksns/v/stable)](https://packagist.org/packages/medz/thinksns)
 [![Total Downloads](https://poser.pugx.org/medz/thinksns/downloads)](https://packagist.org/packages/medz/thinksns)
 [![Latest Unstable Version](https://poser.pugx.org/medz/thinksns/v/unstable)](https://packagist.org/packages/medz/thinksns)
-[![License](https://poser.pugx.org/medz/thinksns/license)](https://packagist.org/packages/medz/thinksns)
+[![License](https://poser.pugx.org/medz/thinksns/license)](https://github.com/medz/thinksns/blob/master/LICENSE)
 [![StyleCI](https://styleci.io/repos/42001557/shield?branch=master)](https://styleci.io/repos/42001557)
 
 # 如何获得ThinkSNS
