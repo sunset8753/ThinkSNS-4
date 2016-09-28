@@ -94,7 +94,7 @@ class App
     {
         //防止CSRF
         if (strtoupper($_SERVER['REQUEST_METHOD']) == 'POST' && stripos($_SERVER['HTTP_REFERER'], SITE_URL) !== 0 && $_SERVER['HTTP_USER_AGENT'] !== 'Shockwave Flash' && (strpos(strtolower($_SERVER['HTTP_USER_AGENT']), 'adobe flash player') === false) && MODULE_NAME != 'Weixin') {
-            die('illegal request.');
+            exit('illegal request.');
         }
 
         // 微信自动登陆和绑定
@@ -149,8 +149,6 @@ class App
         ) {
             if (\Medz\Component\Filesystem\Filesystem::exists(TS_APPLICATION.'/h5') === true) {
                 Jumper::start();
-            } elseif (\Medz\Component\Filesystem\Filesystem::exists(TS_APPLICATION.'/w3g') === true) {
-                U('w3g/Public/home', '', true);
             }
         }
 
