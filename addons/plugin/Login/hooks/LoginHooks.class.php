@@ -709,11 +709,12 @@ class LoginHooks extends Hooks
         $map['uid'] = $user['uid'];
         $res = model('User')->where($map)->save($save);
 
-        $syncdata ['oauth_token'] = $_SESSION [$type] ['access_token'] ['oauth_token'];
-        $syncdata ['oauth_token_secret'] = $_SESSION [$type] ['access_token'] ['oauth_token_secret'];
-        $syncdata ['uid'] = $user ['uid'];
-        $syncdata ['type_uid'] = $userinfo ['id'];
-        $syncdata ['type'] = $type;
+        $syncdata['oauth_token'] = $_SESSION [$type] ['access_token'] ['oauth_token'];
+        $syncdata['oauth_token_secret'] = $_SESSION [$type] ['access_token'] ['oauth_token_secret'];
+        $syncdata['uid'] = $user ['uid'];
+        $syncdata['type_uid'] = $userinfo ['id'];
+        $syncdata['type'] = $type;
+        $syncdata['is_sync'] = 0;
 
         S('user_login_'.$user['uid'], null);
 
