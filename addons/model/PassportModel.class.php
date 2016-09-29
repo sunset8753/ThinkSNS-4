@@ -314,6 +314,7 @@ class PassportModel
         return $user['uid'] > 0 ? $this->_recordLogin($user['uid'], $is_remember_me) : false;
     }
 
+
     //兼容旧版错误
     public function loginLocalWhitoutPassword($login, $is_remember_me = false)
     {
@@ -337,11 +338,11 @@ class PassportModel
         // 注册cookie
         if (!$this->getCookieUid() && $is_remember_me) {
             $expire = 3600 * 24 * 30;
-            cookie('TSV3_LOGGED_USER', $this->jiami(C('SECURE_CODE').".{$uid}"), $expire);
+            cookie('TSV4_LOGGED_USER', $this->jiami(C('SECURE_CODE').".{$uid}"), $expire);
         }
 
         // 记住活跃时间
-        cookie('TSV4_ACTIVE_TIME', time() + 60 * 30);
+        cookie('TSV4_ACTIVE_TIME', time() + C('COOKIE_EXPIRE'));
         cookie('login_error_time', null);
 
         // 更新登陆时间
@@ -385,7 +386,7 @@ class PassportModel
     public function logoutLocal()
     {
         unset($_SESSION['mid'], $_SESSION['SITE_KEY']); // 注销session
-        cookie('TSV3_LOGGED_USER', null);    // 注销cookie
+        cookie('TSV4_LOGGED_USER', null);    // 注销cookie
 
         Addons::hook('passport_logout_local', array('login' => $login, 'password' => $password));
 
@@ -406,7 +407,7 @@ class PassportModel
             return $cookie_uid;
         }
 
-        $cookie = cookie('TSV3_LOGGED_USER');
+        $cookie = cookie('TSV4_LOGGED_USER');
 
         $cookie = explode('.', $this->jiemi($cookie));
 

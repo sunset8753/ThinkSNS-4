@@ -233,16 +233,17 @@ abstract class Action
         $GLOBALS['time_run_detail']['action_init_user_login'] = microtime(true);
 
         //判断登录有效期
-        /*
-        $activeTime  = cookie('ST_ACTIVE_TIME');
-        if($activeTime < time() && APP_NAME != 'admin' && ACTION_NAME !='login'){
+
+        $activeTime = cookie('TSV4_ACTIVE_TIME');
+        if (C('COOKIE_EXPIRE') && $activeTime < time() && APP_NAME != 'admin' && ACTION_NAME != 'login') {
             unset($_SESSION['mid']);
-            cookie('TSV4_LOGGED_USER',null);
-            $this->assign('jumpUrl',U('public/Passport/login'));
-            $this->error(L('PUBLIC_TIME_OUT'));exit();
-        }else{
-            cookie('TSV4_ACTIVE_TIME',time()+60*60*24);
-        }*/
+            cookie('TSV4_LOGGED_USER', null);
+            $this->assign('jumpUrl', U('public/Passport/login'));
+            $this->error(L('PUBLIC_TIME_OUT'));
+            exit();
+        } else {
+            cookie('TSV4_ACTIVE_TIME', time() + C('COOKIE_EXPIRE'));
+        }
 
         //当前登录者uid
         $GLOBALS['ts']['mid'] = $this->mid = intval($_SESSION['mid']);

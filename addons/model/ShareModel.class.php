@@ -192,7 +192,7 @@ class ShareModel
         $content = empty($data ['content']) ? '' : "“{$data['content']}”&nbsp;//&nbsp;";
         $content = parse_html($content);
         $message ['to'] = $msg ['to'];
-        $message ['content'] = $content.parse_html($oldInfo ['source_content']).'&nbsp;&nbsp;<a href="'.$oldInfo ['source_url'].'" target=\'_blank\'>查看</a>';
+        $message ['content'] = $content.parse_html($oldInfo ['source_content']).'&nbsp;&nbsp;<a href="'.$oldInfo ['source_url'].'" target="_blank">查看</a>';
         if (model('Message')->postMessage($message, $GLOBALS ['ts'] ['_user'] ['uid'])) {
             // 发表评论
             $c ['type'] = 3;

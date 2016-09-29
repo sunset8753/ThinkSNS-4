@@ -135,8 +135,7 @@ class ApplicationAction extends AdministratorAction
             D('application_slide')->where('`id` = '.$id)->save($data);
             $this->success('修改成功');
         }
-
-        D('application_slide')->add($data) or $this->error('添加失败');
+        D('application_slide')->data($data)->add() or $this->error('添加失败');
 
         $this->assign('jumpUrl', U('admin/Application/index'));
         $this->success('添加成功');

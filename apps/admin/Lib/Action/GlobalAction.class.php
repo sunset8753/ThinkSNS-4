@@ -16,7 +16,6 @@ class GlobalAction extends AdministratorAction
         return true;
     }
 
-    /** 系统配置 - 积分配置 **/
     //积分类别设置
     public function creditType()
     {
