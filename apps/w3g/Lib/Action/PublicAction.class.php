@@ -355,7 +355,6 @@ class PublicAction extends Action
                 $other['oauth_token'] = t($_POST['oauth_token']);
                 $other['oauth_token_secret'] = t($_POST['oauth_token_secret']);
                 $other['uid'] = $uid;
-                $other['is_sync'] = 0;
                 D('login')->add($other);
             }
 
