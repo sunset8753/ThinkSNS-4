@@ -85,11 +85,7 @@
             "src/old/OpenSociax/functions.inc.php"
         ],
         "classmap": [
-            "addons/utility/",
-            "addons/model/",
-            "addons/diywidget/",
-            "addons/library/",
-            "addons/widget/",
+            "addons/",
             "src/Ts.php",
             "src/old/OpenSociax/"
         ],
