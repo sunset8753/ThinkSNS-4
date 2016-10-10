@@ -1,7 +1,6 @@
 <?php
 
 //使用V2版本的客户端,支持Oauth2.0
-include_once 'sina/saetv2.ex.class.php';
 class sina
 {
     public $loginUrl;

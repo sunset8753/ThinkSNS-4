@@ -79,8 +79,6 @@ class renren
     //发布一条分享
     public function update($text, $opt)
     {
-        require_once 'renren/HttpRequestService.class.php';
-        require_once 'renren/RenrenRestApiService.class.php';
         $refresh_uri = 'https://graph.renren.com/oauth/token?grant_type=refresh_token&refresh_token='.$opt['oauth_token_secret'].'&client_id='.RENREN_KEY.'&client_secret='.RENREN_SECRET;
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $refresh_uri);
