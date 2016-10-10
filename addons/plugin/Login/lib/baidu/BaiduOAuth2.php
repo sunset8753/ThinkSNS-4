@@ -6,8 +6,6 @@
  *
  **************************************************************************/
 
-require_once dirname(__FILE__).'/BaiduUtils.php';
-
 /**
  * Client for Baidu OAuth2.0 service.
  *
