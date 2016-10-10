@@ -120,7 +120,6 @@ class RegisterAction extends Action
                 $other['oauth_token'] = t($_POST['oauth_token']);
                 $other['oauth_token_secret'] = t($_POST['oauth_token_secret']);
                 $other['uid'] = $user['uid'];
-                $other['is_sync'] = 0;
                 D('Login')->add($other);
                 //同步到UCenter
                 if (UC_SYNC) {
@@ -258,7 +257,6 @@ class RegisterAction extends Action
                 $other['oauth_token'] = t($_POST['oauth_token']);
                 $other['oauth_token_secret'] = t($_POST['oauth_token_secret']);
                 $other['uid'] = $uid;
-                $other['is_sync'] = 0;
                 D('login')->add($other);
 
                 //同步到UCenter
@@ -433,7 +431,6 @@ class RegisterAction extends Action
                 $other['oauth_token'] = t($_POST['oauth_token']);
                 $other['oauth_token_secret'] = t($_POST['oauth_token_secret']);
                 $other['uid'] = $uid;
-                $other['is_sync'] = 0;
                 D('login')->add($other);
             }
             //判断是否需要审核

@@ -8,6 +8,8 @@
 
 // when using bae(baidu app engine) to deploy the application,
 // just uncomment the following two lines.
+//require_once('app_config.php');
+//require_once(BAE_API_PATH . '/BaeFetchUrl.class.php');
 
 /**
  * Utils class for Baidu OpenAPI2.0 SDK.

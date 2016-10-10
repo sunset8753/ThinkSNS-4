@@ -1,6 +1,7 @@
 <?php
 
 //使用V2版本的客户端,支持Oauth2.0
+require_once 'baidu/Baidu.php';
 class baidu
 {
     public $loginUrl;

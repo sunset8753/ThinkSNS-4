@@ -1,6 +1,0 @@
-E/ 2016-09-12 07:54:08  [getConfig] ERR: no corp access token
-E/ 2016-09-12 07:54:09  FAIL: {"errcode":40014,"errmsg":"\u4e0d\u5408\u6cd5\u7684access_token"}
-E/ 2016-09-12 07:57:13  [getConfig] ERR: no corp access token
-E/ 2016-09-12 07:57:14  FAIL: {"errcode":40014,"errmsg":"\u4e0d\u5408\u6cd5\u7684access_token"}
-E/ 2016-09-12 07:57:23  [getConfig] ERR: no corp access token
-E/ 2016-09-12 07:57:24  FAIL: {"errcode":40014,"errmsg":"\u4e0d\u5408\u6cd5\u7684access_token"}

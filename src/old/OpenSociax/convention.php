@@ -31,7 +31,7 @@ return array(
     'APP_AUTOLOAD_PATH' => CORE_LIB_PATH.','.CORE_LIB_PATH.'/addons/,'.CORE_LIB_PATH.'/Taglib/,'.ADDON_PATH.'/model/',
 
     /* Cookie设置 */
-    'COOKIE_EXPIRE' => '',        // Coodie有效期
+    'COOKIE_EXPIRE' => 3600,        // Coodie有效期
     'COOKIE_DOMAIN' => '',            // Cookie有效域名
     'COOKIE_PATH' => '/',            // Cookie路径
     'COOKIE_PREFIX' => 'TS4_',        // Cookie前缀 避免冲突

@@ -2,6 +2,7 @@
 
 //设置错误级别
 error_reporting(E_ERROR ^ E_NOTICE ^ E_WARNING);
+// error_reporting(E_ALL);
 
 /* ///调试、找错时请去掉///前空格
 ini_set('display_errors',true);
@@ -38,7 +39,7 @@ define('TS_APPLICATION', TS_ROOT.'/apps'); // 应用存在的目录
 define('TS_CONFIGURE', TS_ROOT.'/config'); // 配置文件存在的目录
 define('TS_STORAGE', '/storage');            // 储存目录，需要可以公开访问，相对于域名根
 /* 应用开发中的配置 */
-define('TS_APP_DEV', true);
+define('TS_APP_DEV', false);
 // 新的系统核心接入
 require TS_ROOT.'/src/Build.php';
 Ts::import(TS_ROOT, 'src', 'old', 'core', '.php');

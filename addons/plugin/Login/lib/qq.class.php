@@ -1,5 +1,6 @@
 <?php
 
+include_once 'qq/Tencent.php';
 class qq
 {
     public $loginUrl;

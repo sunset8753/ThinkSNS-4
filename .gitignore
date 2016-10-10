@@ -7,7 +7,6 @@
 /apps/Event/
 /apps/H5/
 /apps/book/
-/apps/w3g/
 /api/thinksns/*
 !/api/thinksns/UserApi.class.php
 !/api/thinksns/WeiboStatusesApi.class.php
