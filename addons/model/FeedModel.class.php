@@ -526,6 +526,23 @@ class FeedModel extends Model
     }
 
     /**
+     * 返回指定分享相关的标签
+     * @param $feedId     分享ID
+     * @return 返回新的一维数组
+     */
+    public function getTopicIdByFeedId($feedId)
+    {
+        $feedId = intval($feedId);
+        $list = D('')->table(C('DB_PREFIX').'feed_topic AS t LEFT JOIN '.C('DB_PREFIX').'feed_topic_link AS l ON t.topic_id=l.topic_id')
+            ->where(array('l.feed_id' => $feedId))
+            ->order('t.create_uid ASC')
+            ->field('t.topic_id,t.topic_name,t.count,t.status,t.lock,t.recommend,t.outlink,t.create_uid')
+            ->findAll();
+
+        return $list ? $list : array();
+    }
+
+    /**
      * 获取分享列表
      * @param  array  $map   查询条件
      * @param  int    $limit 结果集数目，默认为10
@@ -589,7 +606,7 @@ class FeedModel extends Model
 
         // 加上自己的信息，若不需要屏蔽下语句
 // 		$_where = !empty($where) ? "(a.uid = '{$buid}' OR b.uid = '{$buid}') AND ($where)" : "(a.uid = '{$buid}' OR b.uid = '{$buid}')";
-        $_where = $where." AND a.uid !={$buid} and (a.uid in (SELECT fid from ts_user_union WHERE uid=$buid) 
+        $_where = $where." AND a.uid !={$buid} and (a.uid in (SELECT fid from ts_user_union WHERE uid=$buid)
 		or a.uid in (SELECT u.fid from ts_user_union u LEFT JOIN ts_user_follow f ON u.uid=f.fid WHERE f.uid=$buid )) ";
         // 若填写了关注分组
         if (!empty($fgid)) {
@@ -1183,11 +1200,11 @@ class FeedModel extends Model
                 break;
             case 'union':
                 $buid = $GLOBALS ['ts'] ['uid'];
-                $table = "{$this->tablePrefix}feed AS a 
+                $table = "{$this->tablePrefix}feed AS a
 				LEFT JOIN {$this->tablePrefix}feed_data AS c ON a.feed_id = c.feed_id";
                 $where = ! empty($loadId) ? " a.is_del = 0 AND a.is_audit = 1 AND a.feed_id <'{$loadId}'" : 'a.is_del = 0 AND a.is_audit = 1';
                 $where .= " AND c.feed_data LIKE '%".t($key)."%'";
-                $where .= " and (a.uid in (SELECT fid from ts_user_union WHERE uid=$buid) 
+                $where .= " and (a.uid in (SELECT fid from ts_user_union WHERE uid=$buid)
 		or a.uid in (SELECT u.fid from ts_user_union u LEFT JOIN ts_user_follow f ON u.uid=f.fid WHERE f.uid=$buid )) ";
                 $feedlist = $this->table($table)->where($where)->field('a.feed_id')->order('a.publish_time DESC')->findPage($limit);
                 break;

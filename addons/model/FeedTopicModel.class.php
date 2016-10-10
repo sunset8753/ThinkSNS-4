@@ -8,7 +8,7 @@ class FeedTopicModel extends Model
     public $tableName = 'feed_topic';
 
     //添加话题
-    public function addTopic($content, $feedId = false, $type)
+    public function addTopic($content, $feedId = false, $type, $uid = 0)
     {
         $content = str_replace('＃', '#', $content);
         preg_match_all("/#([^#]*[^#^\s][^#]*)#/is", $content, $arr);
@@ -16,7 +16,9 @@ class FeedTopicModel extends Model
         $topicIds = array();
         foreach ($arr as $v) {
             // $topicIds[] = $this->addKey($v, $feedId, $type);
-            array_push($topicIds, $this->addKey($v, $feedId, $type));
+            if ($v) {
+                array_push($topicIds, $this->addKey($v, $feedId, $type, $uid));
+            }
         }
         // if (count($topicIds) == 1) {
         // 	return $topicIds[0];
@@ -28,7 +30,7 @@ class FeedTopicModel extends Model
     }
 
     //添加话题
-    private function addKey($key, $feedId, $type)
+    private function addKey($key, $feedId, $type, $uid = 0)
     {
         //$map['name'] = trim(t(mStr(preg_replace("/#/",'',trim($key)),150,'utf-8',false)));
         $map['topic_name'] = trim(preg_replace('/#/', '', t($key)));
@@ -47,6 +49,7 @@ class FeedTopicModel extends Model
             $map['lock'] = 0;
             $map['domain'] = '';
             $map['recommend'] = 0;
+            $map['create_uid'] = intval($uid);
             $topicId = $this->add($map);
             if ($feedId) {
                 $this->addFeedJoinTopic($topicId, $feedId, $type);
@@ -100,6 +103,8 @@ class FeedTopicModel extends Model
             return false;
         } elseif (($topic = $this->where('`topic_id` = '.$id)->find())) {
             $topic['topic_name'] or $topic['topic_name'] = $topic_name;
+            $create_uname = model('User')->getUserFields($topic['create_uid'], 'uname');
+            $topic['uname'] = $create_uname['uname'];
         }
 
         return $topic;
@@ -130,6 +135,7 @@ class FeedTopicModel extends Model
 
         return getSubByKey($feeds, 'fid');
     }
+
     /**
      * 获取给定话题名的话题ID
      * @param  string $name 话题名
@@ -170,5 +176,33 @@ class FeedTopicModel extends Model
         // 	return $this->add($map);
         // }
         // return false;
+    }
+
+    /**
+     * 获取指定话题最新的指定分享
+     * @param  int   $topic_id 话题id
+     * @param  int   $count    要返回的分享的数量
+     * @return array
+     */
+    public function getFeedIdByTopicId($topic_id = 0, $count = 3)
+    {
+        $topic_id = intval($topic_id);
+        $count = intval($count);
+        $map['t.topic_id'] = $topic_id;
+        $map['f.type'] = 'postimage';
+
+        $list = D()->table('`'.C('DB_PREFIX').'feed` AS f LEFT JOIN `'.C('DB_PREFIX').'feed_topic_link` AS t ON f.`feed_id` = t.`feed_id`')
+            ->field('t.`feed_id`')
+            ->where($map)
+            ->order('f.feed_id DESC')
+            ->limit($count)
+            ->findAll();
+        foreach ($list as $k => &$v) {
+            $feed_data = D('feed_data')->where(array('feed_id' => intval($v['feed_id'])))->getField('feed_data');
+            $feed_data = unserialize($feed_data);
+            $v['attach_id'] = getImageUrlByAttachId($feed_data['attach_id'][0]);
+        }
+
+        return $list ? $list : array();
     }
 }

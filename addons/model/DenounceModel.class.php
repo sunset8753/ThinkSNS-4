@@ -22,6 +22,7 @@ class DenounceModel extends Model
                 'Android-weiba' => '安卓手机-帖子',
                 'iPhone-weiba' => '苹果手机-帖子',
                 'weiba_post' => '网站-帖子',
+                'information' => '网站-资讯',
                 'mobile-weiba' => '3G手机-帖子',
                 'Android' => '安卓手机-分享',
                 'iPhone' => '苹果手机-分享',
