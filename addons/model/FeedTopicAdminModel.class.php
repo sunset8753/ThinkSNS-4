@@ -24,7 +24,7 @@ class FeedTopicAdminModel extends Model
             $_POST['essence'] && $map['essence'] = $_POST['essence'] == 1 ? 1 : 0;
             $_POST['lock'] && $map['lock'] = $_POST['lock'] == 1 ? 1 : 0;
         }
-        $topic_list = D('feed_topic')->where($map)->order('recommend desc,recommend_time desc,ctime desc')->findpage($limit);
+        $topic_list = D('feed_topic')->where($map)->order('recommend desc,recommend_time desc,create_uid desc')->findpage($limit);
         //数据格式化
         foreach ($topic_list['data'] as $k => $v) {
             if ($v['recommend'] == 1) {

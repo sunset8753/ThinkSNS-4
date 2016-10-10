@@ -5,6 +5,7 @@
  */
 return array(
     'access' => array(
+        'Ding/*' => true,
         'Oauth/*' => true,
         'ProductShare/*' => true,
         'Public/*' => true,
