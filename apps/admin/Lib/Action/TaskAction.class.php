@@ -461,8 +461,8 @@ class TaskAction extends AdministratorAction
         $data['task_name'] = $taskname;
         $data['step_name'] = $stepname;
         $data['step_desc'] = $stepdesc;
-        $data['condition'] = json_encode($condition);
-        $data['reward'] = json_encode($reward);
+        $data['condition'] = addslashes(json_encode($condition));
+        $data['reward'] = addslashes(json_encode($reward));
         $data['action'] = $action;
         $data['show'] = implode(',', $_POST['show']);
 
@@ -537,7 +537,7 @@ class TaskAction extends AdministratorAction
             $src = explode('|', $name['src']);
             $medalinfo = array('id' => $medal, 'name' => $name['name'], 'src' => $src[1]);
         }
-        $reward = json_encode(array('exp' => $exp, 'score' => $score, 'medal' => $medalinfo));
+        $reward = addslashes(json_encode(array('exp' => $exp, 'score' => $score, 'medal' => $medalinfo)));
         $isexist = D('task_reward')->where('task_type='.$tasktype.' and task_level='.$tasklevel)->find();
         if ($isexist) {
             D('task_reward')->setField('reward', $reward, 'task_type='.$tasktype.' and task_level='.$tasklevel);
