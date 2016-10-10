@@ -82,7 +82,8 @@
     },
     "autoload": {
         "files": [
-            "src/old/OpenSociax/functions.inc.php"
+            "src/old/OpenSociax/functions.inc.php",
+            "dingtalk/biz.php"
         ],
         "classmap": [
             "addons/",
