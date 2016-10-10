@@ -168,7 +168,7 @@ class PermissionModel
                     $permission[$a]['info'] = $appHash[$a];
 
                     foreach ($v as $rules) {
-                        foreach ($rules as $ruls) {
+                        foreach ($rules as $rule) {
                             $permission[$a]['module'][$rule['module']]['info'] = $rule['module'];
                             $permission[$a]['module'][$rule['module']]['rule'][$rule['rule']] = $rule['ruleinfo'];
                         }

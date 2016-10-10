@@ -78,7 +78,7 @@ class OAuth
             'refresh_token' => $_SESSION['t_refresh_token'],
         );
         $url = self::$accessTokenURL.'?'.http_build_query($params);
-        $r = Http::request($url);
+        $r = TencentHttp::request($url);
         parse_str($r, $out);
         if ($out['access_token']) {
             //获取成功
@@ -189,7 +189,7 @@ class Tencent
         }
 
         //请求接口
-        $r = Http::request($url, $params, $method, $multi);
+        $r = TencentHttp::request($url, $params, $method, $multi);
         $r = preg_replace('/[^\x20-\xff]*/', '', $r); //清除不可见字符
         $r = iconv('utf-8', 'utf-8//ignore', $r); //UTF-8转码
         //调试信息
@@ -211,7 +211,7 @@ class Tencent
  * @author xiaopengzhu <xp_zhu@qq.com>
  * @version 2.0 2012-04-20
  */
-class Http
+class TencentHttp
 {
     /**
      * 发起一个HTTP/HTTPS的请求

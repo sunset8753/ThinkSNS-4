@@ -8,27 +8,19 @@ class LoginHooks extends Hooks
             'qzone' => array('qzone_key', 'qzone_secret'),
             'qq' => array('qq_key', 'qq_secret'),
             'renren' => array('renren_key', 'renren_secret'),
-            // "douban"    => array("douban_key", "douban_secret"),
             'baidu' => array('baidu_key', 'baidu_secret'),
             'taobao' => array('taobao_key', 'taobao_secret'),
-            //"facebook"  => array("facebook_key", "facebook_secret"),
-            //"google"    => array("google_id", "google_key", "google_secret"),
-            //"twitter"  => array("twitter_key", "twitter_secret"),
         );
     //可同步发布动态的站点
-    private static $validPublish = array('sina', 'qq', 'qzone'); //, 'renren'); 暂时关闭人人网同步-不知道哪里抽风审核不过
+    private static $validPublish = array('sina', 'qq', 'qzone'); // 暂时关闭人人网同步-不知道哪里抽风审核不过
     //应用名称
     private static $validAlias = array(
             'sina' => '新浪分享',
             'qzone' => 'QQ互联',
             'qq' => '腾讯分享',
             'renren' => '人人网',
-            // 'douban'    => "豆瓣",
             'baidu' => '百度',
             'taobao' => '淘宝网',
-            //'facebook'  => "facebook",
-            //'google'    => "google",
-            //'twitter'  => "twitter",
         );
     //应用申请地址
     private static $validApply = array(
@@ -36,12 +28,8 @@ class LoginHooks extends Hooks
             'qzone' => 'http://connect.qq.com',
             'qq' => 'http://open.t.qq.com/websites/',
             'renren' => 'http://dev.renren.com',
-            // 'douban'    => "http://www.douban.com/service/apidoc/connect",
             'baidu' => 'http://developer.baidu.com',
             'taobao' => 'http://open.taobao.com',
-            //'facebook'  => "http://developer.facebook.com",
-            //'google'    => "https://code.google.com/apis/console/",
-            //'twitter'  => "http://developer.facebook.com",
         );
 
     //异步提交JS
@@ -709,11 +697,12 @@ class LoginHooks extends Hooks
         $map['uid'] = $user['uid'];
         $res = model('User')->where($map)->save($save);
 
-        $syncdata ['oauth_token'] = $_SESSION [$type] ['access_token'] ['oauth_token'];
-        $syncdata ['oauth_token_secret'] = $_SESSION [$type] ['access_token'] ['oauth_token_secret'];
-        $syncdata ['uid'] = $user ['uid'];
-        $syncdata ['type_uid'] = $userinfo ['id'];
-        $syncdata ['type'] = $type;
+        $syncdata['oauth_token'] = $_SESSION [$type] ['access_token'] ['oauth_token'];
+        $syncdata['oauth_token_secret'] = $_SESSION [$type] ['access_token'] ['oauth_token_secret'];
+        $syncdata['uid'] = $user ['uid'];
+        $syncdata['type_uid'] = $userinfo ['id'];
+        $syncdata['type'] = $type;
+        $syncdata['is_sync'] = 0;
 
         S('user_login_'.$user['uid'], null);
 
@@ -1169,7 +1158,6 @@ class LoginHooks extends Hooks
                 }
                 !defined(strtoupper($value)) && define(strtoupper($value), $config[$value]);
             }
-            include_once $this->path."/lib/{$type}.class.php";
         }
     }
 }
