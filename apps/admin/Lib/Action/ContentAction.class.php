@@ -67,15 +67,6 @@ class ContentAction extends AdministratorAction
 
         $listData = model('Feed')->getList($map, 20);
         foreach ($listData['data'] as &$v) {
-            //判断是否是图片分享？如果是图片分享，则可设置为推荐微博
-            if ($v['type'] == 'postimage') {
-                if ($v['is_recommend'] == 1) {
-                    $postimage = "<a href='javascript:void(0)' onclick='admin.ContentEdit(".$v['feed_id'].',"noFeedRecommend","'.'取消推荐'.'","'.L('PUBLIC_DYNAMIC')."\")'>取消推荐</a>";
-                } else {
-                    $postimage = "<a href='javascript:void(0)' onclick='admin.ContentEdit(".$v['feed_id'].',"feedRecommend","'.'推荐'.'","'.L('PUBLIC_DYNAMIC')."\")'>设为推荐</a>";
-                }
-            }
-
             $v['uname'] = $v['user_info']['space_link'];
             $v['type'] = $this->opt['type'][$v['type']];
             $v['from'] = $this->from[$v['from']];
@@ -85,8 +76,6 @@ class ContentAction extends AdministratorAction
             //							:"<a href='javascript:void(0)' onclick='admin.ContentEdit({$v['feed_id']},\"feedRecover\",\"".L('PUBLIC_RECOVER')."\",\"".L('PUBLIC_DYNAMIC')."\")'>".L('PUBLIC_RECOVER')."</a>";
             if ($isRec == 0 && $is_audit == 1) {
                 $v['DOACTION'] = "<a href='javascript:void(0)' onclick='admin.ContentEdit({$v['feed_id']},\"delFeed\",\"".L('PUBLIC_STREAM_DELETE').'","'.L('PUBLIC_DYNAMIC')."\")'>".L('PUBLIC_STREAM_DELETE').'</a>';
-                $postimage && $v['DOACTION'] .= '&nbsp-&nbsp;'.$postimage;
-                unset($postimage);
             } elseif ($isRec == 0 && $is_audit == 0) {
                 $v['DOACTION'] = "<a href='javascript:void(0)' onclick='admin.ContentEdit({$v['feed_id']},\"auditFeed\",\"".'通过'.'","'.L('PUBLIC_DYNAMIC')."\")'>".'通过'.'</a>&nbsp;|&nbsp;'."<a href='javascript:void(0)' onclick='admin.ContentEdit({$v['feed_id']},\"delFeed\",\"".L('PUBLIC_STREAM_DELETE').'","'.L('PUBLIC_DYNAMIC')."\")'>".L('PUBLIC_STREAM_DELETE').'</a>';
             } else {
@@ -95,64 +84,6 @@ class ContentAction extends AdministratorAction
         }
         $this->_listpk = 'feed_id';
         $this->displayList($listData);
-    }
-
-    /**
-     * 设为推荐
-     */
-    public function feedRecommend()
-    {
-        $map['type'] = 'postimage';
-        $map['is_del'] = 0;
-        $map['is_audit'] = 1;
-        $map['is_recommend'] = 1;
-        if (model('Feed')->where($map)->count() >= 3) {
-            exit(json_encode(array('status' => 0, 'data' => '最多只能推荐3篇微博')));
-        }
-        unset($map['is_recommend']);
-        $map['feed_id'] = intval($_POST['id']);
-        $res = model('Feed')->where($map)->save(array('is_recommend' => 1, 'recommend_time' => time(0)));
-        if ($res) {
-            $return['status'] = 1;
-            $return['data'] = '操作成功';
-            model('Cache')->rm('fd_'.$map['feed_id']);
-            model('Cache')->rm('feed_info_'.$map['feed_id']);
-            model('Cache')->rm('feed_info_api_'.$map['feed_id']);
-        } else {
-            $return['status'] = 0;
-            $return['data'] = '操作失败';
-        }
-        echo json_encode($return);
-        exit();
-    }
-
-    /**
-     * 取消设为推荐
-     */
-    public function noFeedRecommend()
-    {
-        $map['is_del'] = 0;
-        $map['is_audit'] = 1;
-        $map['type'] = 'postimage';
-        $map['is_recommend'] = 1;
-        if (model('Feed')->where($map)->count() <= 1) {
-            exit(json_encode(array('status' => 0, 'data' => '至少有一篇推荐微博')));
-        }
-        unset($map['is_recommend']);
-        $map['feed_id'] = intval($_POST['id']);
-        $res = model('Feed')->where($map)->save(array('is_recommend' => 0));
-        if ($res) {
-            $return['status'] = 1;
-            $return['data'] = '操作成功';
-            model('Cache')->rm('fd_'.$map['feed_id']);
-            model('Cache')->rm('feed_info_'.$map['feed_id']);
-            model('Cache')->rm('feed_info_api_'.$map['feed_id']);
-        } else {
-            $return['status'] = 0;
-            $return['data'] = '操作失败';
-        }
-        echo json_encode($return);
-        exit();
     }
 
     //待审列表
@@ -658,19 +589,19 @@ class ContentAction extends AdministratorAction
         // 设置列表主键
         $this->_listpk = 'topic_id';
         $this->pageTab[] = array('title' => '话题管理', 'tabHash' => 'list', 'url' => U('admin/Content/topic'));
-        //$this->pageTab[] = array('title' => '推荐话题', 'tabHash' => 'recommendTopic', 'url' => U('admin/Content/topic', array('recommend' => 1)));
+        $this->pageTab[] = array('title' => '推荐话题', 'tabHash' => 'recommendTopic', 'url' => U('admin/Content/topic', array('recommend' => 1)));
         $this->pageTab[] = array('title' => '添加话题', 'tabHash' => 'addTopic', 'url' => U('admin/Content/addTopic'));
         $this->pageButton[] = array('title' => '搜索话题', 'onclick' => "admin.fold('search_form')");
         $this->pageButton[] = array('title' => '批量屏蔽', 'onclick' => "admin.setTopic(3,'',0)");
-        $this->searchKey = array('topic_id', 'topic_name', 'lock', 'type', 'create_uid');
+        $this->searchKey = array('topic_id', 'topic_name', 'lock');
         $this->searchPostUrl = U('admin/Content/topic', array('tabHash' => $_REQUEST['tabHash'], 'recommend' => $_REQUEST['recommend']));
         $this->opt['recommend'] = array('0' => L('PUBLIC_SYSTEMD_NOACCEPT'), '1' => '是', '2' => '否');
         $this->opt['essence'] = array('0' => L('PUBLIC_SYSTEMD_NOACCEPT'), '1' => '是', '2' => '否');
         $this->opt['lock'] = array('0' => L('PUBLIC_SYSTEMD_NOACCEPT'), '1' => '是', '2' => '否');
-        $this->opt['type'] = array('0' => L('PUBLIC_SYSTEMD_NOACCEPT'), '1' => '系统话题', '2' => '个人话题');
-        $this->pageKeyList = array('topic_id', 'topic_name', 'note', 'domain', 'des', 'pic', 'topic_user', 'outlink', 'uname', 'count', 'type', 'DOACTION');
+        $this->pageKeyList = array('topic_id', 'topic_name', 'note', 'domain', 'des', 'pic', 'topic_user', 'outlink', 'DOACTION');
         //dump($_POST);exit;
         $listData = model('FeedTopicAdmin')->getTopic('', $_REQUEST['recommend']);
+        //dump($listData);exit;
         $this->displayList($listData);
     }
 
@@ -681,7 +612,7 @@ class ContentAction extends AdministratorAction
     {
         $this->assign('pageTitle', '添加话题');
         $this->pageTab[] = array('title' => '话题管理', 'tabHash' => 'list', 'url' => U('admin/Content/topic'));
-        //$this->pageTab[] = array('title' => '推荐话题', 'tabHash' => 'recommendTopic', 'url' => U('admin/Content/topic', array('recommend' => 1)));
+        $this->pageTab[] = array('title' => '推荐话题', 'tabHash' => 'recommendTopic', 'url' => U('admin/Content/topic', array('recommend' => 1)));
         $this->pageTab[] = array('title' => '添加话题', 'tabHash' => 'addTopic', 'url' => U('admin/Content/addTopic'));
         $this->pageKeyList = array('topic_name', 'note', 'domain', 'des', 'pic', 'topic_user', 'outlink', 'recommend');
         $topic['domain'] = SITE_URL.'/topics/'.'<input type="text" value="" name="domain" id="form_domain">';
@@ -701,7 +632,7 @@ class ContentAction extends AdministratorAction
     public function doAddTopic()
     {
         t($_POST['topic_name']) == '' && $this->error('话题名称不能为空');
-        //t($_POST['note']) == '' && $this->error('话题注释不能为空');
+        t($_POST['note']) == '' && $this->error('话题注释不能为空');
         $map['topic_name'] = t($_POST['topic_name']);
         if (model('FeedTopic')->where($map)->find()) {
             $this->error('此话题已存在');
@@ -777,7 +708,7 @@ class ContentAction extends AdministratorAction
     {
         $this->assign('pageTitle', '编辑话题');
         $this->pageTab[] = array('title' => '话题管理', 'tabHash' => 'list', 'url' => U('admin/Content/topic'));
-        //$this->pageTab[] = array('title' => '推荐话题', 'tabHash' => 'recommendTopic', 'url' => U('admin/Content/topic', array('recommend' => 1)));
+        $this->pageTab[] = array('title' => '推荐话题', 'tabHash' => 'recommendTopic', 'url' => U('admin/Content/topic', array('recommend' => 1)));
         $this->pageTab[] = array('title' => '添加话题', 'tabHash' => 'addTopic', 'url' => U('admin/Content/addTopic'));
         $this->pageTab[] = array('title' => '编辑话题', 'tabHash' => 'editTopic', 'url' => U('admin/Content/editTopic', array('topic_id' => intval($_GET['topic_id']), 'tabHash' => 'editTopic')));
         $this->pageKeyList = array('topic_id', 'topic_name', 'note', 'domain', 'des', 'pic', 'topic_user', 'outlink', 'recommend');
@@ -802,7 +733,7 @@ class ContentAction extends AdministratorAction
     public function doEditTopic()
     {
         //$_POST['name']=="" && $this->error('话题名称不能为空');
-        //$_POST['note'] == '' && $this->error('话题注释不能为空');
+        $_POST['note'] == '' && $this->error('话题注释不能为空');
         //$map['topic_id'] = array('neq', $_POST['topic_id']);
         //$map['name'] = t($_POST['name']);
         //if(model('FeedTopic')->where($map)->find()) $this->error('此话题已存在');

@@ -1489,10 +1489,10 @@ admin.topicCheck = function(form){
         ui.error('请输入话题名称');
         return false;
     }
-    /*if(getLength(form.note.value) < 1){
+    if(getLength(form.note.value) < 1){
         ui.error('请输入话题注释');
         return false;
-    }*/
+    }
     if(getLength(form.domain.value) > 0){
         var Regx2 = /^[A-Za-z0-9]*$/;
         if(!Regx2.test(form.domain.value)){
@@ -1846,14 +1846,3 @@ admin.edit_tab = function(action,id){
     var title = action+"礼物";
     ui.box.load(U('gift/Admin/edit_gift_tab')+ '&id='+id,title+'信息');
 };
-
-/* 话题管理>话题列表>搜索  */
-admin.userByTopic = function(value){
-    if(value == '1'){
-        $('.user-list').children().remove();
-        $('#search_uids').val('');
-        $('#dl_create_uid').hide();
-    }else{
-        $('#dl_create_uid').show();
-    }
-}
