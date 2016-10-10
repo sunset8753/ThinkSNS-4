@@ -1,22 +1,18 @@
 <?php
 
-$baseDir = dirname(__FILE__);
-$finder = \Symfony\CS\Finder::create()
-    // ->exclude('data')
-    // ->exclude('storage')
+$baseDir = dirname(__FILE__) . '/';
+
+$finder = \Symfony\CS\Finder\DefaultFinder::create()
+    ->exclude('data')
+    ->exclude('storage')
     ->exclude('vendor')
     ->exclude('.svn')
     ->exclude('.git')
-    ->notPath('data')
-    ->notPath('storage')
-    ->notPath('server')
-    ->notPath('src/vendor')
-    ->notPath('addons/theme')
+    ->exclude('src/vendor')
     ->in($baseDir)
 ;
 
 return \Symfony\CS\Config\Config::create()
-    ->setUsingCache(true)
     ->level(Symfony\CS\FixerInterface::PSR2_LEVEL)
     ->fixers(array(
         'double_arrow_multiline_whitespaces',
