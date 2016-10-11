@@ -14,15 +14,10 @@ class AvatarModel
      * @param int $uid 用户UID
      */
 
-    public function __construct($uid)
+    public function __construct($uid = null)
     {
         $uid or $uid = intval($_SESSION['mid']);
         $this->_uid = $uid;
-        unset($uid);
-        // if (!$uid)
-        //     $uid = intval($_SESSION['mid']);
-        // $this->_uid = intval($uid);
-        // return $this; # 呵呵哒！
     }
 
     /**
