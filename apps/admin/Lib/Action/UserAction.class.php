@@ -229,7 +229,7 @@ class UserAction extends AdministratorAction
      * 初始化用户列表管理菜单
      * @param string $type 列表类型，index、pending、dellist
      */
-    private function _initUserListAdminMenu($type)
+    private function _initUserListAdminMenu($type = null)
     {
         // tab选项
         $this->pageTab[] = array('title' => L('PUBLIC_USER_LIST'), 'tabHash' => 'index', 'url' => U('admin/User/index'));
