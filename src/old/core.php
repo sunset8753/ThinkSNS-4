@@ -93,7 +93,9 @@ tsdefine('LOG_PATH', TS_ROOT.TS_STORAGE.'/logs/');
 
 //注册AUTOLOAD方法
 if (function_exists('spl_autoload_register')) {
-    spl_autoload_register('tsautoload');
+    spl_autoload_register(function ($classname) {
+        tsautoload($classname);
+    });
 }
 
 //载入核心运行时文件

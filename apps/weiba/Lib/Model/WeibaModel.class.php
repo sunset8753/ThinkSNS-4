@@ -85,9 +85,12 @@ class WeibaModel extends Model
             }
             $_count = $this->where('status=1 AND is_del=0 AND avatar_middle !="" '.$gid_map)->count();
             $rand_list = $this->field('weiba_id,weiba_name,avatar_middle,follower_count,ctime,intro')->where('status=1 AND is_del=0 AND avatar_middle !="" '.$gid_map)->order(' rand() ')->limit((rand(0, $_count - ($pagesize - $weiba_count ['count']))).','.($pagesize - $weiba_count ['count']))->findAll();
+            if (!is_array($weiba_list['data'])) {
+                $weiba_list['data'] = array();
+            }
             foreach ($rand_list as $v) {
                 $v ['reason'] = '热门微吧';
-                $weiba_list ['data'] [] = $v;
+                $weiba_list['data'][] = $v;
             }
             //dump($weiba_list); 			dump($this->getLastSql());exit;
         }

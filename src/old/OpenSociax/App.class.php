@@ -171,7 +171,7 @@ class App
             file_put_contents($appTimer, time());
         }
 
-        $app = new \Ts\Helper\Controller;
+        $app = new \Ts\Helper\Controller();
         $app
             ->setApp(APP_NAME)
             ->setController(MODULE_NAME)

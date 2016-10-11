@@ -215,7 +215,7 @@ class FeedDiggModel extends Model
             foreach ($list as $v) {
                 $res [$v ['feed_id']] = 1;
             }
-            $this->setDiggCache($uid);
+            $this->setDiggCache($uid, $v['feed_id']);
         } else {
             foreach ($feed_ids as $v) {
                 in_array($v, $digg) && $res[$v] = 1;
