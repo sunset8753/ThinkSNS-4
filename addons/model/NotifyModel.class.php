@@ -243,9 +243,9 @@ class NotifyModel extends Model
     }
 
     //TS2的兼容方法 同 sendNotify
-    public function send($toUid, $node, $config, $from)
+    public function send($toUid, $node, $config, $from = null)
     {
-        return $this->sendNotify($toUid, $node, $config, $from);
+        return $this->sendNotify($toUid, $node, $config, $from = null);
     }
 
     /**
