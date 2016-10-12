@@ -579,7 +579,7 @@ abstract class Action
      * @param  Boolean $ajax    是否为Ajax方
      * @return voi
      */
-    protected function success($message, $ajax = false)
+    protected function success($message = '', $ajax = false)
     {
         Addons::hook('core_filter_success_message', $message);
         $this->_dispatch_jump($message, 1, $ajax);
