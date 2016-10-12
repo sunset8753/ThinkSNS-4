@@ -189,8 +189,9 @@ class Api
             if (isset($_REQUEST['oauth_token'])) {
                 $verifycode['oauth_token'] = h($_REQUEST['oauth_token']);
                 $verifycode['oauth_token_secret'] = h($_REQUEST['oauth_token_secret']);
-                $verifycode['type'] = 'location';
+                // $verifycode['type'] = 'location';
                 $login = D('Login')->where($verifycode)->getField('uid');
+
                 if (isset($login) && $login > 0) {
                     $this->mid = (int) $login;
                     $_SESSION['mid'] = $this->mid;
@@ -203,7 +204,6 @@ class Api
         } else {
             $this->mid = (int) $login;
             $_SESSION['mid'] = $this->mid;
-            $canaccess = true;
             $canaccess = true;
         }
 
@@ -275,6 +275,7 @@ class Api
             dump($message);
             exit;
         } else {
+            header('Content-Type:application/json');
             exit(json_encode($message));
         }
     }
@@ -296,6 +297,7 @@ class Api
             dump($message);
             exit;
         } else {
+            header('Content-Type:application/json');
             exit(json_encode($message));
         }
     }
