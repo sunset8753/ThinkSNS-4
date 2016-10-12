@@ -163,7 +163,7 @@ class Api
             }
 
             //签名判断
-            $tmpArr = array($app_time, $app_uid, $app_token, $app_secret);
+            $tmpArr = array($app_time, $app_uid, $app_id, $app_secret);
             sort($tmpArr, SORT_STRING);
             $tmpStr = implode($tmpArr, '&');
             $tmpStr = md5($tmpStr);
