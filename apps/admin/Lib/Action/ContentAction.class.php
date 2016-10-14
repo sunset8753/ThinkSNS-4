@@ -658,7 +658,7 @@ class ContentAction extends AdministratorAction
         // 设置列表主键
         $this->_listpk = 'topic_id';
         $this->pageTab[] = array('title' => '话题管理', 'tabHash' => 'list', 'url' => U('admin/Content/topic'));
-        //$this->pageTab[] = array('title' => '推荐话题', 'tabHash' => 'recommendTopic', 'url' => U('admin/Content/topic', array('recommend' => 1)));
+        $this->pageTab[] = array('title' => '推荐话题', 'tabHash' => 'recommendTopic', 'url' => U('admin/Content/topic', array('recommend' => 1)));
         $this->pageTab[] = array('title' => '添加话题', 'tabHash' => 'addTopic', 'url' => U('admin/Content/addTopic'));
         $this->pageButton[] = array('title' => '搜索话题', 'onclick' => "admin.fold('search_form')");
         $this->pageButton[] = array('title' => '批量屏蔽', 'onclick' => "admin.setTopic(3,'',0)");
@@ -681,12 +681,12 @@ class ContentAction extends AdministratorAction
     {
         $this->assign('pageTitle', '添加话题');
         $this->pageTab[] = array('title' => '话题管理', 'tabHash' => 'list', 'url' => U('admin/Content/topic'));
-        //$this->pageTab[] = array('title' => '推荐话题', 'tabHash' => 'recommendTopic', 'url' => U('admin/Content/topic', array('recommend' => 1)));
+        $this->pageTab[] = array('title' => '推荐话题', 'tabHash' => 'recommendTopic', 'url' => U('admin/Content/topic', array('recommend' => 1)));
         $this->pageTab[] = array('title' => '添加话题', 'tabHash' => 'addTopic', 'url' => U('admin/Content/addTopic'));
         $this->pageKeyList = array('topic_name', 'note', 'domain', 'des', 'pic', 'topic_user', 'outlink', 'recommend');
         $topic['domain'] = SITE_URL.'/topics/'.'<input type="text" value="" name="domain" id="form_domain">';
         $this->opt['recommend'] = array('1' => '是', '0' => '否');
-        //$this->opt['essence'] = array('1'=>'是','0'=>'否');
+        $this->opt['essence'] = array('1'=>'是','0'=>'否');
         $this->notEmpty = array('topic_name', 'note');
         // 表单URL设置
         $this->savePostUrl = U('admin/Content/doAddTopic');

@@ -5,8 +5,11 @@
     <div id="list_div_{$j}" class="area-type-list <eq name='j' value='$menuCount'>no-margin</eq>">
       <!--<p>查找{$vo.title}</p>-->
       <ul class="clearfixul">
+        <li class="tag_title">
+        <span style="font-size: 16px;">{$vo.title|getShort=###, 10}：</span>
+        </li>
         <li>
-          <a  class="first <eq name="cid" value="$vo.id">current</eq>" href="{:U('people/Index/index', array('cid'=>$vo['id'],'sex'=>$sex,'area'=>$area,'verify'=>$verify,'type'=>$type))}"><span style="font-size: 16px;">{$vo.title|getShort=###, 10}</span>/全部</a>
+          <a  class="first <eq name="cid" value="$vo.id">current</eq>" href="{:U('people/Index/index', array('cid'=>$vo['id'],'sex'=>$sex,'area'=>$area,'verify'=>$verify,'type'=>$type))}">全部</a>
         </li>
         <volist name="vo.child" id="v">
         <!--<li <gt name="i" value="$showNums">style="display:none;"</gt>>-->
@@ -23,6 +26,11 @@
 </div>
 
 <script type="text/javascript">
+$('.area-type-list').each(function(index, el){
+    var ulHeight = $(this).find('ul').height();
+    $(this).find(".tag_title").height(ulHeight-15);
+});
+　
 /**
  * 伸缩菜单效果
  * @param integer divId 操作DIV对象

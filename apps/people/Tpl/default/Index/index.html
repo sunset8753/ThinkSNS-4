@@ -3,7 +3,7 @@
   <div id="main-wrap">
     <div class="find-type">
         <div class="app-title clearfix mb20 border-b">
-            <h4 class="left">找伙伴</h4>
+            <h4 class="left">教师</h4>
             <div class="app-tab-menu clearfix">
                 <ul>
                     <php>if(in_array('official',$findPeopleConfig)){</php>
@@ -56,19 +56,19 @@
                 </ul>
             </div>
         </div>
-      <div class="clearfix"> {:W('Menu', array('cid'=>$cid,'sex'=>$sex,'area'=>$area,'verify'=>$verify,'type'=>$type, 'pid' => $pid))} </div>
+      <div class="clearfix"> {:W('Menu', array('cid'=>$cid,'sex'=>$sex,'area'=>$area,'unit'=>$unit,'verify'=>$verify,'type'=>$type,'pid' => $pid))} </div>
     </div>
     <div id="col" class="st-bg clearfix">
-        <php>if(in_array($type, array('tag','area'))):</php>
-        {:W('Filter', array('cid'=>$cid,'sex'=>$sex,'area'=>$area,'verify'=>$verify,'type'=>$type))}
+        <php>if(in_array($type, array('tag','area', 'unit'))):</php>
+        {:W('Filter', array('cid'=>$cid,'sex'=>$sex,'area'=>$area,'unit'=>$unit,'verify'=>$verify,'type'=>$type))}
         <php>endif;</php>
         <php>if(in_array($type, array('verify','official')) && !empty($topUser)):</php>
         {:W('Face', array('uids'=>$topUser,'type'=>$type))}
         <php>endif;</php>
-        <php>if(in_array($type, array('verify', 'official', 'unit'))):</php>
+        <php>if(in_array($type, array('verify', 'official'))):</php>
         {:W('UserList', array('cid'=>$cid,'uids'=>$topUser,'type'=>$type,'verify'=>$verify,'pid'=>$pid))}
         <php>else:</php>
-        {:W('UserList', array('cid'=>$cid,'sex'=>$sex,'area'=>$area,'verify'=>$verify,'type'=>$type))}
+        {:W('UserList', array('cid'=>$cid,'sex'=>$sex,'area'=>$area,'unit'=>$unit,'verify'=>$verify,'type'=>$type))}
         <php>endif;</php>
     </div>
   </div>

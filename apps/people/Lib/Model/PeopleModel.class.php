@@ -476,6 +476,9 @@ class PeopleModel extends model
         $data['limit'] && $page = intval($data['limit']);
         $data['uids'] = '1';
         // 设置表明
+        $depart = D('UserDepartment')->where(array('department_id'=>$data['unit']))->select();
+        $depart = $depart ? getSubByKey($depart, 'uid') : '';
+        $data['uid'] = implode(',', $depart);
         $table = '`'.C('DB_PREFIX').'user`';
         // 设置查询条件
         $map['is_init'] = 1;
@@ -486,6 +489,9 @@ class PeopleModel extends model
         }
         if (!empty($data['cid'])) {
             $map['department_id'] = array('like', '%'.$data['cid'].'%');
+        }
+        if (!empty($data['uid'])) {
+            $map['uid'] = array('EXP', 'IN ('.$data['uid'].')');
         }
         // 查询数据
         $list = D()->table($table)->where($map)->order($order)->findPage($page);

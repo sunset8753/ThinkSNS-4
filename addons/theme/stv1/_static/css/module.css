@@ -798,6 +798,7 @@ a:hover .contribute{background-position:0 -207px;}
 .name-card .links{background:#F5F5F5;margin: 0;height:32px;padding: 6px 15px 5px}
 .name-card .links p{background:#F5F5F5;margin: 0;overflow: hidden;padding: 6px 0 5px}
 .name-card .links .right{height:27px;}
+.name-card .links .left a{color:#6cbb52;}
 .name-card .links .btn-green, .name-card .links .btn-red, .name-card .links .btn-gray{height:24px}
 .name-card .links .btn-green span, .name-card .links .btn-red span, .name-card .links .btn-gray span{padding:4px 10px;_padding:6px 10px 2px}
 *+html .name-card .links .btn-green span, *+html .name-card .links .btn-red span, *+html .name-card .links .btn-gray span{padding:5px 10px 3px}

@@ -25,7 +25,7 @@ core.message = new function(){
                 },
                 "at": {
                     id: 'at',
-                    title: 'At我的',
+                    title: '@我的',
                     src: THEME_URL + '/image/message/at.png'
                 },
                 "lxr": {
@@ -39,7 +39,7 @@ core.message = new function(){
 
         /* 任务栏 开始 */
     var taskbar = {
-        
+
         el : '<div id="message-taskbar">\
                <div class="wrap">\
                  <ul id="message-fixed" class="message-list"></ul>\
@@ -442,7 +442,7 @@ core.message = new function(){
                 }
             });
         }
-        
+
     }; /* 任务栏 结束 */
 
     var msgbox  = {
@@ -592,10 +592,10 @@ core.message = new function(){
         }
     };
 
-    
 
 
-    
+
+
     self._init  = function(args){
         self.init(args);
     };
@@ -618,7 +618,7 @@ core.message = new function(){
                     $(window).scrollTop(shield.data('st'));
                 }
             });
-            
+
             var setTaskRoom = function(pos){
                 var limit = $(window).height() / taskbar.limitHeight - 5;
                 $.get(U('public/WebMessage/latelyRoomList'), {limit:limit}, function(res){
@@ -645,11 +645,11 @@ core.message = new function(){
                     }
                 }, 'json');
             }
-            
+
             setTaskRoom('append');
-            
+
             setInterval(function(){ setTaskRoom('prepend'); }, 30000);
-            
+
             self.params.taskbar.removeLi = function(li){
                 var data = {roomid: li.data('roomid')};
                 $.get(U('public/WebMessage/clearMessage'), data, function(res){}, 'json');
@@ -658,8 +658,8 @@ core.message = new function(){
             }
 
         });
-        
-        
+
+
     };
 
     self.taskbar = taskbar;

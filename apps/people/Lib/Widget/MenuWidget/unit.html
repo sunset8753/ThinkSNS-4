@@ -1,13 +1,39 @@
-<div class="find-type-list clearfix">
-  <ul>
-<!--    <li class="first">官方推荐</li>-->
-    <li>
-      <div class="find-nav"><a href="{:U('people/Index/index', array('cid'=>0,'type'=>$type))}" class="<eq name='cid' value='0'>current</eq>">全部</a></div>
-    </li>
-    <volist name="menu" id="vo">
-    <li>
-      <div class="find-nav"><a href="{:U('people/Index/index', array('cid'=>$vo['id'],'type'=>$type))}" class="<eq name='cid' value='$vo.id'>current</eq>">{$vo.title}</a></div>
-    </li>
-    </volist>
-  </ul>
+<div class="area-type-lists">
+<div class="area-type-list no-margin clearfix">
+   <!--<p>按地区查找</p>-->
+   <ul>
+      <li>
+         <a class="first <eq name="unit" value="0">current</eq>" href="{:U('people/Index/index', array('unit'=>0,'type'=>$type))}">全部</a>
+      </li>
+      <php>if(!$unit){</php>   <!-- 循环所有省 -->
+      <volist name="allUnit" id="vo">
+      <li>
+         <a <eq name="unit" value="$vo.department_id"> class="current"</eq> href="{:U('people/Index/index', array('unit'=>$vo['department_id'],'type'=>$type))}">{$vo.title}</a>
+      </li>
+      </volist>
+      <php>}else{</php>
+         <neq name="parent2.title" value=""><li><a class="current" href="{:U('people/Index/index', array('unit'=>$parent2['department_id'],'type'=>$type))}">{$parent2['title']}</a></li><else /><li><a class="current" href="{:U('people/Index/index', array('unit'=>$parent1['id'],'type'=>$type))}">{$parent1['title']}</a></li></neq>
+      <php>}</php>
+   </ul>
+   <!--  -->
+   <php>if($parent2['title'] && $parent1['title']){</php>
+   <ul>
+      <li>
+         <a class="first <eq name="unit" value="0">current</eq>" href="{:U('people/Index/index', array('unit'=>$parent2['department_id'],'type'=>$type))}">全部</a>
+      </li>
+         <li><a class="current" href="{:U('people/Index/index', array('unit'=>$parent1['id'],'type'=>$type))}">{$parent1['title']}</a></li>
+   </ul>
+   <php>}</php>
+   <!--  -->
+   <php>if($next){</php>
+   <ul>
+      <volist name="next" id="vo">
+      <li>
+         <a <eq name="unit" value="$vo.department_id"> class="current"</eq> href="{:U('people/Index/index', array('unit'=>$vo['department_id'],'type'=>$type))}">{$vo.title}</a>
+      </li>
+      </volist>
+   </ul>
+   <php>}</php>
+
+</div>
 </div>

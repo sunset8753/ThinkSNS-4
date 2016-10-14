@@ -1247,6 +1247,8 @@ a.top_stick:hover{background-position:-60px 0;text-decoration:none}
 .hot-topic ul{margin:20px 0 0 0;}
 .hot-topic li{margin:0 0 20px 0;}
 .hot-topic a{color:#333;}
+.hot-topic .related-article{position: relative;overflow: hidden;}
+.hot-topic .related-article .title{position: absolute;bottom: 0;left: 0;width: 100%;height: 30px;line-height: 30px;color: #fff;padding-left: 15px;font-size: 14px;filter: alpha(opacity=40);background: rgba(0, 0, 0, 0.4)}
 .right-box .more{ width:100%; float:left;}
 .right-box .next-page,.right-box .next-page:hover{width:80px;height:28px; display:block; text-align:center;line-height:28px;}
 .right-box .next-page{background:#fff; border:#e5e6e7 1px solid;}
