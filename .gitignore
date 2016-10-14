@@ -11,7 +11,7 @@
 #/api/thinksns/*
 !/api/thinksns/UserApi.class.php
 !/api/thinksns/WeiboStatusesApi.class.php
-/api/sociax/
+#/api/sociax/
 /data/upload/*/*/*
 !/data/upload/2015/0715/18/
 !/data/upload/2015/0615/15/
