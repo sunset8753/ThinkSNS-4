@@ -68,6 +68,13 @@ class MenuWidget extends Widget
             case 'official':
                 $var['menu'] = model('CategoryTree')->setTable('user_official_category')->getNetworkList();
                 break;
+            case 'unit':
+                $var['menu'] = model('Department')->getAllHash();
+                foreach ($var['menu'] as $key => &$value) {
+                    $value['id'] = $value['department_id'];
+                    unset($value['department_id']);
+                }
+                break;
         }
 
         // 渲染模版

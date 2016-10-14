@@ -1814,10 +1814,11 @@ class UserAction extends AdministratorAction
         $this->pageTab[] = array('title' => '找人配置', 'tabHash' => 'findPeopleConfig', 'url' => U('admin/User/findPeopleConfig'));
         // 配置用户存储基本字段
         $this->pageKeyList = array('findPeople');
-        $findtype['tag'] = '按标签';
-        $findtype['area'] = '按地区';
-        $findtype['verify'] = '认证用户';
         $findtype['official'] = '官方推荐';
+        $findtype['tag'] = '按标签';
+        $findtype['unit'] = '按单位';
+        /*$findtype['area'] = '按地区';
+        $findtype['verify'] = '认证用户';*/
         $this->opt['findPeople'] = $findtype;
         // 显示配置列表
         $this->displayConfig();

@@ -8,10 +8,10 @@
 .find-type .app-title{padding:20px 20px 0 20px;}
 .find-type-list{padding:0 20px 15px 20px;}
 .find-type-list li{position:relative;float:left; padding:0 5px 5px 0;}
-.find-type-list li .find-nav{/*padding:6px 10px; background:#0096e6; color:#fff; border-radius:2px;-webkit-border-radius:2px;-moz-border-radius:2px;*/}
+.find-type-list li .find-nav{/*padding:6px 10px; background:#6cbb52; color:#fff; border-radius:2px;-webkit-border-radius:2px;-moz-border-radius:2px;*/}
 .find-type-list .first{height:39px;line-height:39px;padding:0 0 0 10px;border-top:0;float:none;}
 .find-type-list li a:link,.find-type-list li a:visited{ height:26px; line-height:26px; padding:0 10px;color:#111; border-radius:2px;-webkit-border-radius:2px;-moz-border-radius:2px;display:block;}
-.find-type-list li a:hover,.find-type-list li a:link.current,.find-type-list li a:visited.current{background:#0096e6;color:#fff;}
+.find-type-list li a:hover,.find-type-list li a:link.current,.find-type-list li a:visited.current{background:#6cbb52;color:#fff;}
 /*.find-type-list li .find-nav{position: relative;z-index:99;line-height:36px;border:2px solid transparent;display:block;_border:2px solid #f5f5f5;_overflow:hidden;}
 .find-type-list li .find-nav.current,.find-type-list .all.current{border:2px solid #414448;background:#fff;}
 .find-type-list li a:hover{background:#fff;border:2px solid #414448;padding:8px 1px  8px 8px;line-height:14px;border-right:0;}
@@ -46,7 +46,7 @@
 .area-type-lists .no-margin{border-bottom:none;margin-bottom:0;}
 .area-type-list li{border:0;float:left; padding:0 5px 5px 0;}
 .area-type-list li a:link,.area-type-list li a:visited{color:#333;line-height:26px;height:26px;margin:0;padding:0 10px;display:block;white-space:nowrap;}
-.area-type-list li a:hover,.area-type-list li a:link.current,.area-type-list li a:visited.current{background:#0096e6;color:#fff;border-radius:2px;-webkit-border-radius:2px;-moz-border-radius:2px;}
+.area-type-list li a:hover,.area-type-list li a:link.current,.area-type-list li a:visited.current{background:#6cbb52;color:#fff;border-radius:2px;-webkit-border-radius:2px;-moz-border-radius:2px;}
 
 .area-type-lists p{line-height:20px;padding:0 0 10px 0;float:none;font-weight:bold;}
 

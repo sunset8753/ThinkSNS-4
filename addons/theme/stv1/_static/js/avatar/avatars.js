@@ -3,7 +3,7 @@
  *
  * @param object args:
  * {
- * 	   
+ *
  * }
  *
  *
@@ -86,14 +86,14 @@ var avatar = function( args ) {
 		//文件类型检验
 		var checkFile=function(){
 			var filename = $(uploadBtn).val();
-			var pos = filename.lastIndexOf(".");  
-		    var str = filename.substring(pos, filename.length)  
-		    var str1 = str.toLowerCase();  
-		    if (!/\.(gif|jpg|jpeg|png)$/.test(str1)) {  
+			var pos = filename.lastIndexOf(".");
+		    var str = filename.substring(pos, filename.length)
+		    var str1 = str.toLowerCase();
+		    if (!/\.(gif|jpg|jpeg|png)$/.test(str1)) {
 		    	uploadBtn.value = '';
 		    	$(uploadBtn).val('');
-		        return false;  
-		    } 
+		        return false;
+		    }
 		    return true;
 		};
 
@@ -105,7 +105,7 @@ var avatar = function( args ) {
 	    uploadBtn.style.display = "none";
 	    loading.style.display = "block";
 		// 异步提交头像
-		
+
 		//M.getJS( THEME_URL + "/js/jquery.form.js?"+SYS_VERSION, function() {
             var options = {
                 success: function( txt ) {
@@ -133,8 +133,8 @@ var avatar = function( args ) {
 							var standard = (up_pic_width > up_pic_height) ? up_pic_height : up_pic_width;
 							standard < now && (now = standard);
 
-				            imgrs = $area_img.imgAreaSelect({ 
-		                        x1: 0, 
+				            imgrs = $area_img.imgAreaSelect({
+		                        x1: 0,
 		                        y1: 0,
 		                        x2: 640, //初始矩形宽
 		                        y2: 215, //初始矩形高
@@ -210,7 +210,7 @@ var avatar = function( args ) {
 				    settingForm.style.display = "none";
 				    uploadForm.style.display = "block";
 				    $('.cut-1').css('display','block');
-				    $('#button').css('background','#0096e6');
+				    $('#button').css('background','#6cbb52');
 				    $('#button').attr('onclick','dosubmit()');
                 }
             };
@@ -226,7 +226,7 @@ var avatar = function( args ) {
         $(uploadBtn).val('');
 	    settingForm.style.display = "none";
 	    uploadForm.style.display = "block";
-	    $('#button').css('background','#0096e6');
+	    $('#button').css('background','#6cbb52');
 	    $('#button').attr('onclick','dosubmit()');
 	    return false;
 	}

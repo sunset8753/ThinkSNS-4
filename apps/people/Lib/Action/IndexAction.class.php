@@ -62,6 +62,14 @@ class IndexAction extends Action
                 $title = '官方推荐';
                 $cate = model('CategoryTree')->setTable('user_official_category')->getNetworkList();
                 break;
+            case 'unit':
+                $title = '按单位查找用户';
+                $cate = model('Department')->getAllHash();
+                foreach ($cate as $key => &$value) {
+                    $value['id'] = $value['department_id'];
+                    unset($value['department_id']);
+                }
+                break;
             case 'tag':
                 $title = '按标签查找用户';
                 $cate = model('UserCategory')->getNetworkList();

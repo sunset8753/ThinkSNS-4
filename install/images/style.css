@@ -118,11 +118,11 @@ h1
 	font-family: Microsoft Yahei, "微软雅黑";
 	font-size: 16px;
 	font-weight: bold;
-	color: #0096E5;
+	color: #6cbb52;
 	margin-top: 15px;
 	margin-bottom: 16px;
 	background-color: transparent;
-	border-bottom: 2px solid #0096E5;
+	border-bottom: 2px solid #6cbb52;
 }
 
 .h1 {
@@ -222,7 +222,7 @@ i
 }
 .blue
 {
-	color: #0096E5;
+	color: #6cbb52;
 }
 .copyright
 {
@@ -323,8 +323,8 @@ form
 	border:none;
 	letter-spacing: .1em;
 	padding: 12px;
-	background-color: #0096E5;
+	background-color: #6cbb52;
 	color: #fff;
 	cursor: pointer;
 	margin-top: 20px;
-} 
+}

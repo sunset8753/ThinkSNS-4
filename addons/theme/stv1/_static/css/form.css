@@ -9,7 +9,7 @@ textarea{resize:none}
 .s-txt,.s-txt-focus{width:238px; border:1px solid #ccc; color:#888;font-size:100%;font-family:inherit;height:20px;line-height:20px;margin:0 10px 0 0;color:#333}
 .form-set .s-txt, .form-set .s-txt-focus{padding: 5px;}
 .s-ck{margin:0 5px 0 0;vertical-align:-2px;_vertical-align:-3px;_marign:0 3px 0 0;}
-.s-radio{margin:0 5px 0 0;} 
+.s-radio{margin:0 5px 0 0;}
 .s-select{font-size:12px;color:#333;background:#fff;padding:2px 2px 2px 5px;margin:0 5px 0 0;border:#b5b5b5 solid 1px;overflow-y:auto;}
 
 /*提取共用部分*/
@@ -131,7 +131,7 @@ transition: background .2s ease-in;
 	text-decoration:none
 }
 .btn-blue-big:link, .btn-blue-big:visited{color:#fff}
-.btn-blue-big span{display: inline-block;color:#fff;height: 16px;line-height: 16px;padding: 10px 8px;margin-top:2px\0;/*for Ie8*/_margin:0/*for Ie6*/} 
+.btn-blue-big span{display: inline-block;color:#fff;height: 16px;line-height: 16px;padding: 10px 8px;margin-top:2px\0;/*for Ie8*/_margin:0/*for Ie6*/}
 *+html .btn-blue-big span{margin:2px 0 0}/*for Ie7*/
 .btn-blue-big{
 	height:36px;font-size:14px;min-width:100px;text-align:center;background: #9EC97F;border-color: #3079ED;border-style: solid;border-width: 1px;color: #fff;
@@ -224,7 +224,7 @@ transition: background .2s ease-in;
 .form-blacklist .choose-user{width:553px;}
 .form-blacklist .choose-user .s-txt{width:542px;margin:0;height:20px;line-height:20px; border:#ccc 1px solid;padding:5px;}
 /*账号绑定--邮箱和手机绑定*/
-.set-item-title h4{padding:10px 0 0 0;font-size:16px; color:#0096e6;}
+.set-item-title h4{padding:10px 0 0 0;font-size:16px; color:#6cbb52;}
 .set-item-title .acc-info{margin:10px 0 0 0;}
 .set-item-info .sec-left{float:left;}
 .set-item-info .sec-right{float:left; padding:15px 0}

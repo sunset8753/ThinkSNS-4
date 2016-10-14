@@ -54,6 +54,9 @@ class PeopleModel extends model
             case 'official':
                 $list = $this->_getOfficialData($data);
                 break;
+            case 'unit':
+                $list = $this->_getUnitData($data);
+                break;
         }
         // 获取用户ID
         $uids = getSubByKey($list['data'], 'uid');
@@ -62,6 +65,7 @@ class PeopleModel extends model
             $list['data'][$k]['user_tag'] = model('Tag')->setAppName('User')->setAppTable('user')->getAppTags($vo['uid']);
             //$list['data'][$k]['user_tag'] = empty ( $list['data'][$k]['user_tag'] ) ? '' : implode ( '、', $list['data'][$k]['user_tag'] );
             $list['data'][$k]['userdata'] = model('UserData')->getUserData($vo['uid']);
+            $list['data'][$k]['depart'] = getDepartmentById($vo['department_id']);
         }
 
         // 用户数据信息组装
@@ -456,6 +460,38 @@ class PeopleModel extends model
         return $list;
     }
 
+    /**
+     * 获取筛选单位用户数据列表.
+     *
+     * @author zhangwei
+     * @date   2016-10-13
+     * @param  array  $data  查询条件数组
+     * @param  string $field 要查询的字段
+     * @param  string $order 排序规则
+     * @param  int    $page  分页条数
+     * @return array
+     */
+    public function _getUnitData($data, $field = 'uid, intro', $order = 'uid DESC', $page = 30)
+    {
+        $data['limit'] && $page = intval($data['limit']);
+        $data['uids'] = '1';
+        // 设置表明
+        $table = '`'.C('DB_PREFIX').'user`';
+        // 设置查询条件
+        $map['is_init'] = 1;
+        $map['is_del'] = 0;
+        // 排除用户
+        if (!empty($data['uids'])) {
+            $map['uid'] = array('EXP', 'NOT IN ('.$data['uids'].')');
+        }
+        if (!empty($data['cid'])) {
+            $map['department_id'] = array('like', '%'.$data['cid'].'%');
+        }
+        // 查询数据
+        $list = D()->table($table)->where($map)->order($order)->findPage($page);
+
+        return $list;
+    }
     /**
      * 获取用户相关信息
      * @param  array $uids 用户ID数组
