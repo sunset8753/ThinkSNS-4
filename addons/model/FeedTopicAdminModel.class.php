@@ -47,10 +47,7 @@ class FeedTopicAdminModel extends Model
                 $topic_list['data'][$k]['topic_user'] .= $topic_user_info[$val]['space_link'].'<br />';
             }
             //dump($topic_list['data'][$k]['topic_user']);exit;
-            // $isrecommend = $v['recommend']?'是':'否';
-            // $topic_list['data'][$k]['recommend'] = '<a href="javascript:void(0);" onclick="admin.setTopic(1,'.$v['topic_id'].','.intval($v['recommend']).')">'.$isrecommend.'</a>';
-            // $isessence = $v['essence']?'是':'否';
-            // $topic_list['data'][$k]['essence'] = '<a href="javascript:void(0);" onclick="admin.setTopic(2,'.$v['topic_id'].','.intval($v['essence']).')">'.$isessence.'</a>';
+
             $islock = $v['lock'] ? '取消屏蔽' : '屏蔽';
             //获取话题被使用的数量
             $count = D()->table('`'.C('DB_PREFIX').'feed` AS f LEFT JOIN `'.C('DB_PREFIX').'feed_topic_link` AS t ON f.`feed_id` = t.`feed_id`')
@@ -64,8 +61,12 @@ class FeedTopicAdminModel extends Model
             $topic_list['data'][$k]['count'] = $count;
             //话题分类（系统话题  、 个人话题）
             $topic_list['data'][$k]['type'] = $v['create_uid'] == 0 ? '系统话题' : '个人话题';
+            $isrecommend = $v['recommend'] ? '取消推荐' : '推荐';
+            $topic_list['data'][$k]['DOACTION'] = '<a href="javascript:void(0);" onclick="admin.setTopic(1,'.$v['topic_id'].','.intval($v['recommend']).')">'.$isrecommend.'</a>-';
+            $isessence = $v['essence']?'取消精华':'设为精华';
+            $topic_list['data'][$k]['DOACTION'] .= '<a href="javascript:void(0);" onclick="admin.setTopic(2,'.$v['topic_id'].','.intval($v['essence']).')">'.$isessence.'</a>-';
             // 操作数据
-            $topic_list['data'][$k]['DOACTION'] = '<a href="javascript:void(0);" onclick="admin.setTopic(3,'.$v['topic_id'].','.intval($v['lock']).')">'.$islock.'</a> - ';
+            $topic_list['data'][$k]['DOACTION'] .= '<a href="javascript:void(0);" onclick="admin.setTopic(3,'.$v['topic_id'].','.intval($v['lock']).')">'.$islock.'</a> - ';
             $topic_list['data'][$k]['DOACTION'] .= '<a href="'.U('admin/Content/editTopic', array('topic_id' => $v['topic_id'], 'tabHash' => 'editTopic')).'">编辑</a>';
             //$listData['data'][$k]['DOACTION'] .= '<a href="javascript:void(0)" onclick="admin.deleteUser(\''.$v['uid'].'\')">'.L('PUBLIC_STREAM_DELETE').'</a>';
         }
