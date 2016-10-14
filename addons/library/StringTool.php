@@ -1,17 +1,6 @@
 <?php
 
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK IT ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2009 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: liu21st <liu21st@gmail.com>
-// +----------------------------------------------------------------------
-// $Id$
-
-class String
+class StringTool
 {
     /**
       +----------------------------------------------------------
@@ -24,15 +13,16 @@ class String
      public static function uuid()
      {
          $charid = md5(uniqid(mt_rand(), true));
-         $hyphen = chr(45); // "-"
-        $uuid = chr(123)// "{"
-.substr($charid, 0, 8).$hyphen
-               .substr($charid, 8, 4).$hyphen
-               .substr($charid, 12, 4).$hyphen
-               .substr($charid, 16, 4).$hyphen
-               .substr($charid, 20, 12)
-               .chr(125); // "}"
-        return $uuid;
+         $hyphen = chr(45);
+         $uuid = chr(123)
+            .substr($charid, 0, 8).$hyphen
+            .substr($charid, 8, 4).$hyphen
+            .substr($charid, 12, 4).$hyphen
+            .substr($charid, 16, 4).$hyphen
+            .substr($charid, 20, 12)
+            .chr(125);
+
+         return $uuid;
      }
 
     /**
@@ -243,13 +233,13 @@ class String
                 $char = substr($format, $i, 1);
                 switch ($char) {
                     case '*': //字母和数字混合
-                        $strtemp .= String::rand_string(1);
+                        $strtemp .= self::rand_string(1);
                         break;
                     case '#'://数字
-                        $strtemp .= String::rand_string(1, 1);
+                        $strtemp .= self::rand_string(1, 1);
                         break;
                     case '$'://大写字母
-                        $strtemp .= String::rand_string(1, 2);
+                        $strtemp .= self::rand_string(1, 2);
                         break;
                     default://其它格式均不转换
                         $strtemp .= $char;

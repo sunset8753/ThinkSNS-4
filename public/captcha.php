@@ -73,7 +73,6 @@ class Image
      */
     public static function buildImageVerify($length = 4, $mode = 1, $type = 'png', $width = 48, $height = 22, $verifyName = 'verify')
     {
-        //tsload(ADDON_PATH.'/liberary/String.class.php');
         $randval = StringTool::rand_string($length, $mode);
         //转换成大写字母.
         $_SESSION[$verifyName] = md5(strtoupper($randval));
@@ -116,7 +115,6 @@ class Image
     // 中文验证码
     public static function GBVerify($length = 4, $type = 'png', $width = 120, $height = 30, $fontface = 'simhei.ttf', $verifyName = 'verify')
     {
-        //tsload(ADDON_PATH.'/liberary/String.class.php');
         $code = StringTool::rand_string($length, 4);
         $width = ($length * 45) > $width ? $length * 45 : $width;
         $_SESSION[$verifyName] = md5($code);
