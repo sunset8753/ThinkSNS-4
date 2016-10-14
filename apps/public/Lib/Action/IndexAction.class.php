@@ -381,8 +381,6 @@ class IndexAction extends Action
      */
     public function verify()
     {
-        tsload(ADDON_PATH.'/library/Image.class.php');
-        tsload(ADDON_PATH.'/library/String.class.php');
         Image::buildImageVerify();
     }
 
