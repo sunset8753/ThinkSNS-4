@@ -120,7 +120,8 @@ class DingApi extends Api
         $user->search_key = sprintf('%s %s', $data->name, Pinyin::getPinyin($data->name));
 
         $user->save();
-
+        $dep = implode(',', $data->department);
+        model('Department')->setDepartMentById($user->uid, $dep);
         if (!$user->uid) {
             return array(
                 'status' => 0,

@@ -77,7 +77,7 @@ class WeiboApi extends Api
         $tablePrefix = C('DB_PREFIX');
         $max_id = $this->max_id ? intval($this->max_id) : 0;
         $count = $this->count ? intval($this->count) : 20;
-        $where = 'a.is_del=0 and a.is_audit=1';
+        $where = 'a.is_del=0 and a.is_audit=1 and is_recommend=1';
         // 动态类型
         $type = $this->data ['type'];
         if (in_array($type, array(
