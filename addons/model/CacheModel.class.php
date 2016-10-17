@@ -2,11 +2,11 @@
 /**
  * 缓存模型 - 业务逻辑模型
  * @example
- * setType($type)						主动设置缓存类型
- * set($key, $value, $expire = null)	设置缓存key=>value，expire表示有效时间，null表示永久
- * get($key, $mutex = false)			获取缓存数据，支持mutex模式
- * getList($prefix, $key)				批量获取指定前缀下的多个key值的缓存
- * rm($key)								删除缓存
+ * setType($type)                       主动设置缓存类型
+ * set($key, $value, $expire = null)    设置缓存key=>value，expire表示有效时间，null表示永久
+ * get($key, $mutex = false)            获取缓存数据，支持mutex模式
+ * getList($prefix, $key)               批量获取指定前缀下的多个key值的缓存
+ * rm($key)                             删除缓存
  * @author jason <yangjs17@yeah.net>
  * @version TS3.0
  */
@@ -14,7 +14,7 @@
 tsload(CORE_LIB_PATH.'/Cache.class.php');
 class CacheModel
 {
-    //public static $_cacheHash = array();	// 缓存的静态变量
+    //public static $_cacheHash = array();  // 缓存的静态变量
     protected $handler;                        // 操作句柄
     protected $type = 'FILE';                // 缓存类型，默认为文件缓存
 
@@ -80,7 +80,7 @@ class CacheModel
     {
         $key = C('DATA_CACHE_PREFIX').$_key;
         // 静态缓存
-/*		if(isset(self::$_cacheHash[$key])){
+/*      if(isset(self::$_cacheHash[$key])){
             return self::$_cacheHash[$key];
         }*/
         $sc = static_cache('cache_'.$key);
@@ -154,7 +154,11 @@ class CacheModel
 
     /**
      * 缓存写入次数
+<<<<<<< HEAD
      * @return 获取缓存写??次数
+=======
+     * @return 获取缓存写入次数
+>>>>>>> master
      */
     public function W()
     {
