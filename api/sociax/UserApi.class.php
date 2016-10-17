@@ -129,18 +129,19 @@ class UserApi extends Api
             );
         }
         // $userInfo['can_'] = CheckPermission('core_normal','feed_del');
-        $user_info ['is_admin'] = CheckPermission('core_admin', 'feed_del') ? '1' : '0';
-        $user_info ['uid'] = $userInfo['uid'];
-        $user_info ['uname'] = $userInfo['uname'];
-        $user_info ['sex'] = $userInfo['sex'] == 1 ? '男' : '女';
-        $user_info ['intro'] = $userInfo['intro'] ? formatEmoji(false, $userInfo['intro']) : '';
-        $user_info ['location'] = $userInfo['location'] ? $userInfo['location'] : '';
-        $user_info ['avatar'] = $userInfo['avatar']['avatar_big'];
-        $user_info ['experience'] = t($userInfo['user_credit']['credit']['experience']['value']);
-        $user_info ['charm'] = t($userInfo['user_credit']['credit']['charm']['value']);
-        $user_info ['weibo_count'] = t(intval($userInfo['user_data']['weibo_count']));
-        $user_info ['follower_count'] = t(intval($userInfo['user_data']['follower_count']));
-        $user_info ['following_count'] = t(intval($userInfo['user_data']['following_count']));
+        $user_info['is_admin'] = CheckPermission('core_admin', 'feed_del') ? '1' : '0';
+        $user_info['uid'] = $userInfo['uid'];
+        $user_info['is_first_login'] = $userInfo['last_login_time'] ? false : true;
+        $user_info['uname'] = $userInfo['uname'];
+        $user_info['sex'] = $userInfo['sex'] == 1 ? '男' : '女';
+        $user_info['intro'] = $userInfo['intro'] ? formatEmoji(false, $userInfo['intro']) : '';
+        $user_info['location'] = $userInfo['location'] ? $userInfo['location'] : '';
+        $user_info['avatar'] = $userInfo['avatar']['avatar_big'];
+        $user_info['experience'] = t($userInfo['user_credit']['credit']['experience']['value']);
+        $user_info['charm'] = t($userInfo['user_credit']['credit']['charm']['value']);
+        $user_info['weibo_count'] = t(intval($userInfo['user_data']['weibo_count']));
+        $user_info['follower_count'] = t(intval($userInfo['user_data']['follower_count']));
+        $user_info['following_count'] = t(intval($userInfo['user_data']['following_count']));
         $follower = model('Follow')->where('fid='.$user_info['uid'])->order('follow_id DESC')->field('uid')->limit($num)->findAll();
         $following = model('Follow')->where('uid='.$user_info['uid'])->order('follow_id DESC')->field('fid')->limit($num)->findAll();
         $follower_arr = $following_arr = array();
@@ -253,7 +254,7 @@ class UserApi extends Api
     {
         $user_info = model('Cache')->get('user_info_api_'.$uid);
         if (!$user_info) {
-            $user_info = model('User')->where('uid='.$uid)->field('uid,uname,sex,location,province,city,area,intro,avatar,department_id')->find();
+            $user_info = model('User')->where('uid='.$uid)->field('uid,uname,sex,location,province,city,area,intro,avatar,department_id,ctime,last_login_time')->find();
             // 头像
             $avatar = model('Avatar')->init($uid)->getUserAvatar();
             // $user_info ['avatar'] ['avatar_middle'] = $avatar ["avatar_big"];

@@ -417,6 +417,23 @@ class DepartmentModel extends Model
     }
 
     /**
+     * 设置用户部门信息.
+     *
+     * @author zhangwei
+     * @date   2016-10-17
+     * @param  int    $uid    用户uid
+     * @param  string     $department_id 部门字符串(1,2,3)
+     */
+    public function setDepartMentById($uid, $department_id)
+    {
+        if ($department_id && $uid) {
+            $dep = explode(',', $department_id);
+            foreach ($dep as $key => $value) {
+                $this->updateUserDepartById($uid, $value);
+            }
+        }
+    }
+    /**
      * 定时任务同步钉钉部门信息.
      *
      * @author zhangwei

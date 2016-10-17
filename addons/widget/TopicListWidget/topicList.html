@@ -5,7 +5,7 @@
         <ul>
         	<volist name="topic_list" id="vo">
         		<li>
-        			<p><a href="{:U('public/Topic/index',array('k'=>urlencode($vo['topic_name'])))}">{$vo['topic_name']}</a>（{$vo['count']}）</p>
+        			<p><a href="{:U('public/Topic/index',array('k'=>urlencode($vo['topic_name'])))}">#{$vo['topic_name']}</a>（{$vo['count']}）</p>
         		</li>
         	</volist>
         </ul>
@@ -17,6 +17,6 @@
 	var obj = $(this).parent().parent().parent().find('ul');
 	$.post(url,{id:1},function(html){
 		obj.html(html);
-	});	
+	});
 });*/
 </script>

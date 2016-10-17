@@ -38,12 +38,15 @@ class DingApi extends Api
         $userInfo = dingtalk_get_user_info(self::$userid); //获取授权用户信息
         $uInfo = UserModel::where('userid', self::$userid)->first();
         if ($uInfo) {
+            $dep = implode(',', $userInfo->department);
             $uInfo->phone = $userInfo->mobile;
             $uInfo->avatar = $userInfo->avatar;
             $uInfo->email = $userInfo->email;
             $uInfo->intro = $userInfo->remark;
-            $uInfo->department_id = implode(',', $userInfo->department);
+            $uInfo->last_login_time = time();
+            $uInfo->department_id = $dep;
             $uInfo->save();
+            model('Department')->setDepartMentById($uInfo->uid, $dep);
             $avatar = new \AvatarModel($uInfo->uid);
             $avatar->saveRemoteAvatar($userInfo->avatar, $uInfo->uid);
             if ($log = Login::where('uid', $uInfo->uid)->where('type', 'location')->first()) {

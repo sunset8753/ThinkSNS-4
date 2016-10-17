@@ -3202,3 +3202,4 @@ function getDepartmentById($department_id)
         return $data;
     }
 }
+
