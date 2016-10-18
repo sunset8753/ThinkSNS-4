@@ -9,7 +9,7 @@
         <include file="_tabs" />
       </div>
       <style type="text/css">
-      .form-row a{color:#0096e6}
+      .form-row a{color:#6cbb52}
       </style>
       <div id="col7" class="main-right">
         <div class="extend minh person-set">
@@ -30,7 +30,7 @@
                     </volist>
                     </div>
                   </dd>
-                  
+
                   <dd id="vCate" style="<php>if(empty($options[$checkedUGID])){echo 'display:none;';}</php>">
                     <div class="form-tt">认证分类：</div>
                     <div class="form-row">
@@ -41,7 +41,7 @@
                   <dd style="<php>if($checkedUGID != 6){ </php>display:none;<php>}</php>" id="company2">
                     <div class="form-tt" id="company22"><font color="red"> * </font>机构名称：</div>
                     <div class="form-row"><input name="company" class="text" id="company" value="{$verifyInfo['company']}"/></div>
-                  </dd>                
+                  </dd>
                   <dd>
                     <div class="form-tt" id="realname2"><font color="red"> * </font><php>if($checkedUGID == 6){</php>负责人姓名：<php>}else{</php>真实姓名：<php>}</php></div>
                     <div class="form-row"><input name="realname" class="text" id="realname" <php>if($verifyInfo['verified'] !== ""){</php>value="{$verifyInfo['realname']}"<php>}</php> /></div>
@@ -142,10 +142,10 @@
             $('#company2').css('display','none');
             $('#realname2').html('<font color="red"> * </font>真实姓名：');
             $('#idcard2').html('<font color="red"> * </font>身份证号码：');
-            $('#phone2').html('<font color="red"> * </font>联系方式：');			
+            $('#phone2').html('<font color="red"> * </font>联系方式：');
 		}
         $('#vtype').val(user_group_id);
-		
+
 		var options = typeof opts[user_group_id] != 'string' ? '' : opts[user_group_id];
 		if(options == '' || !options){
 		  $("#vCate").hide();
@@ -154,7 +154,7 @@
 		}
 		$("#verifiedCategory").html(options);
     };
-    
+
     var delverify = function(){
         if(confirm('确定要注销认证吗？')){
             $.post(U('public/Account/delverify'),{},function(txt){

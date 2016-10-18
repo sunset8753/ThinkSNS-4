@@ -1,0 +1,30 @@
+{
+    "name": "medz/thinksns-app-webapp",
+    "type": "thinksns-app",
+    "license": "private",
+    "authors": [
+        {
+            "name": "Seven Du",
+            "email": "lovevipdsw@outlook.com",
+            "homepage": "http://medz.cn",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.12",
+        "medz/thinksns-installer-plugin": "^1.0",
+        "medz/emoji-format": "^1.0",
+        "symfony/http-foundation": "~2.8",
+        "paragonie/random_compat": "^2.0",
+        "nategood/httpful": "^0.2.20"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\H5\\": "src/",
+            "App\\H5\\Controller\\": "src/Controllers/"
+        }
+    },
+    "extra": {
+        "install-name": "h5"
+    }
+}

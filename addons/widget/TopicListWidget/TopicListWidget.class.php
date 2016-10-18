@@ -29,7 +29,7 @@ class TopicListWidget extends Widget
                 model('Cache')->set('feed_topic_recommend', $list, 86400);
             }
             $var ['topic_list'] = $list;
-            $var ['title'] = '推荐话题';
+            $var ['title'] = '推荐标签';
         }
         // if($data['type']==2){
         // $var['topic_list'] = model('FeedTopic')->where('essence=1')->limit($data['limit'])->findAll();

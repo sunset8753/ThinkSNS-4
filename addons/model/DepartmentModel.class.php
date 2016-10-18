@@ -268,14 +268,14 @@ class DepartmentModel extends Model
         if (empty($treeName) && empty($departmentIds)) {
             return false;
         }
-        $sql = "DELETE FROM {$this->tablePrefix}user_department 
+        $sql = "DELETE FROM {$this->tablePrefix}user_department
 				WHERE uid IN (
 						SELECT uid FROM {$this->tablePrefix}user_profile WHERE field_id ='".self::FIELD_ID."' AND field_data = '{$treeName}')";
 
         $this->query($sql);
 
         foreach ($departmentIds as $id) {
-            $sql = "INSERT INTO {$this->tablePrefix}user_department 
+            $sql = "INSERT INTO {$this->tablePrefix}user_department
 				SELECT uid,{$id} AS department_id FROM {$this->tablePrefix}user_profile WHERE field_id ='".self::FIELD_ID."' AND field_data = '{$treeName}' ";
 
             $this->query($sql);
@@ -414,5 +414,57 @@ class DepartmentModel extends Model
         $sql = "INSERT INTO {$this->tablePrefix}user_department SELECT uid,{$departId} AS department_id FROM {$this->tablePrefix}user";
         $this->query($sql);
         echo $sql;
+    }
+
+    /**
+     * 设置用户部门信息.
+     *
+     * @author zhangwei
+     * @date   2016-10-17
+     * @param int    $uid           用户uid
+     * @param string $department_id 部门字符串(1,2,3)
+     */
+    public function setDepartMentById($uid, $department_id)
+    {
+        if ($department_id && $uid) {
+            $dep = explode(',', $department_id);
+            foreach ($dep as $key => $value) {
+                $this->updateUserDepartById($uid, $value);
+            }
+        }
+    }
+    /**
+     * 定时任务同步钉钉部门信息.
+     *
+     * @author zhangwei
+     * @date   2016-10-11
+     *
+     */
+    public function synchronizeDepart()
+    {
+        $list = dingtalk_get_dept_list();
+        if ($list->department) {
+            foreach ($list->department as $key => $value) {
+                $data[] = array(
+                    'department_id' => $value->id,
+                    'title' => $value->name,
+                    'parent_dept_id' => $value->parentid ? $value->parentid : 0,
+                );
+            }
+
+            $department = D('department')->field('department_id')->select();
+            $department = getSubByKey($department, 'department_id');
+            foreach ($data as $k => $v) {
+                if (!in_array($v['department_id'], $department)) {
+                    $diff = array(
+                        'department_id' => $v['department_id'],
+                        'title' => $v['title'],
+                        'parent_dept_id' => $v['parent_dept_id'],
+                        'ctime' => time(),
+                    );
+                    D('department')->add($diff);
+                }
+            }
+        }
     }
 }

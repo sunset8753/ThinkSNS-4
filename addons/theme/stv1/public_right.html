@@ -1,5 +1,5 @@
 <div id="col3" class="st-index-right">
-	
+
 	<!-- 个人信息 -->
 	<session name="mid">
         <div class="right-wrap">
@@ -15,7 +15,13 @@
     <div class="right-wrap">
     {:W('TopicList',array('type'=>1, 'limit'=>5))}<!--推荐话题-->
     </div>
-	<!-- 插件位 -->
+    <div class="right-wrap">
+    {:W('RelatedDaren', array('title'=>'活跃用户', 'max'=>3, 'limit'=>3))}
+    </div>
+    <div class="right-wrap">
+        {:W('RelatedArticle',array('title'=>'推荐文章', 'isIndex'=>1))}
+    </div>
+
     <!-- 首页右下广告位 -->
     <div class="right-wrap">
     <fieldset class="inter-line" style="padding-bottom:20px;"><legend class="inter-txt">推荐</legend></fieldset>

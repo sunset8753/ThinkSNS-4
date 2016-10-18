@@ -3,7 +3,7 @@
 <?php if(CheckPermission('core_normal','feed_post')): ?>
 
 <div class="send_weibo diy-send-weibo" model-node="send_weibo" id="send_weibo">
-  <div id="send_box"> 
+  <div id="send_box">
     <!--分享-->
     <div type-node="weibo">
       <div class="input">
@@ -46,7 +46,12 @@
             </eq>
             <eq name="actions.topic" value="true">
               <php>if(in_array('topic',$weibo_type)):</php>
-              <a event-node="insert_topic" class="topic-block" href="javascript:;" title="话题"> <i class="topic"></i>话题 </a>
+              <a event-node="insert_topic" class="topic-block" href="javascript:;" title="标签"> <i class="topic"></i>标签 </a>
+              <php>endif;</php>
+            </eq>
+            <eq name="actions.at" value="true">
+              <php>if(in_array('at',$weibo_type)):</php>
+              <a event-node="insert_at" class="at-block" href="javascript:;" title="@某人"> <i class="at"></i>@某人</a>
               <php>endif;</php>
             </eq>
             <eq name="actions.file" value="true">
@@ -56,11 +61,6 @@
                 <input event-node="insert_file" type="file" name="attach" inputname='attach' onchange="core.plugInit('uploadFile',this,'','all')" urlquery="attach_type=feed_file&upload_type=file" hidefocus="true">
               </form>
               </a>
-              <php>endif;</php>
-            </eq>
-            <eq name="actions.at" value="true">
-              <php>if(in_array('at',$weibo_type)):</php>
-              <a event-node="insert_at" class="at-block" href="javascript:;" title="@某人"> <i class="at"></i>@某人</a>
               <php>endif;</php>
             </eq>
             {:Addons::hook('home_index_middle_publish_type',array('position'=>'index'))} </div>
@@ -106,10 +106,10 @@
 </div>
 <script type="text/javascript">
 $(function() {
-	setTimeout(function() {
-		core.weibo.checkNums($('#message_inputor').get(0));
-		$('#message_inputor').focus();
-	}, 500);
+    setTimeout(function() {
+        core.weibo.checkNums($('#message_inputor').get(0));
+        $('#message_inputor').focus();
+    }, 500);
 });
 </script>
 <?php endif; ?>
@@ -120,53 +120,53 @@ var initHtml = '{$initHtml}';
 core.loadFile(THEME_URL+'/js/plugins/core.at.js');
 
 $(function (){
-	$('#change_weibo_tab').click(function() {
-		$('div[type="weibotab"]').hide();
-	});
-	if ($('#inputor{$time}').get(0) != undefined) {
-		setTimeout(function() {
-			if ( initHtml ){
-				$('#inputor{$time}').focus();
-				$('#inputor{$time}').html(initHtml);
-			}
-		} , 300)
-	}
+    $('#change_weibo_tab').click(function() {
+        $('div[type="weibotab"]').hide();
+    });
+    if ($('#inputor{$time}').get(0) != undefined) {
+        setTimeout(function() {
+            if ( initHtml ){
+                $('#inputor{$time}').focus();
+                $('#inputor{$time}').html(initHtml);
+            }
+        } , 300)
+    }
 });
 
 setTimeout(function() {
-	atWho($('#inputor{$time}'));
-	atWho($('#message_inputor'));
+    atWho($('#inputor{$time}'));
+    atWho($('#message_inputor'));
 }, 1000);
 
 $(function () {
-	var whether_to_install_flash = function() {
-		var i_flash = true;
-		if ($.browser.msie) {
-			try {
-				var swf = new ActiveXObject('ShockwaveFlash.ShockwaveFlash');
-			} catch(e) {
-				i_flash = false;
-			}
-		} else {
-			try {
-				var swf = navigator.plugins['Shockwave Flash'];
-				if (typeof swf === 'undefined') {
-					i_flash = false;
-				}
-			} catch(e) {
-				i_flash = false;
-			}
-		}
+    var whether_to_install_flash = function() {
+        var i_flash = true;
+        if ($.browser.msie) {
+            try {
+                var swf = new ActiveXObject('ShockwaveFlash.ShockwaveFlash');
+            } catch(e) {
+                i_flash = false;
+            }
+        } else {
+            try {
+                var swf = navigator.plugins['Shockwave Flash'];
+                if (typeof swf === 'undefined') {
+                    i_flash = false;
+                }
+            } catch(e) {
+                i_flash = false;
+            }
+        }
 
-		return i_flash;
-	}
+        return i_flash;
+    }
 
-	var i_flash = whether_to_install_flash();
-	if (i_flash) {
-		$('a[image-type="noflash"]').remove();
-	} else {
-		$('a[image-type="flash"]').remove();
-		$('a[image-type="noflash"]').show();
-	}
+    var i_flash = whether_to_install_flash();
+    if (i_flash) {
+        $('a[image-type="noflash"]').remove();
+    } else {
+        $('a[image-type="flash"]').remove();
+        $('a[image-type="noflash"]').show();
+    }
 });
 </script>

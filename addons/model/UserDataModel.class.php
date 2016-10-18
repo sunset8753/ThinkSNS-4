@@ -40,6 +40,8 @@ class UserDataModel extends Model
      * follower_count：粉丝数
      * unread_comment：评论未读数
      * unread_atme：@Me未读数
+     * information_digg：文章点赞
+     * information_comment：文章评论
      * @param  string $key  Key值
      * @param  int    $nums 更新的数目
      * @param  bool   $add  是否添加数目，默认为true

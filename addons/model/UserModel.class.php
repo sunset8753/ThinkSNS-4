@@ -4,8 +4,10 @@ use Ts\Models;
 use Medz\Component\EmojiFormat;
 
 /**
- * 用户模型 - 数据对象模型
+ * 用户模型 - 数据对象模型.
+ *
  * @author jason <yangjs17@yeah.net>
+ *
  * @version TS3.0
  */
 class UserModel extends Model
@@ -47,15 +49,20 @@ class UserModel extends Model
             31 => 'openid',
             32 => 'input_city',
             33 => 'is_fixed',
+            34 => 'avatar',
+            35 => 'userid',
+            36 => 'department_id',
             '_autoinc' => true,
             '_pk' => 'uid',
     );
 
     /**
-     * 检查用户是否存在
+     * 检查用户是否存在.
      *
-     * @param  strint $user 用户标识 uid|phone|uname|email
+     * @param strint $user 用户标识 uid|phone|uname|email
+     *
      * @return array
+     *
      * @author Medz Seven <lovevipdsw@outlook.com>
      **/
     public function hasUser($user, $isUid = false)
@@ -78,12 +85,13 @@ class UserModel extends Model
     }
 
     /**
-     * 获取用户列表，后台可以根据用户组查询
+     * 获取用户列表，后台可以根据用户组查询.
      *
-     * @param  int   $limit
-     *                      结果集数目，默认为20
-     * @param  array $map
-     *                      查询条件
+     * @param int   $limit
+     *                     结果集数目，默认为20
+     * @param array $map
+     *                     查询条件
+     *
      * @return array 用户列表信息
      */
     public function getUserList($limit = 20, array $map = array(), $order = '`uid` DESC')
@@ -103,11 +111,11 @@ class UserModel extends Model
                     '%'.t($_POST ['email']).'%',
             );
             isset($_POST ['is_audit']) && $map ['is_audit'] = intval($_POST ['is_audit']);
-            ! empty($_POST ['sex']) && $map ['sex'] = intval($_POST ['sex']);
+            !empty($_POST ['sex']) && $map ['sex'] = intval($_POST ['sex']);
 
             // 注册时间判断，ctime为数组格式
-            if (! empty($_POST ['ctime'])) {
-                if (! empty($_POST ['ctime'] [0]) && ! empty($_POST ['ctime'] [1])) {
+            if (!empty($_POST ['ctime'])) {
+                if (!empty($_POST ['ctime'] [0]) && !empty($_POST ['ctime'] [1])) {
                     // 时间区间条件
                     $map ['ctime'] = array(
                             'BETWEEN',
@@ -116,13 +124,13 @@ class UserModel extends Model
                                     strtotime($_POST ['ctime'] [1]),
                             ),
                     );
-                } elseif (! empty($_POST ['ctime'] [0])) {
+                } elseif (!empty($_POST ['ctime'] [0])) {
                     // 时间大于条件
                     $map ['ctime'] = array(
                             'GT',
                             strtotime($_POST ['ctime'] [0]),
                     );
-                } elseif (! empty($_POST ['ctime'] [1])) {
+                } elseif (!empty($_POST ['ctime'] [1])) {
                     // 时间小于条件
                     $map ['ctime'] = array(
                             'LT',
@@ -137,8 +145,8 @@ class UserModel extends Model
              */
 
             // 用户组信息过滤
-            if (! $_POST ['uid']) {
-                if (! empty($_POST ['user_group'])) {
+            if (!$_POST ['uid']) {
+                if (!empty($_POST ['user_group'])) {
                     if (is_array($_POST ['user_group'])) {
                         $user_group_id = " user_group_id IN ('".implode("','", $_POST ['user_group'])."') ";
                     } else {
@@ -154,7 +162,7 @@ class UserModel extends Model
                 }
 
                 // 用户标签过滤
-                if (! empty($_POST ['user_category'])) {
+                if (!empty($_POST ['user_category'])) {
                     // $table .= ' LEFT JOIN '.$this->tablePrefix.'user_category_link AS l ON l.uid = u.uid WHERE user_category_id = '.intval($_POST['user_category']);
                     $title = D('user_category')->where('user_category_id='.intval($_POST ['user_category']))->getField('title');
                     $tagId = D('tag')->where('name=\''.t($title).'\'')->getField('tag_id');
@@ -201,17 +209,18 @@ class UserModel extends Model
     }
 
     /**
-     * 获取用户列表信息 - 未分页型
+     * 获取用户列表信息 - 未分页型.
      *
-     * @param  array  $map
-     *                       查询条件
-     * @param  int    $limit
-     *                       结果集数目，默认为20
-     * @param  string $field
-     *                       需要显示的字段，多个字段之间使用“,”分割，默认显示全部
-     * @param  string $order
-     *                       排序条件，默认uid DESC
-     * @return array  用户列表信息
+     * @param array  $map
+     *                      查询条件
+     * @param int    $limit
+     *                      结果集数目，默认为20
+     * @param string $field
+     *                      需要显示的字段，多个字段之间使用“,”分割，默认显示全部
+     * @param string $order
+     *                      排序条件，默认uid DESC
+     *
+     * @return array 用户列表信息
      */
     public function getList(array $map = array(), $limit = 20, $field = '*', $order = '`uid` DESC')
     {
@@ -223,17 +232,18 @@ class UserModel extends Model
     }
 
     /**
-     * 获取用户列表信息 - 分页型
+     * 获取用户列表信息 - 分页型.
      *
-     * @param  array  $map
-     *                       查询条件
-     * @param  int    $limit
-     *                       结果集数目，默认为20
-     * @param  string $field
-     *                       需要显示的字段，多个字段之间使用“,”分割，默认显示全部
-     * @param  string $order
-     *                       排序条件，默认uid DESC
-     * @return array  用户列表信息
+     * @param array  $map
+     *                      查询条件
+     * @param int    $limit
+     *                      结果集数目，默认为20
+     * @param string $field
+     *                      需要显示的字段，多个字段之间使用“,”分割，默认显示全部
+     * @param string $order
+     *                      排序条件，默认uid DESC
+     *
+     * @return array 用户列表信息
      */
     public function getPage(array $map = array(), $limit = 20, $field = '*', $order = '`uid` DESC')
     {
@@ -245,10 +255,11 @@ class UserModel extends Model
     }
 
     /**
-     * 获取指定用户的相关信息
+     * 获取指定用户的相关信息.
      *
-     * @param  int   $uid
-     *                    用户UID
+     * @param int $uid
+     *                 用户UID
+     *
      * @return array 指定用户的相关信息
      */
     public function getUserInfo($uid)
@@ -270,10 +281,11 @@ class UserModel extends Model
     }
 
     /**
-     * 为@搜索提供用户信息
+     * 为@搜索提供用户信息.
      *
-     * @param  int   $uid
-     *                    用户UID
+     * @param int $uid
+     *                 用户UID
+     *
      * @return array 指定用户的相关信息
      */
     public function getUserInfoForSearch($uid, $field = '*')
@@ -295,11 +307,12 @@ class UserModel extends Model
     }
 
     /**
-     * 通过用户昵称查询用户相关信息
+     * 通过用户昵称查询用户相关信息.
      *
-     * @param  string $uname
-     *                       昵称信息
-     * @return array  指定昵称用户的相关信息
+     * @param string $uname
+     *                      昵称信息
+     *
+     * @return array 指定昵称用户的相关信息
      */
     public function getUserInfoByName($userName, array $map = array())
     {
@@ -322,11 +335,12 @@ class UserModel extends Model
     }
 
     /**
-     * 通过邮箱查询用户相关信息
+     * 通过邮箱查询用户相关信息.
      *
-     * @param  string $email
-     *                       用户邮箱
-     * @return array  指定昵称用户的相关信息
+     * @param string $email
+     *                      用户邮箱
+     *
+     * @return array 指定昵称用户的相关信息
      */
     public function getUserInfoByEmail($email, array $map)
     {
@@ -349,11 +363,12 @@ class UserModel extends Model
     }
 
     /**
-     * 通过个性域名搜索用户
+     * 通过个性域名搜索用户.
      *
-     * @param  string $domain
-     *                        用户个性域名
-     * @return array  指定昵称用户的相关信息
+     * @param string $domain
+     *                       用户个性域名
+     *
+     * @return array 指定昵称用户的相关信息
      */
     public function getUserInfoByDomain($domain, array $map)
     {
@@ -377,10 +392,11 @@ class UserModel extends Model
     }
 
     /**
-     * 根据UID批量获取多个用户的相关信息
+     * 根据UID批量获取多个用户的相关信息.
      *
-     * @param  array $uids
-     *                     用户UID数组
+     * @param array $uids
+     *                    用户UID数组
+     *
      * @return array 指定用户的相关信息
      */
     public function getUserInfoByUids($uids)
@@ -406,13 +422,14 @@ class UserModel extends Model
     }
 
     /**
-     * 获取指定用户的档案信息
+     * 获取指定用户的档案信息.
      *
-     * @param  int    $uid
-     *                          用户UID
-     * @param  string $category
-     *                          档案分类
-     * @return array  指定用户的档案信息
+     * @param int    $uid
+     *                         用户UID
+     * @param string $category
+     *                         档案分类
+     *
+     * @return array 指定用户的档案信息
      */
     public function getUserProfile($uid, $category = '*')
     {
@@ -454,14 +471,14 @@ class UserModel extends Model
     }
 
     /**
-     * 获取用户档案配置信息
+     * 获取用户档案配置信息.
      *
      * @return array 用户档案配置信息
      */
     public function getUserProfileSetting()
     {
         $profileSetting = D('UserProfileSetting')->findAll();
-        if (! $profileSetting) {
+        if (!$profileSetting) {
             $this->error = L('PUBLIC_GET_USERPROFILE_FAIL'); // 获取用户档案失败
             return false;
         }
@@ -470,11 +487,12 @@ class UserModel extends Model
     }
 
     /**
-     * 添加用户
+     * 添加用户.
      *
-     * @param  array $user
-     *                     新用户的相关信息|新用户对象
-     * @return bool  是否添加成功
+     * @param array $user
+     *                    新用户的相关信息|新用户对象
+     *
+     * @return bool 是否添加成功
      */
     public function addUser(array $user)
     {
@@ -531,12 +549,13 @@ class UserModel extends Model
     }
 
     /**
-     * 密码加密处理
+     * 密码加密处理.
      *
-     * @param  string $password
-     *                          密码
-     * @param  string $salt
-     *                          密码附加参数，默认为11111
+     * @param string $password
+     *                         密码
+     * @param string $salt
+     *                         密码附加参数，默认为11111
+     *
      * @return string 加密后的密码
      */
     public function encryptPassword($password, $salt = '11111')
@@ -545,11 +564,12 @@ class UserModel extends Model
     }
 
     /**
-     * 禁用指定用户账号操作
+     * 禁用指定用户账号操作.
      *
-     * @param  array $ids
-     *                    禁用的用户ID数组
-     * @return bool  是否禁用成功
+     * @param array $ids
+     *                   禁用的用户ID数组
+     *
+     * @return bool 是否禁用成功
      */
     public function deleteUsers($ids)
     {
@@ -563,7 +583,7 @@ class UserModel extends Model
         $save ['is_del'] = 1;
         $result = $this->where($map)->save($save);
         $this->cleanCache($uid_array);
-        if (! $result) {
+        if (!$result) {
             $this->error = L('PUBLIC_DISABLE_ACCOUNT_FAIL'); // 禁用帐号失败
             return false;
         } else {
@@ -574,11 +594,12 @@ class UserModel extends Model
         }
     }
     /**
-     * 彻底删除指定用户账号操作
+     * 彻底删除指定用户账号操作.
      *
-     * @param  array $ids
-     *                    彻底删除的用户ID数组
-     * @return bool  是否彻底删除成功
+     * @param array $ids
+     *                   彻底删除的用户ID数组
+     *
+     * @return bool 是否彻底删除成功
      */
     public function trueDeleteUsers($ids)
     {
@@ -591,7 +612,7 @@ class UserModel extends Model
         );
         $result = $this->where($map)->delete();
         $this->cleanCache($uid_array);
-        if (! $result) {
+        if (!$result) {
             $this->error = L('PUBLIC_REMOVE_COMPLETELY_FAIL'); // 彻底删除帐号失败
             return false;
         } else {
@@ -604,11 +625,12 @@ class UserModel extends Model
     }
 
     /**
-     * 恢复指定用户账号操作
+     * 恢复指定用户账号操作.
      *
-     * @param  array $ids
-     *                    恢复的用户UID数组
-     * @return bool  是否恢复成功
+     * @param array $ids
+     *                   恢复的用户UID数组
+     *
+     * @return bool 是否恢复成功
      */
     public function rebackUsers($ids)
     {
@@ -622,7 +644,7 @@ class UserModel extends Model
         $save ['is_del'] = 0;
         $result = $this->where($map)->save($save);
         $this->cleanCache($uid_array);
-        if (! $result) {
+        if (!$result) {
             $this->error = L('PUBLIC_RECOVER_ACCOUNT_FAIL'); // 恢复帐号失败
             return false;
         } else {
@@ -636,11 +658,12 @@ class UserModel extends Model
     /**
      * 改变用户的激活状态
      *
-     * @param  array $ids
-     *                     用户UID数组
-     * @param  int   $type
-     *                     用户的激活状态，0表示未激活；1表示激活
-     * @return bool  是否操作成功
+     * @param array $ids
+     *                    用户UID数组
+     * @param int   $type
+     *                    用户的激活状态，0表示未激活；1表示激活
+     *
+     * @return bool 是否操作成功
      */
     public function activeUsers($ids, $type = 1)
     {
@@ -659,7 +682,7 @@ class UserModel extends Model
         $result = $this->where($map)->setField('is_active', $type);
         $this->cleanCache($uid_array);
 
-        if (! $result) {
+        if (!$result) {
             $this->error = L('PUBLIC_ACTIVATE_USER_FAIL'); // 激活用户失败
             return false;
         } else {
@@ -668,11 +691,12 @@ class UserModel extends Model
     }
 
     /**
-     * 删除指定用户的档案信息
+     * 删除指定用户的档案信息.
      *
-     * @param  array $ids
-     *                    用户UID数组
-     * @return bool  是否删除用户档案成功
+     * @param array $ids
+     *                   用户UID数组
+     *
+     * @return bool 是否删除用户档案成功
      */
     public function deleteUserProfile($ids)
     {
@@ -684,7 +708,7 @@ class UserModel extends Model
                 $uid_array,
         );
         $result = D('UserProfileSetting')->where($map)->delete();
-        if (! $result) {
+        if (!$result) {
             return false;
         } else {
             return true;
@@ -692,13 +716,14 @@ class UserModel extends Model
     }
 
     /**
-     * 转移指定用户到指定部门
+     * 转移指定用户到指定部门.
      *
-     * @param  array $uids
-     *                                用户UID数组
-     * @param  int   $user_department
-     *                                部门ID
-     * @return bool  是否转移成功
+     * @param array $uids
+     *                               用户UID数组
+     * @param int   $user_department
+     *                               部门ID
+     *
+     * @return bool 是否转移成功
      */
     public function domoveDepart($uids, $user_department)
     {
@@ -712,18 +737,19 @@ class UserModel extends Model
     }
 
     /**
-     * 清除指定用户UID的缓存
+     * 清除指定用户UID的缓存.
      *
-     * @param  array $uids
-     *                     用户UID数组
-     * @return bool  是否清除缓存成功
+     * @param array $uids
+     *                    用户UID数组
+     *
+     * @return bool 是否清除缓存成功
      */
     public function cleanCache($uids)
     {
         if (empty($uids)) {
             return false;
         }
-        ! is_array($uids) && $uids = explode(',', $uids);
+        !is_array($uids) && $uids = explode(',', $uids);
         foreach ($uids as $uid) {
             model('Cache')->rm('ui_'.$uid);
             static_cache('user_info_'.$uid, false);
@@ -740,18 +766,19 @@ class UserModel extends Model
     }
 
     /**
-     * 获取指定用户所感兴趣人的UID数组
+     * 获取指定用户所感兴趣人的UID数组.
      *
-     * @param  int   $uid
-     *                    指定用户UID
-     * @param  int   $num
-     *                    感兴趣人的个数
+     * @param int $uid
+     *                 指定用户UID
+     * @param int $num
+     *                 感兴趣人的个数
+     *
      * @return array 感兴趣人的UID数组
      */
     public function relatedUser($uid, $num)
     {
         $user_info = $this->getUserInfo($uid);
-        if (! $user_info || $num <= 0) {
+        if (!$user_info || $num <= 0) {
             return false;
         }
 
@@ -764,10 +791,10 @@ class UserModel extends Model
 
         $uids = $this->where($map)->limit($num)->getAsFieldArray('uid');
 
-        if (! $uids || count($uids) < $num) {
+        if (!$uids || count($uids) < $num) {
             $limit = count($uids) + $num + 1;
-            $sql = "SELECT `uid` FROM {$this->tablePrefix}user 
-					WHERE uid >= ((SELECT MAX(uid) FROM {$this->tablePrefix}user) - (SELECT MIN(uid) FROM {$this->tablePrefix}user)) * RAND() + (SELECT MIN(uid) FROM {$this->tablePrefix}user) 
+            $sql = "SELECT `uid` FROM {$this->tablePrefix}user
+					WHERE uid >= ((SELECT MAX(uid) FROM {$this->tablePrefix}user) - (SELECT MIN(uid) FROM {$this->tablePrefix}user)) * RAND() + (SELECT MIN(uid) FROM {$this->tablePrefix}user)
 					AND is_active = 1 LIMIT {$limit}";
             $random_uids = $this->query($sql);
             $random_uids = getSubByKey($random_uids, 'uid');
@@ -784,10 +811,11 @@ class UserModel extends Model
     }
 
     /**
-     * 处理用户UID数据为数组形式
+     * 处理用户UID数据为数组形式.
      *
-     * @param  mix   $ids
-     *                    用户UID
+     * @param mix $ids
+     *                 用户UID
+     *
      * @return array 数组形式的用户UID
      */
     private function _parseIds($ids)
@@ -817,10 +845,11 @@ class UserModel extends Model
     }
 
     /**
-     * 获取ts_user表的数据，带缓存功能
+     * 获取ts_user表的数据，带缓存功能.
      *
-     * @param  array $map
-     *                    查询条件
+     * @param array $map
+     *                   查询条件
+     *
      * @return array 指定用户的相关信息
      */
     public function getUserDataByCache(array $map, $field = '*')
@@ -853,17 +882,18 @@ class UserModel extends Model
         return $user;
     }
     /**
-     * 获取指定用户的相关信息
+     * 获取指定用户的相关信息.
      *
-     * @param  array $map
-     *                    查询条件
+     * @param array $map
+     *                   查询条件
+     *
      * @return array 指定用户的相关信息
      */
     private function _getUserInfo(array $map, $field = '*')
     {
         $user = $this->getUserDataByCache($map, $field);
         unset($user ['password']);
-        if (! $user) {
+        if (!$user) {
             $this->error = L('PUBLIC_GET_INFORMATION_FAIL'); // 获取用户信息失败
             return false;
         } else {
@@ -872,7 +902,7 @@ class UserModel extends Model
             $user ['avatar_url'] = U('public/Attach/avatar', array(
                     'uid' => $user ['uid'],
             ));
-            $user ['space_url'] = ! empty($user ['domain']) ? U('public/Profile/index', array(
+            $user ['space_url'] = !empty($user ['domain']) ? U('public/Profile/index', array(
                     'uid' => $user ['domain'],
             )) : U('public/Profile/index', array(
                     'uid' => $user ['uid'],
@@ -928,17 +958,18 @@ class UserModel extends Model
     }
 
     /**
-     * * API使用 **
+     * * API使用 **.
      */
     /**
-     * 格式化API数据
+     * 格式化API数据.
      *
-     * @param  array $data
-     *                     API数据
-     * @param  int   $uid
-     *                     粉丝用户UID
-     * @param  int   $mid
-     *                     登录用户UID
+     * @param array $data
+     *                    API数据
+     * @param int   $uid
+     *                    粉丝用户UID
+     * @param int   $mid
+     *                    登录用户UID
+     *
      * @return array API输出数据
      */
     public function formatForApi($data, $uid, $mid = '')
@@ -968,26 +999,27 @@ class UserModel extends Model
     }
 
     /**
-     * * 用于搜索引擎 **
+     * * 用于搜索引擎 **.
      */
     /**
-     * 搜索用户
+     * 搜索用户.
      *
-     * @param  string $key
-     *                        关键字
-     * @param  int    $follow
-     *                        关注状态值
-     * @param  int    $limit
-     *                        结果集数目，默认为100
-     * @param  int    $max_id
-     *                        主键最大值
-     * @param  string $type
-     *                        类型
-     * @param  int    $noself
-     *                        搜索结果是否包含登录用户，默认为0
-     * @return array  用户列表数据
+     * @param string $key
+     *                       关键字
+     * @param int    $follow
+     *                       关注状态值
+     * @param int    $limit
+     *                       结果集数目，默认为100
+     * @param int    $max_id
+     *                       主键最大值
+     * @param string $type
+     *                       类型
+     * @param int    $noself
+     *                       搜索结果是否包含登录用户，默认为0
+     *
+     * @return array 用户列表数据
      */
-    public function searchUser($key = '', $follow = 0, $limit = 100, $max_id = '', $type = '', $noself = '0', $page, $atme)
+    public function searchUser($key, $follow, $limit, $max_id, $type, $noself, $page, $atme)
     {
         // 判断类型？
         switch ($type) {
@@ -997,10 +1029,10 @@ class UserModel extends Model
                 // if($atme == 'at') {
                 $where .= ' AND is_active=1 AND is_audit=1 AND is_init=1';
                 // }
-                if (! empty($max_id)) {
+                if (!empty($max_id)) {
                     $where .= ' AND uid < '.intval($max_id);
                 }
-                if (! empty($noself)) {
+                if (!empty($noself)) {
                     $where .= ' AND uid !='.intval($GLOBALS ['ts'] ['mid']);
                 }
                 if ($follow == 1) {
@@ -1049,22 +1081,23 @@ class UserModel extends Model
     }
 
     /**
-     * * 用于W3G搜索引擎 **
+     * * 用于W3G搜索引擎 **.
      */
     /**
-     * 搜索用户
+     * 搜索用户.
      *
-     * @param  string $key
-     *                        关键字
-     * @param  int    $max_id
-     *                        主键最大值
-     * @param  int    $follow
-     *                        关注状态值
-     * @param  int    $limit
-     *                        结果集数目，默认为100
-     * @param  int    $noself
-     *                        搜索结果是否包含登录用户，默认为0
-     * @return array  用户列表数据
+     * @param string $key
+     *                       关键字
+     * @param int    $max_id
+     *                       主键最大值
+     * @param int    $follow
+     *                       关注状态值
+     * @param int    $limit
+     *                       结果集数目，默认为100
+     * @param int    $noself
+     *                       搜索结果是否包含登录用户，默认为0
+     *
+     * @return array 用户列表数据
      */
     public function w3g_searchUser($key = '', $max_id = '', $follow = 0, $limit = 20, $page = 1, $noself = '0')
     {
@@ -1077,7 +1110,7 @@ class UserModel extends Model
         if ($max_id) {
             $where .= ' AND uid < '.intval($max_id);
         }
-        if (! empty($noself)) {
+        if (!empty($noself)) {
             $where .= ' AND uid !='.intval($GLOBALS ['ts'] ['mid']);
         }
         if ($follow == 1) {
@@ -1091,7 +1124,7 @@ class UserModel extends Model
         // if($atme == 'at') {
         $where .= ' AND is_active=1 AND is_audit=1 AND is_init=1';
         // }
-        if (! empty($noself)) {
+        if (!empty($noself)) {
             $where .= ' AND uid !='.intval($GLOBALS ['ts'] ['mid']);
         }
         if ($follow == 1) {
@@ -1110,7 +1143,7 @@ class UserModel extends Model
         return $list;
     }
     /**
-     * 根据标示符(uid或uname或email或domain)获取用户信息
+     * 根据标示符(uid或uname或email或domain)获取用户信息.
      *
      * 首先检查缓存(缓存ID: user_用户uid / user_用户uname), 然后查询数据库(并设置缓存).
      *
@@ -1133,7 +1166,7 @@ class UserModel extends Model
     }
 
     /**
-     * 获取最后错误信息
+     * 获取最后错误信息.
      *
      * @return string 最后错误信息
      */
@@ -1142,11 +1175,12 @@ class UserModel extends Model
         return $this->error;
     }
     /**
-     * 假删除用户分享数据
+     * 假删除用户分享数据.
      *
-     * @param  int  $uid
-     *                   用户UID
-     * @return BOOL
+     * @param int $uid
+     *                 用户UID
+     *
+     * @return bool
      */
     public function deleteUserWeiBoData($uid_array)
     {
@@ -1167,11 +1201,12 @@ class UserModel extends Model
     }
 
     /**
-     * 恢复用户的分享数据
+     * 恢复用户的分享数据.
      *
-     * @param  int  $uid
-     *                   用户UID
-     * @return BOOL
+     * @param int $uid
+     *                 用户UID
+     *
+     * @return bool
      */
     public function rebackUserWeiBoData($uid_array)
     {
@@ -1192,11 +1227,12 @@ class UserModel extends Model
     }
 
     /**
-     * 彻底删除用户的分享数据
+     * 彻底删除用户的分享数据.
      *
-     * @param  int  $uid
-     *                   用户UID
-     * @return BOOL
+     * @param int $uid
+     *                 用户UID
+     *
+     * @return bool
      */
     public function trueDeleteUserCoreData($uid_array)
     {
@@ -1207,7 +1243,7 @@ class UserModel extends Model
 
         // 删除分享
         $feed_id_list = model('Feed')->where($map)->field('feed_id')->findAll();
-        if (! empty($feed_id_list)) {
+        if (!empty($feed_id_list)) {
             $idArr = getSubByKey($feed_id_list, 'feed_id');
             $return = model('Feed')->doEditFeed($idArr, 'deleteFeed', L('PUBLIC_STREAM_DELETE'));
             // 删除收藏
@@ -1255,7 +1291,7 @@ class UserModel extends Model
     }
 
     /**
-     * 删除或者恢复用户应用数据
+     * 删除或者恢复用户应用数据.
      *
      * @param array  $uid_array
      *                          用户UID
@@ -1301,11 +1337,13 @@ class UserModel extends Model
     }
 
     /**
-     * 验证是否可以修改用户的手机号
+     * 验证是否可以修改用户的手机号.
      *
-     * @param  int  $phone  用户手机号码
-     * @param  int  $UserID 排除的用户
+     * @param int $phone  用户手机号码
+     * @param int $UserID 排除的用户
+     *
      * @return bool
+     *
      * @author Medz Seven <lovevipdsw@vip.qq.com>
      **/
     public function isChangePhone($phone, $userID = null)
@@ -1319,11 +1357,13 @@ class UserModel extends Model
     }
 
     /**
-     * 验证这个邮箱是否可以被修改入用户数据
+     * 验证这个邮箱是否可以被修改入用户数据.
      *
-     * @param  string $email  输入的邮箱地址
-     * @param  int    $userID 排除的用户ID
+     * @param string $email  输入的邮箱地址
+     * @param int    $userID 排除的用户ID
+     *
      * @return bool
+     *
      * @author Medz Seven <lovevipdsw@vip.qq.com>
      **/
     public function isChangeEmail($email, $userID = null)
@@ -1337,11 +1377,13 @@ class UserModel extends Model
     }
 
     /**
-     * 验证提交的用户名是否可以用于修改
+     * 验证提交的用户名是否可以用于修改.
      *
-     * @param  string $userName 用于修改的用户名
-     * @param  int    $userID   排除的用户ID
+     * @param string $userName 用于修改的用户名
+     * @param int    $userID   排除的用户ID
+     *
      * @return bool
+     *
      * @author Medz Seven <lovevipdsw@vip.qq.com>
      **/
     public function isChangeUserName($userName, $userID = null)
@@ -1352,5 +1394,12 @@ class UserModel extends Model
         }
 
         return false;
+    }
+
+    public function getUserFields($uid, $field = '*')
+    {
+        $user = $this->where(array('uid' => $uid))->field($field)->find();
+
+        return $user;
     }
 } // END class UserModel

@@ -2531,6 +2531,31 @@ function getUserFace($uid, $size)
     return $userface;
 }
 
+/**
+ * 统一分页
+ * @author zhangwei
+ * @date   2016-09-26
+ * @return string
+ */
+function pg()
+{
+    $page = !empty($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
+    $num = !empty($_REQUEST['num']) ? intval($_REQUEST['num']) : 15;
+    $start = ($page - 1) * $num;
+    $limit = $start.','.$num;
+
+    return $limit;
+}
+
+function getGroup()
+{
+    $uid = $GLOBALS['ts']['mid'];
+    $map['uid'] = $uid;
+    $group = D('user_group_link')->where($map)->find();
+
+    return $group['user_group_id'];
+}
+
 function getUserName($uid)
 {
     $userinfo = model('User')->getUserInfo($uid);
@@ -3150,4 +3175,30 @@ function RemoveXSS($val)
     }
 
     return $val;
+}
+
+/**
+ * 根据部门id获取部门列表
+ *
+ * @author zhangwei
+ * @date   2016-10-10
+ * @param  string $department_id 1,2,3
+ * @return array
+ */
+function getDepartmentById($department_id)
+{
+    if ($department_id) {
+        $dep = explode(',', $department_id);
+        foreach ($dep as $key => $value) {
+            // $dep_item = dingtalk_get_dept_info($value);
+            $dep_item = D('department')->where(array('department_id' => $value))->find();
+            /*$dep_item = array(
+                    'id' => $dep_item->id,
+                    'name' => $dep_item->name,
+                );*/
+            $data[] = $dep_item;
+        }
+
+        return $data;
+    }
 }

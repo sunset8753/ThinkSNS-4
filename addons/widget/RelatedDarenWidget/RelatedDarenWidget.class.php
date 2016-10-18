@@ -63,7 +63,7 @@ class RelatedDarenWidget extends Widget
         $key = '_getRelatedDaren'.$var ['uid'].'_'.$var ['limit'].'_'.date('Ymd');
         $var ['user'] = S($key);
         if ($var ['user'] === false || intval($_REQUEST ['rel']) == 1) {
-            $sql = "select * from 
+            $sql = "select * from
 			(SELECT DISTINCT uid FROM `ts_user_data` WHERE `key`='collect_total_count' ORDER BY `value` DESC LIMIT 100) as t
 			order by rand() limit ".$var ['limit'];
 

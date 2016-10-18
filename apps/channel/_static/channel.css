@@ -79,7 +79,7 @@
 /*频道导航*/
 .app-title{margin-bottom: 25px;}
 .app-title h3{font-size:30px;color:#111;font-family:"微软雅黑";height:36px; vertical-align:top;}
-.app-title a{display: inline-block;margin-top: 18px;color:#0096e6;}
+.app-title a{display: inline-block;margin-top: 18px;color:#6cbb52;}
 #channel_nav {width:100%; background:#fff;font-size:16px; float:left;}
 #channel_nav .app-tab-menu{float:left;font-family:"微软雅黑";height:auto;font-size:16px;}
 #channel_nav .app-tab-menu li{float:left;height:50px;line-height:50px;margin-left: 0px;}
@@ -87,15 +87,15 @@
 #channel_nav .app-tab-menu li a{color:#000000;display:inline-block;padding:15px;}
 #channel_nav .app-tab-menu li:hover,
 #channel_nav .app-tab-menu li:hover a,
-#channel_nav .app-tab-menu li .current{color:#fff; background-color:#0096e6;}
+#channel_nav .app-tab-menu li .current{color:#fff; background-color:#6cbb52;}
 
 
 /*频道banner*/
 .channel-banner{margin-bottom:25px;height:210px;}
 .channel-banner-button{margin-top: 10px;overflow:hidden;zoom:1;height:26px;}
-.channel-button-listen{color:#0096e6;float:right;padding:5px 12px;border:1px solid #0096e6;border-radius:10%;height:14px;line-height:14px;margin-right:10px;text-align: center;}
+.channel-button-listen{color:#6cbb52;float:right;padding:5px 12px;border:1px solid #6cbb52;border-radius:10%;height:14px;line-height:14px;margin-right:10px;text-align: center;}
 .channel-button-listen i.ico-minus{background-position:0px -224px; }
-.channel-button-pub{color:#0096e6;float:right;padding:5px 0px;border:1px solid #0096e6;border-radius:10%;width:60px;height:14px;line-height:14px;margin-right:10px;text-align: center;}
+.channel-button-pub{color:#6cbb52;float:right;padding:5px 0px;border:1px solid #6cbb52;border-radius:10%;width:60px;height:14px;line-height:14px;margin-right:10px;text-align: center;}
 .channel-banner-content{margin-top: 10px;overflow:hidden;zoom:1;text-align: center}
 .channel-banner-content h1{font-size:32px;text-align: center;line-height:46px;color:#fff;}
 .channel-banner-content p{font-size:12px;text-align: center;height:14px;line-height: 14px;margin-top:20px;color:#fff;}

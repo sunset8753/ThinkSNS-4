@@ -143,6 +143,6 @@ html,body,input,select,div,tr,td{font-family:"微软雅黑";}
 #group-feed-lists .feed_img_lists .small li{width:100px;height:100px;float:left;margin:0 10px 0 0;}
 /**圈中掌柜|圈中达人**/
 .circle-person{font-size:16px; font-family:"微软雅黑"; display:block;}
-.circle-person .active{ color:#0096e6;}
+.circle-person .active{ color:#6cbb52;}
 /**群组管理**/
 .groupBox{ background:#fff; border:#e5e6e7 1px solid; border-top:none;padding:40px;font-size:16px;}

@@ -1,7 +1,7 @@
 <include file="__THEME__/public_header" />
 <link type="text/css" rel="stylesheet" href="{:APP_URL}/_static/login.css">
   <div id="page-wrap">
-    <div class="reg-wrap">      
+    <div class="reg-wrap">
       <!--设置账号-->
       <div class="reg-main">
         <neq name='config.register_type' value='closed'>
@@ -10,7 +10,7 @@
           <div class="mb30">
             <dl class="account-links clearfix">
               <dt class="face_img left"><img src="{$user.userface}" width="50" height="50" /></dt>
-              <dd class="left"><h4>欢迎你，<span style="color:#0096e6">{$user.uname}</span>，您的{$typeName}帐号授权成功！</h4><p style="color:#666">接下来完成简单的设置，即可用{$typeName}帐号直接登录。</p></dd>
+              <dd class="left"><h4>欢迎你，<span style="color:#6cbb52">{$user.uname}</span>，您的{$typeName}帐号授权成功！</h4><p style="color:#666">接下来完成简单的设置，即可用{$typeName}帐号直接登录。</p></dd>
             </dl>
           </div>
           <div class="tab-menu line-b-animate clearfix" style=" margin-bottom:30px;">
@@ -100,9 +100,9 @@
               </dd>
               <dd class="mt15">
                 <div class="form-row actionBtn">
-                  <input class="btn-register left" type="submit" value="完善资料" />  
+                  <input class="btn-register left" type="submit" value="完善资料" />
                   <if condition="$config['bindemail'] neq 1 AND $config['personal_open'] neq 1">
-                    <a style="float:left;margin-left:30px;line-height:30px;color:#0096e6" href="javascript:void(0);" onclick="$('#ajax_direct_bind_form').submit();">直接进去，以后再完善。</a>
+                    <a style="float:left;margin-left:30px;line-height:30px;color:#6cbb52" href="javascript:void(0);" onclick="$('#ajax_direct_bind_form').submit();">直接进去，以后再完善。</a>
                   </if>
                 </div>
               </dd>
