@@ -701,26 +701,24 @@ class FeedAction extends Action
      */
     public function ajaxWeiboInfo()
     {
-        $feedId = intval($_POST['feedId']);
+        $feedId = intval($_POST ['feedId']);
         // 获取信息失败
         if (empty($feedId)) {
-            $data['status'] = 0;
-            $data['data'] = '获取分享信息失败';
+            $data ['status'] = 0;
+            $data ['data'] = '获取分享信息失败';
             exit(json_encode($data));
         }
-        $var['feedId'] = $feedId;
+        $var ['feedId'] = $feedId;
         // 获取分享信息
-        $var['feedInfo'] = model('Feed')->getFeedInfo($feedId);
-        // 获取分享标签
-        $var['topic_list'] = model('Feed')->getTopicIdByFeedId($feedId);
+        $var ['feedInfo'] = model('Feed')->getFeedInfo($feedId);
         // 分享配置信息
         $weiboSet = model('Xdata')->get('admin_Config:feed');
-        $var['initNums'] = $weiboSet['weibo_nums'];
+        $var ['initNums'] = $weiboSet ['weibo_nums'];
         // 赞功能
-        $var['diggArr'] = model('FeedDigg')->checkIsDigg($feedId, $GLOBALS['ts']['mid']);
+        $var ['diggArr'] = model('FeedDigg')->checkIsDigg($feedId, $GLOBALS ['ts'] ['mid']);
         // 输出信息
-        $data['status'] = 1;
-        $data['data'] = fetch('ajaxWeiboInfo', $var);
+        $data ['status'] = 1;
+        $data ['data'] = fetch('ajaxWeiboInfo', $var);
         exit(json_encode($data));
     }
 

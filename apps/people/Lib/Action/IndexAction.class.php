@@ -28,12 +28,10 @@ class IndexAction extends Action
         // 获取相关数据
         $cid = isset($_GET['cid']) ? intval($_GET['cid']) : 0;
         $sex = isset($_GET['sex']) ? intval($_GET['sex']) : 0;
-        $unit = isset($_GET['unit']) ? intval($_GET['unit']) : 0;
         $area = isset($_GET['area']) ? intval($_GET['area']) : 0;
         $verify = isset($_GET['verify']) ? intval($_GET['verify']) : 0;
         // 加载数据
         $this->assign('cid', $cid);
-        $this->assign('unit', $unit);
         $this->assign('sex', $sex);
         $this->assign('area', $area);
         $this->assign('verify', $verify);
@@ -63,14 +61,6 @@ class IndexAction extends Action
             case 'official':
                 $title = '官方推荐';
                 $cate = model('CategoryTree')->setTable('user_official_category')->getNetworkList();
-                break;
-            case 'unit':
-                $title = '按单位查找用户';
-                $cate = model('Department')->getAllHash();
-                foreach ($cate as $key => &$value) {
-                    $value['id'] = $value['department_id'];
-                    unset($value['department_id']);
-                }
                 break;
             case 'tag':
                 $title = '按标签查找用户';

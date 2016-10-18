@@ -15,7 +15,7 @@ class UserListWidget extends Widget
     {
         // 设置模板
         $template = '';
-        if (in_array($data['type'], array('tag', 'area', 'unit'))) {
+        if (in_array($data['type'], array('tag', 'area'))) {
             $template = 'filter';
         } else {
             $template = 'user';
@@ -24,7 +24,6 @@ class UserListWidget extends Widget
         $var['cid'] = intval($data['cid']);
         $var['sex'] = intval($data['sex']);
         $var['area'] = intval($data['area']);
-        $var['unit'] = intval($data['unit']);
         $var['verify'] = intval($data['verify']);
         $var['type'] = t($data['type']);
         $var['uids'] = t($data['uids']);

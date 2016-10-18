@@ -17,7 +17,7 @@
 .rank-lists .name .face img{-moz-border-radius:15px;-webkit-border-radius:15px;border-radius:15px;}
 /*.rank-box .rank-lists.current span.name a{color:#F2452B;}*/
 .rank-forward{width:960px;padding:60px 0;text-align:center;}
-a.btn-forward-rank {padding: 10px;background: #6cbb52;color: #fff;}
+a.btn-forward-rank {padding: 10px;background: #0096e6;color: #fff;}
 
 /*图标*/
 .ico-comment{background-position:-219px -66px;width:16px;height:16px;vertical-align:-6px;*vertical-align:-3px}
@@ -36,4 +36,4 @@ a.btn-forward-rank {padding: 10px;background: #6cbb52;color: #fff;}
 #rank_nav .app-tab-menu li{float:left;height:50px;line-height:50px;margin-left: 0px;}
 #rank_nav .app-tab-menu li a:link,#rank_nav .app-tab-menu li a:visited{height:16px;line-height:16px;display:inline-block;font-size:16px;padding:17px 15px 15px 15px}
 #rank_nav .app-tab-menu li a{color:#000000;display:inline-block;padding:15px;}
-#rank_nav .app-tab-menu li .current{color:#fff; background-color:#6cbb52;}
+#rank_nav .app-tab-menu li .current{color:#fff; background-color:#0096e6;}

@@ -10,7 +10,7 @@
 <div id="header" name="header"> {* 未登录时 *}
   <nosession name="mid">
     <div class="header-wrap">
-      <div class="head-bd">
+      <div class="head-bd"> 
         <!-- logo -->
         <div class="logo" style="background:url('{$ts.site.logo}') no-repeat;"><a href="{:SITE_URL}"></a></div>
         <!-- logo -->
@@ -19,7 +19,7 @@
             <volist name='site_guest_nav' id='st'>
             <li id="sec-nav-{$st.navi_id}" <php> if(APP_NAME == $st['app_name'] || $_GET['page'] == $st['app_name']):</php> class="current" <php>endif;</php>>
               <a href="{$st.url}" target="{$st.target}"  <php> if(APP_NAME == $st['app_name'] || $_GET['page'] == $st['app_name']):</php> class="app" <php>endif;</php> >{$st.navi_name}</a>
-            </li>
+            </li>                           
           </volist>
           </ul>
         </div>
@@ -29,7 +29,7 @@
   {* 登录后 *}
   <session name="mid">
     <div class="header-wrap">
-      <div class="head-bd">
+      <div class="head-bd"> 
         <!-- logo -->
         <div class="logo" style="background:url('{$site.logo}') no-repeat;"><a href="{:SITE_URL}"></a></div>
         <!-- logo -->
@@ -38,7 +38,7 @@
           <volist name='site_top_nav' id='st'>
             <li _nav="sec-nav-{$st.navi_id}" <php> if(APP_NAME == $st['app_name'] || $_GET['page'] == $st['app_name']):</php> class="current" <php>endif;</php>>
               <a href="{$st.url}" target="{$st.target}"  <php> if(APP_NAME == $st['app_name'] || $_GET['page'] == $st['app_name']):</php> class="app" <php>endif;</php> >{$st.navi_name}</a>
-            </li>
+            </li>                           
           </volist>
           </ul>
         </div>
@@ -52,7 +52,7 @@
           <else />
           <div class="person">
             <ul class="clearfix">
-              <li model-node="search" class="dorp-right">
+              <li model-node="search" class="dorp-right"> 
                   <a href="javascript:void(0);" class="app search-btn"><img src="__THEME__/image/ico-search.png" /></a>
                   <!--<div class="search" model-node="drop_menu_list">-->
                   <div class="search">
@@ -113,7 +113,7 @@
                        //             return false;
                        //         }
                        //     };
-                </script>
+                </script> 
               </li>
               <!-- <li model-node="person" class="dorp-right"> <a href="{$user['space_url']}" class="username">{$user['uname']|getShort=6}</a> </li> -->
               <li model-node="account" class="dorp-right"><a href="javascript:void(0);" class="app" rel="account-btn"><img rel="account-btn" src="__THEME__/image/ico-set.png" /></a>
@@ -125,17 +125,17 @@
                     <php>if(CheckTaskSwitch()):</php>
                       <dd><a href="{:U('public/Task/index')}"><i class="ico-mytask"></i>任务中心</a></dd>
                       <dd><a href="{:U('public/Medal/index')}"><i class="ico-mymedal"></i>勋章馆</a></dd>
-                    <php>endif;</php>
+                    <php>endif;</php> 
                     <php>if(!isVerified($user['uid'])):</php>
                     <dd><a href="{:U('public/Account/authenticate')}"><i class="ico-certification"></i>申请认证</a></dd>
                     <php>endif;</php>
                     <php>if(isInvite() && CheckPermission('core_normal','invite_user')):</php>
                     <dd><a href="{:U('public/Invite/invite')}"><i class="ico-invite"></i>{:L('PUBLIC_INVITE_COLLEAGUE')}</a></dd>
                     <php>endif;</php>
-
-                    <!-- <dd><a href="{:U('public/SmallTools/weiboShare')}">小工具</a></dd> -->
-
-                    <!-- 个人设置菜单钩子 -->
+                    
+                    <!-- <dd><a href="{:U('public/SmallTools/weiboShare')}">小工具</a></dd> --> 
+                    
+                    <!-- 个人设置菜单钩子 --> 
                     {:Addons::hook('header_account_dropmenu')}
                     <php>if(CheckPermission('core_admin','admin_login')){</php>
                     <dd><a href="{:U('admin')}"><i class="ico-systemmanage"></i>{:L('PUBLIC_SYSTEM_MANAGEMENT')}</a></dd>
@@ -149,7 +149,7 @@
                 <div  class="dropmenu" model-node="drop_menu_list" style="height:322px;">
                 </div>
               </li>-->
-
+              
             </ul>
           </div>
           <php> if(MODULE_NAME !='Register'):</php>
@@ -249,10 +249,10 @@
           var _menu = $('#'+_nav);
           clearTimeout( qcloud[ _nav + '_timer' ] );
 
-
+          
           //边框
-          if(_li.hasClass("current") && _menu.has("ul").length) $("li[_nav="+_nav+"]").find("a").css("border-bottom","#6cbb52 4px solid");
-
+          if(_li.hasClass("current") && _menu.has("ul").length) $("li[_nav="+_nav+"]").find("a").css("border-bottom","#0096e6 4px solid");
+          
 
           //隐藏
           qcloud[ _nav + '_timer' ] = setTimeout(function(){
@@ -283,7 +283,7 @@
         //       _dd = $(this).parent().find("ul.sec-nav-detail").clone();
 
         //       //获取li位置
-        //       var l_left = $(this).parent().offset().left;
+        //       var l_left = $(this).parent().offset().left; 
 
         //       $(_dd).css("marginLeft",l_left);
         //       $(".sec-nav").html(_dd);
@@ -313,9 +313,9 @@
     // core.plugFunc('dropnotify',function(){
     //     setTimeout(function(){
     //         core.dropnotify.init('message_list_container','message_container');
-    //     },320);
+    //     },320);   
     // });
-    </script>
+    </script> 
   </session>
 </div>
 <!--二级导航-->

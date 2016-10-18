@@ -2,7 +2,7 @@
 
 #third-party-list a{float:left;width:36px;height:36px;background-image:url(__THEME__/image/ico-account.png);background-repeat:no-repeat;background-position:0 0;cursor:pointer;font-size:12px;color:#888;padding:0 0 0 0;margin:0 0 0 0px;text-decoration:none;overflow:hidden;display:block;text-align:center;line-height:36px;}
 #third-party-list a span{display:none;}
-#third-party-list a:hover{opacity:1;filter:alpha(opacity=100);/*color:#6cbb52;*/color:#888;text-decoration:none;}
+#third-party-list a:hover{opacity:1;filter:alpha(opacity=100);/*color:#0096e6;*/color:#888;text-decoration:none;}
 #third-party-list a.bds_count{display:none}
 #third-party-list .bds_tsina{background-position:-46px -550px;}
 #third-party-list .bds_weixin{background-position:-92px -550px;}
@@ -53,8 +53,8 @@ core.plugFunc('bdshare', function(){
   var pic = '';
   core.bdshare.addConfig('share', {
     "tag" : "third-party-list",
-    'bdText' : bdText,
-    'bdDesc' : bdDesc,
+    'bdText' : bdText, 
+    'bdDesc' : bdDesc, 
     'bdUrl' : url,
     'bdPic' : pic
   });
@@ -69,4 +69,4 @@ function showLayer(trigger,content){
 }
 showLayer(".third-party-more-layer",".third-party-more");
 showLayer(".big-code-layer",".big-code");
-</script>
+</script> 

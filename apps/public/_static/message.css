@@ -10,7 +10,7 @@
 .private-list dt.face{float:left;margin:0 10px 0 0;width:50px;height:50px}
 .private-list dt.face img{-moz-border-radius:50px;-webkit-border-radius:50px;border-radius:50px;}
 .private-list dd.info{margin:0 0 0 70px;font-size:14px;line-height:22px;}
-.private-list dd.info a.right{font-size:12px;color:#6cbb52;}
+.private-list dd.info a.right{font-size:12px;color:#0096e6;}
 .private-list dd.info img{vertical-align:middle;}
 .private-list dd.info .date span{float:right}
 .private-list .hover{ visibility:hidden;_visibility:visible;/*for Ie6*/}
@@ -48,7 +48,7 @@
 .replay-section{padding:5px 0 20px 0;border-bottom:#eee solid 1px;margin:0 0 5px; background:#fff}
 .replay-section .hd {*zoom:1; background:#fff !important; cursor:default !important; font-weight:normal !important;}
 /*.replay-section .hd span{float:right}*/
-.replay-section .hd strong{padding:0 5px;color:#6cbb52;}
+.replay-section .hd strong{padding:0 5px;color:#0096e6;}
 .replay-section .hd a{padding:0 0 0 5px}
 
 .replay-article{padding:20px 0 0 0;*zoom:1;/*for Ie6,Ie7*/}

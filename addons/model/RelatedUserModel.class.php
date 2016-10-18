@@ -77,7 +77,7 @@ class RelatedUserModel extends Model
             $this->_getExcludeUids($fids);
 
             //过滤掉自己
-            $this->_getExcludeUids(array($this->_uid, 1));
+            $this->_getExcludeUids(array($this->_uid));
 
             //过滤掉已关注的用户
             $already = D('UserFollow')->where('uid='.$GLOBALS['ts']['mid'])->field('fid')->findAll();

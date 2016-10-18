@@ -1,4 +1,3 @@
-<php>//echo "<pre>";print_r($user);</php>
 <volist name="user" id="vo">
 	<li model-node="related_li" class="mb20">
 		<!--<div class="user">
@@ -15,12 +14,11 @@
         </div>
         <div class="user-prof left">
           <a class="mb10 name" href="{$vo.userInfo.space_url}">{$vo.userInfo.uname}</a>
-          <p>系统推荐</p>
           <!--<p>
           {$vo.userInfo.auth_icon}
           </p>-->
-        </div>
+        </div> 
         {:W('FollowBtn',array('fid'=>$vo['userInfo']['uid'],'uname'=>$vo['userInfo']['uname'],'follow_state'=>$vo['followState'],'refer'=>'following_right', 'type'=>'related'))}
        <!-- <div class="left"><a class="btns-red mt10"><i class="ico-add"></i>关注</a></div>       -->
-	</li>
+	</li>	
 </volist>

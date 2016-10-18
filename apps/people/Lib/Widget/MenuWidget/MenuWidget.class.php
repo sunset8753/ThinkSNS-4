@@ -1,7 +1,4 @@
 <?php
-
-use Ts\Models\Department as DepModel;
-
 /**
  * 菜单选择Widget
  * @author zivss <guolee226@gmail.com>
@@ -21,7 +18,6 @@ class MenuWidget extends Widget
         // 获取相关数据
         $var['cid'] = intval($data['cid']);
         $var['area'] = intval($data['area']);
-        $var['unit'] = intval($data['unit']);
         $var['sex'] = intval($data['sex']);
         $var['verify'] = intval($data['verify']);
         $var['type'] = t($data['type']);
@@ -71,45 +67,6 @@ class MenuWidget extends Widget
                 break;
             case 'official':
                 $var['menu'] = model('CategoryTree')->setTable('user_official_category')->getNetworkList();
-                break;
-            case 'unit':
-                /*$var['menu'] = model('Department')->getAllHash();
-                foreach ($var['menu'] as $key => &$value) {
-                    $value['id'] = $value['department_id'];
-                    unset($value['department_id']);
-                }*/
-                $var['allUnit'] = model('Department')->getDepartment(1)['_child'];
-                //上级id
-                $cate = DepModel::where('department_id', $var['unit'])->first();
-                $cate = $cate ? $cate->toArray() : [];
-
-                if ($cate['parent_dept_id'] != 1) {
-                    $parent1 = DepModel::where('department_id', $cate['parent_dept_id'])->first(); //上级
-
-                    $var['parent1'] = $parent1 ? $parent1->toArray() : [];
-                    if ($var['parent1']['parent_dept_id'] != 1) {
-                        $parent2 = DepModel::where('department_id', $var['parent1']['parent_dept_id'])->first(); //上上级
-                        $var['parent2'] = $parent2 ? $parent2->toArray() : [];
-                    } else {
-                        $var['parent2']['title'] = $var['parent1']['title'];
-                        $var['parent2']['department_id'] = $var['parent1']['department_id'];
-                        $var['parent1']['title'] = $cate['title'];
-                        $var['parent1']['id'] = $cate['department_id'];
-                    }
-                } else {
-                    $var['parent1']['title'] = $cate['title'];
-                    $var['parent1']['id'] = $cate['department_id'];
-                }
-
-                //下级
-                if ($var['unit'] != 1) {
-                    $next = DepModel::where('parent_dept_id', $var['unit'])->get();
-                    $var['next'] = $next ? $next->toArray() : [];
-                    if (!$var['unit']) {
-                        $next = DepModel::where('parent_dept_id', $cate['parent_dept_id'])->get();
-                        $var['next'] = $next ? $next->toArray() : [];
-                    }
-                }
                 break;
         }
 

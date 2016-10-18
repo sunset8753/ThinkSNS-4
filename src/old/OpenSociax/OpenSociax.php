@@ -24,7 +24,6 @@ tsconfig(include CONF_PATH.'/access.inc.php');
 tsconfig(include CONF_PATH.'/html.inc.php');
 tsconfig(include CONF_PATH.'/router.inc.php');
 tsconfig(include CONF_PATH.'/thinksns.conf.php');
-tsconfig(include CONF_PATH.'/dingtalk.php');
 
 if (!isset($_REQUEST['app']) && !isset($_REQUEST['mod']) && !isset($_REQUEST['act'])) {
     $ts['_app'] = 'public';

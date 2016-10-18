@@ -25,9 +25,4 @@ class Login extends Model
     {
         return $query->where('type_uid', '=', $id);
     }
-
-    public function scopeByUserId($query, $user_id)
-    {
-        return $query->where('uid', $user_id);
-    }
 } // END class Login extends Model

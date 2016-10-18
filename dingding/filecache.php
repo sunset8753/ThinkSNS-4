@@ -1,1 +1,0 @@
-<?php exit(); ?>{"corp_access_token":{"corp_access_token":"cc1a97c9da28381088103b19e5676a1d","expire_time":1474536557,"create_time":1474529557},"js_ticket":{"js_ticket":"tfnWYn1piXRwgDJ6ZZVO9vmN7tNFhA5zwaRL1LF97HTibVbvcP4cLie7NsjHzA9h7PDaGzW697ZGtvbEiStpxS","expire_time":1474536557,"create_time":1474529557}}

@@ -1,5 +1,0 @@
-composer.lock
-node_modules
-vendor
-resources/js/index.js*
-.DS_Store

@@ -2,15 +2,10 @@
   <dl class="person-info-t clearfix">
     <dt><a href="{$userInfo.space_url}"><img src="{$userInfo.avatar_big}" /></a><a href="{:U('public/Account/avatar')}" class="face">换头像</a></dt>
     <dd>
-      <div class="name"> <a href="{$userInfo.space_url}">{$userInfo.uname}</a>
+      <div class="name"> <a href="{$userInfo.space_url}">{$userInfo.uname}</a> 
       </div>
       <div class="user-grade clearfix" data-url="{:U('public/Account/scoredetail')}">
-        <span class="grade">等级: {:intval($userInfo['credit_info']['level']['level'])}</span>
-        	<volist name='userCredit.credit' id='vo'>
-        		<neq name="vo.alias" value="经验">
-        		<span class="grade">{$vo.alias}: {:intval($vo['value'])}</span>
-        		</neq>
-        	</volist>
+        <span class="grade">等级: {:intval($userInfo['credit_info']['level']['level'])}</span><volist name='userCredit.credit' id='vo'><span class="grade">{$vo.alias}: {:intval($vo['value'])}</span></volist>
       </div>
     </dd>
   </dl>
@@ -97,5 +92,5 @@ M.addEventFns({
 			}
 		}
 	}
-});
+}); 
 </script>
