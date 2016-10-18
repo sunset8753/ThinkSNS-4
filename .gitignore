@@ -5,7 +5,8 @@
 #/apps/Information/
 #/apps/Gift/
 #/apps/Event/
-/apps/H5/
+/apps/h5/vendor
+/apps/h5/dist
 /apps/book/
 /apps/w3g/
 #/api/thinksns/*
