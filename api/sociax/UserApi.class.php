@@ -252,7 +252,7 @@ class UserApi extends Api
      */
     public function get_user_info($uid)
     {
-        // $user_info = model('Cache')->get('user_info_api_'.$uid);
+        $user_info = model('Cache')->get('user_info_api_'.$uid);
         if (!$user_info) {
             // $user_info = model('User')->where('uid='.$uid)->field('uid,uname,sex,location,province,city,area,intro,avatar,department_id,ctime,last_login_time')->find();
             $user_info = \Ts\Models\User::byUid($uid)
