@@ -2049,6 +2049,8 @@ class WeiboApi extends Api
                 $diggarr = model('FeedDigg')->checkIsDigg($v, $GLOBALS ['ts'] ['mid']);
                 $r [$k] ['is_digg'] = $diggarr [$v] ? 1 : 0;
                 $r [$k] ['is_favorite'] = model('Collection')->where('uid='.$GLOBALS ['ts'] ['mid'].' and source_id='.$v)->count();
+                $r[$k]['favoriteNum'] = model('Collection')->where('source_id='.$v)->count();
+                $r[$k]['is_comment'] = model('Comment')->where(array('row_id=' => $v, 'table' => 'feed', 'uid' => $this->mid))->count();
                 if ($this->mid != $feed_info ['uid']) {
                     $privacy = model('UserPrivacy')->getPrivacy($this->mid, $feed_info ['uid']);
                     if ($privacy ['comment_weibo'] == 1) {

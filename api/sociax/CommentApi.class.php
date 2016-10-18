@@ -96,9 +96,9 @@ class CommentApi extends Api
                 $value['user_info']['avatar_url'] = getUserFace($value['uid']);
                 if ($value['to_comment_id']) {
                     $replyInfo = model('Comment')->getCommentInfo($value['to_comment_id'], false);
-                    $replyInfos = '//@{uid='.$replyInfo['user_info']['uid'].'|'.$replyInfo['user_info']['uname'].'}：'.$replyInfo['content'];
+                    //$replyInfos = '//@{uid='.$replyInfo['user_info']['uid'].'|'.$replyInfo['user_info']['uname'].'}：'.$replyInfo['content'];
 
-                    $value['content'] = parse_html($value['content'].$replyInfos);
+                    $value['content'] = parse_html($value['content']);
                     $value['content'] = formatEmoji(false, $value['content']); // 解析emoji
                 } else {
                     $value['content'] = formatEmoji(false, $value['content']);
