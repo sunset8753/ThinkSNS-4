@@ -1046,8 +1046,8 @@ class Model extends Think
      */
     public function startTrans()
     {
-        $this->commit();
         $this->db->startTrans();
+        // $this->commit();
     }
 
     /**
