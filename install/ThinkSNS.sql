@@ -3905,6 +3905,7 @@ CREATE TABLE IF NOT EXISTS `ts_credit_record` (
   `des` text COMMENT '详情',
   `change` varchar(255) DEFAULT NULL COMMENT '积分变更',
   `ctime` int(11) DEFAULT NULL COMMENT '时间',
+  `detail` varchar(255) NULL COMMENT 'API所需描述',
   PRIMARY KEY (`rid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
@@ -6436,6 +6437,7 @@ CREATE TABLE IF NOT EXISTS `ts_message_list` (
   `from_uid` int(11) unsigned NOT NULL COMMENT '私信发起者UID',
   `type` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '私信类别，1：一对一；2：多人',
   `title` varchar(255) DEFAULT NULL COMMENT '标题',
+  `logo` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '群聊logo',
   `member_num` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '参与者数量',
   `min_max` varchar(255) DEFAULT NULL COMMENT '参与者UID正序排列，以下划线“_”链接',
   `mtime` int(11) unsigned NOT NULL COMMENT '发起时间戳',
@@ -9499,6 +9501,24 @@ DELETE FROM `ts_system_config` WHERE `key` = 'admin_Application_jpush';
 INSERT INTO `ts_system_config` (`list`, `key`, `value`, `mtime`) VALUES
 ('pageKey', 'admin_Application_jpush', 'a:6:{s:3:"key";a:2:{s:3:"key";s:3:"key";s:6:"secret";s:6:"secret";}s:8:"key_name";a:2:{s:3:"key";s:7:"App Key";s:6:"secret";s:13:"Master Secret";}s:8:"key_type";a:2:{s:3:"key";s:4:"text";s:6:"secret";s:4:"text";}s:11:"key_default";a:2:{s:3:"key";s:0:"";s:6:"secret";s:0:"";}s:9:"key_tishi";a:2:{s:3:"key";s:0:"";s:6:"secret";s:0:"";}s:14:"key_javascript";a:2:{s:3:"key";s:0:"";s:6:"secret";s:0:"";}}', '2015-09-02 03:39:48');
 
+--
+-- 更新语言包，将保持变更为更有意义的“提交”
+--
+UPDATE `ts_lang` SET `zh-cn` = '提交' WHERE `key` LIKE 'PUBLIC_SAVE';
+
+--
+-- 更新公用评论表
+--
+ALTER TABLE `ts_comment` CHANGE `table` `table` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '被评论的内容所存储的表';
+
+ALTER TABLE `ts_feed` CHANGE `latitude` `latitude` VARCHAR(25) NULL DEFAULT NULL COMMENT '纬度', CHANGE `longitude` `longitude` VARCHAR(25) NULL DEFAULT NULL COMMENT '经度';
+
+--
+-- 群聊，群头像
+--
+ALTER TABLE `ts_message_list` ADD `logo` INT(11) UNSIGNED NULL DEFAULT NULL COMMENT '群聊头像' AFTER `title`;
+
+ALTER TABLE `ts_feed_data` CHANGE `feed_data` `feed_data` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '关联ts_feed表，动态数据，序列化保存';
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

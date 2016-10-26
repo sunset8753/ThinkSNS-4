@@ -2,20 +2,19 @@
 /**
  * 个人空间数据统计
  * @example {:W('MySpaceCount')}
- * @version TS3.0 
+ * @version TS3.0
  */
-class MySpaceCountWidget extends Widget{
+class MySpaceCountWidget extends Widget
+{
+    /**
+     * 渲染空间数据统计模板
+     */
+    public function render($data)
+    {
+        $content = $this->renderFile(dirname(__FILE__).'/content.html', $var);
 
-	/**
-	 * 渲染空间数据统计模板
-	 */
-	public function render($data){
+        unset($var, $data);
 
-		$content = $this->renderFile(dirname(__FILE__)."/content.html",$var);
-
-		unset($var,$data);
-
-		return $content;
+        return $content;
     }
 }
-?>

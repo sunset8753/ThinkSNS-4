@@ -22,12 +22,12 @@ class Gateway
      * gateway实例
      * @var object
      */
-    protected static  $businessWorker = null;
+    protected static $businessWorker = null;
 
     /**
      * 向所有客户端(或者client_id_array指定的客户端)广播消息
-     * @param string $message 向客户端发送的消息（可以是二进制数据）
-     * @param array $client_id_array 客户端id数组
+     * @param string $message         向客户端发送的消息（可以是二进制数据）
+     * @param array  $client_id_array 客户端id数组
      */
     public static function sendToAll($message, $client_id_array = null)
     {
@@ -35,34 +35,26 @@ class Gateway
         $gateway_data['cmd'] = GatewayProtocol::CMD_SEND_TO_ALL;
         $gateway_data['body'] = $message;
 
-        if($client_id_array)
-        {
+        if ($client_id_array) {
             $params = array_merge(array('N*'), $client_id_array);
             $gateway_data['ext_data'] = call_user_func_array('pack', $params);
-        }
-        elseif(empty($client_id_array) && is_array($client_id_array))
-        {
+        } elseif (empty($client_id_array) && is_array($client_id_array)) {
             return;
         }
 
         // 如果有businessWorker实例，说明运行在workerman环境中，通过businessWorker中的长连接发送数据
-        if(self::$businessWorker)
-        {
-            foreach(self::$businessWorker->gatewayConnections as $gateway_connection)
-            {
+        if (self::$businessWorker) {
+            foreach (self::$businessWorker->gatewayConnections as $gateway_connection) {
                 $gateway_connection->send($gateway_data);
             }
         }
         // 运行在其它环境中，使用udp向worker发送数据
-        else
-        {
+        else {
             $all_addresses = Store::instance('gateway')->get('GLOBAL_GATEWAY_ADDRESS');
-            if(!is_array($all_addresses))
-            {
-                throw new \Exception('bad gateway addresses ' . var_export($all_addresses, true));
+            if (!is_array($all_addresses)) {
+                throw new \Exception('bad gateway addresses '.var_export($all_addresses, true));
             }
-            foreach($all_addresses as $address)
-            {
+            foreach ($all_addresses as $address) {
                 self::sendToGateway($address, $gateway_data);
             }
         }
@@ -70,7 +62,7 @@ class Gateway
 
     /**
      * 向某个客户端发消息
-     * @param int $client_id
+     * @param int    $client_id
      * @param string $message
      */
     public static function sendToClient($client_id, $message)
@@ -80,19 +72,19 @@ class Gateway
 
     /**
      * 判断某个客户端是否在线
-     * @param int $client_id
+     * @param  int $client_id
      * @return 0/1
      */
     public static function isOnline($client_id)
     {
         $address = Store::instance('gateway')->get('client_id-'.$client_id);
-        if(!$address)
-        {
+        if (!$address) {
             return 0;
         }
         $gateway_data = GatewayProtocol::$empty;
         $gateway_data['cmd'] = GatewayProtocol::CMD_IS_ONLINE;
         $gateway_data['client_id'] = $client_id;
+
         return self::sendUdpAndRecv($address, $gateway_data);
     }
 
@@ -109,11 +101,9 @@ class Gateway
         $all_addresses = Store::instance('gateway')->get('GLOBAL_GATEWAY_ADDRESS');
         $client_array = $status_data = array();
         // 批量向所有gateway进程发送CMD_GET_ONLINE_STATUS命令
-        foreach($all_addresses as $address)
-        {
+        foreach ($all_addresses as $address) {
             $client = stream_socket_client("udp://$address", $errno, $errmsg);
-            if(strlen($gateway_buffer) === stream_socket_sendto($client, $gateway_buffer))
-            {
+            if (strlen($gateway_buffer) === stream_socket_sendto($client, $gateway_buffer)) {
                 $client_id = (int) $client;
                 $client_array[$client_id] = $client;
             }
@@ -122,49 +112,45 @@ class Gateway
         $time_out = 1;
         $time_start = microtime(true);
         // 批量接收请求
-        while(count($client_array) > 0)
-        {
+        while (count($client_array) > 0) {
             $write = $except = array();
             $read = $client_array;
-            if(@stream_select($read, $write, $except, $time_out))
-            {
-                foreach($read as $client)
-                {
+            if (@stream_select($read, $write, $except, $time_out)) {
+                foreach ($read as $client) {
                     // udp
                     $data = json_decode(fread($client, 65535), true);
-                    if($data)
-                    {
+                    if ($data) {
                         $status_data = array_merge($status_data, $data);
                     }
                     unset($client_array[$client]);
                 }
             }
-            if(microtime(true) - $time_start > $time_out)
-            {
+            if (microtime(true) - $time_start > $time_out) {
                 break;
             }
         }
+
         return $status_data;
     }
 
     /**
      * 关闭某个客户端
-     * @param int $client_id
+     * @param int    $client_id
      * @param string $message
      */
     public static function closeClient($client_id)
     {
         $address = Store::instance('gateway')->get('client_id-'.$client_id);
-        if(!$address)
-        {
+        if (!$address) {
             return false;
         }
+
         return self::kickAddress($address, $client_id);
     }
 
     /**
      * 更新session,框架自动调用，开发者不要调用
-     * @param int $client_id
+     * @param int    $client_id
      * @param string $session_str
      */
     public static function updateSocketSession($client_id, $session_str)
@@ -173,28 +159,25 @@ class Gateway
         $gateway_data['cmd'] = GatewayProtocol::CMD_UPDATE_SESSION;
         $gateway_data['client_id'] = $client_id;
         $gateway_data['ext_data'] = $session_str;
-        return self::sendToGateway(Context::$local_ip . ':' . Context::$local_port, $gateway_data);
+
+        return self::sendToGateway(Context::$local_ip.':'.Context::$local_port, $gateway_data);
     }
 
     /**
      * 想某个用户网关发送命令和消息
-     * @param int $client_id
-     * @param int $cmd
-     * @param string $message
-     * @return boolean
+     * @param  int    $client_id
+     * @param  int    $cmd
+     * @param  string $message
+     * @return bool
      */
-    protected static function sendCmdAndMessageToClient($client_id, $cmd , $message)
+    protected static function sendCmdAndMessageToClient($client_id, $cmd, $message)
     {
         // 如果是发给当前用户则直接获取上下文中的地址
-        if($client_id === Context::$client_id || $client_id === null)
-        {
+        if ($client_id === Context::$client_id || $client_id === null) {
             $address = Context::$local_ip.':'.Context::$local_port;
-        }
-        else
-        {
+        } else {
             $address = Store::instance('gateway')->get('client_id-'.$client_id);
-            if(!$address)
-            {
+            if (!$address) {
                 return false;
             }
         }
@@ -208,17 +191,16 @@ class Gateway
 
     /**
      * 发送udp数据并返回
-     * @param int $address
-     * @param string $message
-     * @return boolean
+     * @param  int    $address
+     * @param  string $message
+     * @return bool
      */
-    protected static function sendUdpAndRecv($address , $data)
+    protected static function sendUdpAndRecv($address, $data)
     {
         $buffer = GatewayProtocol::encode($data);
         // 非workerman环境，使用udp发送数据
         $client = stream_socket_client("udp://$address", $errno, $errmsg);
-        if(strlen($buffer) == stream_socket_sendto($client, $buffer))
-        {
+        if (strlen($buffer) == stream_socket_sendto($client, $buffer)) {
             // 阻塞读
             stream_set_blocking($client, 1);
             // 1秒超时
@@ -227,9 +209,7 @@ class Gateway
             $data = fread($client, 655350);
             // 返回结果
             return json_decode($data, true);
-        }
-        else
-        {
+        } else {
             throw new \Exception("sendUdpAndRecv($address, \$bufer) fail ! Can not send UDP data!", 502);
         }
     }
@@ -242,33 +222,34 @@ class Gateway
     protected static function sendToGateway($address, $gateway_data)
     {
         // 有$businessWorker说明是workerman环境，使用$businessWorker发送数据
-        if(self::$businessWorker)
-        {
-            if(!isset(self::$businessWorker->gatewayConnections[$address]))
-            {
+        if (self::$businessWorker) {
+            if (!isset(self::$businessWorker->gatewayConnections[$address])) {
                 return false;
             }
+
             return self::$businessWorker->gatewayConnections[$address]->send($gateway_data);
         }
         // 非workerman环境，使用udp发送数据
         $gateway_buffer = GatewayProtocol::encode($gateway_data);
         $client = stream_socket_client("udp://$address", $errno, $errmsg);
+
         return strlen($gateway_buffer) == stream_socket_sendto($client, $gateway_buffer);
     }
 
     /**
      * 踢掉某个网关的socket
      * @param string $local_ip
-     * @param int $local_port
-     * @param int $client_id
+     * @param int    $local_port
+     * @param int    $client_id
      * @param string $message
-     * @param int $client_id
+     * @param int    $client_id
      */
-    protected  static function kickAddress($address, $client_id)
+    protected static function kickAddress($address, $client_id)
     {
         $gateway_data = GatewayProtocol::$empty;
         $gateway_data['cmd'] = GatewayProtocol::CMD_KICK;
         $gateway_data['client_id'] = $client_id;
+
         return self::sendToGateway($address, $gateway_data);
     }
 
@@ -280,7 +261,6 @@ class Gateway
     {
         self::$businessWorker = $business_worker_instance;
     }
-
 }
 /**
  * 上下文 包含当前用户uid， 内部通信local_ip local_port socket_id ，以及客户端client_ip client_port
@@ -315,20 +295,20 @@ class Context
     public static $client_id;
     /**
      * 编码session
-     * @param mixed $session_data
+     * @param  mixed  $session_data
      * @return string
      */
     public static function sessionEncode($session_data = '')
     {
-        if($session_data !== '')
-        {
+        if ($session_data !== '') {
             return serialize($session_data);
         }
+
         return '';
     }
     /**
      * 解码session
-     * @param string $session_buffer
+     * @param  string $session_buffer
      * @return mixed
      */
     public static function sessionDecode($session_buffer)
@@ -337,11 +317,10 @@ class Context
     }
     /**
      * 清除上下文
-     * @return void
      */
     public static function clear()
     {
-        self::$local_ip = self::$local_port  = self::$client_ip = self::$client_port = self::$client_id  = null;
+        self::$local_ip = self::$local_port = self::$client_ip = self::$client_port = self::$client_id = null;
     }
 }
 /**
@@ -389,7 +368,7 @@ class GatewayProtocol
     const FLAG_BODY_IS_SCALAR = 0x01;
     /**
      * 包头长度
-     * @var integer
+     * @var int
      */
     const HEAD_LEN = 26;
     public static $empty = array(
@@ -406,72 +385,64 @@ class GatewayProtocol
 
     /**
      * 返回包长度
-     * @param string $buffer
-     * @return int return current package length
+     * @param  string $buffer
+     * @return int    return current package length
      */
     public static function input($buffer)
     {
-        if(strlen($buffer) < self::HEAD_LEN)
-        {
+        if (strlen($buffer) < self::HEAD_LEN) {
             return 0;
         }
-        $data = unpack("Npack_len", $buffer);
+        $data = unpack('Npack_len', $buffer);
+
         return $data['pack_len'];
     }
     /**
      * 获取整个包的buffer
-     * @param array $data
+     * @param  array  $data
      * @return string
      */
     public static function encode($data)
     {
-        $flag = (int)is_scalar($data['body']);
-        if(!$flag)
-        {
+        $flag = (int) is_scalar($data['body']);
+        if (!$flag) {
             $data['body'] = serialize($data['body']);
         }
         $ext_len = strlen($data['ext_data']);
         $package_len = self::HEAD_LEN + $ext_len + strlen($data['body']);
-        return pack("NCNnNnNNC",  $package_len,
+
+        return pack('NCNnNnNNC', $package_len,
             $data['cmd'], ip2long($data['local_ip']),
             $data['local_port'], ip2long($data['client_ip']),
             $data['client_port'], $data['client_id'],
-            $ext_len, $flag) . $data['ext_data'] . $data['body'];
+            $ext_len, $flag).$data['ext_data'].$data['body'];
     }
     /**
      * 从二进制数据转换为数组
-     * @param string $buffer
+     * @param  string $buffer
      * @return array
      */
     public static function decode($buffer)
     {
-        $data = unpack("Npack_len/Ccmd/Nlocal_ip/nlocal_port/Nclient_ip/nclient_port/Nclient_id/Next_len/Cflag", $buffer);
+        $data = unpack('Npack_len/Ccmd/Nlocal_ip/nlocal_port/Nclient_ip/nclient_port/Nclient_id/Next_len/Cflag', $buffer);
         $data['local_ip'] = long2ip($data['local_ip']);
         $data['client_ip'] = long2ip($data['client_ip']);
-        if($data['ext_len'] > 0)
-        {
+        if ($data['ext_len'] > 0) {
             $data['ext_data'] = substr($buffer, self::HEAD_LEN, $data['ext_len']);
-            if($data['flag'] & self::FLAG_BODY_IS_SCALAR)
-            {
+            if ($data['flag'] & self::FLAG_BODY_IS_SCALAR) {
                 $data['body'] = substr($buffer, self::HEAD_LEN + $data['ext_len']);
-            }
-            else
-            {
+            } else {
                 $data['body'] = unserialize(substr($buffer, self::HEAD_LEN + $data['ext_len']));
             }
-        }
-        else
-        {
+        } else {
             $data['ext_data'] = '';
-            if($data['flag'] & self::FLAG_BODY_IS_SCALAR)
-            {
+            if ($data['flag'] & self::FLAG_BODY_IS_SCALAR) {
                 $data['body'] = substr($buffer, self::HEAD_LEN);
-            }
-            else
-            {
+            } else {
                 $data['body'] = unserialize(substr($buffer, self::HEAD_LEN));
             }
         }
+
         return $data;
     }
 }
@@ -489,51 +460,40 @@ class Store
     protected static $instance = array();
     /**
      * 获取实例
-     * @param string $config_name
+     * @param  string     $config_name
      * @throws \Exception
      */
     public static function instance($config_name)
     {
         // memcache 驱动
-        if(\Config\Store::$driver == \Config\Store::DRIVER_MC)
-        {
-            if(!isset(\Config\Store::$$config_name))
-            {
+        if (\Config\Store::$driver == \Config\Store::DRIVER_MC) {
+            if (!isset(\Config\Store::$$config_name)) {
                 throw new \Exception("\\Config\\Store::$config_name not set\n");
             }
-            if(!isset(self::$instance[$config_name]))
-            {
-                if(extension_loaded('Memcached'))
-                {
+            if (!isset(self::$instance[$config_name])) {
+                if (extension_loaded('Memcached')) {
                     self::$instance[$config_name] = new \Memcached;
-                }
-                elseif(extension_loaded('Memcache'))
-                {
+                } elseif (extension_loaded('Memcache')) {
                     self::$instance[$config_name] = new \Memcache;
-                }
-                else
-                {
+                } else {
                     sleep(2);
                     exit("extension memcached is not installed\n");
                 }
-                foreach(\Config\Store::$$config_name as $address)
-                {
+                foreach (\Config\Store::$$config_name as $address) {
                     list($ip, $port) = explode(':', $address);
-                    self::$instance[$config_name] ->addServer($ip, $port);
+                    self::$instance[$config_name]->addServer($ip, $port);
                 }
             }
+
             return self::$instance[$config_name];
         }
         // redis 驱动
-        elseif(\Config\Store::$driver == \Config\Store::DRIVER_REDIS)
-        {
-            if(!isset(\Config\Store::$$config_name))
-            {
+        elseif (\Config\Store::$driver == \Config\Store::DRIVER_REDIS) {
+            if (!isset(\Config\Store::$$config_name)) {
                 echo "\\Config\\Store::$config_name not set\n";
                 throw new \Exception("\\Config\\Store::$config_name not set\n");
             }
-            if(!isset(self::$instance[$config_name]))
-            {
+            if (!isset(self::$instance[$config_name])) {
                 self::$instance[$config_name] = new Redisd();
                 // 只选择第一个ip作为服务端
                 $address = current(\Config\Store::$$config_name);
@@ -542,15 +502,15 @@ class Store
                 self::$instance[$config_name]->connect($ip, $port, $timeout);
                 self::$instance[$config_name]->setOption(\Redis::OPT_SERIALIZER, \Redis::SERIALIZER_PHP);
             }
+
             return self::$instance[$config_name];
         }
         // 文件驱动
-        else
-        {
-            if(!isset(self::$instance[$config_name]))
-            {
+        else {
+            if (!isset(self::$instance[$config_name])) {
                 self::$instance[$config_name] = new FileStore($config_name);
             }
+
             return self::$instance[$config_name];
         }
     }
@@ -577,29 +537,26 @@ class FileStore
      */
     public function __construct($config_name)
     {
-        if(!is_dir(\Config\Store::$storePath) && !@mkdir(\Config\Store::$storePath, 0777, true))
-        {
+        if (!is_dir(\Config\Store::$storePath) && !@mkdir(\Config\Store::$storePath, 0777, true)) {
             // 可能目录已经被其它进程创建
             clearstatcache();
-            if(!is_dir(\Config\Store::$storePath))
-            {
+            if (!is_dir(\Config\Store::$storePath)) {
                 // 避免狂刷日志
                 sleep(1);
                 throw new \Exception('cant not mkdir('.\Config\Store::$storePath.')');
             }
         }
         $this->dataFileHandle = fopen(__FILE__, 'r');
-        if(!$this->dataFileHandle)
-        {
-            throw new \Exception("can not fopen dataFileHandle");
+        if (!$this->dataFileHandle) {
+            throw new \Exception('can not fopen dataFileHandle');
         }
     }
 
     /**
      * 设置
-     * @param string $key
-     * @param mixed $value
-     * @param int $ttl
+     * @param  string $key
+     * @param  mixed  $value
+     * @param  int    $ttl
      * @return number
      */
     public function set($key, $value, $ttl = 0)
@@ -609,19 +566,20 @@ class FileStore
 
     /**
      * 读取
-     * @param string $key
-     * @param bool $use_cache
+     * @param  string   $key
+     * @param  bool     $use_cache
      * @return Ambigous <NULL, multitype:>
      */
     public function get($key, $use_cache = true)
     {
         $ret = @file_get_contents(\Config\Store::$storePath.'/'.$key);
+
         return $ret ? unserialize($ret) : null;
     }
 
     /**
      * 删除
-     * @param string $key
+     * @param  string $key
      * @return number
      */
     public function delete($key)
@@ -631,8 +589,8 @@ class FileStore
 
     /**
      * 自增
-     * @param string $key
-     * @return boolean|multitype:
+     * @param  string          $key
+     * @return bool|multitype:
      */
     public function increment($key)
     {
@@ -641,6 +599,7 @@ class FileStore
         $val = !$val ? 1 : ++$val;
         file_put_contents(\Config\Store::$storePath.'/'.$key, serialize($val));
         flock($this->dataFileHandle, LOCK_UN);
+
         return $val;
     }
 
@@ -649,11 +608,9 @@ class FileStore
      */
     public function destroy()
     {
-
     }
 }
-if(\Config\Store::$driver == \Config\Store::DRIVER_REDIS)
-{
+if (\Config\Store::$driver == \Config\Store::DRIVER_REDIS) {
     class Redisd extends \Redis
     {
         public function increment($key)

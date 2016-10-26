@@ -211,7 +211,7 @@
       	<div>
       	<!-- <FORM style='display:inline;padding:0;margin:0;border:0'>  -->
 			<div id="divup_{$upkey}" type="file" rel="{$upkey}">
-			<input type="file" name="attach" rel="{$upkey}" onchange="admin.upload('{$pk}',this)" urlquery='attach_type=feed_image&upload_type=image&thumb=1' style="width:350px;"></div>
+			<input type="file" name="attach" rel="{$upkey}" onchange="admin.upload('{$pk}',this)" urlquery='attach_type=admin_image&upload_type=image&thumb=1' style="width:350px;"></div>
            <div id='show_{$pk}'>
             <php>if($defaultS && is_numeric($defaultS)){</php>
               <img src="{$defaultS|getImageUrlByAttachId}" class="pic-size">
@@ -229,7 +229,7 @@
         <php>if($keyType == 'file'):</php>
         <div>
 
-        {:W('Upload',array('uploadType'=>'file','inputname'=>$pk,'attachIds'=>$defaultS))}
+        {:W('Upload',array('uploadType'=>'file','inputname'=>$pk,'attachIds'=>$defaultS,'urlquery'=>'attach_type=admin_file&upload_type=file'))}
         </div>
         <php>endif;</php>
       	
