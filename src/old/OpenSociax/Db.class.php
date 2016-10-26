@@ -911,7 +911,7 @@ class Db extends Think
     public function commit()
     {
         if ($this->transTimes > 0) {
-            Capsule::getReadPdo()->commit();
+            // Capsule::getReadPdo()->commit();
             // $result = mysql_query('COMMIT', $this->_linkID);
             $this->transTimes = 0;
             if (!Capsule::getReadPdo()->commit()) {
