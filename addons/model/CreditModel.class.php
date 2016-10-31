@@ -291,6 +291,7 @@ class CreditModel extends Model
         }
 
         $creditUser ['uid'] || $creditUser ['uid'] = $uid;
+        $creditUser ['type'] = $creditSet['type'] ? intval($creditSet) : 1;
         if ($creditUserDao->where('uid='.$creditUser['uid'])->count()) {
             $map['id'] = $creditUser['id'];
             $map['uid'] = $creditUser['uid'];

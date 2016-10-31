@@ -574,10 +574,7 @@ class IndexAction extends Action
     {
         //检测用户是否被禁言
         if ($isDisabled = model('DisableUser')->isDisableUser($this->mid, 'post')) {
-            return array(
-                'status' => 0,
-                'msg' => '您已经被禁言了',
-            );
+            $this->error('您已被禁言！', $type);
         }
         if ($_GET['post_type'] == 'index') {
             $type = false;

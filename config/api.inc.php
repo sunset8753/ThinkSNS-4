@@ -8,6 +8,10 @@ return array(
         'Oauth/*' => true,
         'ProductShare/*' => true,
         'Public/*' => true,
+        'LiveUser/postUser' => true,
         'Information/reader' => true,
+        'LiveOauth/ZB_User_Get_AuthByTicket' => true,
+        'LiveGift/*' => true,
+        'LiveUser/*' => true
     ),
 );
