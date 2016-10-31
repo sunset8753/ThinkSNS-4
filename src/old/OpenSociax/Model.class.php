@@ -1207,7 +1207,7 @@ class Model extends Think
      * @param  mixed $pageopt 分页参数
      * @return mixed
      */
-    public function findPage($pageopt, $count = false, $options = array())
+    public function findPage($pageopt = 20, $count = false, $options = array())
     {
         // 分析表达式
         $options = $this->_parseOptions($options);
