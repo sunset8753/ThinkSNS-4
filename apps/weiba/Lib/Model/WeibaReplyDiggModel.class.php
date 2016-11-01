@@ -101,7 +101,7 @@ class WeibaReplyDiggModel extends Model
         return $this->error;
     }
 
-    private function setDiggCache($uid, $feedId, $type = 'add')
+    private function setDiggCache($uid, $feedId = 0, $type = 'add')
     {
         $key = 'weiba_reply_digg_'.$uid;
         $data = S($key);
