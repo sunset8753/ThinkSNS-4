@@ -1236,7 +1236,7 @@ function CheckPermission($load = '', $action = '', $group = '')
  * @param  int    $uid    用户uid
  * @return bool
  */
-function CheckWeibaPermission($weiba_admin, $id, $action, $uid)
+function CheckWeibaPermission($weiba_admin, $id, $action, $uid = 0)
 {
     !$uid && $uid = $GLOBALS['ts']['mid'];
     //超级管理员判断
