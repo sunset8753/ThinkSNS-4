@@ -654,7 +654,7 @@ class ContentAction extends AdministratorAction
             $this->assign('jumpUrl', U('admin/Content/topic'));
             $this->success(L('PUBLIC_ADD_SUCCESS'));
         } else {
-            $this->error($user->getLastError());
+            $this->error(model('FeedTopicAdmin')->getError());
         }
     }
 
@@ -773,7 +773,7 @@ class ContentAction extends AdministratorAction
             $this->assign('jumpUrl', U('admin/Content/topic'));
             $this->success(L('PUBLIC_SYSTEM_MODIFY_SUCCESS'));
         } else {
-            $this->error($user->getLastError());
+            $this->error(D('feed_topic')->getError());
         }
     }
 
