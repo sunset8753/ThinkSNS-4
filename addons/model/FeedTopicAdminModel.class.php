@@ -12,7 +12,7 @@ class FeedTopicAdminModel extends Model
      * @param int limit 每页显示条数
      * @return array 话题列表
      */
-    public function getTopic($limit = 20, $isrecommend)
+    public function getTopic($limit = 20, $isrecommend = 0)
     {
         if ($isrecommend) {
             $map['recommend'] = 1;
@@ -63,6 +63,7 @@ class FeedTopicAdminModel extends Model
     public function addTopic($data)
     {
         $maps['topic_name'] = t($data['topic_name']);
+        $maps['count'] = 0;
         $maps['note'] = t($data['note']);
         $maps['domain'] = t($data['domain']);
         $maps['des'] = t($data['des']);
