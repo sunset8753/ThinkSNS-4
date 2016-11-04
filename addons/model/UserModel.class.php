@@ -267,7 +267,7 @@ class UserModel extends Model
         }
 
         // # 返回用户备注，不缓存
-        if ($GLOBALS ['ts'] ['mid'] != 0) {
+        if (isset($GLOBALS ['ts']['mid']) && $GLOBALS ['ts']['mid'] != 0) {
             $rm ['mid'] = $GLOBALS ['ts']['mid'];
             $rm ['uid'] = $user ['uid'];
             $remark = D('UserRemark')->where($rm)->getField('remark');
