@@ -3345,3 +3345,36 @@ function postUser()
         }
     }
 }
+
+
+/**
+ * 转换备注
+ * @Author Foreach[missu082500@163.cocm]
+ */
+function parse_remark($content){
+    $content = preg_replace_callback('/@([\w\x{2e80}-\x{9fff}\-]+)/u', '_parse_remark', $content);
+    return $content;
+}
+
+/**
+ * 转换备注
+ * @Author Foreach[missu082500@163.cocm]
+ */
+function _parse_remark($result)
+{
+    $info = static_cache('user_info_uname_'.$result[1]);
+    if (!$info) {
+        $info = model('User')->getUserInfoByName($result[1]);
+        if (!$info) {
+            $info = 1;
+        }
+        static_cache('user_info_uname_'.$result[1], $info);
+    }
+
+    if ($info && $info['is_active'] && $info['is_audit'] && $info['is_init']) {
+        $remark = model('UserRemark')->getRemark($_SESSION['mid'], $info['uid']);
+        return $remark ? '@' . $remark : $result[0];
+    } else {
+        return $result[0];
+    }
+}
