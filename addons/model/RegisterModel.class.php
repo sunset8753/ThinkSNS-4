@@ -221,17 +221,19 @@ class RegisterModel extends Model
             return false;
         }
 
-        $old_user = \Ts\Models\User::existent()->byUserName($old_name)->first();
         $user = \Ts\Models\User::existent()->byUserName($name)->first();
-        if (
-            $name != $old_name &&
-            $old_name &&
-            $user &&
-            $old_user->uid != $user->uid
-        ) {
+
+        if (!$old_name && $user) {
             $this->_error = '该用户名已经存在。';
 
             return false;
+        } else if ($old_name) {
+            $old_user = \Ts\Models\User::existent()->byUserName($old_name)->first();
+            if ($name != $old_name && $old_user && $old_user->uid != $user->uid) {
+                $this->_error = '该用户名已经存在。';
+
+                return false;
+            }
         }
 
         //敏感词
