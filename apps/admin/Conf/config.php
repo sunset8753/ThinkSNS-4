@@ -60,7 +60,7 @@ $menu = array(
                 // L('PUBLIC_WEIBO_TEMPLATE_SETTING')	=>  U('admin/Apps/setFeedNode'),
                 'SEO配置' => U('admin/Config/setSeo'),
                 // '页面配置同步' => U('admin/Config/updateAdminTab'),
-                'UCenter配置' => U('admin/Config/setUcenter'),
+                // 'UCenter配置' => U('admin/Config/setUcenter'),
 
                 // '第三方视频接口配置' => U('admin/Config/youkuOutside'),
             ),
@@ -136,6 +136,8 @@ $menu = array(
                 '极光推送' => U('admin/Application/jpush'),
                 '关于我们' => U('admin/Application/about'),
                 '反馈管理' => U('admin/Application/feedback'),
+                '直播相关设置' => U('admin/Application/ZB_config'),
+                '提现管理' => U('admin/Application/ZB_credit_order'),
             ),
         ),
     ),

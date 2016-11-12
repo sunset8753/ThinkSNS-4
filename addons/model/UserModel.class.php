@@ -535,7 +535,6 @@ class UserModel extends Model
 
             return true;
         }
-
         $this->error = L('PUBLIC_ADD_USER_FAIL');
 
         return false;

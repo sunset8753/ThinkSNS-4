@@ -2,7 +2,7 @@
 
 /* # include base class */
 import(APPS_PATH.'/admin/Lib/Action/AdministratorAction.class.php');
-
+use Ts\Models as Model;
 /**
  * APP 客户端设置
  *
@@ -26,7 +26,10 @@ class ApplicationAction extends AdministratorAction
         'channel' => '频道',
         'user' => '用户',
     );
-
+    public function _initialize()
+    {
+        parent::_initialize();
+    }
     /**
      * 轮播列表
      *
@@ -260,4 +263,134 @@ class ApplicationAction extends AdministratorAction
 
         $this->displayConfig();
     }
+
+    //app端直播支付相关配置 bs
+    public function ZB_config()
+    {
+        $this->pageKeyList = array('version', 'gold_exchange_ratio_list', 'cash_exchange_ratio_list', 'alipay_pid', 'alipay_key', 'alipay_email');
+        array_push($this->pageTab, array(
+            'title' => 'app直播相关设置',
+            'hash' => 'ZB_config',
+            'url' => U('admin/Application/ZB_config'),
+        ));
+
+        $this->displayConfig();
+    }
+
+    //提现管理
+    public function ZB_credit_order()
+    {
+        $this->pageTab[] = array('title'=>'提现记录','hash'=>'ZB_credit_order','url'=>U('admin/Application/ZB_credit_order'));
+        $this->pageButton[] = array('title' => '搜索记录', 'onclick' => "admin.fold('search_form')");
+        $this->pageButton[] = array('title' => '批量驳回', 'onclick' => "admin.setReason()");
+        $this->pageKeyList = array('order_number','uid','uname','account','gold','amount','ctime','utime','status','DOACTION');
+        $this->searchKey = array('uid','order_number','account');
+        $this->$searchPostUrl = U('admin/Application/ZB_credit_order');
+        $this->_listpk = 'order_number';
+        if ($_POST) {
+            $_POST['uid'] && $map['uid'] = $_POST['uid'];
+            $_POST['order_number'] && $map['order_number'] = array('like','%'.$_POST['order_number'].'%');
+            $_POST['account'] && $map['account'] = array('like','%'.$_POST['account'].'%');
+        }
+        $list = D('credit_order')->where($map)->findPage(20);
+        foreach ($list['data'] as $key => &$value) {
+            if ($value['status'] == 0) {
+                $value['DOACTION'] = '<a href="'.U('admin/Application/pass', array('number' => $value['order_number'])).'">处理</a> ';
+                $value['DOACTION'] .= ' <a href="javascript:;" onclick="admin.setReason('.$value['order_number'].')">驳回</a>';
+            }
+
+            switch ($value['status']) {
+                case '0':
+                    $value['status'] = '<font color="orange">待处理</font>';
+                    break;
+                case '1':
+                    $value['status'] = '<font color="green">已处理</font>';
+                    break;
+                case '2':
+                    $value['status'] = '<font color="red">已驳回</font>';
+                    break;
+            }
+            $value['ctime'] = date('Y-m-d h:i:s',$value['ctime']);
+            $value['utime'] = empty($value['utime']) ? '暂无处理' : date('Y-m-d h:i:s',$value['utime']);
+            $value['uname'] = getUserName($value['uid']);
+
+        }
+        $this->displayList($list);
+    }
+
+    public function pass()
+    {
+        $return = $this->solveOrder($_GET['number'], 1);
+        if ($return['status'] == 0) {
+            $this->success($return['message']);
+        } else {
+            $this->error($return['message']);
+        }
+    }
+
+    public function setReason()
+    {
+        $numbers = $_GET['number'];
+        $this->assign('numbers',$numbers);
+        $this->display();
+    }
+
+    public function doSetReason()
+    {
+        $numbers = explode(',',$_POST['number']);
+        foreach ($numbers as $key => $value) {
+            if(!empty($value)) {
+                $this->solveOrder($value,2,$_POST['reason']);
+            }
+        }
+        exit(json_encode(array('status'=>1,'info'=>'驳回成功')));
+    }
+
+    /**
+     * 处理提现
+     */
+    private function solveOrder($number,$type,$reason='')
+    {
+        $map['order_number'] = $number;//多个以逗号隔开 支持批量
+        $save['status'] = intval($type) == 1 ? 1 : 2;
+        $save['utime'] = time();
+        $orderinfo = Model\CreditOrder::where('order_number',$number)->first();
+        if ($orderinfo->status == 0) {
+                    // dumP($orderinfo->uid);die;
+            $do = D('credit_order')->where($map)->save($save);//更新处理时间 处理状态
+
+            if ($do) {
+                $uinfo = D('User')->where(array('uid'=>$orderinfo->uid))->find();
+                if ($type == 1) {
+                    $messagecontent = '您的提现申请已被处理，请注意查收';
+                    if(!empty($uinfo['phone'])) {
+                        D('Sms')->sendMessage($uinfo['phone'],$messagecontent);
+                    }
+                } else {
+                    $messagecontent = '您的提现申请已被驳回，理由是'.$reason;
+                    if(!empty($uinfo['phone'])) {
+                        D('Sms')->sendMessage($uinfo['phone'],$messagecontent);
+                    }
+
+                    $record['cid'] = 0;//没有对应的积分规则
+                    $record['type'] = 4;//4-提现
+                    $record['uid'] = $orderinfo->uid;
+                    $record['action'] = '提现驳回';
+                    $record['des'] = '';
+                    $record['change'] = '积分<font color="red">+'.$orderinfo->gold.'</font>';//驳回积分加回来
+                    $record['ctime'] = time();
+                    $record['detail'] = json_encode( array('score' => '+'.$orderinfo->gold) );
+                    $record['reason'] = $reason;
+                    D('credit_record')->add($record);
+                    D('credit_user')->setInc('score', 'uid='.$orderinfo->uid, $orderinfo->gold);
+                }
+
+                return array('message'=>'操作成功','status'=>0);
+
+            } else {
+                return array('message'=>'操作失败','status'=>1);
+            }
+        }
+    }
+
 } // END class ApplicationAction extends AdministratorAction

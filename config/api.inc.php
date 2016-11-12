@@ -13,5 +13,8 @@ return array(
         'LiveOauth/ZB_User_Get_AuthByTicket' => true,
         'LiveGift/*' => true,
         'LiveUser/*' => true,
+        'Application/getVersion' => true,
+        'Application/test' => true,
+        'Application/getZBConfig' => true,
     ),
 );
