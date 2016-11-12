@@ -41,8 +41,11 @@ composer update
 * 和你一样的协作者以及主版本都将择优使用你的代码。
 * 为了情怀。
 
-## 还有什么
-TS中存在太多冗余的东西，尤其是js，不知道哪位愿意做清理工作呢？
+## 🙏
+
+- 前端清理工作：🙏感谢*耿师傅*，正在进行～上上一个💋。
+- 稳定性修复工作：[@HHHCODE](https://github.com/HHHCODE).
+
 
 ## LICENSE
 [ThinkSNS授权协议](http://www.thinksns.com/commercialAuthorizationa.htm)
