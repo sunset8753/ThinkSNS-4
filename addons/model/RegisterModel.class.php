@@ -229,7 +229,7 @@ class RegisterModel extends Model
             return false;
         } elseif ($old_name) {
             $old_user = \Ts\Models\User::existent()->byUserName($old_name)->first();
-            if ($name != $old_name && $old_user && $old_user->uid != $user->uid) {
+            if ($name != $old_name && $old_user && $user && $old_user->uid != $user->uid) {
                 $this->_error = '该用户名已经存在';
 
                 return false;
