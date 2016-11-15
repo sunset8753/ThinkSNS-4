@@ -21,7 +21,7 @@ function getAlipayConfig(array $alipayConfig = null)
     return $config;
 }
 
-function createAlipayUrl(array $alipayConfig, array $parameter)
+function createAlipayUrl(array $alipayConfig, array $parameter, $type = 1)
 {
     $alipayConfig = getAlipayConfig($alipayConfig);
     $parameter = array_merge(array(
@@ -41,8 +41,16 @@ function createAlipayUrl(array $alipayConfig, array $parameter)
         '_input_charset' => trim(strtolower($alipayConfig['input_charset'])),
     ), $parameter);
     $alipaySubmit = new AlipaySubmit($alipayConfig);
-    $url = $alipaySubmit->alipay_gateway_new;
-    $url .= $alipaySubmit->buildRequestParaToString($parameter);
+    if ($type == 1) {
+        $url = $alipaySubmit->alipay_gateway_new;
+        $url .= $alipaySubmit->buildRequestParaToString($parameter);
+    } else {
+        $parameter['seller_id'] = trim($alipayConfig['partner']);
+
+        $url = $alipaySubmit->alipay_client_url;
+        $url .=  urlencode(json_encode(array('requestType' => 'SafePay', "fromAppUrlScheme" => "com.zhiyiThinkSNS4", "dataString" => $alipaySubmit->buildRequestParaToString($parameter))));
+    }
+
 
     return $url;
 }

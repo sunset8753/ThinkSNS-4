@@ -19,6 +19,10 @@ class AlipaySubmit
      *支付宝网关地址（新）
      */
     public $alipay_gateway_new = 'https://mapi.alipay.com/gateway.do?';
+    /*
+        客户端调用
+     */
+    public $alipay_client_url = 'alipay://alipayclient/?';
 
     public function __construct($alipay_config)
     {
