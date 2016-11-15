@@ -268,20 +268,21 @@ class ApplicationAction extends AdministratorAction
     //app端直播支付相关配置 bs
     public function ZB_config()
     {
-        $this->pageKeyList = array('version', 'gold_exchange_ratio_list', 'cash_exchange_ratio_list', 'alipay_pid', 'alipay_key', 'alipay_email');
+        $this->pageKeyList = array('version', 'cash_exchange_ratio_list');
+        $this->pageTab[] = array('title' => '充值配置', 'tabHash' => 'charge', 'url' => U('admin/Config/charge'));
         array_push($this->pageTab, array(
-            'title' => 'app直播相关设置',
-            'hash' => 'ZB_config',
+            'title' => '提现配置',
+            'tabHash' => 'ZB_config',
             'url' => U('admin/Application/ZB_config'),
         ));
-
+       
         $this->displayConfig();
     }
 
     //提现管理
     public function ZB_credit_order()
     {
-        $this->pageTab[] = array('title' => '提现记录', 'hash' => 'ZB_credit_order', 'url' => U('admin/Application/ZB_credit_order'));
+        $this->pageTab[] = array('title' => '提现记录', 'tabHash' => 'ZB_credit_order', 'url' => U('admin/Application/ZB_credit_order'));
         $this->pageButton[] = array('title' => '搜索记录', 'onclick' => "admin.fold('search_form')");
         $this->pageButton[] = array('title' => '批量驳回', 'onclick' => 'admin.setReason()');
         $this->pageKeyList = array('order_number', 'uid', 'uname', 'account', 'gold', 'amount', 'ctime', 'utime', 'status', 'DOACTION');
@@ -297,7 +298,7 @@ class ApplicationAction extends AdministratorAction
         foreach ($list['data'] as $key => &$value) {
             if ($value['status'] == 0) {
                 $value['DOACTION'] = '<a href="'.U('admin/Application/pass', array('number' => $value['order_number'])).'">处理</a> ';
-                $value['DOACTION'] .= ' <a href="javascript:;" onclick="admin.setReason('.$value['order_number'].')">驳回</a>';
+                $value['DOACTION'] .= ' <a href="javascript:;" onclick="admin.setReason(\''.$value['order_number'].'\')">驳回</a>';
             }
 
             switch ($value['status']) {
