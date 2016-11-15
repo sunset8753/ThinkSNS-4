@@ -7,7 +7,7 @@ error_reporting(E_ERROR ^ E_NOTICE ^ E_WARNING);
 ini_set('display_errors', true);
 error_reporting(E_ALL);
 set_time_limit(0);
-// */
+*/
 
 define('DEBUG', false);
 
