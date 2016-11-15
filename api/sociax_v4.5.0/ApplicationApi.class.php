@@ -42,8 +42,19 @@ class ApplicationApi extends Api
         if (md5($this->key) != $key) {
             return $this->rd('', '认证失败', 1);
         }
-        $info['gold_exchange_ratio_list'] = getExchangeConfig('gold');
+        $chongzhi_info = model('Xdata')->get('admin_Config:charge');
         $info['cash_exchange_ratio_list'] = getExchangeConfig('cash');
+        $info['charge_ratio'] = $chongzhi_info['charge_ratio'] ? : '100';//1人民币等于多少积分
+        $info['charge_description'] = $chongzhi_info['description'] ? : '充值描述';//充值描述
+        $field = $this->data['field'];//关键字  不传为全部
+        if ($field) {
+            $field = explode(',', $field);
+            foreach ($info as $key => $value) {
+                if (!in_array($key, $field)) {
+                    unset($info[$key]);
+                }
+            }
+        } 
 
         return $this->rd($info);
     }
@@ -72,7 +83,7 @@ class ApplicationApi extends Api
         $data['account'] = $accountinfo['data']['account'];
         $data['type'] = intval($accountinfo['data']['type']); //绑定获取
 
-         $data['gold'] = intval($this->data['gold']);
+        $data['gold'] = intval($this->data['gold']);
         $data['amount'] = $this->data['amount'];
         $data['ctime'] = time();
          // if (!$data['account']) {

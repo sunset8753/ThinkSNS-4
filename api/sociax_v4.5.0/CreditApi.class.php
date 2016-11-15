@@ -146,8 +146,112 @@ class CreditApi extends Api
         }
     }
 
-    public function saveCharge()
+
+    /*
+        ios 充值 直接返回一个url
+     */
+    public function createChargeIOS()
     {
+        $price = 0.01;//($this->data['money']);
+        // if ($price < 1) {
+        //     return array('status' => 0, 'mesage' => '充值金额不正确');
+        // }
+        $type = intval($this->data['type']);
+        $types = array('alipay', 'weixin');
+        if (!isset($types[$type])) {
+            return array('status' => 0, 'mesage' => '充值方式不支持');
+        }
+        $chargeConfigs = model('Xdata')->get('admin_Config:charge');
+        if (!in_array($types[$type], $chargeConfigs['charge_platform'])) {
+            return array('status' => 0, 'mesage' => '充值方式不支持');
+        }
+
+        $data ['serial_number'] = 'CZ'.date('YmdHis').rand(0, 9).rand(0, 9);
+        $data ['charge_type'] = $type;
+        $data ['charge_value'] = $price;
+        $data ['uid'] = $this->mid;
+        $data ['ctime'] = time();
+        $data ['status'] = 0;
+        $data ['charge_sroce'] = intval($price * abs(intval($chargeConfigs['charge_ratio'])));
+        $data ['charge_order'] = '';
+        $result = D('credit_charge')->add($data);
+
+        if ($result) {
+            $data['charge_id'] = $result;
+
+            require_once ADDON_PATH.'/library/alipay/alipay.php';
+            $configs = $parameter = array();
+            $configs['partner'] = $chargeConfigs['alipay_pid'];
+            $configs['seller_id'] = $chargeConfigs['alipay_pid'];
+            $configs['seller_email'] = $chargeConfigs['alipay_email'];
+            $configs['key'] = $chargeConfigs['alipay_key'];
+            $parameter = array(
+                'notify_url'    => SITE_URL.'/alipay_notify_api.php',
+                'out_trade_no'  => $data['serial_number'],
+                'subject'       => '积分充值:'.$data['charge_sroce'].'积分',
+                'total_fee'     => $data['charge_value'],
+                'body'          => '',
+                'payment_type'  => 1,
+                'service'       => 'mobile.securitypay.pay',
+                'it_b_pay'      => '1c',
+            );
+            $url = createAlipayUrl($configs, $parameter, 2);//直接返回支付宝支付url
+            return array(
+                'status' => 1,
+                'mesage' => '',
+                'data' => $url,
+            );
+        } else {
+            $res = array();
+            $res ['status'] = 0;
+            $res ['mesage'] = '充值创建失败';
+
+            return $res;
+        }   
+    }
+
+    //调用支付后的返回验证 验证通过则加积分
+    //支付的回调不能跳转  输出success 给支付宝
+    public function alipayNotify()
+    {
+        unset($_GET['app'], $_GET['mod'], $_GET['act']);
+        unset($_REQUEST['app'], $_REQUEST['mod'], $_REQUEST['act']);
+        header('Content-type:text/html;charset=utf-8');
+        require_once ADDON_PATH.'/library/alipay/alipay.php';
+        $chargeConfigs = model('Xdata')->get('admin_Config:charge');
+        $configs = array(
+            'partner' => $chargeConfigs['alipay_pid'],
+            'seller_id' => $chargeConfigs['alipay_pid'],
+            'seller_email' => $chargeConfigs['alipay_email'],
+            'key' => $chargeConfigs['alipay_key'],
+        );
+        if (verifyAlipayNotify($configs)) {
+            model('Credit')->charge_success(t($_POST['out_trade_no']));
+        }
+        exit;
+    }
+
+    //客户端拿到订单号 检查订单状态
+    public function checkChage()
+    {
+        $map['serial_number'] = $this->data['out_trade_no'];
+        if (!$map['serial_number']) {
+            
+            return array('status' => 0, 'mesage' => '参数错误');
+        }
+
+        $status = D('credit_charge')->where($map)->getField('status');
+        if ($status == 1) {
+
+            return array('status' => 1, 'mesage' => '充值成功');
+        } else {
+
+            return array('status' => 0, 'mesage' => '充值失败');
+        }
+    }  //这个参数的返回跟其他接口不一致、、、
+
+    public function saveCharge()
+    {   
         $number = (string) $this->data['serial_number'];
         $status = intval($this->data['status']);
         $sign = (string) $this->data['sign'];
