@@ -136,7 +136,6 @@ $menu = array(
                 '极光推送' => U('admin/Application/jpush'),
                 '关于我们' => U('admin/Application/about'),
                 '反馈管理' => U('admin/Application/feedback'),
-                '直播相关设置' => U('admin/Application/ZB_config'),
                 '提现管理' => U('admin/Application/ZB_credit_order'),
             ),
         ),
