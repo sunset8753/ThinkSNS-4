@@ -16,5 +16,6 @@ return array(
         'Application/getVersion' => true,
         'Application/test' => true,
         'Application/getZBConfig' => true,
+        'Credit/alipayNotify' => true,
     ),
 );
