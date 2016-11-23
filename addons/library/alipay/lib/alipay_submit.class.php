@@ -48,6 +48,9 @@ class AlipaySubmit
             case 'MD5':
                 $mysign = md5Sign($prestr, $this->alipay_config['key']);
                 break;
+            case 'RSA':
+                $mysign = rsaSign($prestr, $this->alipay_config['private_key_path']);
+                break;
             default:
                 $mysign = '';
         }
@@ -72,9 +75,14 @@ class AlipaySubmit
         $mysign = $this->buildRequestMysign($para_sort);
 
         //签名结果与签名方式加入请求提交参数组中
-        $para_sort['sign'] = $mysign;
-        $para_sort['sign_type'] = strtoupper(trim($this->alipay_config['sign_type']));
 
+        if(strtoupper(trim($this->alipay_config['sign_type']))=='RSA') {
+            $para_sort['sign'] = urlencode($mysign);
+            $para_sort['sign_type'] = 'RSA';
+        } elseif(strtoupper(trim($this->alipay_config['sign_type']))=='MD5') {
+            $para_sort['sign'] = $mysign;
+            $para_sort['sign_type'] = strtoupper(trim($this->alipay_config['sign_type']));
+        }
         return $para_sort;
     }
 
@@ -87,7 +95,7 @@ class AlipaySubmit
     {
         //待请求参数数组
         $para = $this->buildRequestPara($para_temp);
-
+        // var_dump($para);die;
         //把参数组中所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串，并对字符串做urlencode编码
         $request_data = createLinkstringUrlencode($para);
 

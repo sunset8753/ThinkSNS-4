@@ -17,5 +17,8 @@ return array(
         'Application/test' => true,
         'Application/getZBConfig' => true,
         'Credit/alipayNotify' => true,
+        'Credit/weixinNotify' => true,
+        //极铺登录TS账户
+        'Jipu/authorize' => true,
     ),
 );

@@ -8282,7 +8282,7 @@ CREATE TABLE IF NOT EXISTS `ts_user` (
   `input_city` varchar(255) DEFAULT NULL COMMENT '手动提交地址',
   `is_fixed` tinyint(1) NOT NULL DEFAULT '1' COMMENT '分享框固定为发布状态',
   PRIMARY KEY (`uid`),
-  UNIQUE KEY `email` (`email`) USING BTREE,
+  KEY `email` (`email`) USING BTREE,
   KEY `login` (`phone`) USING BTREE,
   KEY `uname` (`uname`) USING BTREE
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;

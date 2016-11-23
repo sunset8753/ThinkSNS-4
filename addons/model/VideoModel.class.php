@@ -5,12 +5,8 @@
  * @package ThinkSNS\Addnons\Model\Video
  * @author Seven Du <lovevipdsw@vip.qq.com>
  **/
-class VideoModel extends OldVideoModel
-{
-} // END class VideoModel extends OldVideoModel
-
 // 原有的文件
-class OldVideoModel extends Model
+class VideoModel extends Model
 {
     public function upload($from = 0, $timeline = 0)
     {
