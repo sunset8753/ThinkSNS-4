@@ -97,7 +97,7 @@
     "support": {
         "email": "support@zhishisoft.com",
         "forum": "http://demo.thinksns.com",
-        "source": "https://github.com/medz/ThinkSNS-4.git"
+        "source": "https://github.com/medz/thinksns.git"
     },
     "suggest":{
         "medz/vendor-pack-pinyin": "This is a converted Chinese characters spelling library.",
