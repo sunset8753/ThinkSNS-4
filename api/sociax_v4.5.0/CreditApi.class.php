@@ -251,7 +251,6 @@ class CreditApi extends Api
 
         if ($result) {
             $data['charge_id'] = $result;
-
             if ($type == 0) {//支付宝支付
                 require_once ADDON_PATH.'/library/alipay/alipay.php';
                 $configs = $parameter = array();
@@ -290,7 +289,6 @@ class CreditApi extends Api
                 $url['url'] = $weixinpay->getPayParam($order, $chargeConfigs['weixin_pid'], $chargeConfigs['weixin_mid'], $chargeConfigs['weixin_key'], 1);
                 $url['out_trade_no'] = $data['serial_number'];
             }
-
             return array(
                 'status' => 1,
                 'mesage' => '',
@@ -302,7 +300,7 @@ class CreditApi extends Api
             $res ['mesage'] = '充值创建失败';
 
             return $res;
-        }   
+        }
     }
 
     //调用支付后的返回验证 验证通过则加积分
@@ -346,22 +344,19 @@ class CreditApi extends Api
     {
         $map['serial_number'] = $this->data['out_trade_no'];
         if (!$map['serial_number']) {
-            
             return array('status' => 0, 'mesage' => '参数错误');
         }
 
         $status = D('credit_charge')->where($map)->getField('status');
         if ($status == 1) {
-
             return array('status' => 1, 'mesage' => '充值成功');
         } else {
-
             return array('status' => 0, 'mesage' => '充值失败');
         }
     }  //这个类里的参数返回跟其他接口不一致、、、mesage..
 
     public function saveCharge()
-    {   
+    {
         $number = (string) $this->data['serial_number'];
         $status = intval($this->data['status']);
         $sign = (string) $this->data['sign'];
