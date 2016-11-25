@@ -13,22 +13,9 @@ define('SITE_PATH', dirname(__FILE__));
 $_GET['app'] = 'api';
 
 define('APP_NAME', 'api');
-if (isset($_REQUEST['api_version'])) {
-    if ($_REQUEST['api_version'] == 'live') {
-        define('API_VERSION', 'live');
-    } elseif ($_REQUEST['api_version'] == 'jipu') {
-        define('API_VERSION', 'jipu');
-    } elseif ($_REQUEST['api_version'] == 'video') {
-        define('API_VERSION', 'video');
-    } elseif ($_REQUEST['api_version'] == 'photo') {
-        define('API_VERSION', 'photo');
-    } else {
-        $api_version = preg_replace('/[^A-Za-z0-9\._-]/', '', $_REQUEST['api_version']);
-        define('API_VERSION', 'sociax_v'.$api_version);
-    }
-} else {
-    define('API_VERSION', 'sociax_v4.5.0');
-}
+$api_version = !empty($_REQUEST['api_version']) ? $_REQUEST['api_version'] : '4.5.0';
+$api_type = !empty($_REQUEST['api_type']) ? $_REQUEST['api_type'] : 'sociax';
+define('API_VERSION', $api_type . '_v' .$api_version);
 
 /* 新系统需要的一些配置 */
 define('TS_ROOT', dirname(__FILE__));        // Ts根

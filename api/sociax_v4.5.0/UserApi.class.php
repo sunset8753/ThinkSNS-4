@@ -1343,9 +1343,16 @@ class UserApi extends Api
             $map ['value'] = $value;
             $res = D('user_privacy')->add($map);
         }
+
+        $user_privacy = model('UserPrivacy')->getUserSet($this->mid);
+        $data ['message'] = $user_privacy ['message'] ? $user_privacy ['message'] : 0;
+        $data ['space'] = $user_privacy ['space'] ? $user_privacy ['space'] : 0;
+        $data ['comment_weibo'] = $user_privacy ['comment_weibo'] ? $user_privacy ['comment_weibo'] : 0;
+
         // if($res){
         return array(
                 'status' => 1,
+                'data' => $data,
                 'msg' => '设置成功',
         );
         // }else{

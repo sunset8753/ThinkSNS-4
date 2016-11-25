@@ -20,5 +20,7 @@ return array(
         'Credit/weixinNotify' => true,
         //极铺登录TS账户
         'Jipu/authorize' => true,
+        'Jipu/register' => true,
+        'Jipu/save_user_info' => true,
     ),
 );

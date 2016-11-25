@@ -439,14 +439,13 @@ class WeiboApi extends Api
      */
     public function post_weibo($datas)
     {
-        if (! $datas) {
-            if (! CheckPermission('core_normal', 'feed_post')) {
-                return array(
-                        'status' => 0,
-                        'msg' => '您没有权限',
-                );
-            }
-        } else {
+        if (!CheckPermission('core_normal', 'feed_post')) {
+            return array(
+                'status' => 0,
+                'msg' => '您没有权限',
+            );
+        }
+        if ($datas) {
             $this->data ['type'] = $datas ['type'];
         }
 
@@ -602,6 +601,12 @@ class WeiboApi extends Api
      */
     public function upload_photo()
     {
+        if (!CheckPermission('core_normal', 'feed_post')) {
+            return array(
+                'status' => 0,
+                'msg' => '您没有权限',
+            );
+        }
         $d ['attach_type'] = 'feed_image';
         $d ['upload_type'] = 'image';
         $GLOBALS ['fromMobile'] = true;
@@ -642,7 +647,12 @@ class WeiboApi extends Api
     public function upload_video()
     {
         // return $_FILES;
-
+        if (!CheckPermission('core_normal', 'feed_post')) {
+            return array(
+                'status' => 0,
+                'msg' => '您没有权限',
+            );
+        }
         // dump($_REQUEST);exit;
         $info = model('Video')->upload($this->data ['from'], $this->data ['timeline']);
         if ($info ['status']) {

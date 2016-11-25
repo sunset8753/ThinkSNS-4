@@ -106,8 +106,8 @@ class PublicApi extends Api
      **/
     public function discover()
     {
-        $open_arr = isset($this->data['needs']) ? explode(',', t($this->data['needs'])) : array('1', '2', '3', '4', '5', '6', '7', '8', '9');
-        $type = isset($this->data['type']) ? t($this->data['type']) : 'system';
+        $open_arr = !empty($this->data['needs']) ? explode(',', t($this->data['needs'])) : array('1', '2', '3', '4', '5', '6', '7', '8', '9', '10');
+        $type = !empty($this->data['type']) ? t($this->data['type']) : 'system';
         $list = S('api_discover_'.$type);
 
         if (!$list) {
@@ -295,6 +295,15 @@ class PublicApi extends Api
             } else {
                 $list ['lives'] = array();
             }
+        }
+
+        //极铺商品
+        if (in_array('10', $open_arr)) {
+            $jipu_url = 'http://www.jipushop.com/Api/tsGoods';
+            $goods_rs = file_get_contents($jipu_url);
+            $goods_rs = json_decode($goods_rs, true);
+
+            $list['jipu_goods'] = $goods_rs;
         }
 
         return $list;

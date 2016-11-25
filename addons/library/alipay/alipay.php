@@ -1,7 +1,7 @@
 <?php
 
-require_once dirname(__FILE__).'/lib/alipay_submit.class.php';
-require_once dirname(__FILE__).'/lib/alipay_notify.class.php';
+// require_once dirname(__FILE__).'/lib/alipay_submit.class.php';
+// require_once dirname(__FILE__).'/lib/alipay_notify.class.php';
 
 function getAlipayConfig(array $alipayConfig = null)
 {
@@ -14,6 +14,7 @@ function getAlipayConfig(array $alipayConfig = null)
         'cacert' => dirname(__FILE__).'/cacert.pem',
         'transport' => 'http',
         'private_key_path' => '',
+        'alipay_public_key' => '',
     );
     if ($alipayConfig) {
         $config = array_merge($config, $alipayConfig);

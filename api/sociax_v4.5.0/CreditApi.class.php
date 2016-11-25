@@ -105,10 +105,10 @@ class CreditApi extends Api
     */
     public function createCharge()
     {
-        $price = 0.01; //intval($this->data['money']);
-        // if ($price < 1) {
-        //     return array('status' => 0, 'mesage' => '充值金额不正确');
-        // }
+        $price = intval($this->data['money']);
+        if ($price < 1) {
+            return array('status' => 0, 'mesage' => '充值金额不正确');
+        }
         $type = intval($this->data['type']);
         $types = array('alipay', 'weixin');
         if (!isset($types[$type])) {
@@ -134,12 +134,11 @@ class CreditApi extends Api
         $data ['status'] = 0;
         $data ['charge_sroce'] = intval($price * abs(intval($chargeConfigs['charge_ratio'])));
         $data ['charge_order'] = '';
-        // $result = D('credit_charge')->add($data);
+        $result = D('credit_charge')->add($data);
 
-        if (!$result) {
+        if ($result) {
             $data['charge_id'] = $result;
             if ($type == 0) {
-                require_once ADDON_PATH.'/library/alipay/alipay.php';
                 $configs = $parameter = array();
                 $configs['partner'] = $chargeConfigs['alipay_pid'];
                 $configs['seller_id'] = $chargeConfigs['alipay_pid'];
@@ -158,7 +157,7 @@ class CreditApi extends Api
                 $parameter['biz_content'] = '{'.
                     '"subject":"积分充值:'.$data['charge_sroce'].'积分",'.
                     '"out_trade_no":"'.$data['serial_number'].'",'.
-                    '"total_amount":"'.$data['charge_value']."\",'".
+                    '"total_amount":"'.$data['charge_value'].'",'.
                     '"seller_id":"'.$chargeConfigs['alipay_pid'].'",'.
                     '"product_code":"QUICK_MSECURITY_PAY"'.
                     '}';
@@ -174,7 +173,6 @@ class CreditApi extends Api
                     'data' => $url,
                 );
             } elseif ($type == 1) {
-                require_once ADDON_PATH.'/library/WeChatPay.php';
                 $ip = get_client_ip(); //微信支付需要终端ip
                 $order = array(
                     'body' => '积分充值:'.$data['charge_sroce'].'积分',
@@ -253,7 +251,6 @@ class CreditApi extends Api
         if ($result) {
             $data['charge_id'] = $result;
             if ($type == 0) {//支付宝支付
-                require_once ADDON_PATH.'/library/alipay/alipay.php';
                 $configs = $parameter = array();
                 $configs['partner'] = $chargeConfigs['alipay_pid'];
                 $configs['seller_id'] = $chargeConfigs['alipay_pid'];
@@ -271,7 +268,6 @@ class CreditApi extends Api
                 );
                 $url = createAlipayUrl($configs, $parameter, 2); //直接返回支付宝支付url
             } elseif ($type == 1) {
-                require_once ADDON_PATH.'/library/WeChatPay.php';
                 $ip = get_client_ip(); //微信支付需要终端ip
                 $order = array(
                     'body' => '积分充值:'.$data['charge_sroce'].'积分',
@@ -314,12 +310,23 @@ class CreditApi extends Api
         header('Content-type:text/html;charset=utf-8');
         require_once ADDON_PATH.'/library/alipay/alipay.php';
         $chargeConfigs = model('Xdata')->get('admin_Config:charge');
-        $configs = array(
-            'partner' => $chargeConfigs['alipay_pid'],
-            'seller_id' => $chargeConfigs['alipay_pid'],
-            'seller_email' => $chargeConfigs['alipay_email'],
-            'key' => $chargeConfigs['alipay_key'],
-        );
+        if ($_POST['sign_type'] == 'RSA') {
+            $configs = array(
+                'partner' => $chargeConfigs['alipay_pid'],
+                'seller_id' => $chargeConfigs['alipay_pid'],
+                'seller_email' => $chargeConfigs['alipay_email'],
+                'alipay_public_key' => $chargeConfigs['alipay_public_key'],
+                'sign_type' => 'RSA',
+            );
+        } else {
+           $configs = array(
+                'partner' => $chargeConfigs['alipay_pid'],
+                'seller_id' => $chargeConfigs['alipay_pid'],
+                'seller_email' => $chargeConfigs['alipay_email'],
+                'key' => $chargeConfigs['alipay_key'],
+            );
+        }
+ 
         if (verifyAlipayNotify($configs)) {
             model('Credit')->charge_success(t($_POST['out_trade_no']));
         }
@@ -476,22 +483,5 @@ class CreditApi extends Api
         );
 
         return $arr;
-    }
-
-
-    //微信sign加密方法
-    private function setWXsign($param, $wxkey)
-    {
-        ksort($param);
-        $sign = '';
-        foreach ($param as $key => $value) {
-            if ($value && $key != 'sign' && $key != 'key') {
-                $sign .= $key.'='.$value.'&';
-            }
-        }
-        $sign .= 'key='.$wxkey;
-        $sign = strtoupper(md5($sign));
-
-        return $sign;
     }
 }

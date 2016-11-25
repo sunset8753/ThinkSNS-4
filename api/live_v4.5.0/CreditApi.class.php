@@ -134,55 +134,34 @@ class CreditApi extends Api
         $data ['status'] = 0;
         $data ['charge_sroce'] = intval($price * abs(intval($chargeConfigs['charge_ratio'])));
         $data ['charge_order'] = '';
-        $result = D('credit_charge')->add($data);
+        // $result = D('credit_charge')->add($data);
 
-        if ($result) {
+        if (!$result) {
             $data['charge_id'] = $result;
             if ($type == 0) {
-                // require_once ADDON_PATH.'/library/alipay/alipay.php';
-                // $configs = $parameter = array();
-                // $configs['partner'] = $chargeConfigs['alipay_pid'];
-                // $configs['seller_id'] = $chargeConfigs['alipay_pid'];
-                // $configs['seller_email'] = $chargeConfigs['alipay_email'];
-                // $configs['sign_type'] = 'RSA';
-                // $configs['private_key_path'] = $chargeConfigs['private_key_path'];
-                // $parameter = array(
-                //     '_input_charset'=>  '',
-                //     'app_id'        =>  $chargeConfigs['alipay_app_pid'],
-                //     'method'        =>  'alipay.trade.app.pay',
-                //     'charset'       =>  'utf-8',
-                //     'sign_type'     =>  'RSA',
-                //     'timestamp'     =>  date('Y-m-d H:i:s'),
-                //     'version'       =>  '1.0',
-                //     'notify_url'    =>  SITE_URL.'/alipay_notify_api.php',
-                // );
-                // $parameter['biz_content'] = "{".
-                //     "\"subject\":\"积分充值:".$data['charge_sroce']."积分\",".
-                //     "\"out_trade_no\":\"".$data['serial_number']."\",".
-                //     "\"total_amount\":\"".$data['charge_value']."\",'".
-                //     "\"seller_id\":\"".$chargeConfigs['alipay_pid']."\",".
-                //     "\"product_code\":\"QUICK_MSECURITY_PAY\"".
-                //     "}";
                 require_once ADDON_PATH.'/library/alipay/alipay.php';
                 $configs = $parameter = array();
                 $configs['partner'] = $chargeConfigs['alipay_pid'];
                 $configs['seller_id'] = $chargeConfigs['alipay_pid'];
                 $configs['seller_email'] = $chargeConfigs['alipay_email'];
-                $configs['key'] = $chargeConfigs['alipay_key'];
-                $configs['private_key_path'] = $chargeConfigs['private_key_path'];
                 $configs['sign_type'] = 'RSA';
+                $configs['private_key_path'] = $chargeConfigs['private_key_path'];
                 $parameter = array(
+                    'app_id' => $chargeConfigs['alipay_app_pid'],
+                    'method' => 'alipay.trade.app.pay',
+                    'charset' => 'utf-8',
+                    'sign_type' => 'RSA',
+                    'timestamp' => date('Y-m-d H:i:s'),
+                    'version' => '1.0',
                     'notify_url' => SITE_URL.'/alipay_notify_api.php',
-                    'out_trade_no' => $data['serial_number'],
-                    'subject' => '积分充值:'.$data['charge_sroce'].'积分',
-                    'total_fee' => $data['charge_value'],
-                    'body' => '',
-                    'payment_type' => 1,
-                    'service' => 'mobile.securitypay.pay',
-                    'it_b_pay' => '1c',
                 );
-                $configs['biz_content'] = '{"appkey":"'.$chargeConfigs['alipay_app_pid'].'"}';
-                // $url ['url']= createAlipayUrl($configs, $parameter, 3);//直接返回支付宝支付url
+                $parameter['biz_content'] = '{'.
+                    '"subject":"积分充值:'.$data['charge_sroce'].'积分",'.
+                    '"out_trade_no":"'.$data['serial_number'].'",'.
+                    '"total_amount":"'.$data['charge_value'].'",'.
+                    '"seller_id":"'.$chargeConfigs['alipay_pid'].'",'.
+                    '"product_code":"QUICK_MSECURITY_PAY"'.
+                    '}';
 
                 $url ['url'] = createAlipayUrl($configs, $parameter, 3); //直接返回支付宝支付url
                 $url ['charge_type'] = $type;
@@ -273,7 +252,6 @@ class CreditApi extends Api
 
         if ($result) {
             $data['charge_id'] = $result;
-
             if ($type == 0) {//支付宝支付
                 require_once ADDON_PATH.'/library/alipay/alipay.php';
                 $configs = $parameter = array();
@@ -336,12 +314,23 @@ class CreditApi extends Api
         header('Content-type:text/html;charset=utf-8');
         require_once ADDON_PATH.'/library/alipay/alipay.php';
         $chargeConfigs = model('Xdata')->get('admin_Config:charge');
-        $configs = array(
-            'partner' => $chargeConfigs['alipay_pid'],
-            'seller_id' => $chargeConfigs['alipay_pid'],
-            'seller_email' => $chargeConfigs['alipay_email'],
-            'key' => $chargeConfigs['alipay_key'],
-        );
+        if ($_POST['sign_type'] == 'RSA') {
+            $configs = array(
+                'partner' => $chargeConfigs['alipay_pid'],
+                'seller_id' => $chargeConfigs['alipay_pid'],
+                'seller_email' => $chargeConfigs['alipay_email'],
+                'alipay_public_key' => $chargeConfigs['alipay_public_key'],
+                'sign_type' => 'RSA',
+            );
+        } else {
+           $configs = array(
+                'partner' => $chargeConfigs['alipay_pid'],
+                'seller_id' => $chargeConfigs['alipay_pid'],
+                'seller_email' => $chargeConfigs['alipay_email'],
+                'key' => $chargeConfigs['alipay_key'],
+            );
+        }
+ 
         if (verifyAlipayNotify($configs)) {
             model('Credit')->charge_success(t($_POST['out_trade_no']));
         }

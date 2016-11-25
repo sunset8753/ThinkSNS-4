@@ -82,7 +82,8 @@
     },
     "autoload": {
         "files": [
-            "src/old/OpenSociax/functions.inc.php"
+            "src/old/OpenSociax/functions.inc.php",
+            "addons/library/alipay/alipay.php"
         ],
         "classmap": [
             "addons/",

@@ -54,16 +54,16 @@ class AlipayNotify
                 $responseTxt = $this->getResponse($_POST['notify_id']);
             }
 
-            //写日志记录
-            //if ($isSign) {
-            //	$isSignStr = 'true';
-            //}
-            //else {
-            //	$isSignStr = 'false';
-            //}
-            //$log_text = "responseTxt=".$responseTxt."\n notify_url_log:isSign=".$isSignStr.",";
-            //$log_text = $log_text.createLinkString($_POST);
-            //logResult($log_text);
+            // //写日志记录
+            // if ($isSign) {
+            // 	$isSignStr = 'true';
+            // }
+            // else {
+            // 	$isSignStr = 'false';
+            // }
+            // $log_text = "responseTxt=".$responseTxt."\n notify_url_log:isSign=".$isSignStr.",";
+            // $log_text = $log_text.createLinkString($_POST);
+            // logResult($log_text);
 
             //验证
             //$responsetTxt的结果不是true，与服务器设置问题、合作身份者ID、notify_id一分钟失效有关
@@ -125,11 +125,13 @@ class AlipayNotify
     public function getSignVeryfy($para_temp, $sign)
     {
         //除去待签名参数数组中的空值和签名参数
-        $para_filter = paraFilter($para_temp);
-
+        if (strtoupper(trim($this->alipay_config['sign_type'])) == 'RSA') {
+            $para_filter = paraFilter($para_temp,3);//参数需要urldecode
+        } else {
+            $para_filter = paraFilter($para_temp);
+        }
         //对待签名参数数组排序
         $para_sort = argSort($para_filter);
-
         //把数组所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串
         $prestr = createLinkstring($para_sort);
 
@@ -139,7 +141,7 @@ class AlipayNotify
                 $isSgin = md5Verify($prestr, $sign, $this->alipay_config['key']);
                 break;
             case 'RSA':
-                $isSgin = rsaVerify($prestr, $this->alipay_config['private_key_path'], $sign);
+                $isSgin = rsaVerify($prestr, $this->alipay_config['alipay_public_key'], $sign);
                 break;
             default:
                 $isSgin = false;

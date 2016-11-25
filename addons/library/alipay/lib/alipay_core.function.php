@@ -56,15 +56,30 @@ function createLinkstringUrlencode($para)
  * @param $para 签名参数组
  * return 去掉空值与签名参数后的新签名参数组
  */
-function paraFilter($para)
+function paraFilter($para, $type = 1)
 {
     $para_filter = array();
     while (list($key, $val) = each($para)) {
-        if ($key == 'sign' || $key == 'sign_type' || $val == '') {
-            continue;
+        if ($type == 1) {
+            if ($key == 'sign' || $key == 'sign_type' || $val == '') {
+                continue;
+            } else {
+                $para_filter[$key] = $para[$key];
+            }
+        } elseif ($type == 2) {
+            if ($key == 'sign' || $val == '') {
+                continue;
+            } else {
+                $para_filter[$key] = $para[$key];
+            }
         } else {
-            $para_filter[$key] = $para[$key];
+            if ($key == 'sign' || $key == 'sign_type' || $val == '') {
+                continue;
+            } else {
+                $para_filter[$key] = urldecode($para[$key]);
+            }
         }
+
     }
 
     return $para_filter;
@@ -226,7 +241,7 @@ function rsaSign($data, $private_key_path)
  * return 验证结果
  */
 function rsaVerify($data, $ali_public_key_path, $sign)
-{
+{   
     $pubKey = file_get_contents($ali_public_key_path);
     $res = openssl_get_publickey($pubKey);
     $result = (bool) openssl_verify($data, base64_decode($sign), $res);

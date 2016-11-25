@@ -265,10 +265,24 @@ class FindPeopleApi extends Api
                     $tag_id,
             );
         }
-        ! empty($max_id) && $tmap ['row_id'] = array(
-                'lt',
-                $max_id,
-        );
+        if (!empty($max_id)) {
+            $tmap ['row_id'] = array(
+                array(
+                    'lt',
+                    $max_id,
+                ),
+                array(
+                    'neq',
+                    $this->mid,
+                ),
+                'AND',
+            );
+        } else {
+            $tmap ['row_id'] = array(
+                'neq',
+                $this->mid,
+            );
+        }
         $uids = M('app_tag')->field('`row_id`')->where($tmap)->order('row_id desc')->limit($count)->findAll();
 
         $user_list = array();
@@ -424,6 +438,10 @@ class FindPeopleApi extends Api
         );
         $map ['city'] = $city_id;
         $map ['is_init'] = 1;
+        $map ['uid'] = array(
+                'neq',
+                $this->mid,
+        );
         $uids = model('User')->where($map)->order('uid desc')->field('uid')->limit($count)->findAll();
         $user_list = array();
         foreach ($uids as $k => $v) {

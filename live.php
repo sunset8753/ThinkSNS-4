@@ -25,7 +25,7 @@ if (!$_REQUEST['api']) {
 }
 
 define('APP_NAME', 'api');
-define('API_VERSION', 'live');
+define('API_VERSION', 'live_v4.5.0');
 
 /* 新系统需要的一些配置 */
 define('TS_ROOT', dirname(__FILE__));        // Ts根
