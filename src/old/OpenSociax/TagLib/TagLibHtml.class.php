@@ -22,7 +22,7 @@
  * @version   $Id$
  +------------------------------------------------------------------------------
  */
-import('TagLib');
+
 class TagLibHtml extends TagLib
 {
     //类定义开始
@@ -135,17 +135,17 @@ class TagLibHtml extends TagLib
     public function _imageBtn($attr)
     {
         $tag = $this->parseXmlAttr($attr, 'imageBtn');
-        $name = $tag['name'];                //名称
-        $value = $tag['value'];                //文字
-        $id = $tag['id'];                //ID
+        $attributeName = $tag['name'];                //名称
+        $attributeValue = $tag['value'];                //文字
+        $attributeId = $tag['id'];                //ID
         $style = $tag['style'];                //样式名
         $click = $tag['click'];                //点击
         $type = empty($tag['type']) ? 'button' : $tag['type'];                //按钮类型
 
-        if (!empty($name)) {
-            $parseStr = '<div class="'.$style.'" ><input type="'.$type.'" id="'.$id.'" name="'.$name.'" value="'.$value.'" onclick="'.$click.'" class="'.$name.' imgButton"></div>';
+        if (!empty($attributeName)) {
+            $parseStr = '<div class="'.$style.'" ><input type="'.$type.'" id="'.$attributeId.'" name="'.$attributeName.'" value="'.$attributeValue.'" onclick="'.$click.'" class="'.$attributeName.' imgButton"></div>';
         } else {
-            $parseStr = '<div class="'.$style.'" ><input type="'.$type.'" id="'.$id.'"  name="'.$name.'" value="'.$value.'" onclick="'.$click.'" class="button"></div>';
+            $parseStr = '<div class="'.$style.'" ><input type="'.$type.'" id="'.$attributeId.'"  name="'.$attributeName.'" value="'.$attributeValue.'" onclick="'.$click.'" class="button"></div>';
         }
 
         return $parseStr;
