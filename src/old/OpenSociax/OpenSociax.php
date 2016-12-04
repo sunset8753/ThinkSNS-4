@@ -45,7 +45,6 @@ tsdefine('ACTION_NAME', $ts['_act']);
 //新增一些CODE常量.用于简化判断操作
 tsdefine('MODULE_CODE', $ts['_app'].'/'.$ts['_mod']);
 tsdefine('ACTION_CODE', $ts['_app'].'/'.$ts['_mod'].'/'.$ts['_act']);
-tsdefine('APP_RUN_PATH', CORE_RUN_PATH.'/~'.TRUE_APPNAME);
 
 //增加静态化机制 - 页面中可变元素需要ajax配合
 if (file_exists(CORE_RUN_PATH.'/htmlcache/'.str_replace('/', '_', ACTION_CODE).'.html') && !($ts['_app'] == 'public' && $ts['_mod'] == 'Passport' && $ts['_act'] == 'login')) {
@@ -120,11 +119,7 @@ tsdefine('THEME_URL', SITE_URL.'/resources/theme/'.THEME_NAME);
 tsdefine('THEME_PUBLIC_PATH', THEME_PATH.'/_static');
 tsdefine('THEME_PUBLIC_URL', THEME_URL.'/_static');
 tsdefine('APP_PUBLIC_PATH', APP_PATH.'/_static');
-// tsdefine('APP_PUBLIC_URL', APP_URL.'/_static');
 tsdefine('APP_TPL_PATH', APP_PATH.'/Tpl/default');
-tsdefine('APP_TPL_URL', APP_URL.'/Tpl/default');
-
-tsdefine('CANVAS_PATH', SITE_PATH.'/config/canvas/');
 
 /* 临时兼容代码，新方法开发中 */
 $timer = sprintf('%s%s/app/timer', TS_ROOT, TS_STORAGE);
@@ -157,20 +152,4 @@ if (file_exists(sprintf('%s/bootstrap.php', APP_PATH))) {
 //合并应用配置
 if (file_exists(APP_CONFIG_PATH.'/config.php')) {
     tsconfig(include APP_CONFIG_PATH.'/config.php');
-}
-
-//根据应用配置重定义以下常量
-if (C('THEME_NAME')) {
-    tsdefine('THEME_NAME', C('THEME_NAME'));
-}
-
-//根据应用配置重定义以下常量
-if (C('APP_TPL_PATH')) {
-    tsdefine('APP_TPL_PATH', C('APP_TPL_PATH'));
-}
-
-//如果是部署模式、则如下定义
-if (C('DEPLOY_STATIC')) {
-    tsdefine('THEME_PUBLIC_URL', PUBLIC_URL.'/'.THEME_NAME);
-    tsdefine('APP_PUBLIC_URL', THEME_PUBLIC_URL.'/'.TRUE_APPNAME);
 }

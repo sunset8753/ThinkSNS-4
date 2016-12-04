@@ -4,7 +4,6 @@
  * @author SamPeng <penglingjun@zhishisoft.com>
  * @version TS v4
  */
-tsload(CORE_LIB_PATH.'/addons/AbstractAddons.class.php');
 abstract class NormalAddons extends AbstractAddons
 {
     /**

@@ -46,17 +46,6 @@ class Think
             tsload(APP_MODEL_PATH.'/'.$classname.'.class.php');
         } elseif (substr($classname, -6) == 'Action') {
             tsload(APP_ACTION_PATH.'/'.$classname.'.class.php');
-        } else {
-            // 根据自动加载路径设置进行尝试搜索
-            if (tsconfig('APP_AUTOLOAD_PATH')) {
-                $paths = explode(',', tsconfig('APP_AUTOLOAD_PATH'));
-                foreach ($paths as $path) {
-                    if (tsload($path.'/'.$classname.'.class.php')) {
-                        // 如果加载类成功则返回
-                        return ;
-                    }
-                }
-            }
         }
 
         return ;

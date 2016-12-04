@@ -12,9 +12,6 @@
  * @version  $Id$
  +------------------------------------------------------------------------------
  */
-if (!defined('THINK_PATH')) {
-    exit();
-}
 
 return array(
 
@@ -28,7 +25,7 @@ return array(
     /* 项目设定 */
     'SITE_LOGO' => 'image/logo.png', //默认的站点logo
     'DEFAULT_GROUP_ID' => 3, //默认注册之后的用户组ID
-    'APP_AUTOLOAD_PATH' => CORE_LIB_PATH.','.CORE_LIB_PATH.'/addons/,'.CORE_LIB_PATH.'/Taglib/,'.ADDON_PATH.'/model/',
+    'APP_AUTOLOAD_PATH' => '',
 
     /* Cookie设置 */
     'COOKIE_EXPIRE' => '',        // Coodie有效期
@@ -117,8 +114,6 @@ return array(
     'TMPL_CACHE_TIME' => -1,         // 模板缓存有效期 -1 为永久，(以数字为值，单位:秒)
     'TMPL_ACTION_ERROR' => 'Public:success', // 默认错误跳转对应的模板文件
     'TMPL_ACTION_SUCCESS' => 'Public:success', // 默认成功跳转对应的模板文件
-    'TMPL_TRACE_FILE' => THINK_PATH.'/Tpl/PageTrace.tpl.php',     // 页面Trace的模板文件
-    'TMPL_EXCEPTION_FILE' => THINK_PATH.'/Tpl/ThinkException.tpl.php', // 异常页面的模板文件
     'TMPL_FILE_DEPR' => '/', //模板文件MODULE_NAME与ACTION_NAME之间的分割符，只对项目分组部署有效
     'TMPL_CACHE_PATH' => CORE_RUN_PATH.'/tplcache/', //模板文件缓存路径
 

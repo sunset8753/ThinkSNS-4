@@ -10,8 +10,6 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
-defined('THINK_PATH') or exit();
-
 /**
  * Redis缓存驱动
  * 要求安装phpredis扩展：https://github.com/nicolasff/phpredis

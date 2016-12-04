@@ -5,7 +5,6 @@
  * @author sampeng
  *
  */
-tsload(CORE_LIB_PATH.'/addons/AbstractAddons.class.php');
 abstract class SimpleAddons extends AbstractAddons
 {
     private $name;

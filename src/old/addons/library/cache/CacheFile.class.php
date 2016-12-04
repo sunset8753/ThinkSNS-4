@@ -10,7 +10,6 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
-defined('THINK_PATH') or exit();
 /**
  * 文件类型缓存类
  * @category   Think

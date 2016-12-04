@@ -5,10 +5,6 @@
  * @version ThinkSNS v4.
  */
 
-if (!defined('SITE_PATH')) {
-    exit();
-}
-
 @ini_set('magic_quotes_runtime', 0);
 
 /* # 设置时区 */
@@ -60,10 +56,8 @@ if (!defined('__ROOT__')) {
 //基本常量定义
 tsdefine('ROOT_FILE', basename(_PHP_FILE_) == 'api.php' ? 'index.php' : basename(_PHP_FILE_));
 tsdefine('CORE_PATH', dirname(__FILE__));
-tsdefine('THINK_PATH', CORE_PATH.'/ThinkPHP');
 
-tsdefine('SITE_DOMAIN', strip_tags($_SERVER['HTTP_HOST']));
-tsdefine('SITE_URL', (IS_HTTPS ? 'https:' : 'http:').'//'.SITE_DOMAIN.__ROOT__);
+tsdefine('SITE_URL', (IS_HTTPS ? 'https:' : 'http:').'//'.strip_tags($_SERVER['HTTP_HOST']).__ROOT__);
 
 tsdefine('CONF_PATH', SITE_PATH.'/config');
 
@@ -71,7 +65,6 @@ tsdefine('APPS_PATH', SITE_PATH.'/apps');
 tsdefine('APPS_URL', SITE_URL.'/apps');    # 应用内部图标 等元素
 
 tsdefine('ADDON_PATH', SITE_PATH.'/src/old/addons');
-tsdefine('ADDON_URL', SITE_URL.'/src/old/addons');
 
 tsdefine('DATA_PATH', SITE_PATH.'/data');
 tsdefine('DATA_URL', SITE_URL.'/data');
@@ -82,12 +75,7 @@ tsdefine('UPLOAD_URL', SITE_URL.'/data/upload');
 tsdefine('PUBLIC_PATH', SITE_PATH.'/public');
 tsdefine('PUBLIC_URL', SITE_URL.'/public');
 
-//载入核心模式: 默认是OpenSociax. 也支持ThinkPHP
-if (!defined('CORE_MODE')) {
-    define('CORE_MODE', 'OpenSociax');
-}
-
-tsdefine('CORE_LIB_PATH', CORE_PATH.'/'.CORE_MODE);
+tsdefine('CORE_LIB_PATH', CORE_PATH.'/OpenSociax');
 tsdefine('CORE_RUN_PATH', TS_ROOT.TS_STORAGE.'/temp');
 tsdefine('LOG_PATH', TS_ROOT.TS_STORAGE.'/logs/');
 
@@ -98,14 +86,10 @@ if (function_exists('spl_autoload_register')) {
     });
 }
 
-//载入核心运行时文件
-include CORE_LIB_PATH.'/'.CORE_MODE.'.php';
-
 tsdefine('NOW_TIME', $_SERVER ['REQUEST_TIME']);
 tsdefine('REQUEST_METHOD', $_SERVER ['REQUEST_METHOD']);
 tsdefine('IS_GET', REQUEST_METHOD == 'GET' ? true : false);
 tsdefine('IS_POST', REQUEST_METHOD == 'POST' ? true : false);
-tsdefine('TOKEN', 'ts_wx');
 
 /* 核心方法 */
 
@@ -322,3 +306,6 @@ function static_cache($cache_id, $value = null, $clean = false)
         return $cacheHash[$cache_id];
     }
 }
+
+//载入核心运行时文件
+include CORE_LIB_PATH.'/OpenSociax.php';

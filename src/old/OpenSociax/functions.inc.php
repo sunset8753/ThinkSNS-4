@@ -123,7 +123,7 @@ function session($name, $value = '')
             // 读取session驱动
             $class = 'Session'.ucwords(strtolower(C('SESSION_TYPE')));
             // 检查驱动类
-            if (require_once(CORE_LIB_PATH.'/Session/'.$class.'.class.php')) {
+            if (class_exists($class)) {
                 $hander = new $class();
                 $hander->execute();
             } else {

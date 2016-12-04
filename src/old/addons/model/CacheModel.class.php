@@ -10,8 +10,6 @@
  * @author jason <yangjs17@yeah.net>
  * @version TS3.0
  */
-// 加载缓存操作类
-tsload(CORE_LIB_PATH.'/Cache.class.php');
 class CacheModel
 {
     //public static $_cacheHash = array();  // 缓存的静态变量

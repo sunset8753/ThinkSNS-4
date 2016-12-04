@@ -10,7 +10,6 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
-defined('THINK_PATH') or exit();
 /**
  * Eaccelerator缓存驱动
  * @category   Extend

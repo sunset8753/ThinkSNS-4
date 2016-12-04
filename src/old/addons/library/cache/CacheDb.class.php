@@ -10,7 +10,6 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
-defined('THINK_PATH') or exit();
 /**
  * 数据库方式缓存驱动
  *    CREATE TABLE think_cache (
