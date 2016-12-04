@@ -4,8 +4,6 @@
  * @author jason <yangjs17@yeah.net>
  * @version TS3.0
  */
-// 加载上传操作类
-require_once SITE_PATH.'/addons/library/UploadFile.class.php';
 
 class AttachModel extends Model
 {

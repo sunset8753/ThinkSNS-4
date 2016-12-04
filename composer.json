@@ -74,9 +74,6 @@
         "illuminate/database": "4.1.*",
         "jpush/jpush": "^3.4"
     },
-    "require-dev": {
-        "friendsofphp/php-cs-fixer": "^1.11"
-    },
     "config": {
         "vendor-dir": "src/vendor/",
         "preferred-install": "dist"
@@ -84,12 +81,11 @@
     "autoload": {
         "files": [
             "src/old/OpenSociax/functions.inc.php",
-            "addons/library/alipay/alipay.php"
+            "src/old//addons/library/alipay/alipay.php"
         ],
         "classmap": [
-            "addons/",
             "src/Ts.php",
-            "src/old/OpenSociax/"
+            "src/old/"
         ],
         "psr-4": {
             "Ts\\": "src/",

@@ -87,14 +87,6 @@ $_REQUEST = array_merge($_GET, $_POST);
 check_gpc($_GET);
 check_gpc($_REQUEST);
 
-//如果有UC的配置载入配置
-if (file_exists(CONF_PATH.'/uc_config.inc.php')) {
-    tsload(CONF_PATH.'/uc_config.inc.php');
-}
-
-//如果未定义.
-tsdefine('UC_SYNC', 0);
-
 /*  应用配置  */
 //载入应用配置
 tsdefine('APP_PATH', APPS_PATH.'/'.TRUE_APPNAME);
@@ -119,8 +111,8 @@ if (C('THEME_NAME')) {
 }
 
 //默认静态文件、模版文件目录
-tsdefine('THEME_PATH', ADDON_PATH.'/theme/'.THEME_NAME);
-tsdefine('THEME_URL', ADDON_URL.'/theme/'.THEME_NAME);
+tsdefine('THEME_PATH', SITE_PATH.'/resources/theme/'.THEME_NAME);
+tsdefine('THEME_URL', SITE_URL.'/resources/theme/'.THEME_NAME);
 tsdefine('THEME_PUBLIC_PATH', THEME_PATH.'/_static');
 tsdefine('THEME_PUBLIC_URL', THEME_URL.'/_static');
 tsdefine('APP_PUBLIC_PATH', APP_PATH.'/_static');
