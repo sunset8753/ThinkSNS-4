@@ -333,6 +333,21 @@ abstract class Action
             $GLOBALS['time_run_detail']['action_init_user_data'] = microtime(true);
 
             $GLOBALS['time_run_detail']['action_init_user_disable'] = microtime(true);
+
+            //oauth_token
+            $login = D('login')->where('uid='.$this->mid." AND type='location'")->find();
+            if (! $login) {
+                $data['uid'] = $this->mid;
+                $data['oauth_token'] = getOAuthToken($this->mid);
+                $data['oauth_token_secret'] = getOAuthTokenSecret();
+                $savedata['type'] = 'location';
+                $savedata = array_merge($savedata, $data);
+                D('')->table(C('DB_PREFIX').'login')->add($savedata);
+            } else {
+                $data['oauth_token'] = $login['oauth_token'];
+                $data['oauth_token_secret'] = $login['oauth_token_secret'];
+            }
+            $login = $data;
         }
 
         $this->user = EmojiFormat::de($this->user);
@@ -340,6 +355,7 @@ abstract class Action
         $this->assign('mid', $this->mid);   //登录者
         $this->assign('uid', $this->uid);   //访问对象
         $this->assign('user', $this->user); //当前登陆的人
+        $this->assign('login_token', $login);
 
         Addons::hook('core_filter_init_user');
 

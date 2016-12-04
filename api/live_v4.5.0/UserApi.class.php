@@ -219,7 +219,7 @@ class UserApi extends Api
         // 没登陆过智播没有usid的 直接生成一个
         $live_user_mod = M('live_user_info');
         if (!$usid = $live_user_mod->where(array('uid' => $userInfo['uid']))->getField('usid')) {
-            $live_user_info = file_get_contents(SITE_URL.'/api.php?api_version=live&mod=LiveUser&act=postUser&uid='.$userInfo['uid']);
+            $live_user_info = file_get_contents(SITE_URL.'/api.php?api_type=live&mod=LiveUser&act=postUser&uid='.$userInfo['uid']);
             $live_user_info = json_decode($live_user_info, true);
             $live_user_info ['status'] == 1 && $user_info['usid'] = $live_user_info['data']['usid'];
         } else {

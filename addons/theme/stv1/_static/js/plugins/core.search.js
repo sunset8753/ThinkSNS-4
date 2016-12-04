@@ -46,7 +46,7 @@ core.search.searchInit = function(obj){
 	});
 }
 core.search.displayList = function(obj){
-	this.searchKey = obj.value.replace(/(^\s*)|(\s*$)/g,"");
+	this.searchKey = stripscript(obj.value.replace(/(^\s*)|(\s*$)/g,""));
 	if(getLength(this.searchKey)>0){
 		var html = '<div class="search-box" style="margin:0px 1px 0 -1px;" id="search-box"><dd id="s_1" class="current" onclick="core.search.dosearch(\'public\',2);" onmouseover="$(this).addClass(\'current\');" onmouseout="$(this).removeClass(\'current\');">搜“<span>'+this.searchKey+'</span>”相关分享&raquo;</dd>'
 					+'<dd id="s_2" onclick="core.search.dosearch(\'public\',1);" onmouseover="$(this).addClass(\'current\');" onmouseout="$(this).removeClass(\'current\');">搜“<span>'+this.searchKey+'</span>”相关人&raquo;</dd>'

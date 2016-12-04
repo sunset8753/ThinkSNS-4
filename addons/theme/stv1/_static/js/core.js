@@ -74,7 +74,7 @@ var _core = function() {
 			// 第二次调用的时候就不=0了
 			if(temp == 0) {	
 				// JQuery的ajax载入文件方式，如果有样式文件，同理在此引入相关样式文件
-				$.getScript(THEME_URL+'/js/rcalendar.js', function() {	
+				$.getScript(THEME_URL+'/js/rcalendar.js?v=' + SYS_VERSION, function() {	
 					rcalendar(t, m, r);
 				});
 			} else {
@@ -140,13 +140,13 @@ core.plugInit = function() {
 				func._init(arg);	
 			}
 		};
-		var file = THEME_URL + '/js/plugins/core.' + arguments[0] + '.js';
+		var file = THEME_URL + '/js/plugins/core.' + arguments[0] + '.js?v=' + SYS_VERSION;
 		core.loadFile(file, back);
 	}
 };
 //与上面方法类似 只不过可以自己写回调函数（不主动执行init）
 core.plugFunc = function(plugName,callback){
-	var file = THEME_URL+'/js/plugins/core.'+plugName+'.js';
+	var file = THEME_URL+'/js/plugins/core.'+plugName+'.js?v=' + SYS_VERSION;
 	core.loadFile(file,callback);
 };
 

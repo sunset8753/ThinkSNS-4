@@ -5,10 +5,10 @@
             <li>
                 <a href="javascript:;" class="right hover" onclick="delGroup({$g.follow_group_id})">删除</a>
                 <a href="javascript:void(0)" class="right hover mr10" onclick="editGroup({$g.follow_group_id})">{:L('PUBLIC_EDIT_GROUP')}</a>
-                <label onclick="editGroup({$g.follow_group_id});">
-                <span id='title_{$g.follow_group_id}' class="cursor">{$g.title}</span></label>
+                <label onclick="editGroup({$g.});">
+                <span id='title_{$g.follow_group_id}' classfollow_group_id="cursor">{$g.title|htmlspecialchars_decode}</span></label>
                 <span id='edit_{$g.follow_group_id}' style="display:none">
-                <input type="text" value='{$g.title}' class="s-txt" onblur="this.className='s-txt'" onfocus="this.className='s-txt-focus'" >
+                <input type="text" value="{$g.title|htmlspecialchars_decode}" class="s-txt" onblur="this.className='s-txt'" onfocus="this.className='s-txt-focus'" >
                 <a href="javascript:;" onclick="saveGroup({$g.follow_group_id});" class="btn-green-small" style="margin-top:5px;"><span>{:L('PUBLIC_SAVE')}</span></a>
                 <a href="javascript:;" onclick="cenSaveGroup({$g.follow_group_id});" class="btn-cancel"><span>{:L('PUBLIC_CANCEL')}</span></a>
                 </span>

@@ -10,7 +10,7 @@ class LiveBaseApi extends Api
     //protected $stream_server = '在这里填写直播服务器地址';
     public $stream_server = '';
     //定义请求header
-    public $header = [];
+    public $header = array();
     public $curl_header = array('Auth-Appid: zb60225160269831');
     //对接智播1.0 usid前缀
     protected $usid_prex = 'ThinkSNS_';
@@ -27,9 +27,9 @@ class LiveBaseApi extends Api
     public function _initialize()
     {
         //设置请求的header参数
-        $this->header = [
+        $this->header = array(
             'Auth-Appid' => 'zb60225160269831', //'zb602251775577514102'
-        ];
+        );
         //管理后台设置的直播验证服务地址
         $this->stream_server = 'http://zbtest.zhibocloud.cn';
         if (!M('')->query("show tables like '".C('DB_PREFIX')."live_user_info'")) {

@@ -49,7 +49,7 @@ class LiveOauthApi extends Api
         $ticket = D('live_user_info')->where($map)
                                      ->getField('ticket');
         if (! $ticket) {
-            $live_user_info = file_get_contents(SITE_URL.'/api.php?api_version=live&mod=LiveUser&act=postUser&uid='.$this->mid);
+            $live_user_info = file_get_contents(SITE_URL.'/api.php?api_type=live&mod=LiveUser&act=postUser&uid='.$this->mid);
             $live_user_info = json_decode($live_user_info, true);
             $live_user_info ['status'] == 1 && $ticket = $live_user_info['data']['ticket'];
         }
@@ -193,7 +193,7 @@ class LiveOauthApi extends Api
             $data[$k]['user']['usid'] = ($usid = $live_user_mod->where(array('uid' => $v['uid']))->getField('usid')) ? $usid : '';
             // 没登陆过智播没有usid的 直接生成一个
             if (!$usid = $live_user_mod->where(array('uid' => $v['uid']))->getField('usid')) {
-                $live_user_info = file_get_contents(SITE_URL.'/api.php?api_version=live&mod=LiveUser&act=postUser&uid='.$v['uid']);
+                $live_user_info = file_get_contents(SITE_URL.'/api.php?api_type=live&mod=LiveUser&act=postUser&uid='.$v['uid']);
                 $live_user_info = json_decode($live_user_info, true);
                 $live_user_info ['status'] == 1 && $data[$k]['user']['usid'] = $live_user_info['data']['usid'];
             } else {
@@ -477,15 +477,15 @@ class LiveOauthApi extends Api
             exit(json_encode($return));
         }
         //条件
-        $data = [
+        $data = array(
             'uid' => $uid,
             'to_uid' => $this->mid,
             'type' => $type,
-        ];
+        );
         //尝试获取预交易口令
         $token = $this->getPreToken($data);
         if ($token) {
-            return ['code' => '00000', 'data' => ['pre_token' => $this->jiami($token)]];
+            return array('code' => '00000', 'data' => array('pre_token' => $this->jiami($token)));
         }
 
         $return['code'] = '70500';
@@ -524,7 +524,7 @@ class LiveOauthApi extends Api
             $result['trade_order'] = $this->jiami($result['trade_order']);
             unset($result['code']);
 
-            return ['code' => '00000', 'data' => $result];
+            return array('code' => '00000', 'data' => $result);
             die;
         }
         $error ['code'] = '70401';
@@ -536,7 +536,7 @@ class LiveOauthApi extends Api
     /**
      * @name 生成预交易口令
      */
-    public function getPreToken($data = [])
+    public function getPreToken($data = array())
     {
         if (empty($data) || !$data['uid'] || !$data['to_uid']) {
             return '';
@@ -605,7 +605,7 @@ class LiveOauthApi extends Api
     /**
      * @name 生成订单
      */
-    protected function createOrder($data = [])
+    protected function createOrder($data = array())
     {
         //默认的错误提示信息
         $this->error = '支付异常,请重新尝试';
@@ -647,7 +647,7 @@ class LiveOauthApi extends Api
     /**
      *@name 处理兑换
      */
-    protected function do_trade_order($order = [])
+    protected function do_trade_order($order = array())
     {
         $count = (int) $order['count'];
         //兑换
@@ -673,7 +673,7 @@ class LiveOauthApi extends Api
                 //收款方接收成功,生成日志(支出方+接收方)
                 //收款记录
                 $credit_record = M('credit_record');
-                $log = [
+                $log = array(
                     'change' => $gold_num,
                     'uid' => $order['uid'], //支出方
                     'type' => 4, //ts中记录赞兑换积分为4
@@ -682,11 +682,11 @@ class LiveOauthApi extends Api
                     'action' => '直播赞兑换',
                     'ctime' => NOW_TIME,
                     'detail' => json_encode(array('score' => $gold_num, 'order' => $order['trade_order'])),
-                ];
+                );
                 $credit_record->add($log);
                 //支付记录
                 //添加赞消费记录
-                $log = [
+                $log = array(
                     'change' => -$count,
                     'uid' => $order['uid'],
                     'type' => 5, //ts中赞消耗的类型为5
@@ -695,7 +695,7 @@ class LiveOauthApi extends Api
                     'action' => '赞消费',
                     'ctime' => NOW_TIME,
                     'detail' => json_encode(array('zan_remain' => -$count, 'order' => $order['trade_order'])),
-                ];
+                );
                 $credit_record->add($log);
                 model('User')->cleanCache($order['uid']);
                 //给直播服务器发送数据同步通知

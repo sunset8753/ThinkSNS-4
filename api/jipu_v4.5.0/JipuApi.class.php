@@ -40,30 +40,20 @@ class JipuApi extends Api
                 }
 
                 //记录token
-                $data['oauth_token'] = getOAuthToken($user['uid']);
-                $data['oauth_token_secret'] = getOAuthTokenSecret();
                 $data['uid'] = $user['uid'];
                 $data['user'] = model('User')->getUserInfo($data['uid']);
                 $login = D('')->table(C('DB_PREFIX').'login')->where('uid='.$user['uid']." AND type='location'")->find();
                 if (! $login) {
+                    $data['oauth_token'] = getOAuthToken($user['uid']);
+                    $data['oauth_token_secret'] = getOAuthTokenSecret();
                     $savedata['type'] = 'location';
                     $savedata = array_merge($savedata, $data);
                     D('')->table(C('DB_PREFIX').'login')->add($savedata);
                 } else {
-                    //清除缓存
-                    model('Cache')->rm($login['oauth_token'].$login['oauth_token_secret']);
-                    D('')->table(C('DB_PREFIX').'login')->where('uid='.$user['uid']." AND type='location'")->save($data);
+                    $data['oauth_token'] = $login['oauth_token'];
+                    $data['oauth_token_secret'] = $login['oauth_token_secret'];
                 }
-
-                //直播用户信息
-                if ($live_user_info = D('live_user_info')->where(array('uid' => $user['uid']))->find()) {
-                    $data['ticket'] = $live_user_info['ticket'];
-                } else {
-                    $live_user_info = file_get_contents(SITE_URL.'/api.php?api_version=live&mod=LiveUser&act=postUser&uid='.$user['uid']);
-                    //$live_user_info && $data['ticket'] = $live_user_info['ticket'];
-                    $live_user_info = json_decode($live_user_info, true);
-                    $live_user_info['status'] == 1 && $data['ticket'] = $live_user_info['data']['ticket'];
-                }
+                
                 $data['status'] = 1;
 
                 return $data;
@@ -83,10 +73,13 @@ class JipuApi extends Api
      * @param varchar oauth_token_secret
      * @return array 状态+提示
      */
-    public function loginCheck()
+    public function login_check()
     {
-        if ($this->mid) {
-            return array('status' => 1, 'uid' => $this->mid);
+        if ($this->mid && ($this->mid == $this->data['uid'])) {
+            $user = model('User')->getUserInfo($this->mid);
+            return array('status' => 1, 'user' => $user);
+        }else {
+            return array('status' => 0, 'msg' => '参数错误');
         }
     }
 
@@ -268,6 +261,20 @@ class JipuApi extends Api
             $login_salt = rand(11111, 99999);
             $save ['login_salt'] = $login_salt;
             $save ['password'] = md5(md5($this->data ['password']).$login_salt);
+        }
+
+        //修改手机号
+        if ($this->data['phone']) {
+            $phone = t($this->data ['phone']);
+            $userPhone = model('User')->where('`uid`='.$uid)->getField('phone');
+            if (! model('Register')->isValidPhone($phone, $userPhone)) {
+                return array(
+                        'status' => 0,
+                        'msg' => model('Register')->getLastError(),
+                );
+                return $return;
+            }
+            $save ['phone'] = $phone;
         }
 
         if (! empty($save)) {

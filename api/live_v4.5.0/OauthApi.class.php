@@ -212,6 +212,16 @@ class OauthApi extends Api
                 if ($user['is_active'] != 1) {
                     return array('status' => 0, 'msg' => '您的帐号尚未激活,请进入邮箱激活');
                 }
+                
+                //直播用户信息
+                $query['uid'] = $user['uid'];
+                if ($live_user_info = D('live_user_info')->where(array('uid' => $user['uid']))->find()) {
+                    $query['ticket'] = $live_user_info['ticket'];
+                }
+                $params = http_build_query($query);
+                $live_user_info = file_get_contents(SITE_URL.'/api.php?api_type=live&mod=LiveUser&act=postUser&' . $params);
+                $live_user_info = json_decode($live_user_info, true);
+                $live_user_info['status'] == 1 && $ticket = $live_user_info['data']['ticket'];
 
                 //记录token
                 $data['oauth_token'] = getOAuthToken($user['uid']);
@@ -228,15 +238,7 @@ class OauthApi extends Api
                     D('')->table(C('DB_PREFIX').'login')->where('uid='.$user['uid']." AND type='location'")->save($data);
                 }
 
-                //直播用户信息
-                if ($live_user_info = D('live_user_info')->where(array('uid' => $user['uid']))->find()) {
-                    $data['ticket'] = $live_user_info['ticket'];
-                } else {
-                    $live_user_info = file_get_contents(SITE_URL.'/api.php?api_version=live&mod=LiveUser&act=postUser&uid='.$user['uid']);
-                    //$live_user_info && $data['ticket'] = $live_user_info['ticket'];
-                    $live_user_info = json_decode($live_user_info, true);
-                    $live_user_info['status'] == 1 && $data['ticket'] = $live_user_info['data']['ticket'];
-                }
+                $data['ticket'] = $ticket;
                 $data['status'] = 1;
 
                 return $data;

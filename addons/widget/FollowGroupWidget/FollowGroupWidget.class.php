@@ -47,7 +47,7 @@ class FollowGroupWidget extends Widget
     public function addgroup()
     {
         return  $content = $this->renderFile(dirname(__FILE__).'/addgroup.html');
-    }
+    } 
 
     /**
      * 添加分组
@@ -62,14 +62,15 @@ class FollowGroupWidget extends Widget
             exit(json_encode($return));
         }
 
-        $groupname = t($_POST['groupname']);
+        $groupname = htmlspecialchars($_POST['groupname'], ENT_QUOTES);
+        // var_dump($groupname);die;
         $followGroup = model('FollowGroup')->getGroupList($GLOBALS['ts']['mid']);
         foreach ($followGroup as $v) {
             if ($v['title'] === $groupname) {
                 $return = array('status' => 0, 'data' => L('PUBLIC_USER_GROUP_EXIST'));
                 exit(json_encode($return));
             }
-        }
+        } 
         // 插入数据
         $res = model('FollowGroup')->setGroup($GLOBALS['ts']['mid'], $groupname);
         if ($res == 0) {
@@ -87,7 +88,10 @@ class FollowGroupWidget extends Widget
     {
         $followGroupDao = model('FollowGroup');
         $var['group_list'] = $followGroupDao->getGroupList($GLOBALS['ts']['mid']);
-
+        foreach( $var['group_list'] as &$v )
+        {
+            $v['title'] = htmlspecialchars( $v['title'] , ENT_QUOTES);
+        }
         return  $content = $this->renderFile(dirname(__FILE__).'/editgroup.html', $var);
     }
 

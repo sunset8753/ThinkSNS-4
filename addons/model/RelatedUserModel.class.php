@@ -60,7 +60,7 @@ class RelatedUserModel extends Model
     public function getRelatedUser($show = 4, $limit = 100)
     {
         // 获取100个用户的缓存
-        // $relatedUseInfo = model('Cache')->get('related_user_'.$GLOBALS['ts']['mid']);
+        $relatedUseInfo = model('Cache')->get('related_user_'.$GLOBALS['ts']['mid']);
         if (empty($relatedUseInfo)) {
             //过滤掉当前显示的用户
             if ($show == 1) {

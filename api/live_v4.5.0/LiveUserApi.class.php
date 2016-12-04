@@ -5,6 +5,9 @@
  * @version  TS4.0
  */
 require_once 'LiveBaseApi.class.php';
+
+use server\Thinksns\Lib\Message;
+
 class LiveUserApi extends LiveBaseApi
 {
     /**
@@ -25,7 +28,6 @@ class LiveUserApi extends LiveBaseApi
 
     public function postUser()
     {
-
         //检查是否设置直播地址
         if (!$this->checkStreamServiceUrl()) {
             return array(
@@ -37,12 +39,18 @@ class LiveUserApi extends LiveBaseApi
         //获取直播服务器地址
         $live_service = $this->getStreamServiceUrl();
         //组装数据
-        $data = [
-            'usid' => $this->usid_prex.$uid, //传递uid增加前缀
-            'uname' => getUserName($uid), //用户名
-            'sex' => getUserField($uid, 'sex'),  //传递性别
-        ];
+        $data = array();
+        $data['usid'] = $this->usid_prex.$uid;//传递uid增加前缀
+        $data['uname'] = getUserName($uid);//用户名
+        $data['sex'] = getUserField($uid, 'sex');//传递性别
+        $data['ticket'] = $_REQUEST['ticket'];
 
+        // $data = [
+        //     'usid' => $this->usid_prex.$uid, //传递uid增加前缀
+        //     'uname' => getUserName($uid), //用户名
+        //     'sex' => getUserField($uid, 'sex'),  //传递性别
+        // ];
+        //语法不能高于5.3.12.。。
         if ($this->mod->where(array('usid' => $data['usid']))->count() && !isset($data[ 'ticket'])) {
             return array(
                     'status' => 0,
@@ -201,5 +209,57 @@ class LiveUserApi extends LiveBaseApi
                     'status' => 1,
                     'data' => array('is_sync' => 1),
                 );
+    }
+
+    /**
+     * 直播推送
+     * @Author Foreach
+     * @DateTime 2016-10-13T01:03:34+0800
+     * @return [type] [description]
+     */
+    public function pushLive()
+    {
+        // if (!$this->is_ZhiboService()) {
+        //     return array(
+        //                 'status' => 0,
+        //                 '授权错误',
+        //             );
+        //     exit;
+        // }
+        $usid = $_REQUEST['usid'];
+        $status = $_REQUEST['status'];
+        if (!$usid) {
+            return array(
+                    'status' => 0,
+                    'message' => '参数传递错误',
+                );
+        }
+
+        //直播开始推送
+        if ($status == 1) {
+            $userinfo = M('live_user_info')->where(array('usid'=>$usid))->find();
+            $followers = M('user_follow')->where(array('fid'=>$userinfo['uid']))->order('`follow_id` DESC')->field('uid')->select();
+            $followers_uids = getSubByKey($followers, 'uid');
+
+            $alert = $userinfo['uname'];
+            $data['usid'] = $usid;
+            $data['push_type'] = 'live';
+            $rs = M('Jpush')->pushMessage($followers_uids, $alert, $data);
+            echo json_encode($rs);
+        }
+    }
+
+    /* 直播推送
+     * @Author Foreach
+     * @DateTime 2016-12-01
+     * @return [type] [description]
+     */
+    public function updateTicket($usid){
+        $data ['usid'] = $usid;
+        $data ['ticket'] = '';
+        var_dump($usid);
+        $result = json_decode(tocurl($this->Service_User_Url, $this->curl_header, $data), true);
+        var_dump($result);exit;
+        return $result['code'] == 1 ? true : false;
     }
 }

@@ -88,14 +88,14 @@ class LiveGiftApi extends LiveBaseApi
         $live_gift_log = M('live_gift_log');
         $res = M('live_gift_log')->add($gift);
         if (!$res) { //赠送记录
-            echo json_encode(['status' => 0, 'message' => '记录添加失败']);
+            echo json_encode(array('status' => 0, 'message' => '记录添加失败'));
             exit;
         } else {
             //用户积分增加以及减少
             $creditMod = model('Credit');
             $creditMod->setUserCredit($gift['uid'], array('des' => '赠送礼物', 'score' => -$gift['num'], 'name' => '', 'alias' => '赠送礼物', 'type' => 6, 'cid' => 0), 1, array('score' => -$gift['num'], 'order' => $gift['order']));
             $creditMod->setUserCredit($gift['to_uid'], array('des' => '收到礼物', 'score' => $gift['num'], 'name' => '收到礼物', 'alias' => '收到礼物', 'type' => 6, 'cid' => 0), 1, array('score' => $gift['num'], 'order' => $gift['order']));
-            echo json_encode(['status' => 1, 'data' => ['is_sync' => 1]]);
+            echo json_encode(array('status' => 1, 'data' => array('is_sync' => 1)));
             exit;
         }
         die;

@@ -188,7 +188,7 @@ filter:progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=
 .header-wrap .head-bd .logo a{width:115px; height:30px;position:absolute;left:0;top:0;}
 .header-wrap .head-bd .nav{float: left;height:60px;margin: 0 0 0 25px;}
 .header-wrap .head-bd .nav li{float:left;height:59px;line-height:58px; font-size:18px; position:relative;}
-#header .head-bd .nav li a{display:block;height:56px; line-height:58px; font-size:18px;padding:0 12px;margin:0 5px;}
+#header .head-bd .nav li a{display:block;height:56px; line-height:58px; font-size:18px;padding:0 10px;margin:0 5px;}
 #header .head-bd .nav .current a.app{ color:#0096e6; border-bottom:#0096e6 4px solid;}
 *+html #header .head-bd .nav .current a.app{padding:0 20px;/*for Ie7*/}
 
@@ -215,7 +215,7 @@ filter:progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=
 #header .head-bd .person a.ico-search:hover{background-position:0 -295px;background-color:none;width:13px;height:13px}
 #header .head-bd .person a.face{height:20px;padding:0;margin:8px 5px 7px;border:none 0}
 #header .head-bd  .search-btn{ z-index:100; position:absolute; right:105px;*right:155px;}
-#header .head-bd .search{position:absolute;right:100px;*right:150px;top:14px;float:left;width:238px;_width:240px;height:30px; line-height:30px;background:#fff;border:#858585 1px solid;}
+#header .head-bd .search{position:absolute;right:85px;*right:150px;top:14px;float:left;width:238px;_width:240px;height:30px; line-height:30px;background:#fff;border:#858585 1px solid;}
 #header .head-bd .search .text{width:145px;height:20px;line-height:20px;border:0;margin:3px 5px;outline:none;*margin:5px;*height:18px;*line-height:18px;*padding:2px 0;}
 #header .head-bd .search label{position:absolute;left:5px;top:8px;color:#999;}
 #header .head-bd .search a{margin:5px 0 0 0;display:inline-block;}

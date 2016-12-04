@@ -15,6 +15,17 @@ var getLength = function(str, shortUrl) {
 	}
 };
 
+//xss前端过滤方法
+var stripscript = function(s) 
+{ 
+	var pattern = new RegExp("[%--`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）——|{}【】‘；：”“'\"。，、？]")//格式 RegExp("[在中间定义特殊过滤字符]")
+	var rs = ""; 
+	for (var i = 0; i < s.length; i++) { 
+	 	rs = rs+s.substr(i, 1).replace(pattern, ''); 
+	}
+	return rs;
+}
+
 // 截取字符串
 var subStr = function(str, len) {
     if(!str) {
