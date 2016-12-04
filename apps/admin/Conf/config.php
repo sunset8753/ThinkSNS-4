@@ -150,17 +150,9 @@ foreach ($app_list as $k => $v) {
     $menu['admin_menu']['apps'][L('PUBLIC_APP_MANAGEMENT')][$k] = $v;
 }
 
-// $is_weixin = intval($_GET ['is_weixin']);
-$_GET ['is_weixin'] = 0;
 $plugin_list = model('Addon')->getAddonsAdminUrl();
 foreach ($plugin_list as $k => $v) {
     $menu['admin_menu']['extends']['插件管理'][$k] = $v;
 }
-// $_GET ['is_weixin'] = 1;
-// $plugin_list = model('Addon')->getAddonsAdminUrl();
-// foreach($plugin_list as $k=>$v){
-// 	$menu['admin_menu']['weixin']['微信管理'][$k] = $v;
-// }
-// $_GET ['is_weixin'] = $is_weixin;
 
 return $menu;
