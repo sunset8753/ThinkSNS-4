@@ -966,7 +966,7 @@ class FeedModel extends Model
                 $apps[] = $app['app_name'];
             }
             //获得所有feed配置文件
-            require_once ADDON_PATH.'/library/io/Dir.class.php';
+
             $dirs = new Dir(SITE_PATH, '*.feed.php');
             foreach ($apps as $app) {
                 $app_config_path = SITE_PATH.'/apps/'.$app.'/Conf/';

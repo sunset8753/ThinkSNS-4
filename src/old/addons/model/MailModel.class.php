@@ -15,9 +15,6 @@ class MailModel
      */
     public function __construct()
     {
-        tsload(ADDON_PATH.'/library/phpmailer/class.phpmailer.php');
-        tsload(ADDON_PATH.'/library/phpmailer/class.pop3.php');
-        tsload(ADDON_PATH.'/library/phpmailer/class.smtp.php');
         $emailset = model('Xdata')->get('admin_Config:email');
         $this->option = array(
             'email_sendtype' => $emailset['email_sendtype'],

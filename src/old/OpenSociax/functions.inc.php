@@ -1794,18 +1794,10 @@ function getThumbImage($filename, $width = 100, $height = 'auto', $cut = false, 
 
             return $info;
         } else {
-            //生成缩略图
-            // tsload( ADDON_PATH.'/library/Image.class.php' );
-            // if($cut){
-            //     Image::cut(UPLOAD_PATH.$filename, UPLOAD_PATH.$thumbFile, $width, $height);
-            // }else{
-            //     Image::thumb(UPLOAD_PATH.$filename, UPLOAD_PATH.$thumbFile, '', $width, $height);
-            // }
             //生成缩略图 - 更好的方法
             if ($height == 'auto') {
                 $height = 0;
             }
-            tsload(ADDON_PATH.'/library/phpthumb/ThumbLib.inc.php');
             $thumb = PhpThumbFactory::create(UPLOAD_PATH.$filename);
             if ($cut) {
                 $thumb->adaptiveResize($width, $height);
@@ -2934,14 +2926,6 @@ function convert_ip($ip)
             $return = '- LAN';
         } elseif ($iparray[0] > 255 || $iparray[1] > 255 || $iparray[2] > 255 || $iparray[3] > 255) {
             $return = '- Invalid IP Address';
-        } else {
-            $tinyipfile = ADDON_PATH.'/libs/misc/tinyipdata.dat';
-            $fullipfile = ADDON_PATH.'/libs/misc/wry.dat';
-            if (@file_exists($tinyipfile)) {
-                $return = convert_ip_tiny($ip, $tinyipfile);
-            } elseif (@file_exists($fullipfile)) {
-                $return = convert_ip_full($ip, $fullipfile);
-            }
         }
     }
     $return = iconv('GBK', 'UTF-8', $return);
@@ -3278,11 +3262,11 @@ function postUser()
         //获取直播服务器地址
         $live_service = $this->getStreamServiceUrl();
         //组装数据
-        $data = [
+        $data = array(
             'usid' => $this->usid_prex.$this->mid, //传递uid增加前缀
             'uname' => getUserName($this->mid), //用户名
             'sex' => getUserField($this->mid, 'sex'),  //传递性别
-        ];
+        );
 
     if ($this->mod->where(array('usid' => $data['usid']))->count() && !isset($data[ 'ticket'])) {
         return array(

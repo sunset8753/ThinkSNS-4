@@ -189,8 +189,6 @@ class UploadWidget extends Widget
         $filename = $attach['save_path'].$attach['save_name'];
         $realname = auto_charset($attach['name'], 'UTF-8', 'GBK//IGNORE');
 
-        //下载函数
-        tsload(ADDON_PATH.'/library/Http.class.php');
         //从云端下载
         $cloud = model('CloudAttach');
         if ($cloud->isOpen()) {

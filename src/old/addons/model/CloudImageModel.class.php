@@ -102,7 +102,7 @@ class CloudImageModel
     {
         //上传到云服务器
         $config = $this->getConfig();
-        tsload(ADDON_PATH.'/library/upyun.class.php');
+
         $cloud = new UpYun($config['cloud_image_bucket'], $config['cloud_image_admin'], $config['cloud_image_password']);
         $cloud->setTimeout(60);
         $res = $cloud->getFileInfo($filename);
@@ -156,7 +156,7 @@ class CloudImageModel
     {
         //上传到云服务器
         $config = $this->getConfig();
-        tsload(ADDON_PATH.'/library/upyun.class.php');
+
         $cloud = new UpYun($config['cloud_image_bucket'], $config['cloud_image_admin'], $config['cloud_image_password']);
         $cloud->setTimeout(60);
         $res = $cloud->writeFile($filename, $filecontent, true);
@@ -178,7 +178,7 @@ class CloudImageModel
     {
         //上传到云服务器
         $config = $this->getConfig();
-        tsload(ADDON_PATH.'/library/upyun.class.php');
+
         $cloud = new UpYun($config['cloud_image_bucket'], $config['cloud_image_admin'], $config['cloud_image_password']);
         $cloud->setTimeout(60);
         $res = $cloud->deleteFile($filename);
@@ -246,7 +246,7 @@ class CloudImageModel
 
                 //上传到云服务器
                 $config = $this->getConfig();
-                tsload(ADDON_PATH.'/library/upyun.class.php');
+
                 $cloud = new UpYun($config['cloud_image_bucket'], $config['cloud_image_admin'], $config['cloud_image_password']);
                 $cloud->setTimeout(60);
 

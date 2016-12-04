@@ -1139,7 +1139,6 @@ class AccountAction extends Action
     protected function alipay(array $data)
     {
         $chargeConfigs = model('Xdata')->get('admin_Config:charge');
-        require_once ADDON_PATH.'/library/alipay/alipay.php';
         $configs = $parameter = array();
         $configs['partner'] = $chargeConfigs['alipay_pid'];
         $configs['seller_email'] = $chargeConfigs['alipay_email'];
@@ -1165,7 +1164,6 @@ class AccountAction extends Action
     {
         unset($_GET['app'], $_GET['mod'], $_GET['act']);
         unset($_REQUEST['app'], $_REQUEST['mod'], $_REQUEST['act']);
-        require_once ADDON_PATH.'/library/alipay/alipay.php';
         $chargeConfigs = model('Xdata')->get('admin_Config:charge');
         $configs = array(
             'partner' => $chargeConfigs['alipay_pid'],
@@ -1195,7 +1193,6 @@ class AccountAction extends Action
         unset($_GET['app'], $_GET['mod'], $_GET['act']);
         unset($_REQUEST['app'], $_REQUEST['mod'], $_REQUEST['act']);
         header('Content-type:text/html;charset=utf-8');
-        require_once ADDON_PATH.'/library/alipay/alipay.php';
         $chargeConfigs = model('Xdata')->get('admin_Config:charge');
         $configs = array(
             'partner' => $chargeConfigs['alipay_pid'],

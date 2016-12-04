@@ -20,7 +20,7 @@ class DepartmentModel extends Model
     public function _initialize()
     {
         $field = array('id' => 'department_id', 'name' => 'title', 'pid' => 'parent_dept_id', 'sort' => 'display_order');
-        tsload(ADDON_PATH.'/model/CateTreeModel');
+
         $this->treeDo = new CateTreeModel('department');
         $this->treeDo->setField($field);
     }

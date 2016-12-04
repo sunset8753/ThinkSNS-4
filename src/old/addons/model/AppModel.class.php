@@ -433,7 +433,6 @@ class AppModel extends Model
         // 默认应用，不能安装卸载
         $installed = empty($installed) ? C('DEFAULT_APPS') : array_merge($installed, C('DEFAULT_APPS'));
 
-        require_once ADDON_PATH.'/library/io/Dir.class.php';
         $dirs = new Dir(APPS_PATH);
         $dirs = $dirs->toArray();
         foreach ($dirs as $v) {

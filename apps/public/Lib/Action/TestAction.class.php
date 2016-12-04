@@ -226,25 +226,14 @@ class TestAction extends Action
     public function findLang()
     {
 
-        //  - model-
-        // $filePath[] = ADDON_PATH.'/model';
-        //
-        // - view -
-//		$filePath[] = ADDON_PATH.'/theme/stv1/public';
-//		$filePath[] = ADDON_PATH.'/theme/stv1/task';
-//		$filePath[] = ADDON_PATH.'/theme/stv1/support';
-//		$filePath[] = ADDON_PATH.'/theme/stv1/contact';
-//		$filePath[] = ADDON_PATH.'/theme/stv1/admin';
-        //
         // - app -
- $filePath[] = SITE_PATH.'/apps/public';
+        $filePath[] = SITE_PATH.'/apps/public';
         $filePath[] = SITE_PATH.'/apps/support';
         $filePath[] = SITE_PATH.'/apps/contact';
         $filePath[] = SITE_PATH.'/apps/admin';
         $filePath[] = SITE_PATH.'/apps/task';
 
         $filelist = array();
-        require_once ADDON_PATH.'/library/io/Dir.class.php';
 
         foreach ($filePath as $v) {
             $filelist[$v] = $this->getDir($v);

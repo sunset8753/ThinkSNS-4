@@ -348,8 +348,6 @@ class CreditApi extends Api
         $data ['charge_value'] = floatval($_REQUEST ['charge_value']);
         $data ['charge_score'] = floatval($_REQUEST ['charge_score']);
 
-        tsload(ADDON_PATH.'/library/WxPayPubHelper/WxPayPubHelper.php');
-
 // 		dump(WxPayConf_pub::APPID);
 // 		dump(WxPayConf_pub::MCHID);
 // 		dump(WxPayConf_pub::KEY);

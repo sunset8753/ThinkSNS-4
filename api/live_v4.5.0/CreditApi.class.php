@@ -139,7 +139,7 @@ class CreditApi extends Api
         if (!$result) {
             $data['charge_id'] = $result;
             if ($type == 0) {
-                require_once ADDON_PATH.'/library/alipay/alipay.php';
+
                 $configs = $parameter = array();
                 $configs['partner'] = $chargeConfigs['alipay_pid'];
                 $configs['seller_id'] = $chargeConfigs['alipay_pid'];
@@ -174,7 +174,7 @@ class CreditApi extends Api
                     'data' => $url,
                 );
             } elseif ($type == 1) {
-                require_once ADDON_PATH.'/library/WeChatPay.php';
+
                 $ip = get_client_ip(); //微信支付需要终端ip
                 $order = array(
                     'body' => '积分充值:'.$data['charge_sroce'].'积分',
@@ -253,7 +253,6 @@ class CreditApi extends Api
         if ($result) {
             $data['charge_id'] = $result;
             if ($type == 0) {//支付宝支付
-                require_once ADDON_PATH.'/library/alipay/alipay.php';
                 $configs = $parameter = array();
                 $configs['partner'] = $chargeConfigs['alipay_pid'];
                 $configs['seller_id'] = $chargeConfigs['alipay_pid'];
@@ -271,7 +270,6 @@ class CreditApi extends Api
                 );
                 $url = createAlipayUrl($configs, $parameter, 2); //直接返回支付宝支付url
             } elseif ($type == 1) {
-                require_once ADDON_PATH.'/library/WeChatPay.php';
                 $ip = get_client_ip(); //微信支付需要终端ip
                 $order = array(
                     'body' => '积分充值:'.$data['charge_sroce'].'积分',
@@ -312,7 +310,6 @@ class CreditApi extends Api
         unset($_GET['app'], $_GET['mod'], $_GET['act']);
         unset($_REQUEST['app'], $_REQUEST['mod'], $_REQUEST['act']);
         header('Content-type:text/html;charset=utf-8');
-        require_once ADDON_PATH.'/library/alipay/alipay.php';
         $chargeConfigs = model('Xdata')->get('admin_Config:charge');
         if ($_POST['sign_type'] == 'RSA') {
             $configs = array(
@@ -342,7 +339,6 @@ class CreditApi extends Api
         unset($_GET['app'], $_GET['mod'], $_GET['act']);
         unset($_REQUEST['app'], $_REQUEST['mod'], $_REQUEST['act']);
         $chargeConfigs = model('Xdata')->get('admin_Config:charge');
-        require_once ADDON_PATH.'/library/WeChatPay.php';
         $weixinpay = new WeChatPay();
         $result = $weixinpay->notifyReturn($chargeConfigs['weixin_key']);
         if ($result) {
@@ -401,8 +397,6 @@ class CreditApi extends Api
     {
         $data ['charge_value'] = floatval($_REQUEST ['charge_value']);
         $data ['charge_score'] = floatval($_REQUEST ['charge_score']);
-
-        tsload(ADDON_PATH.'/library/WxPayPubHelper/WxPayPubHelper.php');
 
 // 		dump(WxPayConf_pub::APPID);
 // 		dump(WxPayConf_pub::MCHID);

@@ -739,7 +739,7 @@ class WebMessageModel
         $clients = $this->getClientByUser($toUids);
         if ($clients) {
             if (!class_exists('Gateway', false)) {
-                require ADDON_PATH.'/library/GatewayClient/Gateway.php';
+                throw new \Exception('not find class "Gateway"');
             }
             foreach ($data as &$rs) {
                 $rs['message_id'] = (int) $rs['message_id'];

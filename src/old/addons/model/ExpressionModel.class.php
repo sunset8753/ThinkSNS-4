@@ -20,7 +20,7 @@ class ExpressionModel
             // $pkg = $pkg ? $pkg : 'default';
             $pkg = $pkg ? $pkg : 'new';
             $filepath = THEME_PUBLIC_PATH.'/image/expression/'.$pkg;
-            require_once ADDON_PATH.'/library/io/Dir.class.php';
+
             $expression = new Dir($filepath);
             $expression_pkg = $expression->toArray();
 

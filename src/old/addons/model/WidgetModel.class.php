@@ -339,7 +339,6 @@ class WidgetModel extends Model
      */
     private function _doupdate($path)
     {
-        tsload(ADDON_PATH.'/library/io/Dir.class.php');
         $dirs = new Dir($path);
         $dirs = $dirs->toArray();
         foreach ($dirs as $info) {

@@ -137,8 +137,7 @@ class PermissionModel
      */
     public function getRuleList($gid, $app, $appgroup)
     {
-        // $permissionFile = ADDON_PATH.'/lang/zh-cn/permission.xml';
-        // $xml = simplexml_load_file( $permissionFile );
+
         // 权限节点获取
         $permData = D('permission_node')->order('module DESC')->findAll();
         $appHash = $permNode = $appGroup = array();

@@ -79,7 +79,6 @@ class CloudAttachModel
     {
         $filename = trim($filename);
         $config = $this->getConfig();
-        tsload(ADDON_PATH.'/library/upyun.class.php');
         $cloud = new UpYun($config['cloud_attach_bucket'], $config['cloud_attach_admin'], $config['cloud_attach_password']);
         $cloud->setTimeout(60);
         $content = $cloud->readFile('/'.$filename);
@@ -183,7 +182,6 @@ class CloudAttachModel
 
                 //上传到云服务器
                 $config = $this->getConfig();
-                tsload(ADDON_PATH.'/library/upyun.class.php');
                 $cloud = new UpYun($config['cloud_attach_bucket'], $config['cloud_attach_admin'], $config['cloud_attach_password']);
                 $cloud->setTimeout(60);
 

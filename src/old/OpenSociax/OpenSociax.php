@@ -110,8 +110,13 @@ if (C('THEME_NAME')) {
     tsdefine('THEME_NAME', 'stv1');
 }
 
+if (!defined('THEME_ROOT')) {
+    define('THEME_ROOT', SITE_PATH.'/resources/theme/');
+    
+}
+
 //默认静态文件、模版文件目录
-tsdefine('THEME_PATH', SITE_PATH.'/resources/theme/'.THEME_NAME);
+tsdefine('THEME_PATH', THEME_ROOT.THEME_NAME);
 tsdefine('THEME_URL', SITE_URL.'/resources/theme/'.THEME_NAME);
 tsdefine('THEME_PUBLIC_PATH', THEME_PATH.'/_static');
 tsdefine('THEME_PUBLIC_URL', THEME_URL.'/_static');

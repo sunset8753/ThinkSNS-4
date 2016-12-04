@@ -65,7 +65,6 @@ class UserGroupAction extends AdministratorAction
         $this->opt['user_group_type'] = array(0 => L('PUBLIC_ORDINARY'), 1 => L('PUBLIC_SPECIAL'));
         $this->opt['is_authenticate'] = array(1 => '是', 0 => '否');
 
-        require_once ADDON_PATH.'/library/io/Dir.class.php';
         $dirs = new Dir(THEME_PUBLIC_PATH.'/image/usergroup');
         $dirs = $dirs->toArray();
 //      $icons = array('-1'=>'无');

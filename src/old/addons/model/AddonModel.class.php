@@ -372,13 +372,9 @@ class AddonModel extends Model
             }
             $path = $dirName.'/'.$entry;
             $addonsFile = $path.'/'.$entry.'Addons.class.php';
-            tsload(CORE_PATH.'/OpenSociax/addons/AbstractAddons.class.php');
-            tsload(CORE_PATH.'/OpenSociax/addons/NormalAddons.class.php');
-            tsload(CORE_PATH.'/OpenSociax/addons/SimpleAddons.class.php');
             if (file_exists($addonsFile)) {
-                tsload($addonsFile);
                 $class = $entry.'Addons';
-                $fileAddons [$entry] = new $class ();
+                $fileAddons [$entry] = new $class();
                 $fileAddons [$entry]->setPath($path);
             }
         }

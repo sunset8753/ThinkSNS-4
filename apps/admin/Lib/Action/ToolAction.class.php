@@ -322,7 +322,6 @@ class ToolAction extends AdministratorAction
     {
         $filename = basename($_REQUEST ['filename']);
         // 下载函数
-        require_once ADDON_PATH.'/library/Http.class.php';
         $file_path = DATA_PATH.'/database'.'/'.$filename;
 
         if (file_exists($file_path)) {

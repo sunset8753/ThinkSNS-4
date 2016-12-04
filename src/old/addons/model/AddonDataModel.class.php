@@ -4,8 +4,6 @@
  * @author jason <yangjs17@yeah.net>
  * @version TS3.0
  */
-// 载入Key-Value存储引擎模型 - 数据对象模型
-tsload(ADDON_PATH.'/model/XdataModel.class.php');
 class AddonDataModel extends XdataModel
 {
     const PREFIX = 'addons:';            // 前缀
