@@ -75,7 +75,6 @@ tsdefine('UPLOAD_URL', SITE_URL.'/data/upload');
 tsdefine('PUBLIC_PATH', SITE_PATH.'/public');
 tsdefine('PUBLIC_URL', SITE_URL.'/public');
 
-tsdefine('CORE_LIB_PATH', CORE_PATH.'/OpenSociax');
 tsdefine('CORE_RUN_PATH', TS_ROOT.TS_STORAGE.'/temp');
 tsdefine('LOG_PATH', TS_ROOT.TS_STORAGE.'/logs/');
 
@@ -307,5 +306,5 @@ function static_cache($cache_id, $value = null, $clean = false)
     }
 }
 
-//载入核心运行时文件
-include CORE_LIB_PATH.'/OpenSociax.php';
+// 载入核心运行时文件
+include dirname(__FILE__).'/OpenSociax/OpenSociax.php';

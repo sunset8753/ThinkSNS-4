@@ -211,17 +211,7 @@ class Template
             $this->getIncludeTagLib($content);
             if (!empty($this->tagLib)) {
                 // 对导入的TagLib进行解析
-                $_taglibs = C('_taglibs_');
                 foreach ($this->tagLib as $tagLibName) {
-                    // 内置标签库
-                    if (!tsload(CORE_LIB_PATH.'/TagLib/TagLib'.ucwords(strtolower($tagLibName)).'.class.php')) {
-                        // 扩展标签库
-                        if ($_taglibs && isset($_taglibs[$tagLibName])) {
-                            tsload(CORE_LIB_PATH.'/TagLib/TagLib'.$_taglibs[$tagLibName].'.class.php');
-                        } else {
-                            throw_exception($tagLibName.L('_TAGLIB_NOT_EXIST_'));
-                        }
-                    }
                     $this->parseTagLib($tagLibName, $content);
                 }
             }

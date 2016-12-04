@@ -5,9 +5,7 @@
  * @version ST1.0
  */
 
-if (!defined('SITE_PATH')) {
-    exit();
-}
+include dirname(__FILE__).'/functions.inc.php';
 
 /*  全局配置  */
 
@@ -18,7 +16,7 @@ $GLOBALS['_beginTime'] = microtime(true);
 define('MEMORY_LIMIT_ON', function_exists('memory_get_usage'));
 
 //载入全局配置
-tsconfig(include CORE_LIB_PATH.'/convention.php');
+tsconfig(include dirname(__FILE__).'/convention.php');
 tsconfig(include CONF_PATH.'/config.inc.php');
 tsconfig(include CONF_PATH.'/access.inc.php');
 tsconfig(include CONF_PATH.'/html.inc.php');
@@ -133,23 +131,3 @@ if (
 }
 define('APP_PUBLIC_URL', sprintf('%s%s/app/%s', SITE_URL, TS_STORAGE, strtolower(APP_NAME)));
 
-//设置语言包
-setLang();
-
-/*
- * 新应用入口文件
- */
-if (file_exists(sprintf('%s/bootstrap.php', APP_PATH))) {
-    Ts::import(APP_PATH, 'bootstrap', '.php');
-
-/*
- * 兼容旧的应用
- */
-} elseif (file_exists(sprintf('%s/common.php', APP_COMMON_PATH))) {
-    Ts::import(APP_COMMON_PATH, 'common', '.php');
-}
-
-//合并应用配置
-if (file_exists(APP_CONFIG_PATH.'/config.php')) {
-    tsconfig(include APP_CONFIG_PATH.'/config.php');
-}

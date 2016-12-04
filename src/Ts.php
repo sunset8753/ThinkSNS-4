@@ -64,7 +64,8 @@ final class Ts
             TsAutoLoader::entry($namespace);
         });
 
-        // var_dump(Capsule::table('user')->where('uid', 1)->select('uname')->get());exit;
+        //设置语言包
+        setLang();
     }
 
     /**

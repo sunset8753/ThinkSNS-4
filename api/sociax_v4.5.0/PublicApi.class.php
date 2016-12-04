@@ -282,11 +282,11 @@ class PublicApi extends Api
                     $user_info ['is_follow'] = $res[$uid]['following'];
                     /* # 获取用户封面 */
                     $cover = D('user_data')->where('`key` LIKE "application_user_cover" AND `uid` = '.$v)->field('value')->getField('value');
-                    $user_info ['cover'] = $cover ? (object) array($cover) : (object) [];
+                    $user_info ['cover'] = $cover ? (object) array($cover) : (object) array();
                     $value['user'] = $user_info;
 
                     $icon = $value['stream']['icon'];
-                    $value['stream']['icon'] = $icon ? (object) $icon : (object) [];
+                    $value['stream']['icon'] = $icon ? (object) $icon : (object) array();
                     $lives[] = $value;
                 }
                 $list ['lives'] = $lives;
