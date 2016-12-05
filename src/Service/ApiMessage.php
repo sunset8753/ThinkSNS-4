@@ -11,7 +11,7 @@ class ApiMessage
 {	
 	protected $status = 1;
 	
-	protected $message = '',
+	protected $message = '';
 	
 	protected $data = '';
 
