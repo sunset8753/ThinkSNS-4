@@ -72,24 +72,19 @@
         "medz/emoji-format": "^1.0",
         "symfony/polyfill-mbstring": "~1.0",
         "illuminate/database": "4.1.*",
-        "jpush/jpush": "^3.4"
+        "jpush/jpush": "^3.4",
+        "zhiyicx/thinksns-old-code": "^1.0"
     },
     "config": {
         "vendor-dir": "src/vendor/",
         "preferred-install": "dist"
     },
     "autoload": {
-        "files": [
-            "src/old/core.php",
-            "src/old//addons/library/alipay/alipay.php"
-        ],
         "classmap": [
-            "src/Ts.php",
-            "src/old/"
+            "src/Ts.php"
         ],
         "psr-4": {
-            "Ts\\": "src/",
-            "App\\": "apps/"
+            "Ts\\": "src/"
         }
     },
     "support": {
