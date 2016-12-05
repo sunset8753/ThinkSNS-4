@@ -73,7 +73,8 @@
         "symfony/polyfill-mbstring": "~1.0",
         "illuminate/database": "4.1.*",
         "jpush/jpush": "^3.4",
-        "zhiyicx/thinksns-old-code": "^1.0"
+        "zhiyicx/thinksns-old-code": "^1.0",
+        "zhiyicx/thinksns-theme-stv1": "^1.0"
     },
     "config": {
         "vendor-dir": "src/vendor/",
