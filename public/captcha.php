@@ -14,12 +14,7 @@ if (strtolower(ini_get('session.save_handler')) == 'files') {
 session_start();
 $name = 'verify';
 
-$font = dirname(dirname(__FILE__)).'/resources/assets/fonts/ariali.ttf';
-if (file_exists($font) && isset($_GET['type']) && $_GET['type'] == 'chinese') {
-    Image::GBVerify(3, 'png', 140, 50, $font, $name);
-} else {
-    Image::buildImageVerify(5, 5, 'png', 112, 42, $name);
-}
+Image::buildImageVerify(5, 5, 'png', 112, 42, $name);
 
 class Image
 {
@@ -104,7 +99,7 @@ class Image
             $fontcolor = imagecolorallocate($im, mt_rand(0, 255), mt_rand(0, 255), mt_rand(0, 255));
             imagesetpixel($im, mt_rand(0, $width), mt_rand(0, $height), $pointColor);
         }
-        $font = '../addons/library/font/ariali.ttf';
+        $font = dirname(dirname(__FILE__)).'/resources/assets/fonts/ariali.ttf';
         for ($i = 0; $i < $length; $i++) {
             // imagestring($im,5,$i*10+5,mt_rand(1,8),$randval{$i}, $stringColor);
             imagettftext($im, 20, mt_rand(-30, 30), $i * 16 + 12, $height / 1.4, $stringColor, $font, $randval{$i}); //这个是新的，用imagettftext函数
