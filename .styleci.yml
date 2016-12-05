@@ -1,18 +1,5 @@
 preset: psr2
 risky: false
-finder:
-  exclude:
-    - "data"
-    - "storage"
-    - "vendor"
-    - "src/vendor"
-    - ".git"
-    - ".svn"
-  name:
-    - "*.php"
-    - ".php_cs"
-  path:
-    - ""
 enabled:
   - double_arrow_multiline_whitespaces
   - duplicate_semicolon
