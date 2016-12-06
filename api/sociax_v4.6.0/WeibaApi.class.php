@@ -23,9 +23,11 @@ class WeibaApi extends Api
                 'eq', $post_id, ), ))->find();
 
         if (!$info || !isset($info['weiba_id'])) {
-            return array(
-                'status' => 0,
-                'message' => '帖子不存在或者已经被删除！', );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '帖子不存在或者已经被删除！');
+            // return array(
+            //     'status' => 0,
+            //     'message' => '帖子不存在或者已经被删除！', );
         }
         $post_uid = $info['post_uid'];
         $weiba_id = $info['weiba_id'];
@@ -34,21 +36,27 @@ class WeibaApi extends Api
             $post_uid == $this->mid ||
             CheckWeibaPermission('', $weiba_id)) {
             if ($post_uid != $this->mid && CheckWeibaPermission('', $weiba_id)) {
-                return array(
-                    'status' => 0,
-                    'message' => '你没有权限操作！', );
+
+                return Ts\Service\ApiMessage::withArray('', 0, '你没有权限操作！');
+                // return array(
+                //     'status' => 0,
+                //     'message' => '你没有权限操作！', );
             }
         } else {
-            return array(
-                'status' => 0,
-                'message' => '你没有权限操作！', );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '你没有权限操作！');
+            // return array(
+            //     'status' => 0,
+            //     'message' => '你没有权限操作！', );
         }
 
         if (!CheckWeibaPermission('', $weiba['weiba_id'])) {
             if (!CheckPermission('weiba_normal', 'weiba_del') || $post_uid != $this->mid) {
-                return array(
-                    'status' => 0,
-                    'message' => '你没有权限操作！', );
+
+                return Ts\Service\ApiMessage::withArray('', 0, '你没有权限操作！');
+                // return array(
+                //     'status' => 0,
+                //     'message' => '你没有权限操作！', );
             }
         }
 
@@ -74,14 +82,16 @@ class WeibaApi extends Api
             /* 删除收藏 */
             D('WeibaPost')->where(array('post_id' => $post_id))->delete();
 
-            return array(
-                'status' => 1,
-                'message' => '删除成功！', );
+            return Ts\Service\ApiMessage::withArray('', 1, '删除成功！');
+            // return array(
+            //     'status' => 1,
+            //     'message' => '删除成功！', );
         }
 
-        return array(
-            'status' => 0,
-            'message' => '删除失败！', );
+        return Ts\Service\ApiMessage::withArray('', 0, '删除失败！');
+        // return array(
+        //     'status' => 0,
+        //     'message' => '删除失败！', );
     }
 
     /**
@@ -95,7 +105,8 @@ class WeibaApi extends Api
         $num = M('UserData')->getUserData($this->mid);
         $num = $num['unread_comment_weiba'];
 
-        return intval($num);
+        return Ts\Service\ApiMessage::withArray(intval($num), 1, '');
+        // return intval($num);
     }
 
     /**
@@ -109,7 +120,8 @@ class WeibaApi extends Api
         $num = M('UserData')->getUserData($this->mid);
         $num = $num['unread_digg_weibapost'];
 
-        return intval($num);
+        return Ts\Service\ApiMessage::withArray(intval($num), 1, '');
+        // return intval($num);
     }
 
     /**
@@ -138,7 +150,8 @@ class WeibaApi extends Api
         }
         model('UserData')->setKeyValue($this->mid, 'unread_digg_weibapost', 0);
 
-        return $list;
+        return Ts\Service\ApiMessage::withArray($list, 1, '');
+        // return $list;
     }
 
     /**
@@ -157,10 +170,12 @@ class WeibaApi extends Api
         $post_id = intval($this->data ['post_id']);
         $post_uid = M('weiba_post')->where('is_del = 0 and post_id='.$post_id)->getField('post_uid');
         if (! $post_uid) {
-            return array(
-                    'status' => 0,
-                    'msg' => '内容已被删除，举报失败',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '内容已被删除，举报失败');
+            // return array(
+            //         'status' => 0,
+            //         'msg' => '内容已被删除，举报失败',
+            // );
         }
 
         $data ['from'] = 'weiba_post';
@@ -169,10 +184,12 @@ class WeibaApi extends Api
         $data ['uid'] = $this->mid;
         $data ['fuid'] = $post_uid;
         if ($isDenounce = model('Denounce')->where($data)->count()) {
-            return array(
-                    'status' => 0,
-                    'msg' => L('PUBLIC_REPORTING_INFO'),
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, L('PUBLIC_REPORTING_INFO'));
+            // return array(
+            //         'status' => 0,
+            //         'msg' => L('PUBLIC_REPORTING_INFO'),
+            // );
         } else {
             $data ['content'] = D('weiba_post')->where('post_id = '.$post_id)->getField('title');
             $data ['reason'] = t($this->data ['reason']);
@@ -188,15 +205,18 @@ class WeibaApi extends Api
                     model('Notify')->sendNotify($v ['uid'], 'denouce_audit');
                 }
 
-                return array(
-                        'status' => 1,
-                        'msg' => '举报成功',
-                );
+                return Ts\Service\ApiMessage::withArray('', 1, '举报成功');
+                // return array(
+                //         'status' => 1,
+                //         'msg' => '举报成功',
+                // );
             } else {
-                return array(
-                        'status' => 0,
-                        'msg' => L('PUBLIC_REPORT_ERROR'),
-                );
+
+                return Ts\Service\ApiMessage::withArray('', 0, L('PUBLIC_REPORT_ERROR'));
+                // return array(
+                //         'status' => 0,
+                //         'msg' => L('PUBLIC_REPORT_ERROR'),
+                // );
             }
         }
     }
@@ -272,11 +292,13 @@ class WeibaApi extends Api
         /* 增加帖子阅读数 */
         D('weiba_post')->where('`post_id` = '.intval($this->id))->setInc('read_count');
 
-        return $data;
+        return Ts\Service\ApiMessage::withArray($data, 1, '');
+        // return $data;
     }
     public function digg_lists()
     {
-        return $this->weiba_post_digg($this->data ['post_id'], 20);
+        $return = $this->weiba_post_digg($this->data ['post_id'], 20);
+        return Ts\Service\ApiMessage::withArray($return, 1, '');
     }
 
     /*
@@ -289,7 +311,8 @@ class WeibaApi extends Api
                 'post_id' => $weiba_id,
         ));
 
-        return $data;
+        return Ts\Service\ApiMessage::withArray($data, 1, '');
+        // return $data;
     }
 
     /**
@@ -347,7 +370,8 @@ class WeibaApi extends Api
         $res ['my'] = (array) $var;
         $res ['recommend'] = (array) $weiba_recommend;
 
-        return $res;
+        return Ts\Service\ApiMessage::withArray($res, 1, '');
+        // return $res;
     }
 
     public function _post_list($list)
@@ -388,7 +412,8 @@ class WeibaApi extends Api
             $list[$k]['title'] = formatEmoji(false, $list[$k]['title']);
         }
 
-        return $list;
+        return Ts\Service\ApiMessage::withArray($list, 1, '');
+        // return $list;
     }
     /**
      * 圈子 --using
@@ -463,7 +488,8 @@ class WeibaApi extends Api
             $data ['weiba_top'] = $top;
         }
 
-        return $data;
+        return Ts\Service\ApiMessage::withArray($data, 1, '');
+        // return $data;
     }
     public function detail_digest()
     {
@@ -496,7 +522,8 @@ class WeibaApi extends Api
             }
         }
 
-        return $list;
+        return Ts\Service\ApiMessage::withArray($list, 1, '');
+        // return $list;
     }
     public function setNewcount($weiba_id, $num = 1)
     {
@@ -514,7 +541,8 @@ class WeibaApi extends Api
             M('weiba')->where($map)->setField('new_count', (int) $num + (int) $weiba ['new_count']);
         }
 
-        return true;
+        return Ts\Service\ApiMessage::withArray('true', 1, '');
+        // return true;
     }
     public function findWeiba()
     {
@@ -552,10 +580,11 @@ class WeibaApi extends Api
             $var = array();
         }
 
-        return array(
-                $weiba,
-                $var,
-        );
+        return Ts\Service\ApiMessage::withArray(array($weiba, $var), 1, '');
+        // return array(
+        //         $weiba,
+        //         $var,
+        // );
     }
 
     /**
@@ -583,7 +612,8 @@ class WeibaApi extends Api
             $var = array();
         }
 
-        return $var;
+        return Ts\Service\ApiMessage::withArray($var, 1, '');
+        // return $var;
     }
 
     /**
@@ -639,7 +669,8 @@ class WeibaApi extends Api
             $var = array();
         }
 
-        return $var;
+        return Ts\Service\ApiMessage::withArray($var, 1, '');
+        // return $var;
     }
 
     /**
@@ -650,10 +681,11 @@ class WeibaApi extends Api
         $man = model('RelatedUser')->getRelatedUser(8);
         $weiba = $this->_weiba_recommend(8, 200, 200);
 
-        return array(
-                $weiba,
-                $man,
-        );
+        return Ts\Service\ApiMessage::withArray(array($weiba, $man), 1, '');
+        // return array(
+        //         $weiba,
+        //         $man,
+        // );
     }
 
     /**
@@ -670,10 +702,11 @@ class WeibaApi extends Api
         $data ['weiba_id'] = intval($_REQUEST ['weiba_id']);
         $data ['follower_uid'] = empty($this->user_id) ? $this->mid : $this->user_id;
         if (M('weiba_follow')->where($data)->find()) {
-            $nres ['status'] = 0;
-            $nres ['msg'] = '您已关注该圈子';
+            // $nres ['status'] = 0;
+            // $nres ['msg'] = '您已关注该圈子';
 
-            return $nres;
+            return Ts\Service\ApiMessage::withArray('', 0, '您已关注该圈子');
+            // return $nres;
         } else {
             $res = M('weiba_follow')->add($data);
             if ($res) {
@@ -681,15 +714,17 @@ class WeibaApi extends Api
 
                 // 添加积分
                 model('Credit')->setUserCredit($data['follower_uid'], 'follow_weiba');
-                $nres ['status'] = 1;
-                $nres ['msg'] = '关注成功';
+                // $nres ['status'] = 1;
+                // $nres ['msg'] = '关注成功';
 
-                return $nres;
+                return Ts\Service\ApiMessage::withArray('', 1, '关注成功');
+                // return $nres;
             } else {
-                $nres ['status'] = 0;
-                $nres ['msg'] = '关注失败';
+                // $nres ['status'] = 0;
+                // $nres ['msg'] = '关注失败';
 
-                return $nres;
+                return Ts\Service\ApiMessage::withArray('', 0, '关注失败');
+                // return $nres;
             }
         }
     }
@@ -715,21 +750,24 @@ class WeibaApi extends Api
 
                 // 添加积分
                 model('Credit')->setUserCredit($uid, 'unfollow_weiba');
-                $nres ['status'] = 1;
-                $nres ['msg'] = '取消关注成功';
+                // $nres ['status'] = 1;
+                // $nres ['msg'] = '取消关注成功';
 
-                return $nres;
+                return Ts\Service\ApiMessage::withArray('', 1, '取消关注成功');
+                // return $nres;
             } else {
-                $nres ['status'] = 0;
-                $nres ['msg'] = '取消关注失败';
+                // $nres ['status'] = 0;
+                // $nres ['msg'] = '取消关注失败';
 
-                return $nres;
+                return Ts\Service\ApiMessage::withArray('', 0, '取消关注失败');
+                // return $nres;
             }
         } else {
-            $nres ['status'] = 0;
-            $nres ['msg'] = '您尚未关注该圈子';
+            // $nres ['status'] = 0;
+            // $nres ['msg'] = '您尚未关注该圈子';
 
-            return $nres;
+            return Ts\Service\ApiMessage::withArray('', 0, '您尚未关注该圈子');
+            // return $nres;
         }
     }
 
@@ -756,7 +794,8 @@ class WeibaApi extends Api
             $res ['info'] = '您以赞过';
         }
 
-        return $res;
+        return Ts\Service\ApiMessage::withArray('', $res['status'], $res['info']);
+        // return $res;
     }
     // 取消赞帖子
     public function delPostDigg()
@@ -779,7 +818,8 @@ class WeibaApi extends Api
             $res ['info'] = '您还没赞过';
         }
 
-        return $res;
+        return Ts\Service\ApiMessage::withArray('', $res['status'], $res['info']);
+        // return $res;
     }
 
     /**
@@ -814,7 +854,8 @@ class WeibaApi extends Api
             $res ['msg'] = '您已经收藏过';
         }
 
-        return $res;
+        return Ts\Service\ApiMessage::withArray('', $res['status'], $res['info']);
+        // return $res;
     }
 
     /**
@@ -841,7 +882,8 @@ class WeibaApi extends Api
             $res ['msg'] = '你还没有收藏';
         }
 
-        return $res;
+        return Ts\Service\ApiMessage::withArray('', $res['status'], $res['info']);
+        // return $res;
     }
 
     /**
@@ -886,10 +928,12 @@ class WeibaApi extends Api
         /* # 获取所有资源 */
         $ids = D('weiba_post')->where(array('post_id' => array('IN', $ids)))->order('find_in_set(post_id,\''.implode(',', $ids).'\')')->select();
 
-        return array(
+        $return  = array(
             'max_id' => $this->max_id,
             'data' => $this->_post_list($ids),
         );
+
+        return Ts\Service\ApiMessage::withArray($return, 1, '');
     }
 
     /**
@@ -927,7 +971,8 @@ class WeibaApi extends Api
             $weiba_recommend[$k]['content'] = formatEmoji(false, $weiba_recommend[$k]['content']);
         }
 
-        return $weiba_recommend;
+        return Ts\Service\ApiMessage::withArray($weiba_recommend, 1, '');
+        // return $weiba_recommend;
     }
 
     /**
@@ -948,7 +993,8 @@ class WeibaApi extends Api
         $follow_data = M('weiba_follow')->where(" ( follower_uid = '{$uid}' AND weiba_id IN({$_weibaids}) ) ")->findAll();
         $follow_states = $this->_formatFollowState($uid, $weiba_ids, $follow_data);
 
-        return $follow_states [$uid];
+        return Ts\Service\ApiMessage::withArray($follow_states[$uid], 1, '');
+        // return $follow_states [$uid];
     }
 
     /**
@@ -976,7 +1022,8 @@ class WeibaApi extends Api
             }
         }
 
-        return $follow_states;
+        return Ts\Service\ApiMessage::withArray($follow_states, 1, '');
+        // return $follow_states;
     }
     /**
      * 获取指定分享的评论列表 --using
@@ -1046,7 +1093,8 @@ class WeibaApi extends Api
             $comment_list [] = $comment_info;
         }
 
-        return $comment_list;
+        return Ts\Service\ApiMessage::withArray($comment_list, 1, '');
+        // return $comment_list;
     }
     /**
      * 获取指定帖子的赞过的人的列表 --using
@@ -1069,6 +1117,7 @@ class WeibaApi extends Api
         ! empty($this->max_id) && $where .= " AND id < {$this->max_id}";
         $digg_list = M('weiba_post_digg')->where($where)->order('cTime DESC')->limit($count)->findAll();
         if (! $digg_list) {
+            return Ts\Service\ApiMessage::withEmpty();
             return array();
         }
         $follow_status = model('Follow')->getFollowStateByFids($this->user_id, getSubByKey($digg_list, 'uid'));
@@ -1082,7 +1131,8 @@ class WeibaApi extends Api
             unset($digg_list [$k] ['post_id']);
         }
 
-        return $digg_list;
+        return Ts\Service\ApiMessage::withArray($digg_list, 1, '');
+        // return $digg_list;
     }
     /**
      * 获取用户信息 --using
@@ -1100,7 +1150,8 @@ class WeibaApi extends Api
         $user_info ['avatar'] ['avatar_middle'] = $user_info_whole ['avatar'] ['avatar_middle'];
         $user_info ['user_group'] = $user_info_whole ['user_group'];
 
-        return $user_info;
+        return Ts\Service\ApiMessage::withArray($user_info, 1, '');
+        // return $user_info;
     }
     public function recommend_topic()
     {
@@ -1130,7 +1181,8 @@ class WeibaApi extends Api
         }
         $res ['my'] = (array) $list;
 
-        return (array) $res;
+        return Ts\Service\ApiMessage::withArray($res, 1, '');
+        // return (array) $res;
     }
     public function search_topic()
     {
@@ -1149,7 +1201,8 @@ class WeibaApi extends Api
 
         $list = M('weiba_post')->where($map)->order('post_time desc')->limit(20)->findAll();
 
-        return (array) $this->_post_list($list);
+        $return = (array) $this->_post_list($list);
+        return Ts\Service\ApiMessage::withArray($return, 1, '');
     }
     public function recommend_all()
     {
@@ -1164,7 +1217,8 @@ class WeibaApi extends Api
         $list = M('weiba_post')->where($map)->order('post_time desc')->limit(20)->findAll();
         $list = $this->_post_list($list);
 
-        return (array) $list;
+        return Ts\Service\ApiMessage::withArray((array)$list, 1, '');
+        // return (array) $list;
     }
     public function post_all()
     {
@@ -1178,7 +1232,8 @@ class WeibaApi extends Api
         $list = M('weiba_post')->where($map)->order('post_time desc')->limit(20)->findAll();
         $list = $this->_post_list($list);
 
-        return (array) $list;
+        return Ts\Service\ApiMessage::withArray((array)$list, 1, '');
+        // return (array) $list;
     }
     public function post_one()
     {
@@ -1188,7 +1243,8 @@ class WeibaApi extends Api
         $list = M('weiba_post')->where($map)->findAll();
         $list = $this->_post_list($list);
 
-        return (array) $list;
+        return Ts\Service\ApiMessage::withArray((array)$list, 1, '');
+        // return (array) $list;
     }
     public function digest_all()
     {
@@ -1203,7 +1259,8 @@ class WeibaApi extends Api
         $list = M('weiba_post')->where($map)->order('post_time desc')->limit(20)->findAll();
         $list = $this->_post_list($list);
 
-        return (array) $list;
+        return Ts\Service\ApiMessage::withArray((array)$list, 1, '');
+        // return (array) $list;
     }
     public function all_wieba()
     {
@@ -1229,7 +1286,8 @@ class WeibaApi extends Api
             $list[$k]['content'] = formatEmoji(false, $list[$k]['content']);
         }
         // dump(M ( 'weiba' )->getLastSql());
-        return (array) $list;
+        return Ts\Service\ApiMessage::withArray((array)$list, 1, '');
+        // return (array) $list;
     }
     /**
      * 评论帖子 --using
@@ -1251,25 +1309,30 @@ class WeibaApi extends Api
 
         //检测用户是否被禁言
         if ($isDisabled = model('DisableUser')->isDisableUser($this->mid, 'post')) {
-            return array(
-                'status' => 0,
-                'msg' => '您已经被禁言了',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '您已经被禁言了');
+            // return array(
+            //     'status' => 0,
+            //     'msg' => '您已经被禁言了',
+            // );
         }
         if (! t($this->data ['content'])) {
             $return ['msg'] = '评论内容不能为空';
 
-            return $return;
+            return Ts\Service\ApiMessage::withArray('', 0, $return['msg']);
+            // return $return;
         }
         if (! intval($this->data ['post_id'])) {
             $return ['msg'] = '参数非法';
 
-            return $return;
+            return Ts\Service\ApiMessage::withArray('', 0, $return['msg']);
+            // return $return;
         }
         if (! $this->mid || ! CheckPermission('weiba_normal', 'weiba_reply')) {
             $return ['msg'] = '你无权发布';
 
-            return $return;
+            return Ts\Service\ApiMessage::withArray('', 0, $return['msg']);
+            // return $return;
         }
 
         $feed_detail = M('weiba_post')->where('post_id='.intval($this->data ['post_id']))->find();
@@ -1290,17 +1353,20 @@ class WeibaApi extends Api
 
         $filterContentStatus = filter_words($data ['content']);
         if (! $filterContentStatus ['status']) {
-            return array(
-                    'status' => 0,
-                    'msg' => $filterContentStatus ['data'],
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, $filterContentStatus['data']);
+            // return array(
+            //         'status' => 0,
+            //         'msg' => $filterContentStatus ['data'],
+            // );
         }
         $data ['content'] = $filterContentStatus ['data'];
 
         if (isSubmitLocked()) {
             $return ['msg'] = '发布内容过于频繁，请稍后再试！';
 
-            return $return;
+            return Ts\Service\ApiMessage::withArray('', 0, $return['msg']);
+            // return $return;
         }
 
         if ($data ['reply_id'] = D('weiba_reply')->add($data)) {
@@ -1386,7 +1452,9 @@ class WeibaApi extends Api
             $return ['msg'] = '发布成功';
         }
 
-        return $return;
+
+        return Ts\Service\ApiMessage::withArray('', $return['status'], $return['msg']);
+        // return $return;
     }
     public function add_post_digg()
     {
@@ -1397,7 +1465,8 @@ class WeibaApi extends Api
             $result ['status'] = 0;
             $result ['msg'] = '你已经赞过';
 
-            return $result;
+            return Ts\Service\ApiMessage::withArray('', $result['status'], $result['msg']);
+            // return $result;
         }
         $map ['cTime'] = time();
         $res = M('weiba_post_digg')->add($map);
@@ -1408,12 +1477,14 @@ class WeibaApi extends Api
             $result ['status'] = 1;
             $result ['msg'] = '操作成功';
 
-            return $result;
+            return Ts\Service\ApiMessage::withArray('', $result['status'], $result['msg']);
+            // return $result;
         } else {
             $result ['status'] = 0;
             $result ['msg'] = '操作失败';
 
-            return $result;
+            return Ts\Service\ApiMessage::withArray('', $result['status'], $result['msg']);
+            // return $result;
         }
     }
 
@@ -1430,7 +1501,8 @@ class WeibaApi extends Api
         if (!$this->data['post_id']) {
             $return['msg'] = '请选择帖子';
 
-            return $return;
+            return Ts\Service\ApiMessage::withArray('', $return['status'], $return['msg']);
+            // return $return;
         }
         $weiba_post_mod = M('weiba_post');
         $map['post_id'] = intval($this->data['post_id']);
@@ -1459,7 +1531,8 @@ class WeibaApi extends Api
         $return['status'] = '1';
         $return['msg'] = '删除成功';
 
-        return $return;
+        return Ts\Service\ApiMessage::withArray('', $return['status'], $return['msg']);
+        // return $return;
     }
 
     //取消赞
@@ -1474,12 +1547,14 @@ class WeibaApi extends Api
             $result ['status'] = 1;
             $result ['msg'] = '操作成功';
 
-            return $result;
+            return Ts\Service\ApiMessage::withArray('', $result['status'], $result['msg']);
+            // return $result;
         } else {
             $result ['status'] = 0;
             $result ['msg'] = '操作失败';
 
-            return $result;
+            return Ts\Service\ApiMessage::withArray('', $result['status'], $result['msg']);
+            // return $result;
         }
     }
     public function upload_photo()
@@ -1489,16 +1564,22 @@ class WeibaApi extends Api
         $GLOBALS ['fromMobile'] = true;
         $info = model('Attach')->upload($d, $d);
 
-        return  $this->add_post($info ['info']);
+        $return = $this->add_post($info ['info']);
+
+        return Ts\Service\ApiMessage::withArray($return, 0, '');
     }
     public function add_post($imgs)
     {
         if (! CheckPermission('weiba_normal', 'weiba_post')) {
-            $this->error('对不起，您没有权限进行该操作！');
+
+            return Ts\Service\ApiMessage::withArray('', 0, '对不起，您没有权限进行该操作！');
+            // $this->error('对不起，您没有权限进行该操作！');
         }
         $weibaid = intval($this->data ['weiba_id']);
         if (! $weibaid) {
-            $this->error('请选择微吧！');
+
+            return Ts\Service\ApiMessage::withArray('', 0, '请选择微吧！');
+            // $this->error('请选择微吧！');
         }
         $weiba = D('weiba')->where('weiba_id='.$weibaid)->find();
         if (! CheckPermission('core_admin', 'admin_login')) {
@@ -1508,7 +1589,9 @@ class WeibaApi extends Api
                     $map ['follower_uid'] = $this->mid;
                     $res = D('weiba_follow')->where($map)->find();
                     if (! $res && ! CheckPermission('core_admin', 'admin_login')) {
-                        $this->error('对不起，您没有发帖权限，请关注该微吧！');
+
+                        return Ts\Service\ApiMessage::withArray('', 0, '对不起，您没有发帖权限，请关注该微吧！');
+                        // $this->error('对不起，您没有发帖权限，请关注该微吧！');
                     }
                     break;
                 case 2:
@@ -1519,7 +1602,9 @@ class WeibaApi extends Api
                     );
                     $weiba_admin = D('weiba_follow')->where($map)->order('level desc')->field('follower_uid')->findAll();
                     if (! in_array($this->mid, getSubByKey($weiba_admin, 'follower_uid')) && ! CheckPermission('core_admin', 'admin_login')) {
-                        $this->error('对不起，您没有发帖权限，仅限管理员发帖！');
+
+                        return Ts\Service\ApiMessage::withArray('', 0, '对不起，您没有发帖权限，仅限管理员发帖！');
+                        // $this->error('对不起，您没有发帖权限，仅限管理员发帖！');
                     }
                     break;
                 case 3:
@@ -1527,7 +1612,9 @@ class WeibaApi extends Api
                     $map ['level'] = 3;
                     $weiba_admin = D('weiba_follow')->where($map)->order('level desc')->field('follower_uid')->find();
                     if ($this->mid != $weiba_admin ['follower_uid'] && ! CheckPermission('core_admin', 'admin_login')) {
-                        $this->error('对不起，您没有发帖权限，仅限吧主发帖！');
+
+                        return Ts\Service\ApiMessage::withArray('', 0, '对不起，您没有发帖权限，仅限吧主发帖！');
+                        // $this->error('对不起，您没有发帖权限，仅限吧主发帖！');
                     }
                     break;
             }
@@ -1549,14 +1636,20 @@ class WeibaApi extends Api
         $checkContents = preg_replace('/<img(.*?)src=/i', 'img', $checkContent);
         $checkContents = preg_replace('/<embed(.*?)src=/i', 'img', $checkContents);
         if (strlen(t($this->data ['title'])) == 0) {
-            $this->error('帖子标题不能为空');
+
+            return Ts\Service\ApiMessage::withArray('', 0, '帖子标题不能为空');
+            // $this->error('帖子标题不能为空');
         }
         if (strlen(t($checkContents)) == 0) {
-            $this->error('帖子内容不能为空');
+
+            return Ts\Service\ApiMessage::withArray('', 0, '帖子内容不能为空');
+            // $this->error('帖子内容不能为空');
         }
         preg_match_all('/./us', t($this->data ['title']), $match);
         if (count($match [0]) > 20) { // 汉字和字母都为一个字
-            $this->error('帖子标题不能超过20个字');
+
+            return Ts\Service\ApiMessage::withArray('', 0, '帖子标题不能超过20个字');
+            // $this->error('帖子标题不能超过20个字');
         }
         if ($this->data ['attach_ids']) {
             $attach = explode('|', $this->data ['attach_ids']);
@@ -1614,13 +1707,17 @@ class WeibaApi extends Api
             // 添加积分
             model('Credit')->setUserCredit($this->mid, 'publish_topic');
 
-            return array(
-                    'status' => 1,
-                    'post_id' => $res,
-                    'msg' => '发布成功',
-            );
+
+            return Ts\Service\ApiMessage::withArray($res, 1, '发布成功');
+            // return array(
+            //         'status' => 1,
+            //         'post_id' => $res,
+            //         'msg' => '发布成功',
+            // );
         } else {
-            $this->error('发布失败');
+
+            return Ts\Service\ApiMessage::withArray('', 0, '发布失败');
+            // $this->error('发布失败');
         }
     }
 }

@@ -11,7 +11,9 @@ class TagApi extends Api
      **/
     public function getTreeAll()
     {
-        return model('CategoryTree')->setTable('user_category')->getNetworkList();
+        $return = model('CategoryTree')->setTable('user_category')->getNetworkList();
+
+        return Ts\Service\ApiMessage::withArray($return, 1, '');
     }
 
     /**
@@ -36,7 +38,8 @@ class TagApi extends Api
             }
         }
 
-        return $all;
+        return Ts\Service\ApiMessage::withArray($all, 1, '');
+        // return $all;
     }
 
     /**
@@ -61,7 +64,8 @@ class TagApi extends Api
             ));
         }
 
-        return $tags;
+        return Ts\Service\ApiMessage::withArray($tags, 1, '');
+        // return $tags;
     }
 
     /*
@@ -84,17 +88,21 @@ class TagApi extends Api
         $tags = explode(',', $_REQUEST['name']);
         // 判断是否为空
         if (empty($tags)) {
-            return array(
-                    'status' => 0,
-                    'info' => L('PUBLIC_TAG_NOEMPTY'),
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, L('PUBLIC_TAG_NOEMPTY'));
+            // return array(
+            //         'status' => 0,
+            //         'info' => L('PUBLIC_TAG_NOEMPTY'),
+            // );
         }
 
         if (count($tags) > 5) {
-            return array(
-                    'status' => 0,
-                    'info' => '最多只能选择5个',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 1, '最多只能选择5个');
+            // return array(
+            //         'status' => 0,
+            //         'info' => '最多只能选择5个',
+            // );
         }
         M('app_tag')->where(array('app' => 'public', 'table' => 'user', 'row_id' => $this->mid))->delete();
         // 其他相关参数
@@ -107,7 +115,9 @@ class TagApi extends Api
         $return ['status'] = ! empty($result) > 0 ? 1 : 0;
         $return ['data'] = $result;
 
-        return $return;
+
+        return Ts\Service\ApiMessage::withArray($return, 1, '');
+        // return $return;
     }
 
     /*
@@ -126,6 +136,7 @@ class TagApi extends Api
         $return ['status'] = ! empty($result) > 0 ? 1 : 0;
         $return ['data'] = $result;
 
-        return $return;
+        return Ts\Service\ApiMessage::withArray($return, 1, '');
+        // return $return;
     }
 }

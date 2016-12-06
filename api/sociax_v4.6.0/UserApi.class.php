@@ -25,7 +25,8 @@ class UserApi extends Api
         /* 删除微吧帖子权限 */
         $manage['manage_del_weiba_post'] = (bool) CheckPermission('weiba_admin', 'weiba_del');
 
-        return $manage;
+        return Ts\Service\ApiMessage::withArray($manage, 1, '');
+        // return $manage;
     }
 
     /**
@@ -49,19 +50,23 @@ class UserApi extends Api
     public function uploadUserCover()
     {
         if (!$this->mid) {
-            $this->error(array(
-                'status' => '-1',
-                'msg' => '没有登陆',
-            ));
+
+            return Ts\Service\ApiMessage::withArray('', 0, '没有登陆');
+            // $this->error(array(
+            //     'status' => '-1',
+            //     'msg' => '没有登陆',
+            // ));
         }
 
         $info = model('Attach')->upload(array('upload_type' => 'image'));
 
         if (count($info['info']) <= 0) {
-            $this->error(array(
-                'status' => '-2',
-                'msg' => '没有上传任何文件',
-            ));
+
+            return Ts\Service\ApiMessage::withArray('', 0, '没有上传任何文件');
+            // $this->error(array(
+            //     'status' => '-2',
+            //     'msg' => '没有上传任何文件',
+            // ));
         }
 
         $info = array_pop($info['info']);
@@ -78,11 +83,12 @@ class UserApi extends Api
             ));
         }
 
-        return array(
-            'status' => '1',
-            'msg' => '更新成功！',
-            'image' => getImageUrlByAttachId($info['attach_id']),
-        );
+        return Ts\Service\ApiMessage::withArray(getImageUrlByAttachId($info['attach_id']), 1, '');
+        // return array(
+        //     'status' => '1',
+        //     'msg' => '更新成功！',
+        //     'image' => getImageUrlByAttachId($info['attach_id']),
+        // );
     }
 
     /**
@@ -114,18 +120,22 @@ class UserApi extends Api
         if ($this->mid != $uid) {
             $privacy = model('UserPrivacy')->getPrivacy($this->mid, $uid);
             if ($privacy ['space'] == 1) {
-                return array(
-                        'status' => 0,
-                        'msg' => '您没有权限进入TA的个人主页',
-                );
+
+                return Ts\Service\ApiMessage::withArray('', 0, '您没有权限进入TA的个人主页');
+                // return array(
+                //         'status' => 0,
+                //         'msg' => '您没有权限进入TA的个人主页',
+                // );
             }
         }
         $userInfo = $this->get_user_info($uid);
         if (! $userInfo ['uname']) {
-            return array(
-                    'status' => 0,
-                    'msg' => '该用户不存在或已被删除',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '该用户不存在或已被删除');
+            // return array(
+            //         'status' => 0,
+            //         'msg' => '该用户不存在或已被删除',
+            // );
         }
         // $userInfo['can_'] = CheckPermission('core_normal','feed_del');
         $user_info ['is_admin'] = CheckPermission('core_admin', 'feed_del') ? '1' : '0';
@@ -229,7 +239,8 @@ class UserApi extends Api
             }
         }
 
-        return $user_info;
+        return Ts\Service\ApiMessage::withArray($user_info, 1, '');
+        // return $user_info;
     }
 
     //获取用户勋章
@@ -253,7 +264,8 @@ class UserApi extends Api
             unset($v ['type']);
         }
 
-        return $list;
+        return Ts\Service\ApiMessage::withArray($list, 1, '');
+        // return $list;
     }
 
     /**
@@ -291,7 +303,8 @@ class UserApi extends Api
         // 用户备注
         $user_info ['remark'] = model('UserRemark')->getRemark($this->mid, $uid);
 
-        return $user_info;
+        return Ts\Service\ApiMessage::withArray($user_info, 1, '');
+        // return $user_info;
     }
 
     /**
@@ -367,7 +380,8 @@ class UserApi extends Api
             $follower_arr [$k] ['follow_status'] = $follow_status [$v ['uid']];
         }
 
-        return $follower_arr;
+        return Ts\Service\ApiMessage::withArray($follower_arr, 1, '');
+        // return $follower_arr;
     }
 
     /**
@@ -440,7 +454,8 @@ class UserApi extends Api
             $following_arr [$k] ['follow_status'] = $follow_status [$v ['fid']];
         }
 
-        return $following_arr;
+        return Ts\Service\ApiMessage::withArray($following_arr, 1, '');
+        // return $following_arr;
     }
 
     /**
@@ -511,7 +526,8 @@ class UserApi extends Api
             $friend_arr [$k] ['follow_status'] = $follow_status [$v ['fid']];
         }
 
-        return $friend_arr;
+        return Ts\Service\ApiMessage::withArray($friend_arr, 1, '');
+        // return $friend_arr;
     }
 
     /**
@@ -587,7 +603,8 @@ class UserApi extends Api
                 $letters [$first_letter] [$v ['follow_id']] ['follow_status'] = $follow_status [$v ['fid']];
             }
 
-            return $letters;
+            return Ts\Service\ApiMessage::withArray($letters, 1, '');
+            // return $letters;
         } else {
             $where = ' `uid` IN ('.implode(',', getSubByKey($friend, 'fid')).')';
             $max_id = $this->max_id ? intval($this->max_id) : 0;
@@ -616,7 +633,8 @@ class UserApi extends Api
                 $user_list [] = $user_detail;
             }
 
-            return $user_list;
+            return Ts\Service\ApiMessage::withArray($user_list, 1, '');
+            // return $user_list;
         }
     }
 
@@ -725,7 +743,8 @@ class UserApi extends Api
             $photo_list [$k] ['image_url'] = getImageUrl($attachInfo ['save_path'].$attachInfo ['save_name']);
         }
 
-        return $photo_list;
+        return Ts\Service\ApiMessage::withArray($photo_list, 1, '');
+        // return $photo_list;
     }
 
     /**
@@ -795,7 +814,8 @@ class UserApi extends Api
             }
         }
 
-        return $video_list;
+        return Ts\Service\ApiMessage::withArray($video_list, 1, '');
+        // return $video_list;
     }
 
     /**
@@ -834,7 +854,8 @@ class UserApi extends Api
             $user_blacklist [$k] ['avatar'] = $blacklist_info ['avatar'] ['avatar_big'];
         }
 
-        return $user_blacklist;
+        return Ts\Service\ApiMessage::withArray($user_blacklist, 1, '');
+        // return $user_blacklist;
     }
 
     /**
@@ -849,25 +870,30 @@ class UserApi extends Api
         $uid = intval($this->user_id);
 
         if (empty($uid)) {
-            return array(
-                    'status' => 0,
-                    'msg' => '请指定用户',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '请指定用户');
+            // return array(
+            //         'status' => 0,
+            //         'msg' => '请指定用户',
+            // );
         }
         if ($uid == $this->mid) {
-            return array(
-                    'status' => 0,
-                    'msg' => '不能把自己加入黑名单',
-            );
+            return Ts\Service\ApiMessage::withArray('', 0, '不能把自己加入黑名单');
+            // return array(
+            //         'status' => 0,
+            //         'msg' => '不能把自己加入黑名单',
+            // );
         }
         if (D('user_blacklist')->where(array(
                 'uid' => $this->mid,
                 'fid' => $uid,
         ))->count()) {
-            return array(
-                    'status' => 0,
-                    'msg' => '用户已经在黑名单中了',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '用户已经在黑名单中了');
+            // return array(
+            //         'status' => 0,
+            //         'msg' => '用户已经在黑名单中了',
+            // );
         }
 
         $data ['uid'] = $this->mid;
@@ -878,15 +904,18 @@ class UserApi extends Api
             model('Follow')->unFollow($uid, $this->mid);
             model('Cache')->set('u_blacklist_'.$this->mid, '');
 
-            return array(
-                    'status' => 1,
-                    'msg' => '添加成功',
-            );
+            return Ts\Service\ApiMessage::withArray('', 1, '添加成功');
+            // return array(
+            //         'status' => 1,
+            //         'msg' => '添加成功',
+            // );
         } else {
-            return array(
-                    'status' => 0,
-                    'msg' => '添加失败',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '添加失败');
+            // return array(
+            //         'status' => 0,
+            //         'msg' => '添加失败',
+            // );
         }
     }
 
@@ -902,19 +931,23 @@ class UserApi extends Api
         $uid = intval($this->user_id);
 
         if (empty($uid)) {
-            return array(
-                    'status' => 0,
-                    'msg' => '请指定用户',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '请指定用户');
+            // return array(
+            //         'status' => 0,
+            //         'msg' => '请指定用户',
+            // );
         }
         if (! D('user_blacklist')->where(array(
                 'uid' => $this->mid,
                 'fid' => $uid,
         ))->count()) {
-            return array(
-                    'status' => 0,
-                    'msg' => '用户不在黑名单中',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '用户不在黑名单中');
+            // return array(
+            //         'status' => 0,
+            //         'msg' => '用户不在黑名单中',
+            // );
         }
 
         $map ['uid'] = $this->mid;
@@ -922,15 +955,18 @@ class UserApi extends Api
         if (D('user_blacklist')->where($map)->delete()) {
             model('Cache')->set('u_blacklist_'.$this->mid, '');
 
-            return array(
-                    'status' => 1,
-                    'msg' => '移出成功',
-            );
+            return Ts\Service\ApiMessage::withArray('', 1, '');
+            // return array(
+            //         'status' => 1,
+            //         'msg' => '移出成功',
+            // );
         } else {
-            return array(
-                    'status' => 0,
-                    'msg' => '移出失败',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '移出失败');
+            // return array(
+            //         'status' => 0,
+            //         'msg' => '移出失败',
+            // );
         }
     }
 
@@ -958,15 +994,18 @@ class UserApi extends Api
             $data ['y2'] = $data ['h'];
             $r = $dAvatar->dosave($data);
 
-            return array(
-                    'status' => 1,
-                    'msg' => '修改成功',
-            );
+            return Ts\Service\ApiMessage::withArray('', 1, '修改成功');
+            // return array(
+            //         'status' => 1,
+            //         'msg' => '修改成功',
+            // );
         } else {
-            return array(
-                    'status' => 0,
-                    'msg' => '修改失败',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '修改失败');
+            // return array(
+            //         'status' => 0,
+            //         'msg' => '修改失败',
+            // );
         }
     }
 
@@ -1027,7 +1066,8 @@ class UserApi extends Api
             unset($first_letter);
         }
 
-        return $letters;
+        return Ts\Service\ApiMessage::withArray($letters, 1, '');
+        // return $letters;
     }
 
     /**
@@ -1060,10 +1100,11 @@ class UserApi extends Api
             if (! $res) {
                 $error = model('Register')->getLastError();
 
-                return array(
-                        'status' => 0,
-                        'msg' => $error,
-                );
+                return Ts\Service\ApiMessage::withArray('', 0, $error);
+                // return array(
+                //         'status' => 0,
+                //         'msg' => $error,
+                // );
             }
             // 如果包含中文将中文翻译成拼音
             if (preg_match('/[\x7f-\xff]+/', $save ['uname'])) {
@@ -1098,30 +1139,35 @@ class UserApi extends Api
             // 验证格式
             if (! $regmodel->isValidPassword($this->data ['password'], $this->data ['password'])) {
                 $msg = $regmodel->getLastError();
-                $return = array(
-                        'status' => 0,
-                        'msg' => $msg,
-                );
+                // $return = array(
+                //         'status' => 0,
+                //         'msg' => $msg,
+                // );
 
-                return $return;
+                return Ts\Service\ApiMessage::withArray('', 0, $msg);
+                // return $return;
             }
             // 验证新密码与旧密码是否一致
             if ($this->data ['password'] == $this->data ['old_password']) {
-                $return = array(
-                        'status' => 0,
-                        'msg' => L('PUBLIC_PASSWORD_SAME'),
-                );
 
-                return $return;
+                return Ts\Service\ApiMessage::withArray('', 0, L('PUBLIC_PASSWORD_SAME'));
+                // $return = array(
+                //         'status' => 0,
+                //         'msg' => L('PUBLIC_PASSWORD_SAME'),
+                // );
+
+                // return $return;
             }
             // 验证原密码是否正确
             $user = model('User')->where('`uid`='.$this->mid)->find();
             if (md5(md5($this->data ['old_password']).$user ['login_salt']) != $user ['password']) {
-                $return = array(
-                        'status' => 0,
-                        'msg' => L('PUBLIC_ORIGINAL_PASSWORD_ERROR'),
-                ); // 原始密码错误
-                return $return;
+
+                return Ts\Service\ApiMessage::withArray('', 0, L('PUBLIC_ORIGINAL_PASSWORD_ERROR'));
+                // $return = array(
+                //         'status' => 0,
+                //         'msg' => L('PUBLIC_ORIGINAL_PASSWORD_ERROR'),
+                // ); // 原始密码错误
+                // return $return;
             }
             $login_salt = rand(11111, 99999);
             $save ['login_salt'] = $login_salt;
@@ -1140,10 +1186,12 @@ class UserApi extends Api
         // 修改用户标签
         if (isset($this->data ['tags'])) {
             if (empty($this->data ['tags'])) {
-                return array(
-                        'status' => 0,
-                        'msg' => L('PUBLIC_TAG_NOEMPTY'),
-                );
+
+                return Ts\Service\ApiMessage::withArray('', 0, L('PUBLIC_TAG_NOEMPTY'));
+                // return array(
+                //         'status' => 0,
+                //         'msg' => L('PUBLIC_TAG_NOEMPTY'),
+                // );
             }
             $nameList = t($this->data ['tags']);
             $nameList = explode(',', $nameList);
@@ -1155,19 +1203,22 @@ class UserApi extends Api
             if (! empty($rowId)) {
                 $registerConfig = model('Xdata')->get('admin_Config:register');
                 if (count($tagIds) > $registerConfig ['tag_num']) {
-                    return array(
-                            'status' => 0,
-                            'msg' => '最多只能设置'.$registerConfig ['tag_num'].'个标签',
-                    );
+
+                    return Ts\Service\ApiMessage::withArray('', 0, '最多只能设置'.$registerConfig ['tag_num'].'个标签');
+                    // return array(
+                    //         'status' => 0,
+                    //         'msg' => '最多只能设置'.$registerConfig ['tag_num'].'个标签',
+                    // );
                 }
                 model('Tag')->setAppName('public')->setAppTable('user')->updateTagData($rowId, $tagIds);
             }
         }
 
-        return array(
-                'status' => 1,
-                'msg' => '修改成功',
-        );
+        return Ts\Service\ApiMessage::withArray('', 1, '修改成功');
+        // return array(
+        //         'status' => 1,
+        //         'msg' => '修改成功',
+        // );
     }
 
     /**
@@ -1211,29 +1262,36 @@ class UserApi extends Api
         $userPhone = model('User')->where('`uid` = '.intval($this->mid))->field('phone')->getField('phone');
         /* 判断是否传输的不是手机号码 */
         if (!MedzValidator::isTelNumber($phone)) {
-            return array(
-                'status' => 0,
-                'msg' => '不是正确的手机号码',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '不是正确的手机号码');
+            // return array(
+            //     'status' => 0,
+            //     'msg' => '不是正确的手机号码',
+            // );
         /* # 判断是否已经被使用，排除自己 */
         } elseif (!model('Register')->isValidPhone($phone, $userPhone)) {
-            return array(
-                'status' => 0,
-                'msg' => model('Register')->getLastError(),
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, model('Register')->getLastError());
+            // return array(
+            //     'status' => 0,
+            //     'msg' => model('Register')->getLastError(),
+            // );
 
         /* # 判断是否发送验证码失败 */
         } elseif (!model('Sms')->sendCaptcha($phone, true)) {
-            return array(
-                'status' => 0,
-                'msg' => model('Sms')->getMessage(),
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, model('Sms')->getMessage());
+            // return array(
+            //     'status' => 0,
+            //     'msg' => model('Sms')->getMessage(),
+            // );
         }
 
-        return array(
-            'status' => 1,
-            'msg' => '发送成功！',
-        );
+        return Ts\Service\ApiMessage::withArray('', 1, '发送成功！');
+        // return array(
+        //     'status' => 1,
+        //     'msg' => '发送成功！',
+        // );
     }
 
     /**
@@ -1250,18 +1308,22 @@ class UserApi extends Api
         $phone = t($this->data ['phone']);
         $userPhone = model('User')->where('`uid` = '.intval($this->mid))->field('phone')->getField('phone');
         if (! model('Register')->isValidPhone($phone, $userPhone)) {
-            return array(
-                    'status' => 0,
-                    'msg' => model('Register')->getLastError(),
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, model('Register')->getLastError());
+            // return array(
+            //         'status' => 0,
+            //         'msg' => model('Register')->getLastError(),
+            // );
         }
         $smsDao = model('Sms');
         $code = t($this->data ['code']);
         if (!$smsDao->CheckCaptcha($phone, $code)) {
-            return array(
-                    'status' => 0,
-                    'msg' => $smsDao->getMessage(),
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, $smsDao->getMessage());
+            // return array(
+            //         'status' => 0,
+            //         'msg' => $smsDao->getMessage(),
+            // );
         }
         $map ['uid'] = $this->mid;
 
@@ -1269,15 +1331,18 @@ class UserApi extends Api
         if ($result !== false) {
             model('User')->cleanCache($this->mid);
 
-            return array(
-                    'status' => 1,
-                    'msg' => '绑定成功',
-            );
+            return Ts\Service\ApiMessage::withArray('', 1, '绑定成功');
+            // return array(
+            //         'status' => 1,
+            //         'msg' => '绑定成功',
+            // );
         } else {
-            return array(
-                    'status' => 0,
-                    'msg' => '绑定失败',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '绑定失败');
+            // return array(
+            //         'status' => 0,
+            //         'msg' => '绑定失败',
+            // );
         }
     }
 
@@ -1293,7 +1358,8 @@ class UserApi extends Api
         $data ['space'] = $user_privacy ['space'] ? $user_privacy ['space'] : 0;
         $data ['comment_weibo'] = $user_privacy ['comment_weibo'] ? $user_privacy ['comment_weibo'] : 0;
 
-        return $data;
+        return Ts\Service\ApiMessage::withArray($data, 1, '');
+        // return $data;
     }
 
     /**
@@ -1341,11 +1407,12 @@ class UserApi extends Api
         $data ['comment_weibo'] = $user_privacy ['comment_weibo'] ? $user_privacy ['comment_weibo'] : 0;
 
         // if($res){
-        return array(
-                'status' => 1,
-                'data' => $data,
-                'msg' => '设置成功',
-        );
+        return Ts\Service\ApiMessage::withArray($data, 1, '设置成功');
+        // return array(
+        //         'status' => 1,
+        //         'data' => $data,
+        //         'msg' => '设置成功',
+        // );
         // }else{
         // return array('status'=>0,'msg'=>'设置失败');
         // }
@@ -1361,22 +1428,29 @@ class UserApi extends Api
     public function follow()
     {
         if (empty($this->mid) || empty($this->user_id)) {
-            return array(
-                    'status' => 0,
-                    'msg' => '参数错误',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '参数错误');
+            // return array(
+            //         'status' => 0,
+            //         'msg' => '参数错误',
+            // );
         }
         $r = model('Follow')->doFollow($this->mid, $this->user_id);
         if ($r) {
-            $r ['status'] = 1;
-            $r ['msg'] = '关注成功';
+            // $r ['status'] = 1;
+            // $r ['msg'] = '关注成功';
 
-            return $r;
+            return Ts\Service\ApiMessage::withArray('', 1, '关注成功');
+            // return $r;
         } else {
-            return array(
-                    'status' => 0,
-                    'msg' => model('Follow')->getLastError(),
-            );
+
+            $msg = model('Follow')->getLastError();
+
+            return Ts\Service\ApiMessage::withArray('', 0, $msg);
+            // return array(
+            //         'status' => 0,
+            //         'msg' => model('Follow')->getLastError(),
+            // );
         }
     }
 
@@ -1390,22 +1464,28 @@ class UserApi extends Api
     public function unfollow()
     {
         if (empty($this->mid) || empty($this->user_id)) {
-            return array(
-                    'status' => 0,
-                    'msg' => '参数错误',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '参数错误');
+            // return array(
+            //         'status' => 0,
+            //         'msg' => '参数错误',
+            // );
         }
         $r = model('Follow')->unFollow($this->mid, $this->user_id);
         if ($r) {
-            $r ['status'] = 1;
-            $r ['msg'] = '取消成功';
+            // $r ['status'] = 1;
+            // $r ['msg'] = '取消成功';
 
-            return $r;
+            return Ts\Service\ApiMessage::withArray('', 1, '取消成功');
+            // return $r;
         } else {
-            return array(
-                    'status' => 0,
-                    'msg' => model('Follow')->getLastError(),
-            );
+            $msg = model('Follow')->getLastError();
+
+            return Ts\Service\ApiMessage::withArray('', 0, $msg);
+            // return array(
+            //         'status' => 0,
+            //         'msg' => model('Follow')->getLastError(),
+            // );
         }
     }
 
@@ -1478,7 +1558,8 @@ class UserApi extends Api
         }
         $bindInfo = array_merge($tel_bind, $bindInfo);
 
-        return $bindInfo;
+        return Ts\Service\ApiMessage::withArray($bindInfo, 1, '');
+        // return $bindInfo;
     }
     /**
      * 解绑第三方帐号 --using
@@ -1496,29 +1577,35 @@ class UserApi extends Api
             if ($res !== false) {
                 model('User')->cleanCache($this->mid);
 
-                return array(
-                        'status' => 1,
-                        'msg' => '解绑成功',
-                );
+                return Ts\Service\ApiMessage::withArray('', 1, '解绑成功');
+                // return array(
+                //         'status' => 1,
+                //         'msg' => '解绑成功',
+                // );
             } else {
-                return array(
-                        'status' => 0,
-                        'msg' => '解绑失败',
-                );
+
+                return Ts\Service\ApiMessage::withArray('', 1, '解绑失败');
+                // return array(
+                //         'status' => 0,
+                //         'msg' => '解绑失败',
+                // );
             }
         } else {
             if (D('login')->where("uid={$this->mid} AND type='{$type}'")->delete()) {
                 S('user_login_'.$this->mid, null);
 
-                return array(
-                        'status' => 1,
-                        'msg' => '解绑成功',
-                );
+                return Ts\Service\ApiMessage::withArray('', 1, '解绑成功');
+                // return array(
+                //         'status' => 1,
+                //         'msg' => '解绑成功',
+                // );
             } else {
-                return array(
-                        'status' => 0,
-                        'msg' => '解绑失败',
-                );
+
+                return Ts\Service\ApiMessage::withArray('', 0, '解绑失败');
+                // return array(
+                //         'status' => 0,
+                //         'msg' => '解绑失败',
+                // );
             }
         }
     }
@@ -1554,23 +1641,29 @@ class UserApi extends Api
             $syncdata ['is_sync'] = 0;
             S('user_login_'.$this->mid, null);
             if ($info = M('login')->where("type_uid={$type_uid} AND type='".$type."'")->find()) {
-                return array(
-                        'status' => 0,
-                        'msg' => '该帐号已绑定',
-                );
+
+                return Ts\Service\ApiMessage::withArray('', 0, '该账户已绑定');
+                // return array(
+                //         'status' => 0,
+                //         'msg' => '该帐号已绑定',
+                // );
             } else {
                 if (M('login')->add($syncdata)) {
-                    return array(
-                            'status' => 1,
-                            'msg' => '绑定成功',
-                    );
+
+                    return Ts\Service\ApiMessage::withArray('', 1, '绑定成功');
+                    // return array(
+                    //         'status' => 1,
+                    //         'msg' => '绑定成功',
+                    // );
                 }
             }
         } else {
-            return array(
-                    'status' => 0,
-                    'msg' => '参数错误',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '参数错误');
+            // return array(
+            //         'status' => 0,
+            //         'msg' => '参数错误',
+            // );
         }
     }
 
@@ -1592,10 +1685,12 @@ class UserApi extends Api
         $length = mb_strlen($remark, 'utf-8');
         $res = ($length >= 2 && $length <= 10);
         if (!$res) {
-            return array(
-                'status' => 0,
-                'msg' => '备注长度必须在2-10个字之间',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '备注长度必须在2-10个字之间');
+            // return array(
+            //     'status' => 0,
+            //     'msg' => '备注长度必须在2-10个字之间',
+            // );
         }
 
         if (!empty($uid) && !empty($remark)) {
@@ -1605,21 +1700,27 @@ class UserApi extends Api
             $rs = D('UserRemark')->setRemark($uid, $remark);
 
             if ($rs !== false) {
-                return array(
-                        'status' => 1,
-                        'msg' => '设置成功',
-                );
+
+                return Ts\Service\ApiMessage::withArray('', 1, '设置成功');
+                // return array(
+                //         'status' => 1,
+                //         'msg' => '设置成功',
+                // );
             } else {
-                return array(
-                        'status' => 0,
-                        'msg' => '设置失败',
-                );
+
+                return Ts\Service\ApiMessage::withArray('', 0, '设置失败');
+                // return array(
+                //         'status' => 0,
+                //         'msg' => '设置失败',
+                // );
             }
         } else {
-            return array(
-                    'status' => 0,
-                    'msg' => '参数错误',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '参数错误');
+            // return array(
+            //         'status' => 0,
+            //         'msg' => '参数错误',
+            // );
         }
     }
 

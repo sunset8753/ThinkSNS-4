@@ -24,7 +24,11 @@
           </li>
           <li>
             <div class="c1">附件</div>
-            <div class="c2">{:W('Upload', array('urlquery'=>'attach_type=weiba_attach'))}</div>
+            <div class="c2">{:W('Upload', array('urlquery'=>'attach_type=weiba_attach'))} 
+              <php>$Config_attach = model('Xdata')->get('admin_Config:attach');</php>
+              <span style="font-size:12px; color:#888;">文件大小不能超过<php>echo (($Config_attach['attach_max_size'] < ini_get('post_max_size')) ? $Config_attach['attach_max_size'] : ini_get('post_max_size'));</php>M，且只允许上传格式：<php>echo str_replace(',', '、', $Config_attach['attach_allow_extension']);</php></span>
+              <php>unset($Config_attach);</php>
+            </div>
           </li>
           <li>
             <div class="c1"></div>

@@ -95,7 +95,8 @@ class TaskApi extends OldTaskApi
             array_push($tasks, $task);
         }
 
-        return $tasks;
+        return Ts\Service\ApiMessage::withArray($tasks, 1, '');
+        // return $tasks;
     }
 
     /**
@@ -105,8 +106,10 @@ class TaskApi extends OldTaskApi
      * @author Seven Du <lovevipdsw@vip.qq.com>
      **/
     public function mainLine()
-    {
-        return $this->daily(self::MAINLINE);
+    {   
+        $return = $this->daily(self::MAINLINE);
+
+        return Ts\Service\ApiMessage::withArray($return, 1, '');
     }
 
     /**
@@ -221,7 +224,8 @@ class TaskApi extends OldTaskApi
             }
         }
 
-        return $tasks;
+        return Ts\Service\ApiMessage::withArray($tasks, 1, '');
+        // return $tasks;
     }
 } // END class TaskApi extends OldTaskApi
 
@@ -381,7 +385,8 @@ class OldTaskApi extends Api
             }
         }
 
-        return $res;
+        return Ts\Service\ApiMessage::withArray($res, 1, '');
+        // return $res;
     }
 
     // public function task_list1() {
@@ -497,10 +502,12 @@ class OldTaskApi extends Api
             $status = D('task_user')->where('uid='.$this->mid.' and ( status=0 or receive=1 ) and id='.$id)->find();
             $taskexist = D('task_user')->where('uid='.$this->mid.' and id='.$id)->find();
             if ($status || ! $taskexist) {
-                return array(
-                        'status' => 0,
-                        'msg' => '参数错误',
-                );
+
+                return Ts\Service\ApiMessage::withArray('', 0, '参数错误');
+                // return array(
+                //         'status' => 0,
+                //         'msg' => '参数错误',
+                // );
             }
             $res = D('task_user')->setField('receive', 1, 'id='.$id);
             if ($res) {
@@ -521,21 +528,25 @@ class OldTaskApi extends Api
                 model('Task')->getReward($reward->exp, $reward->score, $reward->medal->id, $GLOBALS ['ts'] ['mid']);
                 // $res = array('allcomplete'=> $allcomplete , 'tasktype'=>$this->data['task_type'] ,'info'=>$info);
                 // echo json_encode($res);
-                return array(
-                        'status' => 1,
-                        'msg' => '领取成功',
-                );
+                return Ts\Service\ApiMessage::withArray('', 1, '领取成功');
+                // return array(
+                //         'status' => 1,
+                //         'msg' => '领取成功',
+                // );
             } else {
-                return array(
-                        'status' => 0,
-                        'msg' => '领取失败',
-                );
+                return Ts\Service\ApiMessage::withArray('', 0, '领取失败');
+                // return array(
+                //         'status' => 0,
+                //         'msg' => '领取失败',
+                // );
             }
         } else {
-            return array(
-                    'status' => 0,
-                    'msg' => '参数错误',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '参数错误');
+            // return array(
+            //         'status' => 0,
+            //         'msg' => '参数错误',
+            // );
         }
     }
 }

@@ -47,52 +47,66 @@ class OauthApi extends Api
 
         /* 判断用户手机号码可用性 */
         if (!$register->isValidPhone($phone)) {
-            return array(
-                'status' => 0,
-                'message' => $register->getLastError(),
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, $register->getLastError());
+            // return array(
+            //     'status' => 0,
+            //     'message' => $register->getLastError(),
+            // );
 
         /* 判断用户名是否可用 */
         } elseif (!$register->isValidName($username)) {
-            return array(
-                'status' => 0,
-                'message' => $register->getLastError(),
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, $register->getLastError());
+            // return array(
+            //     'status' => 0,
+            //     'message' => $register->getLastError(),
+            // );
 
         /* 判断验证码是否正确 */
         } elseif (!$register->isValidRegCode($code, $phone)) {
-            return array(
-                'status' => 0,
-                'message' => $register->getLastError(),
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, $register->getLastError());
+            // return array(
+            //     'status' => 0,
+            //     'message' => $register->getLastError(),
+            // );
 
         /* 判断头像传递信息是否完整 */
         } elseif (!$avatarUrl or !$avatarW or !$avatarH) {
-            return array(
-                'status' => 0,
-                'message' => '用户头像上传不完整',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '用户头像上传不完整');
+            // return array(
+            //     'status' => 0,
+            //     'message' => '用户头像上传不完整',
+            // );
 
         /* 密码判断 */
         } elseif (!$register->isValidPasswordNoRepeat($password)) {
-            return array(
-                'status' => 0,
-                'message' => $register->getLastError(),
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, $register->getLastError());
+            // return array(
+            //     'status' => 0,
+            //     'message' => $register->getLastError(),
+            // );
 
         /* 格式化地区地址判断 */
         } elseif (!$location) {
-            return array(
-                'status' => 0,
-                'message' => '格式化地区地址不能为空',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '格式化地区地址不能为空');
+            // return array(
+            //     'status' => 0,
+            //     'message' => '格式化地区地址不能为空',
+            // );
 
         /* 地区判断 */
         } elseif (!$province or !$city) {
-            return array(
-                'status' => 0,
-                'message' => '请完整的选择地区',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '请完整的选择地区');
+            // return array(
+            //     'status' => 0,
+            //     'message' => '请完整的选择地区',
+            // );
         }
 
         $userData = array(
@@ -126,10 +140,12 @@ class OauthApi extends Api
 
         $uid = model('User')->add($userData); // 添加用户数据
         if (!$uid) {
-            return array(
-                'status' => 0,
-                'message' => '注册失败',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '注册失败');
+            // return array(
+            //     'status' => 0,
+            //     'message' => '注册失败',
+            // );
         }                                     // 注册失败的提示
 
         /* 添加默认用户组 */
@@ -173,10 +189,11 @@ class OauthApi extends Api
             return $this->authorize();
         }
 
-        return array(
-            'status' => 2,
-            'message' => '注册成功，请等待审核',
-        );
+        return Ts\Service\ApiMessage::withArray('', 1, '注册成功，请等待审核');
+        // return array(
+        //     'status' => 2,
+        //     'message' => '注册成功，请等待审核',
+        // );
     }
 
 /********** 登录注销 **********/
@@ -203,14 +220,20 @@ class OauthApi extends Api
             //判断用户名密码是否正确
             if ($user && md5(md5($password).$user['login_salt']) == $user['password']) {
                 if (model('DisableUser')->isDisableUser($user['uid'])) {
-                    return array('status' => 0, 'msg' => '您的帐号被已管理员禁用');
+
+                    return Ts\Service\ApiMessage::withArray('', 0, '您的帐号被已管理员禁用');
+                    // return array('status' => 0, 'msg' => '您的帐号被已管理员禁用');
                 }
                 //如果未激活提示未激活
                 if ($user['is_audit'] != 1) {
-                    return array('status' => 0, 'msg' => '您的帐号尚未通过审核');
+
+                    return Ts\Service\ApiMessage::withArray('', 0, '您的帐号尚未通过审核');
+                    // return array('status' => 0, 'msg' => '您的帐号尚未通过审核');
                 }
                 if ($user['is_active'] != 1) {
-                    return array('status' => 0, 'msg' => '您的帐号尚未激活,请进入邮箱激活');
+
+                    return Ts\Service\ApiMessage::withArray('', 0, '您的账号尚未激活，请进入游戏激活');
+                    // return array('status' => 0, 'msg' => '您的帐号尚未激活,请进入邮箱激活');
                 }
 
                 //记录token
@@ -230,12 +253,17 @@ class OauthApi extends Api
 
                 $data['status'] = 1;
 
-                return $data;
+                return Ts\Service\ApiMessage::withArray($data, 1, '');
+                // return $data;
             } else {
-                return array('status' => 0, 'msg' => '用户名或密码错误');
+
+                return Ts\Service\ApiMessage::withArray('', 0, '用户名或密码错误');
+                // return array('status' => 0, 'msg' => '用户名或密码错误');
             }
         } else {
-            return array('status' => 0, 'msg' => '用户名或密码不能为空');
+
+            return Ts\Service\ApiMessage::withArray('', 0, '用户名或密码不能为空');
+            // return array('status' => 0, 'msg' => '用户名或密码不能为空');
         }
     }
 
@@ -261,9 +289,12 @@ class OauthApi extends Api
             $data['uid'] = $user['uid'];
             D('')->table(C('DB_PREFIX').'login')->where('uid='.$user['uid']." AND type='location'")->save($data);
 
-            return array('status' => 1, 'msg' => '退出成功');
+            return Ts\Service\ApiMessage::withArray('', 1, '退出成功');
+            // return array('status' => 1, 'msg' => '退出成功');
         } else {
-            return array('status' => 0, 'msg' => '退出失败');
+
+            return Ts\Service\ApiMessage::withArray('', 0, '退出失败');
+            // return array('status' => 0, 'msg' => '退出失败');
         }
     }
 
@@ -285,21 +316,26 @@ class OauthApi extends Api
         $phone = model('User')->where($where)->field('`phone`')->getField('phone');
 
         if (!$phone) {
-            return array(
-                'status' => 0,
-                'message' => '该用户没有绑定手机号码，或者用户不存在！',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '该用户没有绑定手机号码，或者用户不存在！');
+            // return array(
+            //     'status' => 0,
+            //     'message' => '该用户没有绑定手机号码，或者用户不存在！',
+            // );
         } elseif (!model('Sms')->sendCaptcha($phone, false)) {
-            return array(
-                'status' => -1,
-                'message' => model('Sms')->getMessage(),
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, model('Sms')->getMessage());
+            // return array(
+            //     'status' => -1,
+            //     'message' => model('Sms')->getMessage(),
+            // );
         }
 
-        return array(
-            'status' => 1,
-            'message' => '发送成功！',
-        );
+        return Ts\Service\ApiMessage::withArray('', 1, '发送成功！');
+        // return array(
+        //     'status' => 1,
+        //     'message' => '发送成功！',
+        // );
     }
 
     /**
@@ -319,26 +355,33 @@ class OauthApi extends Api
         $phone = model('User')->where($where)->field('`phone`')->getField('phone');
 
         if (!$phone) {
-            return array(
-                'status' => 0,
-                'message' => '用户不存在或者没有绑定手机号码',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '用户不存在或者没有绑定手机号码');
+            // return array(
+            //     'status' => 0,
+            //     'message' => '用户不存在或者没有绑定手机号码',
+            // );
         } elseif (!$code) {
-            return array(
-                'status' => -1,
-                'message' => '验证码不能为空',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '验证码不能为空');
+            // return array(
+            //     'status' => -1,
+            //     'message' => '验证码不能为空',
+            // );
         } elseif (!model('Sms')->CheckCaptcha($phone, $code)) {
-            return array(
-                'status' => -2,
-                'message' => model('Sms')->getMessage(),
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, model('Sms')->getMessage());
+            // return array(
+            //     'status' => -2,
+            //     'message' => model('Sms')->getMessage(),
+            // );
         }
 
-        return array(
-            'status' => 1,
-            'message' => '验证码正确',
-        );
+        return Ts\Service\ApiMessage::withArray('', 1, '验证码正确');
+        // return array(
+        //     'status' => 1,
+        //     'message' => '验证码正确',
+        // );
     }
 
     /**
@@ -359,25 +402,33 @@ class OauthApi extends Api
         $phone = model('User')->where($where)->field('`phone`')->getField('phone');
 
         if (!$phone) {
-            return array(
-                'status' => 0,
-                'message' => '用户不存在或者没有绑定手机号码',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '用户不存在或者没有绑定手机号码');
+            // return array(
+            //     'status' => 0,
+            //     'message' => '用户不存在或者没有绑定手机号码',
+            // );
         } elseif (!$code) {
-            return array(
-                'status' => -1,
-                'message' => '验证码不能为空',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '验证码不能为空');
+            // return array(
+            //     'status' => -1,
+            //     'message' => '验证码不能为空',
+            // );
         } elseif (!model('Register')->isValidPasswordNoRepeat($password)) {
-            return array(
-                'status' => -2,
-                'message' => model('Register')->getLastError(),
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, model('Register')->getLastError());
+            // return array(
+            //     'status' => -2,
+            //     'message' => model('Register')->getLastError(),
+            // );
         } elseif (!model('Sms')->CheckCaptcha($phone, $code)) {
-            return array(
-                'status' => -3,
-                'message' => model('Sms')->getMessage(),
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, model('Sms')->getMessage());
+            // return array(
+            //     'status' => -3,
+            //     'message' => model('Sms')->getMessage(),
+            // );
         }
 
         $data = array();
@@ -385,16 +436,19 @@ class OauthApi extends Api
         $data['password'] = model('User')->encryptPassword($password, $data['login_salt']);
 
         if (model('User')->where('`phone` = '.$phone)->save($data)) {
-            return array(
-                'status' => 1,
-                'message' => '修改成功',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 1, '修改成功');
+            // return array(
+            //     'status' => 1,
+            //     'message' => '修改成功',
+            // );
         }
 
-        return array(
-            'status' => -4,
-            'message' => '修改失败',
-        );
+        return Ts\Service\ApiMessage::withArray('', 0, '修改失败');
+        // return array(
+        //     'status' => -4,
+        //     'message' => '修改失败',
+        // );
     }
 
 /********** 注册 **********/
@@ -439,23 +493,28 @@ class OauthApi extends Api
 
         /* # 检查是否可以已经被注册 */
         if (!model('User')->isChangePhone($phone)) {
-            $this->error(array(
-                'status' => 0,
-                'msg' => '该手机已经存在，无法再次注册',
-            ));
+
+            return Ts\Service\ApiMessage::withArray('', 0, '该手机已经存在，无法再次注册');
+            // $this->error(array(
+            //     'status' => 0,
+            //     'msg' => '该手机已经存在，无法再次注册',
+            // ));
 
         /* # 检查是否发送失败 */
         } elseif (($sms = model('Sms')) and !$sms->sendCaptcha($phone, true)) {
-            $this->error(array(
-                'status' => 0,
-                'msg' => $sms->getMessage(),
-            ));
+
+            return Ts\Service\ApiMessage::withArray('', 0, $sms->getMessage());
+            // $this->error(array(
+            //     'status' => 0,
+            //     'msg' => $sms->getMessage(),
+            // ));
         }
 
-        return array(
-            'status' => 1,
-            'msg' => '发送成功！',
-        );
+        return Ts\Service\ApiMessage::withArray('', 1, '发送成功！');
+        // return array(
+        //     'status' => 1,
+        //     'msg' => '发送成功！',
+        // );
     }
 
     // /**
@@ -490,16 +549,19 @@ class OauthApi extends Api
 
         /* # 判断验证码是否正确 */
         if ($sms->CheckCaptcha($phone, $code)) {
-            return array(
-                'status' => 1,
-                'msg' => '验证通过',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 1, '验证通过');
+            // return array(
+            //     'status' => 1,
+            //     'msg' => '验证通过',
+            // );
         }
 
-        return array(
-            'status' => 0,
-            'msg' => $sms->getMessage(),
-        );
+        return Ts\Service\ApiMessage::withArray('', 0, $sms->getMessage());
+        // return array(
+        //     'status' => 0,
+        //     'msg' => $sms->getMessage(),
+        // );
     }
 
     /**
@@ -511,7 +573,8 @@ class OauthApi extends Api
         $dAvatar = model('Avatar');
         $res = $dAvatar->upload(true);
 
-        return $res;
+        return Ts\Service\ApiMessage::withArray($res, 1, '');
+        // return $res;    
     }
 
     /**
@@ -538,7 +601,9 @@ class OauthApi extends Api
         $password = t($_POST['password']);
         //return array('status'=>0, 'msg'=>'注册失败，必须设置头像');
         if (in_array('face', $registerConfig['personal_required']) && $_POST['avatar_url'] == '') {
-            return array('status' => 0, 'msg' => '注册失败，请上传头像');
+
+            return Ts\Service\ApiMessage::withArray('', 0, '注册失败，请上传头像');
+            // return array('status' => 0, 'msg' => '注册失败，请上传头像');
         }
         $avatar['picurl'] = $_POST['avatar_url'];
         $avatar['picwidth'] = intval($_POST['avatar_width']);
@@ -551,18 +616,21 @@ class OauthApi extends Api
 
         /* # 验证手机号码 */
         if (($sms = model('Sms')) and !$sms->CheckCaptcha($phone, $regCode)) {
-            return array(
-                'status' => 0,
-                'msg' => $sms->getMessage(),
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, $sms->getMessage());
+            // return array(
+            //     'status' => 0,
+            //     'msg' => $sms->getMessage(),
+            // );
         }
         unset($sms);
 
         if (!$regmodel->isValidPhone($phone)) {
             $msg = $regmodel->getLastError();
-            $return = array('status' => 0, 'msg' => $msg);
+            // $return = array('status' => 0, 'msg' => $msg);
 
-            return $return;
+            return Ts\Service\ApiMessage::withArray('', 0, $msg);
+            // return $return;
         }
         /*
         //头像验证
@@ -575,16 +643,21 @@ class OauthApi extends Api
         //用户名验证
         if (!$regmodel->isValidName($uname)) {
             $msg = $regmodel->getLastError();
-            $return = array('status' => 0, 'msg' => $msg);
 
-            return $return;
+            return Ts\Service\ApiMessage::withArray('', 0, $msg);
+            // $return = array('status' => 0, 'msg' => $msg);
+
+            // return $return;
         }
         //密码验证
         if (!$regmodel->isValidPasswordNoRepeat($password)) {
             $msg = $regmodel->getLastError();
-            $return = array('status' => 0, 'msg' => $msg);
 
-            return $return;
+            return Ts\Service\ApiMessage::withArray('', 0, $msg);
+
+            // $return = array('status' => 0, 'msg' => $msg);
+
+            // return $return;
         }
         //开始注册
         $login_salt = rand(11111, 99999);
@@ -653,11 +726,12 @@ class OauthApi extends Api
                 $return = array('status' => 1, 'msg' => '注册成功，请等待审核', 'need_audit' => 1);
             }
 
-            return $return;
+            return Ts\Service\ApiMessage::withArray('', 1, '注册成功，请等待审核');
+            // return $return;
         } else {
-            $return = array('status' => 0, 'msg' => '注册失败');
-
-            return $return;
+            // $return = array('status' => 0, 'msg' => '注册失败');
+            return Ts\Service\ApiMessage::withArray('', 0, '注册失败');
+            // return $return;
         }
     }
 
@@ -700,16 +774,23 @@ class OauthApi extends Api
                     $savedata = array_merge($savedata, $data);
                     $result = M('login')->add($savedata);
                     if (!$result) {
-                        return array('status' => 0, 'msg' => '获取失败');
+
+                        return Ts\Service\ApiMessage::withArray('', 0, '获取失败');
+                        // return array('status' => 0, 'msg' => '获取失败');
                     }
                 }
 
-                return $data;
+                return Ts\Service\ApiMessage::withArray($data, 1, '');
+                // return $data;
             } else {
-                return array('status' => 0, 'msg' => '帐号尚未绑定');
+
+                return Ts\Service\ApiMessage::withArray('', 0, '账号尚未绑定');
+                // return array('status' => 0, 'msg' => '帐号尚未绑定');
             }
         } else {
-            return array('status' => 0, 'msg' => '参数错误');
+
+            return Ts\Service\ApiMessage::withArray('', 0, '参数错误');
+            // return array('status' => 0, 'msg' => '参数错误');
         }
     }
 
@@ -730,16 +811,18 @@ class OauthApi extends Api
         //用户名验证
         if (!model('Register')->isValidName($uname)) {
             $msg = model('Register')->getLastError();
-            $return = array('status' => 0, 'msg' => $msg);
+            // $return = array('status' => 0, 'msg' => $msg);
 
-            return $return;
+            return Ts\Service\ApiMessage::withArray('', 0, $msg);
+            // return $return;
         }
         //密码验证
         if (!model('Register')->isValidPasswordNoRepeat($password)) {
             $msg = model('Register')->getLastError();
-            $return = array('status' => 0, 'msg' => $msg);
+            // $return = array('status' => 0, 'msg' => $msg);
 
-            return $return;
+            return Ts\Service\ApiMessage::withArray('', 0, $msg);
+            // return $return;
         }
         $login_salt = rand(11111, 99999);
         $map['uname'] = $uname;
@@ -794,12 +877,18 @@ class OauthApi extends Api
                 model('Follow')->bulkDoFollow($uid, $defaultFollow);
             }
             if ($map['is_audit'] == 1) {
-                return $data;
+
+                return Ts\Service\ApiMessage::withArray($data, 1, '');
+                // return $data;
             } else {
-                $return = array('status' => 1, 'msg' => '注册成功，请等待审核', 'need_audit' => 1);
+                // $return = array('status' => 1, 'msg' => '注册成功，请等待审核', 'need_audit' => 1);
+
+                return Ts\Service\ApiMessage::withArray('', 1, '注册成功，请等待审核');
             }
         } else {
-            return array('status' => 0, 'msg' => '注册失败');
+
+            return Ts\Service\ApiMessage::withArray('', 0, '注册失败');
+            // return array('status' => 0, 'msg' => '注册失败');
         }
     }
 
@@ -814,7 +903,8 @@ class OauthApi extends Api
      */
     public function isEmail($string)
     {
-        return 0 < preg_match("/^\w+(?:[-+.']\w+)*@\w+(?:[-.]\w+)*\.\w+(?:[-.]\w+)*$/", $string);
+        $return = 0 < preg_match("/^\w+(?:[-+.']\w+)*@\w+(?:[-.]\w+)*\.\w+(?:[-.]\w+)*$/", $string);
+        return Ts\Service\ApiMessage::withArray($return, 1, '');
     }
 
     /**
@@ -824,7 +914,8 @@ class OauthApi extends Api
      */
     public function isValidPhone($phone)
     {
-        return preg_match("/^[1][3578]\d{9}$/", $phone) !== 0;
+        $return = preg_match("/^[1][3578]\d{9}$/", $phone) !== 0;
+        return Ts\Service\ApiMessage::withArray($return, 1, '');
     }
 
 /*===============E-Mail API satrt==================*/
@@ -847,35 +938,42 @@ class OauthApi extends Api
          * 验证是否是正确的邮箱地址
          */
         if (!$this->isEmail($email)) {
-            return array(
-                'status' => 0,
-                'message' => '不是合法的E-Mail地址',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '不是合法的E-Mail地址');
+            // return array(
+            //     'status' => 0,
+            //     'message' => '不是合法的E-Mail地址',
+            // );
 
         /*
          * 验证用户是否存在
          */
         } elseif (model('User')->hasUser($email) and !$this->data['notreg']) {
-            return array(
-                'status' => -1,
-                'message' => '该邮箱用户已经存在，无法使用',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '该邮箱用户已经存在，无法使用');
+            // return array(
+            //     'status' => -1,
+            //     'message' => '该邮箱用户已经存在，无法使用',
+            // );
 
         /*
          * 发送验证码，并检查是否发送失败,并加入时间锁
          */
         } elseif (($sms = model('Sms')) and !$sms->sendEmaillCaptcha($email, true)) {
-            return array(
-                'status' => -2,
-                'message' => $sms->getMessage(),
-            );
+            
+            return Ts\Service\ApiMessage::withArray('', 0, $sms->getMessage());
+            // return array(
+            //     'status' => -2,
+            //     'message' => $sms->getMessage(),
+            // );
         }
         unset($sms);
 
-        return array(
-            'status' => 1,
-            'message' => '发送成功，请注意查收',
-        );
+        return Ts\Service\ApiMessage::withArray('', 1, '发送成功，请注意查收');
+        // return array(
+        //     'status' => 1,
+        //     'message' => '发送成功，请注意查收',
+        // );
     }
 
     /**
@@ -904,35 +1002,42 @@ class OauthApi extends Api
          * 验证邮箱是否是不合法邮箱地址
          */
         if (!$this->isEmail($email)) {
-            return array(
-                'status' => 0,
-                'message' => '不合法的E-mail地址',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '不合法的E-mail地址');
+            // return array(
+            //     'status' => 0,
+            //     'message' => '不合法的E-mail地址',
+            // );
 
         /*
          * 验证验证码是否为空
          */
         } elseif (!$code) {
-            return array(
-                'status' => -1,
-                'message' => '验证码不能为空',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '验证码不能为空');
+            // return array(
+            //     'status' => -1,
+            //     'message' => '验证码不能为空',
+            // );
 
         /*
          * 验证验证码是否正确
          */
         } elseif (($sms = model('Sms')) and !$sms->checkEmailCaptcha($email, $code)) {
-            return array(
-                'status' => -3,
-                'message' => $sms->getMessage(),
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, $sms->getMessage());
+            // return array(
+            //     'status' => -3,
+            //     'message' => $sms->getMessage(),
+            // );
         }
         unset($sms);
 
-        return array(
-            'status' => 1,
-            'message' => '正确，可以注册',
-        );
+        return Ts\Service\ApiMessage::withArray('', 1, '正确，可以注册');
+        // return array(
+        //     'status' => 1,
+        //     'message' => '正确，可以注册',
+        // );
     }
 
     /**
@@ -986,87 +1091,107 @@ class OauthApi extends Api
          * 验证邮箱是否是不合法邮箱地址
          */
         if (!$this->isEmail($email)) {
-            return array(
-                'status' => 0,
-                'message' => '不合法的E-mail地址',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '不合法的E-mail地址');
+            // return array(
+            //     'status' => 0,
+            //     'message' => '不合法的E-mail地址',
+            // );
 
         /*
          * 验证验证码是否为空
          */
         } elseif (!$code) {
-            return array(
-                'status' => -1,
-                'message' => '验证码不能为空',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '验证码不能为空');
+            // return array(
+            //     'status' => -1,
+            //     'message' => '验证码不能为空',
+            // );
 
         /* # 判断性别是否不符合 */
         } elseif (!in_array($sex, array(0, 1, 2))) {
-            return array(
-                'status' => 0,
-                'message' => '性别参数错误',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '性别参数错误');
+            // return array(
+            //     'status' => 0,
+            //     'message' => '性别参数错误',
+            // );
 
         /*
          * 验证邮箱是否已经注册过了
          */
         } elseif (model('User')->hasUser($email)) {
-            return array(
-                'status' => -2,
-                'message' => '该邮箱用户已经存在，无法注册',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '该邮箱用户已经存在，无法注册');
+            // return array(
+            //     'status' => -2,
+            //     'message' => '该邮箱用户已经存在，无法注册',
+            // );
 
         /*
          * 验证username是否已经被注册了
          */
         } elseif (model('User')->hasUser($username)) {
-            return array(
-                'status' => -3,
-                'message' => '该用户名已经被注册',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '该用户名已经被注册');
+            // return array(
+            //     'status' => -3,
+            //     'message' => '该用户名已经被注册',
+            // );
 
         /*
          * 验证密码格式是否非法
          */
         } elseif (!preg_match('/^[a-zA-Z0-9]+$/', $password)) {
-            return array(
-                'status' => -4,
-                'message' => '密码非法，只能是大小写英文和数字组成',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '密码非法，只能是大小写英文和数字组成');
+            // return array(
+            //     'status' => -4,
+            //     'message' => '密码非法，只能是大小写英文和数字组成',
+            // );
 
         /*
          * 验证密码是否过短
          */
         } elseif (($plen = strlen($password)) and $plen < 6) {
-            return array(
-                'status' => -5,
-                'message' => '密码太短，最少需要6位',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '密码太短，最少需要6位');
+            // return array(
+            //     'status' => -5,
+            //     'message' => '密码太短，最少需要6位',
+            // );
 
         /*
          * 验证密码是否太长
          */
         } elseif ($plen > 15) {
-            return array(
-                'status' => -6,
-                'message' => '密码太长，最多15位',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '密码太长，最多15位码');
+            // return array(
+            //     'status' => -6,
+            //     'message' => '密码太长，最多15位',
+            // );
 
         /* # 判断是否没有上传头像 */
         } elseif (!$avatar['picurl']) {
-            return array(
-                'status' => 0,
-                'message' => '请上传头像',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '请上传头像');
+            // return array(
+            //     'status' => 0,
+            //     'message' => '请上传头像',
+            // );
 
         /*
          * 验证验证码是否正确
          */
         } elseif (($sms = model('Sms')) and !$sms->checkEmailCaptcha($email, $code)) {
-            return array(
-                'status' => -7,
-                'message' => $sms->getMessage(),
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, $sms->getMessage());
+            // return array(
+            //     'status' => -7,
+            //     'message' => $sms->getMessage(),
+            // );
         }
         unset($sms);
 
@@ -1216,10 +1341,12 @@ class OauthApi extends Api
         }
         unset($userData);
 
-        return array(
-            'status' => -8,
-            'message' => '注册失败',
-        );
+
+        return Ts\Service\ApiMessage::withArray('', 0, '注册失败');
+        // return array(
+        //     'status' => -8,
+        //     'message' => '注册失败',
+        // );
     }
 
     /**
@@ -1258,64 +1385,78 @@ class OauthApi extends Api
          * 验证邮箱格式是否正确
          */
         if (!$this->isEmail($email)) {
-            return array(
-                'status' => 0,
-                'message' => '不是合法的E-Mail地址',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '不是合法的E-Mail地址');
+            // return array(
+            //     'status' => 0,
+            //     'message' => '不是合法的E-Mail地址',
+            // );
 
         /*
          * 验证验证码是否不存在
          */
         } elseif (!$code) {
-            return array(
-                'status' => -1,
-                'message' => '验证码不能为空',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '验证码不能为空');
+            // return array(
+            //     'status' => -1,
+            //     'message' => '验证码不能为空',
+            // );
 
         /*
          * 验证邮箱用户是否不存在
          */
         } elseif (!($uid = model('User')->where('`email` = \''.t($email).'\'')->field('`uid`')->getField('uid'))) {
-            return array(
-                'status' => -2,
-                'message' => '用户不存在',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '用户不存在');
+            // return array(
+            //     'status' => -2,
+            //     'message' => '用户不存在',
+            // );
 
         /*
          * 验证密码格式是否非法
          */
         } elseif (!preg_match('/^[a-zA-Z0-9]+$/', $password)) {
-            return array(
-                'status' => -3,
-                'message' => '密码非法，只能是大小写英文和数字组成',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '密码非法，只能是大小写英文和数字组成');
+            // return array(
+            //     'status' => -3,
+            //     'message' => '密码非法，只能是大小写英文和数字组成',
+            // );
 
         /*
          * 验证密码是否过短
          */
         } elseif (($plen = strlen($password)) and $plen < 6) {
-            return array(
-                'status' => -4,
-                'message' => '密码太短，最少需要6位',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '密码太短，最少需要6位');
+            // return array(
+            //     'status' => -4,
+            //     'message' => '密码太短，最少需要6位',
+            // );
 
         /*
          * 验证密码是否太长
          */
         } elseif ($plen > 15) {
-            return array(
-                'status' => -5,
-                'message' => '密码太长，最多15位',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '密码太长，最多15位');
+            // return array(
+            //     'status' => -5,
+            //     'message' => '密码太长，最多15位',
+            // );
 
         /*
          * 验证验证码是否不正确
          */
         } elseif (($sms = model('Sms')) and !$sms->checkEmailCaptcha($email, $code)) {
-            return array(
-                'status' => -6,
-                'message' => $sms->getMessage(),
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, $sms->getMessage());
+            // return array(
+            //     'status' => -6,
+            //     'message' => $sms->getMessage(),
+            // );
         }
         unset($sms, $plen);
 
@@ -1349,16 +1490,18 @@ class OauthApi extends Api
             /*
              * 返回修改成功信息
              */
-            return array(
-                'status' => 1,
-                'message' => '密码找回并修改成功',
-            );
+            return Ts\Service\ApiMessage::withArray('', 1, '密码找回并修改成功');
+            // return array(
+            //     'status' => 1,
+            //     'message' => '密码找回并修改成功',
+            // );
         }
 
-        return array(
-            'status' => -7,
-            'message' => '密码找回失败',
-        );
+        return Ts\Service\ApiMessage::withArray('', 0, '密码找回失败');
+        // return array(
+        //     'status' => -7,
+        //     'message' => '密码找回失败',
+        // );
     }
 
     /**
@@ -1372,17 +1515,21 @@ class OauthApi extends Api
         $emailSuffix = $emailSuffix['email_suffix'];
 
         if (!$emailSuffix) {
-            return array(
-                'status' => 2,
-                'message' => '无邮箱后缀限制',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '无邮箱后缀限制');
+            // return array(
+            //     'status' => 2,
+            //     'message' => '无邮箱后缀限制',
+            // );
         }
 
-        return array(
-            'status' => 1,
-            'message' => '成功',
-            'data' => explode(',', $emailSuffix),
-        );
+
+        return Ts\Service\ApiMessage::withArray(explode(',', $emailSuffix), 1, '');
+        // return array(
+        //     'status' => 1,
+        //     'message' => '成功',
+        //     'data' => explode(',', $emailSuffix),
+        // );
     }
 /*===============E-Mail API end  ==================*/
 }

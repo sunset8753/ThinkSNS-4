@@ -29,7 +29,9 @@ class EventApi extends Api
         /* 获取初始化时间戳 */
         list($cid, $area, $time, $wd) = Common::getInput(array('cid', 'area', 'time', 'wd'));
 
-        return Event::getInstance()->getMonthEventDay($cid, $area, $wd, $time);
+        $return = Event::getInstance()->getMonthEventDay($cid, $area, $wd, $time);
+
+        return Ts\Service\ApiMessage::withArray($return, 1, '');
     }
 
     /**
@@ -44,8 +46,9 @@ class EventApi extends Api
         $info = Event::getInstance()->get($eid);
         $info or
         self::error(array(
+            'data' => '',
             'status' => 0,
-            'message' => '活动已经删除',
+            'msg' => '活动已经删除',
         ));
         $data = array(
             'app' => 'Event',
@@ -62,13 +65,15 @@ class EventApi extends Api
         );
         if (model('Comment')->addComment($data, true)) {
             self::success(array(
+                'data' => '',
                 'status' => 1,
-                'message' => '回复成功',
+                'msg' => '回复成功',
             ));
         }
         self::error(array(
+            'data' => '',
             'status' => 0,
-            'message' => model('Comment')->getError(),
+            'msg' => model('Comment')->getError(),
         ));
     }
 
@@ -82,13 +87,15 @@ class EventApi extends Api
         $eid = Common::getInput('eid', 'post');
         if (Star::getInstance()->un($eid, $this->mid)) {
             self::success(array(
+                'data' => '',
                 'status' => 1,
-                'message' => '取消关注成功',
+                'msg' => '取消关注成功',
             ));
         }
         self::error(array(
+            'data' => '',
             'status' => 0,
-            'message' => Star::getInstance()->getError(),
+            'msg' => Star::getInstance()->getError(),
         ));
     }
 
@@ -102,13 +109,15 @@ class EventApi extends Api
         $eid = Common::getInput('eid', 'post');
         if (Star::getInstance()->add($eid, $this->mid)) {
             self::success(array(
+                'data' => '',
                 'status' => 1,
-                'message' => '关注成功',
+                'msg' => '关注成功',
             ));
         }
         self::error(array(
+            'data' => '',
             'status' => 0,
-            'message' => Star::getInstance()->getError(),
+            'msg' => Star::getInstance()->getError(),
         ));
     }
 
@@ -120,8 +129,9 @@ class EventApi extends Api
      * @author Seven Du <lovevipdsw@vip.qq.com>
      **/
     public function myPost()
-    {
-        return $this->findEvendByType(1);
+    {   
+        return Ts\Service\ApiMessage::withArray($this->findEvendByType(1), 1, '');  
+        // return $this->findEvendByType(1);
     }
 
     /**
@@ -133,7 +143,8 @@ class EventApi extends Api
      **/
     public function myEnrollment()
     {
-        return $this->findEvendByType(0);
+        return Ts\Service\ApiMessage::withArray($this->findEvendByType(0), 1, '');  
+        // return $this->findEvendByType(0);
     }
 
     /**
@@ -145,7 +156,8 @@ class EventApi extends Api
      **/
     public function myStar()
     {
-        return $this->findEvendByType(2);
+        return Ts\Service\ApiMessage::withArray($this->findEvendByType(2), 1, '');  
+        // return $this->findEvendByType(2);
     }
 
     /**
@@ -187,7 +199,8 @@ class EventApi extends Api
             $list['data'][$key] = $value;
         }
 
-        return $list;
+        return Ts\Service\ApiMessage::withArray($list, 1, '');  
+        // return $list;
     }
 
     /**
@@ -228,23 +241,28 @@ class EventApi extends Api
 
         // # 判断是否有上传
         if (count($info['info']) <= 0) {
-            return array(
-                'status' => '-1',
-                'msg' => '没有上传的文件',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '没有上传的文件');  
+            // return array(
+            //     'status' => '-1',
+            //     'msg' => '没有上传的文件',
+            // );
 
         // # 判断是否上传成功
         } elseif ($info['status'] == false) {
-            return array(
-                'status' => '0',
-                'msg' => $info['info'],
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, $info['info']);  
+            // return array(
+            //     'status' => '0',
+            //     'msg' => $info['info'],
+            // );
         }
 
-        return array(
-            'status' => 1,
-            'data' => array_pop($info['info']),
-        );
+        return Ts\Service\ApiMessage::withArray(array_pop($info['info']), 1, '');  
+        // return array(
+        //     'status' => 1,
+        //     'data' => array_pop($info['info']),
+        // );
     }
 
     /**
@@ -278,13 +296,14 @@ class EventApi extends Api
                                 ->add())) {
             self::message(array(
                 'status' => 1,
-                'message' => '发布成功',
+                'msg' => '发布成功',
                 'data' => $id,
             ));
         }
         self::error(array(
+            'data' => '',
             'status' => 0,
-            'message' => Event::getInstance()->getError(),
+            'msg' => Event::getInstance()->getError(),
         ));
     }
 
@@ -305,13 +324,15 @@ class EventApi extends Api
         list($eid, $name, $sex, $num, $phone, $note) = Common::getInput(array('eid', 'name', 'sex', 'num', 'phone', 'note'));
         if (Enrollment::getInstance()->add($this->mid, $eid, $name, $sex, $num, $phone, $note, time())) {
             self::success(array(
+                'data' => '',
                 'status' => 1,
-                'message' => '报名成功',
+                'msg' => '报名成功',
             ));
         }
         self::error(array(
+            'data' => '',
             'status' => 0,
-            'message' => Enrollment::getInstance()->getError(),
+            'msg' => Enrollment::getInstance()->getError(),
         ));
     }
 
@@ -328,11 +349,12 @@ class EventApi extends Api
         $eid = Common::getInput('eid');
         $eid = intval($eid);
 
-        return model('Comment')->setAppName('Event')
+        $return = model('Comment')->setAppName('Event')
                                ->setAppTable('event_list')
                                ->getCommentList(array(
                                        'row_id' => array('eq', $eid),
                                    ), 'comment_id DESC');
+        return Ts\Service\ApiMessage::withArray($return, 1, '');  
     }
 
     /**
@@ -347,8 +369,9 @@ class EventApi extends Api
         $id = Common::getInput('eid');
         if (!$id or !($data = Event::getInstance()->get($id)) or $data['del']) {
             self::error(array(
+                'data' => '',
                 'status' => 0,
-                'message' => '您访问的活动不存在，或者已经被删除！',
+                'msg' => '您访问的活动不存在，或者已经被删除！',
             ));
         }
 
@@ -377,7 +400,8 @@ class EventApi extends Api
         /* 封面 */
         $data['image'] = getImageUrlByAttachId($data['image']);
 
-        return $data;
+        return Ts\Service\ApiMessage::withArray($data, 1, '');  
+        // return $data;
     }
 
     /**
@@ -406,7 +430,8 @@ class EventApi extends Api
             $data['data'][$key] = $value;
         }
 
-        return $data;
+        return Ts\Service\ApiMessage::withArray($data, 1, '');  
+        // return $data;
     }
 
     /**
@@ -432,7 +457,8 @@ class EventApi extends Api
             $data[$key] = $value;
         }
 
-        return $data;
+        return Ts\Service\ApiMessage::withArray($data, 1, '');  
+        // return $data;
     }
 
     /**
@@ -447,7 +473,9 @@ class EventApi extends Api
         $pid <= 0 and
         $pid = 0;
 
-        return model('Area')->getAreaList($pid);
+        $return = model('Area')->getAreaList($pid);
+
+        return Ts\Service\ApiMessage::withArray($return, 1, '');  
     }
 
     /**
@@ -458,7 +486,9 @@ class EventApi extends Api
      **/
     public function getAreaAll()
     {
-        return Event::getInstance()->getArea();
+        $return = Event::getInstance()->getArea();
+
+        return Ts\Service\ApiMessage::withArray($return, 1, '');  
     }
 
     /**
@@ -469,7 +499,9 @@ class EventApi extends Api
      **/
     public function getCateAll()
     {
-        return Cate::getInstance()->getAll();
+        $return = Cate::getInstance()->getAll();
+
+        return Ts\Service\ApiMessage::withArray($return, 1, '');  
     }
 
     /**

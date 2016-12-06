@@ -118,10 +118,9 @@ class InformationApi extends Api
      */
     public function NewsList()
     {
-        !$_REQUEST['cid'] && $this->error('资讯分类不能为空');
         $catid = intval($_REQUEST['cid']);
         $newsModel = Subject::getInstance();
-        $map['cid'] = $catid;
+        $catid && $map['cid'] = $catid;
         $map['isPre'] = 0;
         $map['isDel'] = 0;
         $this->data['max_id'] && $map['id'] = array('lt', $this->data['max_id']);
@@ -159,6 +158,12 @@ class InformationApi extends Api
         $cateModel = Cate::getInstance();
         $cates = $cateModel->where(['isDel' => 0])->order('rank asc')->select();
         if (!empty($cates)) {
+            array_unshift($cates, array(
+                'id' => 0,
+                'name' => '全部',
+                'isDel' => 0,
+                'rank' => 0
+            ));
             $return ['msg'] = '获取分类成功';
             $return ['status'] = 1;
             $return ['data'] = $cates;

@@ -41,7 +41,8 @@ class CheckinApi extends Api
             model('Cache')->set('check_info_'.$uid.'_'.date('Ymd'), $data);
         }
 
-        return $data;
+        return Ts\Service\ApiMessage::withArray($data, 1, '');  
+        // return $data;
     }
     // 排行榜
     public function rank()
@@ -54,7 +55,8 @@ class CheckinApi extends Api
             $v ['remark'] = D('UserRemark')->getRemark($this->mid, $v['uid']);
         }
 
-        return $list;
+        return Ts\Service\ApiMessage::withArray($list, 1, '');  
+        // return $list;
     }
 
     /**
@@ -125,6 +127,7 @@ class CheckinApi extends Api
             }
         }
 
+        // return Ts\Service\ApiMessage::withArray($this->get_check_info(), 1, '');  
         return $this->get_check_info();
     }
     // 记录用户的最后活动位置
@@ -157,8 +160,10 @@ class CheckinApi extends Api
             // dump($res);
         }
 
-        return array(
-                'status' => intval($res),
-        );
+
+        return Ts\Service\ApiMessage::withArray('', intval($res), '');  
+        // return array(
+        //         'status' => intval($res),
+        // );
     }
 }

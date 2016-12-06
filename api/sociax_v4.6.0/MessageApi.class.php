@@ -13,8 +13,10 @@ class MessageApi extends Api
      * @author Medz Seven <lovevipdsw@vip.qq.com>
      **/
     public function getSocketAddress()
-    {
-        return model('Xdata')->get('admin_Application:socket');
+    {   
+        $return = model('Xdata')->get('admin_Application:socket');
+
+        return Ts\Service\ApiMessage::withArray($return, 1, '');
     }
 
     /**
@@ -29,23 +31,25 @@ class MessageApi extends Api
 
         if (!$uid) {
             $this->error(array(
-                'status' => '-1',
+                'data' => '',
+                'status' => '0',
                 'msg' => '没有传入UID',
             ));
         } elseif (!($user = model('User')->getUserInfo($uid))) {
             $this->error(array(
-                'status' => '-2',
+                'data' => '',
+                'status' => '0',
                 'msg' => '用户不存在',
             ));
         }
-
-        return array(
-            'status' => '1',
+        $return = array(
             'uname' => $user['uname'],
             'remark' => $user['remark'],
             'avatar' => $user['avatar_original'],
             'intro' => $user['intro'] ? formatEmoji(false, $user ['intro']) : '',
         );
+
+        return Ts\Service\ApiMessage::withArray($return, 1, '');
     }
 
     /**
@@ -64,21 +68,25 @@ class MessageApi extends Api
 
         if (!in_array($method, array('stream', 'url', 'redirect'))) {
             $this->error(array(
+                'data' => '',
                 'status' => 0,
                 'msg' => '获取模式错误',
             ));
         } elseif (!in_array($size, array('original', 'big', 'middle', 'small'))) {
             $this->array(array(
+                'data' => '',
                 'status' => 0,
                 'msg' => '头像尺寸错误',
             ));
         } elseif (!$uid) {
             $this->error(array(
+                'data' => '',
                 'status' => 0,
                 'msg' => '不存在用户',
             ));
         } elseif (!($user = model('User')->getUserInfo($uid))) {
             $this->error(array(
+                'data' => '',
                 'status' => 0,
                 'msg' => '该用户不存在',
             ));
@@ -98,10 +106,11 @@ class MessageApi extends Api
             exit;
         }
 
-        return array(
-            'status' => 1,
+        $return = array(
             'url' => $face,
         );
+
+        return Ts\Service\ApiMessage::withArray($return, 1, '');
     }
 
     /**
@@ -127,17 +136,20 @@ class MessageApi extends Api
 
         if (!$hash) {
             $this->error(array(
-                'status' => '-1',
+                'data' => '',
+                'status' => 0,
                 'msg' => '没有传递需要获取的附件ID',
             ));
         } elseif (!in_array($method, array('stream', 'url', 'redirect'))) {
             $this->error(array(
-                'status' => '-2',
+                'data' => '',
+                'status' => 0,
                 'msg' => '没有正确的传递获取模式',
             ));
         } elseif (!($attach = model('Attach')->getAttachById(intval($hash)))) {
             $this->error(array(
-                'status' => '-3',
+                'data' => '',
+                'status' => 0,
                 'msg' => '没有这个附件',
             ));
         } elseif ($method == 'stream') {
@@ -151,13 +163,13 @@ class MessageApi extends Api
             exit;
         }
 
-        return array(
-            'status' => '1',
+        $return = array(
             'url' => getAttachUrl($attach['save_path'].$attach['save_name']),
             'width' => $attach['width'],
             'height' => $attach['height'],
-            'msg' => '获取成功',
         );
+
+        return Ts\Service\ApiMessage::withArray($return, 1, '获取成功');
     }
 
     /**
@@ -209,16 +221,19 @@ class MessageApi extends Api
         $data = array_pop($data);
         $data = @desdecrypt($data, C('SECURE_CODE'));
         if (!$data) {
-            return array(
-                'status' => 0,
-                'mes' => '上传失败',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '上传失败');
+            // return array(
+            //     'status' => 0,
+            //     'msg' => '上传失败',
+            // );
         }
 
-        return array(
-            'status' => 1,
-            'logo' => $data,
-        );
+        return Ts\Service\ApiMessage::withArray($data, 1, '');
+        // return array(
+        //     'status' => 1,
+        //     'logo' => $data,
+        // );
     }
 
     /**
@@ -248,14 +263,16 @@ class MessageApi extends Api
         // # 判断是否有上传
         if (count($info['info']) <= 0) {
             $this->error(array(
-                'status' => '-1',
+                'data' => '',
+                'status' => 0,
                 'msg' => '没有上传的文件',
             ));
 
         // # 判断是否上传成功
         } elseif ($info['status'] == false) {
             $this->error(array(
-                'status' => '0',
+                'data' => '',
+                'status' => 0,
                 'msg' => $info['info'],
             ));
         }
@@ -266,10 +283,11 @@ class MessageApi extends Api
             array_push($data, $value);
         }
 
-        return array(
-            'status' => '1',
-            'list' => $data,
-        );
+        return Ts\Service\ApiMessage::withArray($data, 1, '');
+        // return array(
+        //     'status' => '1',
+        //     'list' => $data,
+        // );
     }
 
     public function unreadcount()
@@ -278,8 +296,7 @@ class MessageApi extends Api
 'comment' => 0, 'atme' => 0, 'digg' => 0, 'follower' => 0, 'weiba' => 0, 'weiba_comment' => 0, 'unread_digg_weibapost' => 0,
         );*/
         $count = model('UserData')->setUid($GLOBALS ['ts'] ['mid'])->getUserData();
-
-        return array(
+        $return = array(
             'comment' => (string) intval($count ['unread_comment']),
             'atme' => (string) intval($count ['unread_atme']),
             'digg' => (string) intval($count ['unread_digg']),
@@ -288,6 +305,8 @@ class MessageApi extends Api
             'weiba_comment' => intval($count['unread_comment_weiba']),
             'unread_digg_weibapost' => intval($count['unread_digg_weibapost']),
         );
+
+        return Ts\Service\ApiMessage::withArray($return, 1, '');
     }
 
     /**
@@ -302,12 +321,16 @@ class MessageApi extends Api
         $list_id = intval($this->data ['list_id']);
         $list_info = D('message_list')->field('list_id,from_uid,type as room_type,title,member_num, logo')->where('list_id='.$list_id)->find();
         if (! $list_info) {
-            return $this->error('房间不存在');
+
+            return Ts\Service\ApiMessage::withArray('', 0, '房间不存在');
+            // return $this->error('房间不存在');
         }
         // 加入成员列表
         $members = D('message_member')->where('list_id='.$list_id)->order('ctime ASC')->field('member_uid')->findAll();
         if (! $members) {
-            return $this->error('没有任何用户');
+
+            return Ts\Service\ApiMessage::withArray('', 0, '没有任何用户');
+            // return $this->error('没有任何用户');
         }
         foreach ($members as $k => $v) {
             $user_info_whole = model('User')->getUserInfo($v ['member_uid']);
@@ -326,7 +349,8 @@ class MessageApi extends Api
         }
         $list_info ['status'] = 1;
 
-        return $list_info;
+        return Ts\Service\ApiMessage::withArray($list_info, 1, '');
+        // return $list_info;
     }
 
     /**
@@ -340,14 +364,19 @@ class MessageApi extends Api
     {
         $uid = intval($this->user_id);
         if (! $uid) {
-            return $this->error('请选择用户');
+
+            return Ts\Service\ApiMessage::withArray('', 0, '请选择用户');
+            // return $this->error('请选择用户');
         }
         $data = model('UserPrivacy')->getPrivacy($this->mid, $uid);
         if ($data['message'] == 1) {
-            return $this->error('您没有权限给TA发私信');
+
+            return Ts\Service\ApiMessage::withArray('', 0, '您没有权限给TA发私信');
+            // return $this->error('您没有权限给TA发私信');
         }
 
-        return $this->success('可以发私信');
+        return Ts\Service\ApiMessage::withArray('', 1, '可以发私信');
+        // return $this->success('可以发私信');
     }
 
     /**
@@ -370,7 +399,8 @@ class MessageApi extends Api
             unset($_l['to_user_info']);
         }
 
-        return $message;
+        return Ts\Service\ApiMessage::withArray($message, 1, '');
+        // return $message;
     }
 
     private function __formatMessageList($message)
@@ -379,7 +409,8 @@ class MessageApi extends Api
             $message[$k] = $this->__formatMessageDetail($v);
         }
 
-        return $message;
+        return Ts\Service\ApiMessage::withArray($message, 1, '');
+        // return $message;
     }
 
     private function __formatMessageDetail($message)
@@ -395,6 +426,7 @@ class MessageApi extends Api
         $message['with_uid'] = $uids[0] == $this->mid ? $uids[1] : $uids[0];
         $message['with_uid_userinfo'] = model('User')->getUserInfo($message['with_uid']);
 
-        return $message;
+        return Ts\Service\ApiMessage::withArray($message, 1, '');
+        // return $message;
     }
 }

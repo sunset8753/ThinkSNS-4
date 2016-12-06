@@ -43,7 +43,8 @@ class WeiboApi extends Api
         $where .= " AND type != 'postfile'";
         $feed_ids = model('Feed')->where($where)->field('feed_id')->limit($count)->order('feed_id DESC')->getAsFieldArray('feed_id');
 
-        return $this->format_feed($feed_ids);
+        $return = $this->format_feed($feed_ids);
+        return Ts\Service\ApiMessage::withArray($return, 0, '');
     }
 
     /**
@@ -83,7 +84,9 @@ class WeiboApi extends Api
         $where = "(a.uid = '{$GLOBALS['ts']['mid']}' OR b.uid = '{$GLOBALS['ts']['mid']}') AND ($where)"; // 加上自己的信息，若不需要此数据，请屏蔽下面语句
         $feed_ids = model('Feed')->where($where)->table($table)->field('a.feed_id')->limit($count)->order('a.feed_id DESC')->getAsFieldArray('feed_id');
 
-        return $this->format_feed($feed_ids);
+        $return = $this->format_feed($feed_ids);
+
+        return Ts\Service\ApiMessage::withArray($return, 0, '');
     }
 
     /**
@@ -137,7 +140,9 @@ class WeiboApi extends Api
         $sql = 'SELECT distinct c.feed_id FROM `'.$tablePrefix.'channel` c LEFT JOIN `'.$tablePrefix.'feed` f ON c.feed_id = f.feed_id WHERE '.$where.' ORDER BY '.$order.' LIMIT '.$count.'';
         $feed_ids = getSubByKey(D()->query($sql), 'feed_id');
 
-        return $this->format_feed($feed_ids);
+        $return = $this->format_feed($feed_ids);
+
+        return Ts\Service\ApiMessage::withArray($return, 0, '');
     }
 
     /**
@@ -157,27 +162,33 @@ class WeiboApi extends Api
     {
         $topic_name = t($this->data ['topic_name']);
         if (! $topic_name) {
-            return array(
-                    'status' => 0,
-                    'msg' => '话题名称不能为空',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '话题名称不能为空');
+            // return array(
+            //         'status' => 0,
+            //         'msg' => '话题名称不能为空',
+            // );
         }
         $weibo_list = array();
         $topic_detail = D('feed_topic')->where(array(
                 'topic_name' => formatEmoji(true, $topic_name),
         ))->find();
         if (! $topic_detail) {
-            return array(
-                    'status' => 1,
-                    'msg' => '列表为空',
-                    'data' => $weibo_list,
-            );
+
+            return Ts\Service\ApiMessage::withArray($weibo_list, 0, '列表为空');
+            // return array(
+            //         'status' => 1,
+            //         'msg' => '列表为空',
+            //         'data' => $weibo_list,
+            // );
         }
         if ($topic_detail ['lock'] == 1) {
-            return array(
-                    'status' => 0,
-                    'msg' => '该话题已屏蔽',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '该话题已屏蔽');
+            // return array(
+            //         'status' => 0,
+            //         'msg' => '该话题已屏蔽',
+            // );
         }
 
         $tablePrefix = C('DB_PREFIX');
@@ -231,11 +242,13 @@ class WeiboApi extends Api
             }
         }
         if ($max_id) {
-            return array(
-                    'status' => 1,
-                    'msg' => '列表',
-                    'data' => $feeds,
-            );
+
+            return Ts\Service\ApiMessage::withArray($feeds, 1, '列表');
+            // return array(
+            //         'status' => 1,
+            //         'msg' => '列表',
+            //         'data' => $feeds,
+            // );
         } else {
             $detail ['topic_name'] = '#'.$topic_detail ['topic_name'].'#';
             $detail ['des'] = $topic_detail ['des'] ? t($topic_detail ['des']) : '';
@@ -247,12 +260,14 @@ class WeiboApi extends Api
                 $detail ['pic'] = '';
             }
             // $detail['feeds'] = $feeds;
-            return array(
-                    'status' => 1,
-                    'msg' => '列表',
+            // 
+            
+            $return = array(
                     'detail' => $detail,
                     'data' => $feeds,
             );
+
+            return Ts\Service\ApiMessage::withArray($return, 1, '列表');
         }
     }
 
@@ -279,7 +294,9 @@ class WeiboApi extends Api
 
         $feed_ids = getSubByKey($lists ['data'], 'feed_id');
 
-        return $this->format_feed($feed_ids);
+        $return = $this->format_feed($feed_ids);
+
+        return Ts\Service\ApiMessage::withArray($return, 1, '');
     }
 
     /**
@@ -321,7 +338,8 @@ class WeiboApi extends Api
         $feed_info ['comment_info'] = $this->weibo_comments($feed_id, 10);
         $feed_info ['digg_info'] = $this->weibo_diggs($feed_id);
 
-        return $feed_info;
+        return Ts\Service\ApiMessage::withArray($feed_info, 1, '列表');
+        // return $feed_info;
     }
 
     /**
@@ -377,7 +395,9 @@ class WeiboApi extends Api
             $comment_list [] = $comment_info;
         }
 
-        return $comment_list;
+
+        return Ts\Service\ApiMessage::withArray($comment_list, 1, '列表');
+        // return $comment_list;
     }
 
     /**
@@ -413,7 +433,9 @@ class WeiboApi extends Api
             unset($digg_list [$k] ['feed_id']);
         }
 
-        return $digg_list;
+
+        return Ts\Service\ApiMessage::withArray($digg_list, 1, '列表');
+        // return $digg_list;
     }
 
     /**
@@ -440,10 +462,12 @@ class WeiboApi extends Api
     public function post_weibo($datas)
     {
         if (!CheckPermission('core_normal', 'feed_post')) {
-            return array(
-                'status' => 0,
-                'msg' => '您没有权限',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '您没有权限');
+            // return array(
+            //     'status' => 0,
+            //     'msg' => '您没有权限',
+            // );
         }
         if ($datas) {
             $this->data ['type'] = $datas ['type'];
@@ -451,10 +475,12 @@ class WeiboApi extends Api
 
         //检测用户是否被禁言
         if ($isDisabled = model('DisableUser')->isDisableUser($this->mid, 'post')) {
-            return array(
-                'status' => 0,
-                'msg' => '您已经被禁言了',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '您已经被禁言了');
+            // return array(
+            //     'status' => 0,
+            //     'msg' => '您已经被禁言了',
+            // );
         }
 
         $data ['uid'] = $this->mid;
@@ -464,10 +490,12 @@ class WeiboApi extends Api
         $data['body'] = formatEmoji(true, $data['body']);
 
         if (trim($data ['body']) == '') {
-            return array(
-                    'status' => 0,
-                    'msg' => '内容不能为空',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '内容不能为空');
+            // return array(
+            //         'status' => 0,
+            //         'msg' => '内容不能为空',
+            // );
         }
         $data ['type'] = isset($this->data ['type']) ? $this->data ['type'] : 'post';
         $data ['app'] = 'public';
@@ -528,11 +556,13 @@ class WeiboApi extends Api
             // 添加到频道
             $isOpenChannel = model('App')->isAppNameOpen('channel');
             if (! $isOpenChannel) {
-                return array(
-                        'status' => 1,
-                        'msg' => '发布成功',
-                        'feed_id' => $feed_id,
-                );
+
+                return Ts\Service\ApiMessage::withArray($feed_id, 1, '发布成功');
+                // return array(
+                //         'status' => 1,
+                //         'msg' => '发布成功',
+                //         'feed_id' => $feed_id,
+                // );
             }
             // 添加微博到频道中
             $channelId = t($this->data ['channel_category_id']);
@@ -566,17 +596,19 @@ class WeiboApi extends Api
                 D('Channel', 'channel')->setChannel($feed_id, $channelId, false);
             }
 
-            return array(
-                    'status' => 1,
-                    'msg' => '发布成功',
+            $return = array(
                     'feed_id' => $feed_id,
                     'is_audit_channel' => intval($channelConf ['is_audit']),
             );
+
+            return Ts\Service\ApiMessage::withArray($return, 1, '发布成功');
         } else {
-            return array(
-                    'status' => 0,
-                    'msg' => '发布失败',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '发布失败');
+            // return array(
+            //         'status' => 0,
+            //         'msg' => '发布失败',
+            // );
         }
     }
 
@@ -602,10 +634,12 @@ class WeiboApi extends Api
     public function upload_photo()
     {
         if (!CheckPermission('core_normal', 'feed_post')) {
-            return array(
-                'status' => 0,
-                'msg' => '您没有权限',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '您没有权限');
+            // return array(
+            //     'status' => 0,
+            //     'msg' => '您没有权限',
+            // );
         }
         $d ['attach_type'] = 'feed_image';
         $d ['upload_type'] = 'image';
@@ -616,12 +650,15 @@ class WeiboApi extends Api
             $data ['type'] = 'postimage';
             $data ['attach_id'] = getSubByKey($info ['info'], 'attach_id');
 
-            return $this->post_weibo($data);
+            $return = $this->post_weibo($data);
+            return Ts\Service\ApiMessage::withArray($return, 1, '');
         } else {
-            return array(
-                    'status' => 0,
-                    'msg' => '发布失败',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '发布失败');
+            // return array(
+            //         'status' => 0,
+            //         'msg' => '发布失败',
+            // );
         }
     }
 
@@ -648,6 +685,8 @@ class WeiboApi extends Api
     {
         // return $_FILES;
         if (!CheckPermission('core_normal', 'feed_post')) {
+
+            return Ts\Service\ApiMessage::withArray('', 0, '您没有权限');
             return array(
                 'status' => 0,
                 'msg' => '您没有权限',
@@ -667,9 +706,12 @@ class WeiboApi extends Api
             $data ['video_id'] = intval($info ['video_id']);
             $data ['from'] = intval($this->data ['from']);
 
-            return $this->post_weibo($data);
+            $return = $this->post_weibo($data);
+
+            return Ts\Service\ApiMessage::withArray($return, 1, '');
         } else {
-            return $info;
+            // return $info;
+            return Ts\Service\ApiMessage::withArray($info, 1, '');
         }
     }
 
@@ -702,15 +744,19 @@ class WeiboApi extends Api
             model('Comment')->where(array('row_id' => $feed_id))->data($data)->save();
         }
         if ($return ['status'] == 1) {
-            return array(
-                    'status' => 1,
-                    'msg' => '删除成功',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 1, '删除成功');
+            // return array(
+            //         'status' => 1,
+            //         'msg' => '删除成功',
+            // );
         } else {
-            return array(
-                    'status' => 0,
-                    'msg' => '删除失败',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '删除失败');
+            // return array(
+            //         'status' => 0,
+            //         'msg' => '删除失败',
+            // );
         }
     }
 
@@ -734,16 +780,20 @@ class WeiboApi extends Api
     public function repost_weibo()
     {
         if (! CheckPermission('core_normal', 'feed_post')) {
-            return array(
-                    'status' => 0,
-                    'msg' => '您没有权限',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '您没有权限');
+            // return array(
+            //         'status' => 0,
+            //         'msg' => '您没有权限',
+            // );
         }
         if (! t($this->data ['content'])) {
-            return array(
-                    'status' => 0,
-                    'msg' => '转发内容不能为空',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '转发内容不能为空');
+            // return array(
+            //         'status' => 0,
+            //         'msg' => '转发内容不能为空',
+            // );
         }
         $feed_detail = model('Feed')->where('feed_id='.intval($this->data ['feed_id']))->field('app,app_row_table,app_row_id')->find();
         $p ['app_name'] = isset($feed_detail ['app']) ? $feed_detail ['app'] : 'public';
@@ -766,16 +816,20 @@ class WeiboApi extends Api
             // 添加积分
             model('Credit')->setUserCredit($this->mid, 'forward_weibo');
 
-            return array(
-                    'status' => 1,
-                    'msg' => '转发成功',
-                    'feed_id' => $return ['data'] ['feed_id'],
-            );
+
+            return Ts\Service\ApiMessage::withArray($return['data']['feed_id'], 1, '转发成功');
+            // return array(
+            //         'status' => 1,
+            //         'msg' => '转发成功',
+            //         'feed_id' => $return ['data'] ['feed_id'],
+            // );
         } else {
-            return array(
-                    'status' => 0,
-                    'msg' => '转发失败',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '转发失败');
+            // return array(
+            //         'status' => 0,
+            //         'msg' => '转发失败',
+            // );
         }
     }
 
@@ -795,23 +849,28 @@ class WeiboApi extends Api
     public function comment_weibo()
     {
         if (! CheckPermission('core_normal', 'feed_comment')) {
-            return array(
-                    'status' => 0,
-                    'msg' => '您没有权限',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '您没有权限');
+            // return array(
+            //         'status' => 0,
+            //         'msg' => '您没有权限',
+            // );
         }
         if (! t($this->data ['content'])) {
-            return array(
-                    'status' => 0,
-                    'msg' => '评论内容不能为空',
-            );
+            return Ts\Service\ApiMessage::withArray('', 0, '评论内容不能为空');
+            // return array(
+            //         'status' => 0,
+            //         'msg' => '评论内容不能为空',
+            // );
         }
         //检测用户是否被禁言
         if ($isDisabled = model('DisableUser')->isDisableUser($this->mid, 'post')) {
-            return array(
-                'status' => 0,
-                'msg' => '您已经被禁言了',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '您已经被禁言了');
+            // return array(
+            //     'status' => 0,
+            //     'msg' => '您已经被禁言了',
+            // );
         }
         $feed_detail = model('Feed')->where('feed_id='.intval($this->data ['feed_id']))->find();
         $data ['type'] = 1;
@@ -870,16 +929,19 @@ class WeiboApi extends Api
                 D('weiba_post', 'weiba')->where('post_id = '.$feed_detail['app_row_id'])->save($wp_up);
             }
 
-            return array(
-                    'status' => 1,
-                    'msg' => '评论成功',
-                    'cid' => $data['comment_id'],
-            );
+            return Ts\Service\ApiMessage::withArray($data['comment_id'], 1, '评论成功');
+            // return array(
+            //         'status' => 1,
+            //         'msg' => '评论成功',
+            //         'cid' => $data['comment_id'],
+            // );
         } else {
-            return array(
-                    'status' => 0,
-                    'msg' => '评论失败',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '评论失败');
+            // return array(
+            //         'status' => 0,
+            //         'msg' => '评论失败',
+            // );
         }
     }
 
@@ -897,25 +959,30 @@ class WeiboApi extends Api
          * 验证是否传入了参数是否合法
          */
         if (!$cid or !$this->mid) {
-            return array(
-                'status' => 0,
-                'message' => '传入的参数不合法',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '传入的参数不合法');
+            // return array(
+            //     'status' => 0,
+            //     'message' => '传入的参数不合法',
+            // );
 
         /*
          * 判断是否删除成功
          */
         } elseif (model('Comment')->deleteComment(array($cid), $this->mid)) {
-            return array(
-                'status' => 1,
-                'message' => '删除成功',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 1, '删除成功');
+            // return array(
+            //     'status' => 1,
+            //     'message' => '删除成功',
+            // );
         }
 
-        return array(
-            'status' => -1,
-            'message' => '删除失败',
-        );
+        return Ts\Service\ApiMessage::withArray('', 0, '删除失败');
+        // return array(
+        //     'status' => -1,
+        //     'message' => '删除失败',
+        // );
     }
 
     /**
@@ -930,15 +997,19 @@ class WeiboApi extends Api
         $feed_id = intval($this->data ['feed_id']);
         $res = model('FeedDigg')->addDigg($feed_id, $this->mid);
         if ($res) {
-            return array(
-                    'status' => 1,
-                    'msg' => '操作成功',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 1, '操作成功');
+            // return array(
+            //         'status' => 1,
+            //         'msg' => '操作成功',
+            // );
         } else {
-            return array(
-                    'status' => 0,
-                    'msg' => '操作失败',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '操作失败');
+            // return array(
+            //         'status' => 0,
+            //         'msg' => '操作失败',
+            // );
         }
     }
 
@@ -954,15 +1025,19 @@ class WeiboApi extends Api
         $feed_id = intval($this->data ['feed_id']);
         $res = model('FeedDigg')->delDigg($feed_id, $this->mid);
         if ($res) {
-            return array(
-                    'status' => 1,
-                    'msg' => '操作成功',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 1, '操作成功');
+            // return array(
+            //         'status' => 1,
+            //         'msg' => '操作成功',
+            // );
         } else {
-            return array(
-                    'status' => 0,
-                    'msg' => '操作失败',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '操作失败');
+            // return array(
+            //         'status' => 0,
+            //         'msg' => '操作失败',
+            // );
         }
     }
 
@@ -978,15 +1053,19 @@ class WeiboApi extends Api
         $comment_id = intval($this->data ['comment_id']);
         $res = model('CommentDigg')->addDigg($comment_id, $this->mid);
         if ($res) {
-            return array(
-                    'status' => 1,
-                    'msg' => '操作成功',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 1, '操作成功');
+            // return array(
+            //         'status' => 1,
+            //         'msg' => '操作成功',
+            // );
         } else {
-            return array(
-                    'status' => 0,
-                    'msg' => '操作失败',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '操作失败');
+            // return array(
+            //         'status' => 0,
+            //         'msg' => '操作失败',
+            // );
         }
     }
 
@@ -1002,15 +1081,19 @@ class WeiboApi extends Api
         $comment_id = intval($this->data ['comment_id']);
         $res = model('CommentDigg')->delDigg($comment_id, $this->mid);
         if ($res) {
-            return array(
-                    'status' => 1,
-                    'msg' => '操作成功',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 1, '操作成功');
+            // return array(
+            //         'status' => 1,
+            //         'msg' => '操作成功',
+            // );
         } else {
-            return array(
-                    'status' => 0,
-                    'msg' => '操作失败',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '操作失败');
+            // return array(
+            //         'status' => 0,
+            //         'msg' => '操作失败',
+            // );
         }
     }
 
@@ -1028,15 +1111,19 @@ class WeiboApi extends Api
         $data ['source_app'] = 'public'; // public
 
         if (model('Collection')->addCollection($data)) {
-            return array(
-                    'status' => 1,
-                    'msg' => '收藏成功',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 1, '收藏成功');
+            // return array(
+            //         'status' => 1,
+            //         'msg' => '收藏成功',
+            // );
         } else {
-            return array(
-                    'status' => 0,
-                    'msg' => '收藏失败',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '收藏失败');
+            // return array(
+            //         'status' => 0,
+            //         'msg' => '收藏失败',
+            // );
         }
     }
 
@@ -1050,15 +1137,19 @@ class WeiboApi extends Api
     public function unfavorite_weibo()
     {
         if (model('Collection')->delCollection($this->data ['feed_id'], 'feed')) {
-            return array(
-                    'status' => 1,
-                    'msg' => '取消收藏成功',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 1, '取消收藏成功');
+            // return array(
+            //         'status' => 1,
+            //         'msg' => '取消收藏成功',
+            // );
         } else {
-            return array(
-                    'status' => 0,
-                    'msg' => '取消收藏失败',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '取消收藏失败');
+            // return array(
+            //         'status' => 0,
+            //         'msg' => '取消收藏失败',
+            // );
         }
     }
 
@@ -1078,10 +1169,11 @@ class WeiboApi extends Api
         $feed_id = intval($this->data ['feed_id']);
         $feed_uid = model('Feed')->where('is_del=0 and feed_id='.$feed_id)->getField('uid');
         if (! $feed_uid) {
-            return array(
-                    'status' => 0,
-                    'msg' => '内容已被删除，举报失败',
-            );
+            return Ts\Service\ApiMessage::withArray('', 0, '内容已被删除，举报失败');
+            // return array(
+            //         'status' => 0,
+            //         'msg' => '内容已被删除，举报失败',
+            // );
         }
 
         if ($this->data ['from'] == 2) {
@@ -1095,10 +1187,12 @@ class WeiboApi extends Api
         $data ['uid'] = $this->mid;
         $data ['fuid'] = $feed_uid;
         if ($isDenounce = model('Denounce')->where($data)->count()) {
-            return array(
-                    'status' => 0,
-                    'msg' => L('PUBLIC_REPORTING_INFO'),
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, L('PUBLIC_REPORTING_INFO'));
+            // return array(
+            //         'status' => 0,
+            //         'msg' => L('PUBLIC_REPORTING_INFO'),
+            // );
         } else {
             $data ['content'] = D('feed_data')->where('feed_id='.$feed_id)->getField('feed_content');
             $data ['reason'] = t($this->data ['reason']);
@@ -1114,15 +1208,19 @@ class WeiboApi extends Api
                     model('Notify')->sendNotify($v ['uid'], 'denouce_audit');
                 }
 
-                return array(
-                        'status' => 1,
-                        'msg' => '举报成功',
-                );
+
+                return Ts\Service\ApiMessage::withArray('', 1, '举报成功');
+                // return array(
+                //         'status' => 1,
+                //         'msg' => '举报成功',
+                // );
             } else {
-                return array(
-                        'status' => 0,
-                        'msg' => L('PUBLIC_REPORT_ERROR'),
-                );
+
+                return Ts\Service\ApiMessage::withArray('', 0, L('PUBLIC_REPORT_ERROR'));
+                // return array(
+                //         'status' => 0,
+                //         'msg' => L('PUBLIC_REPORT_ERROR'),
+                // );
             }
         }
     }
@@ -1179,7 +1277,8 @@ class WeiboApi extends Api
         ! empty($max_id) && $where .= " AND feed_id < {$max_id}";
         $feed_ids = model('Feed')->where($where)->field('feed_id')->limit($count)->order('feed_id DESC')->getAsFieldArray('feed_id');
 
-        return $this->format_feed($feed_ids);
+        $return = $this->format_feed($feed_ids);
+        return Ts\Service\ApiMessage::withArray($return, 1, '');
     }
 
     /**
@@ -1259,7 +1358,8 @@ class WeiboApi extends Api
             $collection_list [] = $r [$k];
         }
 
-        return $collection_list;
+        return Ts\Service\ApiMessage::withArray($comment_list, 1, '');
+        // return $collection_list;
     }
 
     /**
@@ -1318,7 +1418,8 @@ class WeiboApi extends Api
         }
         $feed_ids = D()->table('`'.C('DB_PREFIX').'feed` AS a LEFT JOIN `'.C('DB_PREFIX').'feed_data` AS b ON a.`feed_id` = b.`feed_id`')->field('a.`feed_id`')->where($map)->order('a.`feed_id` DESC')->limit($count)->getAsFieldArray('feed_id');
 
-        return $this->format_feed($feed_ids);
+        $return = $this->format_feed($feed_ids);
+        return Ts\Service\ApiMessage::withArray($return, 1, '');
     }
 
     /**
@@ -1374,7 +1475,8 @@ class WeiboApi extends Api
         }
         $feed_ids = D()->table('`'.C('DB_PREFIX').'feed` AS a LEFT JOIN `'.C('DB_PREFIX').'feed_data` AS b ON a.`feed_id` = b.`feed_id`')->field('a.`feed_id`')->where($map)->order('a.`feed_id` DESC')->limit($count)->getAsFieldArray('feed_id');
 
-        return $this->format_feed($feed_ids);
+        $return = $this->format_feed($feed_ids);
+        return Ts\Service\ApiMessage::withArray($return, 1, '');
     }
 
     /**
@@ -1463,7 +1565,8 @@ class WeiboApi extends Api
             }
         }
 
-        return $at_list;
+        return Ts\Service\ApiMessage::withArray($at_list, 1, '');
+        // return $at_list;
     }
 
     /**
@@ -1498,9 +1601,12 @@ class WeiboApi extends Api
                 $v['topic_name'] = parseForApi($v['topic_name']);
             }
 
-            return $data;
+            return Ts\Service\ApiMessage::withArray($data, 1, '');
+            // return $data;
         } else {
-            return array();
+
+            return Ts\Service\ApiMessage::withEmpty();
+            // return array();
         }
     }
 
@@ -1569,7 +1675,8 @@ class WeiboApi extends Api
             unset($atme);
         }
 
-        return $atme_arr;
+        return Ts\Service\ApiMessage::withArray($atme_arr, 1, '');
+        // return $atme_arr;
     }
 
     /**
@@ -1607,9 +1714,13 @@ class WeiboApi extends Api
             }
         }
         if (count($_feed_info) > 0) {
-            return $_feed_info;
+
+            return Ts\Service\ApiMessage::withArray($_feed_info, 1, '');
+            // return $_feed_info;
         } else {
-            return array();
+
+            return Ts\Service\ApiMessage::withEmpty();
+            // return array();
         }
     }
 
@@ -1661,7 +1772,8 @@ class WeiboApi extends Api
             unset($comment);
         }
 
-        return $comment_arr;
+        return Ts\Service\ApiMessage::withArray($comment_arr, 1, '');
+        // return $comment_arr;
     }
 
     /**
@@ -1705,7 +1817,8 @@ class WeiboApi extends Api
             unset($comment);
         }
 
-        return $comment_arr;
+        return Ts\Service\ApiMessage::withArray($comment_arr, 1, '');
+        // return $comment_arr;
     }
 
     /**
@@ -1753,7 +1866,8 @@ class WeiboApi extends Api
             unset($digg);
         }
 
-        return $digg_arr;
+        return Ts\Service\ApiMessage::withArray($digg_arr, 1, '');
+        // return $digg_arr;
     }
 
     /**
@@ -1828,9 +1942,12 @@ class WeiboApi extends Api
                 unset($feed);
             }
 
-            return array_values($r);
+            return Ts\Service\ApiMessage::withArray(array_values($r), 1, '');
+            // return array_values($r);
         } else {
-            return array();
+
+            return Ts\Service\ApiMessage::withEmpty();
+            // return array();
         }
     }
 
@@ -1855,7 +1972,9 @@ class WeiboApi extends Api
         $feed_info = array();
         $data = model('Feed')->where($map)->table("{$tablePrefix}feed AS a LEFT JOIN {$tablePrefix}feed_data AS b ON a.feed_id = b.feed_id ")->find();
         if (!$data) {
-            return array();
+
+            return Ts\Service\ApiMessage::withEmpty();
+            // return array();
         }
         if ($data ['is_del'] == 0) {
             $feed_info ['status'] = 'no';
@@ -2000,7 +2119,8 @@ class WeiboApi extends Api
         /* # 将emoji代码格式化为emoji */
         $feed_info['content'] = formatEmoji(false, $feed_info['content']);
 
-        return $feed_info;
+        return Ts\Service\ApiMessage::withArray($feed_info, 1, '');
+        // return $feed_info;
     }
 
     /**
@@ -2099,7 +2219,8 @@ class WeiboApi extends Api
                 break;
         }
 
-        return $source_info;
+        return Ts\Service\ApiMessage::withArray($source_info, 1, '');
+        // return $source_info;
     }
 
     /**
@@ -2125,7 +2246,8 @@ class WeiboApi extends Api
         $privacy = model('UserPrivacy')->getPrivacy($this->mid, $uid);
         $user_info ['space_privacy'] = $privacy['space'];
 
-        return $user_info;
+        return Ts\Service\ApiMessage::withArray($user_info, 1, '');
+        // return $user_info;
     }
 
     /**
@@ -2136,12 +2258,14 @@ class WeiboApi extends Api
      **/
     public function getHotTopic()
     {
-        return model('FeedTopic')->where(array(
+        $return = model('FeedTopic')->where(array(
             'recommend' => 1,
             'lock' => 0,
         ))->order('`recommend_time` DESC')
           ->limit(5)
           ->select();
+
+        return Ts\Service\ApiMessage::withArray($return, 1, '');
     }
 
     /**
@@ -2159,10 +2283,12 @@ class WeiboApi extends Api
         );
         $max_id && $where['topic_id'] = array('lt', $max_id);
 
-        return model('FeedTopic')->where($where)
+        $return = model('FeedTopic')->where($where)
                                  ->order('`topic_id` DESC')
                                  ->limit($limit)
                                  ->select();
+
+        return Ts\Service\ApiMessage::withArray($return, 1, '');
     }
 
     public function all_topic()
@@ -2190,7 +2316,8 @@ class WeiboApi extends Api
             $v['topic_name'] = parseForApi($v['topic_name']);
         }
 
-        return $res;
+        return Ts\Service\ApiMessage::withArray($res, 1, '');
+        // return $res;
     }
 
     /**
@@ -2201,8 +2328,10 @@ class WeiboApi extends Api
      **/
     public function getWeiboStrMaxLength()
     {
-        return array(
+        $return = array(
             'num' => json_decode(json_encode(model('Xdata')->get('admin_Config:feed')), false)->weibo_nums,
         );
+
+        return Ts\Service\ApiMessage::withArray($return, 1, '');
     }
 }

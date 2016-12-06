@@ -12,7 +12,8 @@ class PublicApi extends Api
 {
     public function getAreaAll()
     {
-        return Capsule::table('area')->get();
+        $return = Capsule::table('area')->get();
+        return Ts\Service\ApiMessage::withArray($return, 1, '');
     }
 
     /**
@@ -36,7 +37,9 @@ class PublicApi extends Api
         $list = model('Area')->getAreaList($pid);
 
         if ($notsort) {
-            return $list;
+
+            return Ts\Service\ApiMessage::withArray($list, 1, '');
+            // return $list;
         }
 
         $areas = array();
@@ -55,7 +58,8 @@ class PublicApi extends Api
         }
         ksort($areas);
 
-        return $areas;
+        return Ts\Service\ApiMessage::withArray($areas, 1, '');
+        // return $areas;
     }
 
     /**
@@ -73,7 +77,8 @@ class PublicApi extends Api
             $list[$key] = $value;
         }
 
-        return $list;
+        return Ts\Service\ApiMessage::withArray($list, 1, '');
+        // return $list;
     }
 
     /**
@@ -304,6 +309,7 @@ class PublicApi extends Api
             $list['jipu_goods'] = $goods_rs;
         }
 
-        return $list;
+        return Ts\Service\ApiMessage::withArray($list, 1, '');
+        // return $list;
     }
 } // END class PublicApi extends Api

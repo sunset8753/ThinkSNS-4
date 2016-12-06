@@ -24,10 +24,12 @@ class InformationApi extends Api
         $info->increment('hits', 1);
 
         if (!$info) {
-            return array(
-                'status' => 0,
-                'message' => '访问的资讯不存在！',
-            );
+
+          return Ts\Service\ApiMessage::withArray('', 0, '访问的资讯不存在！');
+            // return array(
+            //     'status' => 0,
+            //     'message' => '访问的资讯不存在！',
+            // );
         }
 
         echo '<!DOCTYPE html>
@@ -118,7 +120,7 @@ class InformationApi extends Api
      */
     public function NewsList()
     {
-        !$_REQUEST['cid'] && $this->error('资讯分类不能为空');
+        !$_REQUEST['cid'] &&  return Ts\Service\ApiMessage::withArray('', 0, '资讯分类不能为空');//$this->error('资讯分类不能为空');
         $catid = intval($_REQUEST['cid']);
         $newsModel = Subject::getInstance();
         $map['cid'] = $catid;
@@ -143,9 +145,11 @@ class InformationApi extends Api
                 $subject['image'] = $image;
                 unset($subject['content']);
             }
-            $this->success(array('data' => $newsList));
+            return Ts\Service\ApiMessage::withArray($newsList, 1, '');
+            // $this->success(array('data' => $newsList));
         } else {
-            $this->error('暂时没有资讯');
+          return Ts\Service\ApiMessage::withArray('', 0, '暂时没有资讯');
+            // $this->error('暂时没有资讯');
         }
     }
 
@@ -159,17 +163,13 @@ class InformationApi extends Api
         $cateModel = Cate::getInstance();
         $cates = $cateModel->where(['isDel' => 0])->order('rank asc')->select();
         if (!empty($cates)) {
-            $return ['msg'] = '获取分类成功';
-            $return ['status'] = 1;
-            $return ['data'] = $cates;
 
-            return $return;
+            return Ts\Service\ApiMessage::withArray($cates, 1, '获取分类成功');
+            // return $return;
         } else {
-            $return ['msg'] = '没有找到分类';
-            $return ['status'] = 0;
-            $return ['data'] = '';
 
-            return $return;
+            return Ts\Service\ApiMessage::withArray('', 0, '没有找到分类');
+            // return $return;
         }
     }
 
@@ -185,6 +185,7 @@ class InformationApi extends Api
         $where = '`is_del` = 0 AND `app` = \'Information\' AND `table` = \'%s\' AND `row_id` = %d';
         $where = sprintf($where, 'information_list', intval($sid));
 
-        return model('Comment')->where($where)->field('comment_id')->count();
+        $return = model('Comment')->where($where)->field('comment_id')->count();
+        return Ts\Service\ApiMessage::withArray($return, 1, '');
     }
 }

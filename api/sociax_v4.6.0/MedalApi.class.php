@@ -22,7 +22,8 @@ class MedalApi extends Api
 
         unset($all);
 
-        return $medals;
+        return Ts\Service\ApiMessage::withArray($medals, 1, '');
+        // return $medals;
     }
 
     /**
@@ -52,7 +53,8 @@ class MedalApi extends Api
         unset($uid, $sql, $all);
 
         /* # 返回数据 */
-        return $medals;
+        return Ts\Service\ApiMessage::withArray($medals, 1, '');
+        // return $medals;
     }
 
     /**
@@ -79,6 +81,7 @@ class MedalApi extends Api
 
         unset($medals, $value, $medal);
 
-        return $data;
+        return Ts\Service\ApiMessage::withArray($data, 1, '');
+        // return $data;
     }
 } // END class MedalApi extends Api

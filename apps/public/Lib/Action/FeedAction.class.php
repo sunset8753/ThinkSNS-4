@@ -149,6 +149,9 @@ class FeedAction extends Action
         if ($_POST ['video_id']) {
             $d ['video_id'] = intval($_POST ['video_id']);
         }
+        if ($_POST['channel_id'] > 0) {
+            $d['is_audit'] = 0;
+        }
         // 发送分享的类型
         $type = t($_POST ['type']);
         // 附件信息

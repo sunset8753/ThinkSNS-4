@@ -10,17 +10,6 @@ class ApplicationApi extends Api
     //加密key
     protected $key = 'ThinkSNS';
 
-    //数据统一返回格式
-    private function rd($data = '', $msg = 'ok', $status = 0)
-    {
-        return array(
-            'data' => $data,
-            'msg' => $msg,
-            'status' => $status,
-        );
-    }
-
-
     //获取版本号 用于app获取更新配置
     public function getVersion()
     {
@@ -30,8 +19,8 @@ class ApplicationApi extends Api
         } else {
             $version = 1; //未配置  初始版本
         }
-
-        return $this->rd($version);
+        return Ts\Service\ApiMessage::withArray($version,1,'');
+        // return $this->rd($version);
     }
 
     //获取支付相关配置
@@ -56,7 +45,7 @@ class ApplicationApi extends Api
             }
         }
 
-        return $this->rd($info);
+        return Ts\Service\ApiMessage::withArray($info,1,'');
     }
 
     //生成提现订单号
@@ -65,7 +54,7 @@ class ApplicationApi extends Api
         //暂用这种简单的订单号生成办法。。。。请求密集时可能出现订单号重复？
         $number = date('YmdHis').rand(1000, 9999);
 
-        return $number;
+       return Ts\Service\ApiMessage::withArray($number,1,'');
     }
 
     /**
@@ -78,7 +67,8 @@ class ApplicationApi extends Api
 
         $accountinfo = $this->getUserAccount();
         if ($accountinfo['status'] == 1) {
-            return $this->rd('', '请先绑定提现账户', 1);
+            return Ts\Service\ApiMessage::withArray('', 0, '请先绑定提现账户');
+            // return $this->rd('', '请先绑定提现账户', 1);
         }
         $data['account'] = $accountinfo['data']['account'];
         $data['type'] = intval($accountinfo['data']['type']); //绑定获取
@@ -91,11 +81,13 @@ class ApplicationApi extends Api
          //     return $this->rd('','请填写提现账户',1);
          // }
          if (!$data['gold']) {
-             return $this->rd('', '请填写提现金额', 1);
+            return Ts\Service\ApiMessage::withArray('', 0, '请填写提现金额');
+             // return $this->rd('', '请填写提现金额', 1);
          }
         $score = D('credit_user')->where(array('uid' => $this->mid))->getField('score');
         if ($score < $data['gold']) {
-            return $this->rd('', '积分不足', 1);
+            return Ts\Service\ApiMessage::withArray('', 0, '积分不足');
+            // return $this->rd('', '积分不足', 1);
         }
         $info = Model\CreditOrder::insert($data);
         if ($info) {
@@ -111,9 +103,11 @@ class ApplicationApi extends Api
             D('credit_user')->setDec('score', 'uid='.$this->mid, $data['gold']);
             D('Credit')->cleanCache($this->mid);
 
-            return $this->rd('', '提交成功请等待审核', 0);
+            return Ts\Service\ApiMessage::withArray('', 1, '提交成功请等待审核');
+            // return $this->rd('', '提交成功请等待审核', 0);
         } else {
-            return $this->rd('', '保存失败，请稍后再试', 1);
+            return Ts\Service\ApiMessage::withArray('', 0, '保存失败，请稍后再试');
+            // return $this->rd('', '保存失败，请稍后再试', 1);
         }
     }
 
@@ -127,29 +121,36 @@ class ApplicationApi extends Api
         if ($status == 1) {
             $data['account'] = $this->data['account'];
             if (!$data['account']) {
-                return $this->rd('', '请输入需要绑定的账户', 1);
+                return Ts\Service\ApiMessage::withArray('', 0,'请输入需要绑定的账户');
+                // return $this->rd('', '请输入需要绑定的账户', 1);
             }
             $data['type'] = intval($this->data['type']) ?: 1; //1-支付宝 2-微信
             if (Model\UserAccount::find($this->mid)) {
-                return $this->rd('', '已有绑定账户', 1);
+                return Ts\Service\ApiMessage::withArray('', 0, '已有绑定账户');
+                // return $this->rd('', '已有绑定账户', 1);
             }
             $data['uid'] = $this->mid;
             $data['ctime'] = time();
             $info = Model\UserAccount::insert($data);
             if ($info) {
-                return $this->rd('', '绑定成功', 0);
+                return Ts\Service\ApiMessage::withArray('', 1, '绑定成功');
+                // return $this->rd('', '绑定成功', 0);
             } else {
-                return $this->rd('', '绑定失败，请稍后再试', 1);
+                return Ts\Service\ApiMessage::withArray('', 0,'绑定失败，请稍后再试');
+                // return $this->rd('', '绑定失败，请稍后再试', 1);
             }
         } else {
             if (!Model\UserAccount::find($this->mid)) {
-                return $this->rd('', '未绑定账户', 1);
+                return Ts\Service\ApiMessage::withArray('', 0, '未绑定账户');
+                // return $this->rd('', '未绑定账户', 1);
             }
             $info = Model\UserAccount::where('uid', $this->mid)->delete();
             if ($info) {
-                return $this->rd('', '解绑成功', 0);
+                return Ts\Service\ApiMessage::withArray('', 1, '解绑成功');
+                // return $this->rd('', '解绑成功', 0);
             } else {
-                return $this->rd('', '操作失败，请稍后再试', 1);
+                return Ts\Service\ApiMessage::withArray('', 0, '操作失败，请稍后再试');
+                // return $this->rd('', '操作失败，请稍后再试', 1);
             }
         }
     }
@@ -161,12 +162,14 @@ class ApplicationApi extends Api
     {
         $info = Model\UserAccount::find($this->mid);
         if (!$info) {
-            return $this->rd('', '未绑定账户', 1);
+            return Ts\Service\ApiMessage::withArray('', 0, '未绑定账户');
+            // return $this->rd('', '未绑定账户', 1);
         } else {
             $data['account'] = $info->account;
             $data['type'] = $info->type;
 
-            return $this->rd($data);
+            return Ts\Service\ApiMessage::withArray($data,1,'');
+            // return $this->rd($data);
         }
     }
 

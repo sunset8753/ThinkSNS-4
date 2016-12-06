@@ -10,7 +10,8 @@ class DenounceApi extends Api
             $return['status'] = 0;
             $return['info'] = '参数错误';
 
-            return $return;
+            return Ts\Service\ApiMessage::withArray('', $return['status'], $return['info']);
+            // return $return;
         }
         $map['uid'] = $this->mid;
         $info = array();
@@ -32,7 +33,8 @@ class DenounceApi extends Api
             $return['status'] = 0;
             $return['info'] = '内容已被删除，举报失败';
 
-            return $return;
+            return Ts\Service\ApiMessage::withArray('', $return['status'], $return['info']);
+            // return $return;
         }
         $return = array();
         model('Denounce')->where($map)->count();
@@ -55,6 +57,7 @@ class DenounceApi extends Api
             }
         }
 
-        return $return;
+        return Ts\Service\ApiMessage::withArray('', $return['status'], $return['info']);
+        // return $return;
     }
 }

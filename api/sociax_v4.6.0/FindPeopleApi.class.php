@@ -36,7 +36,8 @@ class FindPeopleApi extends Api
         $my ['rank'] = '排名：'.$rank;
         $my ['lists'] = $lists;
 
-        return $my;
+        return Ts\Service\ApiMessage::withArray($my, 1, '');  
+        // return $my;
     }
     public function rank_medal()
     {
@@ -68,7 +69,8 @@ class FindPeopleApi extends Api
         $my ['rank'] = '排名：'.$rank;
         $my ['lists'] = $lists;
 
-        return $my;
+        // return $my;
+        return Ts\Service\ApiMessage::withArray($my, 1, '');  
     }
     /**
      * 找人首页-搜索用户 --using
@@ -185,7 +187,8 @@ class FindPeopleApi extends Api
             }
         }
 
-        return $user_list;
+        return Ts\Service\ApiMessage::withArray($user_list, 1, '');  
+        // return $user_list;
     }
 
     /**
@@ -202,7 +205,8 @@ class FindPeopleApi extends Api
             $categoryTree [$k] ['child'] = D('user_category')->where('pid='.$v ['user_category_id'])->field('user_category_id as id,title')->findAll();
         }
 
-        return $categoryTree;
+        return Ts\Service\ApiMessage::withArray($categoryTree, 1, '');  
+        // return $categoryTree;
     }
 
     /**
@@ -222,10 +226,11 @@ class FindPeopleApi extends Api
         $count = $this->count ? intval($this->count) : 20;
         $cid = intval($this->data ['tag_id']);
         if (! $cid) {
-            return array(
-                    'status' => 0,
-                    'msg' => '请选择标签',
-            );
+            return Ts\Service\ApiMessage::withArray('', 0, '请选择标签');  
+            // return array(
+            //         'status' => 0,
+            //         'msg' => '请选择标签',
+            // );
         }
         $pid = M('UserCategory')->where('user_category_id='.$cid)->getField('pid');
         if ($pid == 0) {
@@ -296,7 +301,8 @@ class FindPeopleApi extends Api
             $user_list [$k] ['follow_status'] = model('Follow')->getFollowState($this->mid, $v ['row_id']);
         }
 
-        return $user_list;
+        return Ts\Service\ApiMessage::withArray($user_list, 1, '');  
+        // return $user_list;
     }
 
 
@@ -318,10 +324,12 @@ class FindPeopleApi extends Api
         $count = $this->count ? intval($this->count) : 20;
 
         if ($this->data ['sex'] == '') {
-            return array(
-                    'status' => 0,
-                    'msg' => '请选择性别',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '请选择性别');  
+            // return array(
+            //         'status' => 0,
+            //         'msg' => '请选择性别',
+            // );
         }
         $sex = intval($this->data ['sex']);
 
@@ -345,7 +353,8 @@ class FindPeopleApi extends Api
             $user_list [$k] ['follow_status'] = model('Follow')->getFollowState($this->mid, $v ['uid']);
         }
 
-        return $user_list;
+        return Ts\Service\ApiMessage::withArray($user_list, 1, '');  
+        // return $user_list;
     }
 
     /**
@@ -407,7 +416,8 @@ class FindPeopleApi extends Api
             unset($first_letter);
         }
 
-        return $letters;
+        return Ts\Service\ApiMessage::withArray($letters, 1, '');  
+        // return $letters;
     }
 
     /**
@@ -427,10 +437,12 @@ class FindPeopleApi extends Api
         $count = $this->count ? intval($this->count) : 20;
         $city_id = intval($this->data ['city_id']);
         if (! $city_id) {
-            return array(
-                    'status' => 0,
-                    'msg' => '请选择地区',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '请选择地区');  
+            // return array(
+            //         'status' => 0,
+            //         'msg' => '请选择地区',
+            // );
         }
         ! empty($max_id) && $map ['uid'] = array(
                 'lt',
@@ -454,7 +466,8 @@ class FindPeopleApi extends Api
             $user_list [$k] ['follow_status'] = model('Follow')->getFollowState($this->mid, $v ['uid']);
         }
 
-        return $user_list;
+        return Ts\Service\ApiMessage::withArray($user_list, 1, '');  
+        // return $user_list;
     }
 
     /**
@@ -477,7 +490,8 @@ class FindPeopleApi extends Api
             }
         }
 
-        return $categoryTree;
+        return Ts\Service\ApiMessage::withArray($categoryTree, 1, '');  
+        // return $categoryTree;
     }
 
     /**
@@ -497,10 +511,12 @@ class FindPeopleApi extends Api
         $count = $this->count ? intval($this->count) : 20;
         $verify_id = t($this->data ['verify_id']);
         if (! $verify_id) {
-            return array(
-                    'status' => 0,
-                    'msg' => '请选择认证类型',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 0, '请选择认证类型');
+            // return array(
+            //         'status' => 0,
+            //         'msg' => '请选择认证类型',
+            // );
         }
 
         $verify_arr = explode('_', $verify_id);
@@ -526,7 +542,8 @@ class FindPeopleApi extends Api
             $user_list [$k] ['follow_status'] = model('Follow')->getFollowState($this->mid, $v ['uid']);
         }
 
-        return $user_list;
+        return Ts\Service\ApiMessage::withArray($user_list, 1, '');
+        // return $user_list;
     }
 
     /**
@@ -559,26 +576,30 @@ class FindPeopleApi extends Api
                 'uid' => $this->mid,
             ));
 
-            return array(
-                'status' => 1,
-                'message' => '位置添加成功',
-            );
+            return Ts\Service\ApiMessage::withArray('', 1, '位置添加成功');
+            // return array(
+            //     'status' => 1,
+            //     'message' => '位置添加成功',
+            // );
 
         /* 判断是否更新成功 */
         } elseif (D('mobile_user')->where('`uid` = '.$this->mid)->save(array(
             'last_latitude' => $lat,
             'last_longitude' => $lng,
         ))) {
-            return array(
-                'status' => 1,
-                'message' => '位置更新成功',
-            );
+
+            return Ts\Service\ApiMessage::withArray('', 1, '位置更新成功');
+            // return array(
+            //     'status' => 1,
+            //     'message' => '位置更新成功',
+            // );
         }
 
-        return array(
-            'status' => 0,
-            'message' => '位置未改变',
-        );
+        return Ts\Service\ApiMessage::withArray('', 0, '位置未改变');
+        // return array(
+        //     'status' => 0,
+        //     'message' => '位置未改变',
+        // );
     }
 
     /**
@@ -691,7 +712,8 @@ class FindPeopleApi extends Api
         /*
          * 返回数据
          */
-        return $list;
+        return Ts\Service\ApiMessage::withArray($list, 1, '');
+        // return $list;
     }
 
     /**
@@ -735,7 +757,8 @@ class FindPeopleApi extends Api
         $stepTwo = 2 * asin(min(1, sqrt($stepOne)));
         $calculatedDistance = $earthRadius * $stepTwo;
 
-        return round($calculatedDistance);
+        return Ts\Service\ApiMessage::withArray(round($calculatedDistance), 1, '');
+        // return round($calculatedDistance);
     }
 
     /**
@@ -801,7 +824,8 @@ class FindPeopleApi extends Api
             $data = array_merge($user_list, $user_list1);
         }
 
-        return $data;
+        return Ts\Service\ApiMessage::withArray($data, 1, '');
+        // return $data;
     }
     public function top_ad()
     {
@@ -818,6 +842,7 @@ class FindPeopleApi extends Api
         }
         // dump ( $info );
 
-        return $info;
+        return Ts\Service\ApiMessage::withArray($info, 1, '');
+        // return $info;
     }
 }
