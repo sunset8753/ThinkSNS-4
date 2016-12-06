@@ -21,7 +21,8 @@ class Image
     //类定义开始
 
     /**
-     * 取得图像信息.
+     +----------------------------------------------------------
+     * 取得图像信息
      *
      +----------------------------------------------------------
      * @static
@@ -29,6 +30,7 @@ class Image
      * @param string $image 图像文件名
      +----------------------------------------------------------
      * @return mixed
+     +----------------------------------------------------------
      */
     public static function getImageInfo($img)
     {
@@ -37,11 +39,11 @@ class Image
             $imageType = strtolower(substr(image_type_to_extension($imageInfo[2]), 1));
             $imageSize = filesize($img);
             $info = array(
-                'width'  => $imageInfo[0],
+                'width' => $imageInfo[0],
                 'height' => $imageInfo[1],
-                'type'   => $imageType,
-                'size'   => $imageSize,
-                'mime'   => $imageInfo['mime'],
+                'type' => $imageType,
+                'size' => $imageSize,
+                'mime' => $imageInfo['mime'],
             );
 
             return $info;
@@ -51,6 +53,7 @@ class Image
     }
 
     /**
+     +----------------------------------------------------------
      * 生成图像验证码
      +----------------------------------------------------------
      * @static
@@ -62,6 +65,7 @@ class Image
      * @param string $height 高度
      +----------------------------------------------------------
      * @return string
+     +----------------------------------------------------------
      */
     public static function buildImageVerify($length = 4, $mode = 1, $type = 'png', $width = 48, $height = 22, $verifyName = 'verify')
     {
@@ -98,10 +102,10 @@ class Image
         $font = dirname(dirname(__FILE__)).'/resources/assets/fonts/ariali.ttf';
         for ($i = 0; $i < $length; $i++) {
             // imagestring($im,5,$i*10+5,mt_rand(1,8),$randval{$i}, $stringColor);
-            imagettftext($im, 20, mt_rand(-30, 30), $i * 16 + 12, $height / 1.4, $stringColor, $font, $randval[$i]); //这个是新的，用imagettftext函数
+            imagettftext($im, 20, mt_rand(-30, 30), $i * 16 + 12, $height / 1.4, $stringColor, $font, $randval{$i}); //这个是新的，用imagettftext函数
         }
         //@imagestring($im, 5, 5, 3, $randval, $stringColor);
-        self::output($im, $type);
+        Image::output($im, $type);
     }
 
     // 中文验证码
@@ -132,7 +136,7 @@ class Image
             $codex = StringTool::msubstr($code, $i, 1);
             imagettftext($im, mt_rand(16, 20), mt_rand(-60, 60), 40 * $i + 20, mt_rand(30, 35), $fontcolor, $fontface, $codex);
         }
-        self::output($im, $type);
+        Image::output($im, $type);
     }
 
     public static function output($im, $type = 'png', $filename = '')
@@ -151,10 +155,12 @@ class Image
 class StringTool
 {
     /**
-      * 生成UUID 单机使用.
+      +----------------------------------------------------------
+      * 生成UUID 单机使用
       +----------------------------------------------------------
       +----------------------------------------------------------
       * @return string
+      +----------------------------------------------------------
       */
      public static function uuid()
      {
@@ -171,9 +177,11 @@ class StringTool
      }
 
     /**
-     * 生成Guid主键.
      +----------------------------------------------------------
-     * @return bool
+     * 生成Guid主键
+     +----------------------------------------------------------
+     * @return Boolean
+     +----------------------------------------------------------
      */
     public static function keyGen()
     {
@@ -181,11 +189,13 @@ class StringTool
     }
 
     /**
+     +----------------------------------------------------------
      * 检查字符串是否是UTF8编码
      +----------------------------------------------------------
      * @param string $string 字符串
      +----------------------------------------------------------
-     * @return bool
+     * @return Boolean
+     +----------------------------------------------------------
      */
     public function is_utf8($str)
     {
@@ -229,6 +239,7 @@ class StringTool
     }
 
     /**
+     +----------------------------------------------------------
      * 字符串截取，支持中文和其它编码
      +----------------------------------------------------------
      * @static
@@ -240,8 +251,9 @@ class StringTool
      * @param string $suffix  截断显示字符
      +----------------------------------------------------------
      * @return string
+     +----------------------------------------------------------
      */
-    public static function msubstr($str, $start, $length, $charset = 'utf-8', $suffix = true)
+    public static function msubstr($str, $start = 0, $length, $charset = 'utf-8', $suffix = true)
     {
         if (function_exists('mb_substr')) {
             return mb_substr($str, $start, $length, $charset);
@@ -262,8 +274,9 @@ class StringTool
     }
 
     /**
+     +----------------------------------------------------------
      * 产生随机字串，可用来自动生成密码
-     * 默认长度6位 字母和数字混合 支持中文.
+     * 默认长度6位 字母和数字混合 支持中文
      +----------------------------------------------------------
      * @param string $len  长度
      * @param string $type 字串类型
@@ -271,6 +284,7 @@ class StringTool
      * @param string $addChars 额外字符
      +----------------------------------------------------------
      * @return string
+     +----------------------------------------------------------
      */
     public static function rand_string($len = 6, $type = '', $addChars = '')
     {
@@ -314,7 +328,8 @@ class StringTool
     }
 
     /**
-     * 生成一定数量的随机数，并且不重复.
+     +----------------------------------------------------------
+     * 生成一定数量的随机数，并且不重复
      +----------------------------------------------------------
      * @param int    $number 数量
      * @param string $len    长度
@@ -322,6 +337,7 @@ class StringTool
      *                       0 字母 1 数字 其它 混合
      +----------------------------------------------------------
      * @return string
+     +----------------------------------------------------------
      */
     public static function build_count_rand($number, $length = 4, $mode = 1)
     {
@@ -347,14 +363,16 @@ class StringTool
     }
 
     /**
+     +----------------------------------------------------------
      *  带格式生成随机字符 支持批量生成
-     *  但可能存在重复.
+     *  但可能存在重复
      +----------------------------------------------------------
      * @param string $format 字符格式
      *                       # 表示数字 * 表示字母和数字 $ 表示字母
      * @param int    $number 生成数量
      +----------------------------------------------------------
      * @return string | array
+     +----------------------------------------------------------
      */
     public static function build_format_rand($format, $number = 1)
     {
@@ -366,13 +384,13 @@ class StringTool
                 $char = substr($format, $i, 1);
                 switch ($char) {
                     case '*': //字母和数字混合
-                        $strtemp .= self::rand_string(1);
+                        $strtemp .= StringTool::rand_string(1);
                         break;
                     case '#'://数字
-                        $strtemp .= self::rand_string(1, 1);
+                        $strtemp .= StringTool::rand_string(1, 1);
                         break;
                     case '$'://大写字母
-                        $strtemp .= self::rand_string(1, 2);
+                        $strtemp .= StringTool::rand_string(1, 2);
                         break;
                     default://其它格式均不转换
                         $strtemp .= $char;
@@ -382,16 +400,18 @@ class StringTool
             $str[] = $strtemp;
         }
 
-        return $number == 1 ? $strtemp : $str;
+        return $number == 1 ? $strtemp : $str ;
     }
 
     /**
-     * 获取一定范围内的随机数字 位数不足补零.
+     +----------------------------------------------------------
+     * 获取一定范围内的随机数字 位数不足补零
      +----------------------------------------------------------
      * @param int $min 最小值
      * @param int $max 最大值
      +----------------------------------------------------------
      * @return string
+     +----------------------------------------------------------
      */
     public static function rand_number($min, $max)
     {

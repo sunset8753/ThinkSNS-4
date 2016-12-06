@@ -12,12 +12,13 @@
 //
 
 /**
- * 内容管理.
+ +------------------------------------------------------------------------------
+ * 内容管理
  +------------------------------------------------------------------------------
  *
  * @author    jason <yangjs17@yeah.net>
- *
  * @version   1.0
+ +------------------------------------------------------------------------------
  */
 tsload(APPS_PATH.'/admin/Lib/Action/AdministratorAction.class.php');
 
@@ -89,7 +90,7 @@ class ContentAction extends AdministratorAction
     public function feedUnAudit()
     {
         $this->pageKey = APP_NAME.'_'.MODULE_NAME.'_feed';
-        $this->searchPageKey = 'S_'.$this->pageKey;
+        $this->searchPageKey = 'S_'.$this->pageKey ;
         $this->feed(0, 0);
     }
 
@@ -97,10 +98,9 @@ class ContentAction extends AdministratorAction
     public function feedRec()
     {
         $this->pageKey = APP_NAME.'_'.MODULE_NAME.'_feed';
-        $this->searchPageKey = 'S_'.$this->pageKey;
+        $this->searchPageKey = 'S_'.$this->pageKey ;
         $this->feed(1);
     }
-
     //恢复
     public function feedRecover()
     {
@@ -113,7 +113,6 @@ class ContentAction extends AdministratorAction
         echo json_encode($return);
         exit();
     }
-
     //分享通过审核
     public function auditFeed()
     {
@@ -126,7 +125,6 @@ class ContentAction extends AdministratorAction
         echo json_encode($return);
         exit();
     }
-
     //假删除
     public function delFeed()
     {
@@ -139,7 +137,6 @@ class ContentAction extends AdministratorAction
         echo json_encode($return);
         exit();
     }
-
     //真删除
     public function deleteFeed()
     {
@@ -154,10 +151,8 @@ class ContentAction extends AdministratorAction
     }
 
     /**
-     * 评论管理.
-     *
+     * 评论管理
      * @param bool $isRec 是否是回收站列表
-     *
      * @return array 相关数据
      */
     public function comment($isRec = false, $is_audit = 1)
@@ -219,7 +214,7 @@ class ContentAction extends AdministratorAction
     public function commentUnAudit()
     {
         $this->pageKey = APP_NAME.'_'.MODULE_NAME.'_comment';
-        $this->searchPageKey = 'S_'.$this->pageKey;
+        $this->searchPageKey = 'S_'.$this->pageKey ;
         $this->comment(0, 0);
     }
 
@@ -227,7 +222,7 @@ class ContentAction extends AdministratorAction
     public function commentRec()
     {
         $this->pageKey = APP_NAME.'_'.MODULE_NAME.'_comment';
-        $this->searchPageKey = 'S_'.$this->pageKey;
+        $this->searchPageKey = 'S_'.$this->pageKey ;
         $this->comment(1);
     }
 
@@ -255,7 +250,6 @@ class ContentAction extends AdministratorAction
     {
         echo json_encode(model('Comment')->doEditComment($_POST['id'], 'delComment', '删除成功'));
     }
-
     //真删除
     public function deleteComment()
     {
@@ -263,8 +257,7 @@ class ContentAction extends AdministratorAction
     }
 
     /**
-     * 私信管理列表.
-     *
+     * 私信管理列表
      * @param int $isRec [description]
      */
     public function message($isRec = 0)
@@ -330,22 +323,19 @@ class ContentAction extends AdministratorAction
     public function messageRec()
     {
         $this->pageKey = APP_NAME.'_'.MODULE_NAME.'_message';
-        $this->searchPageKey = 'S_'.$this->pageKey;
+        $this->searchPageKey = 'S_'.$this->pageKey ;
         $this->message(1);
     }
-
     //恢复
     public function messageRecover()
     {
         echo json_encode(model('Message')->doEditMessage($_POST['id'], 'messageRecover', L('PUBLIC_RECOVER')));
     }
-
     //假删除
     public function delMessage()
     {
         echo json_encode(model('Message')->doEditMessage($_POST['id'], 'delMessage', L('PUBLIC_STREAM_DELETE')));
     }
-
     //真删除
     public function deleteMessage()
     {
@@ -404,32 +394,28 @@ class ContentAction extends AdministratorAction
     public function attachRec()
     {
         $this->pageKey = APP_NAME.'_'.MODULE_NAME.'_attach';
-        $this->searchPageKey = 'S_'.$this->pageKey;
+        $this->searchPageKey = 'S_'.$this->pageKey ;
         $this->attach(1);
     }
-
     //恢复
     public function attachRecover()
     {
         echo json_encode(model('Attach')->doEditAttach($_POST['id'], 'attachRecover', L('PUBLIC_RECOVER')));
     }
-
     //假删除
     public function delAttach()
     {
         echo json_encode(model('Attach')->doEditAttach($_POST['id'], 'delAttach', L('PUBLIC_STREAM_DELETE')));
     }
-
     //真删除
     public function deleteAttach()
     {
         echo json_encode(model('Attach')->doEditAttach($_POST['id'], 'deleteAttach', L('PUBLIC_REMOVE_COMPLETELY')));
     }
-
     //TODO 临时放着 后面要移动到messagemodel中
 
     /**
-     * 视频管理.
+     * 视频管理
      */
     public function video($is_del = 0)
     {
@@ -481,28 +467,24 @@ class ContentAction extends AdministratorAction
     public function videoRec()
     {
         $this->pageKey = APP_NAME.'_'.MODULE_NAME.'_video';
-        $this->searchPageKey = 'S_'.$this->pageKey;
+        $this->searchPageKey = 'S_'.$this->pageKey ;
         $this->video(1);
     }
-
     //恢复
     public function videoRecover()
     {
         echo json_encode(model('Video')->doEditVideo($_POST['id'], 'videoRecover', L('PUBLIC_RECOVER')));
     }
-
     //假删除
     public function delvideo()
     {
         echo json_encode(model('Video')->doEditVideo($_POST['id'], 'delVideo', L('PUBLIC_STREAM_DELETE')));
     }
-
     //真删除
     public function deletevideo()
     {
         echo json_encode(model('Video')->doEditVideo($_POST['id'], 'deleteVideo', L('PUBLIC_REMOVE_COMPLETELY')));
     }
-
     //视频配置
     public function video_config()
     {
@@ -517,7 +499,6 @@ class ContentAction extends AdministratorAction
         $this->savePostUrl = U('admin/Content/do_video_config');
         $this->displayConfig($data);
     }
-
     public function do_video_config()
     {
         $list = $_POST['systemdata_list'];
@@ -537,7 +518,7 @@ class ContentAction extends AdministratorAction
     }
 
     /**
-     * 举报管理.
+     * 举报管理
      */
     public function denounce($map)
     {
@@ -562,8 +543,7 @@ class ContentAction extends AdministratorAction
     }
 
     /**
-     * 删除举报回收站内容.
-     *
+     * 删除举报回收站内容
      * @return int 是否删除成功
      */
     public function doDeleteDenounce()
@@ -571,7 +551,7 @@ class ContentAction extends AdministratorAction
         // 判断参数
         if (empty($_POST['ids'])) {
             echo 0;
-            exit;
+            exit ;
         }
 
         $data[] = L('PUBLIC_CONTENT_REPORT_DELETE');
@@ -582,8 +562,7 @@ class ContentAction extends AdministratorAction
     }
 
     /**
-     * 撤销举报内容.
-     *
+     * 撤销举报内容
      * @return int 是否撤销成功
      */
     public function doReviewDenounce()
@@ -591,7 +570,7 @@ class ContentAction extends AdministratorAction
         // 判断参数
         if (empty($_POST['ids'])) {
             echo 0;
-            exit;
+            exit ;
         }
 
         $data[] = L('PUBLIC_CONTENT_REPORT_REVOKE');
@@ -602,7 +581,7 @@ class ContentAction extends AdministratorAction
     }
 
     /**
-     * 话题管理.
+     * 话题管理
      */
     public function topic()
     {
@@ -627,7 +606,7 @@ class ContentAction extends AdministratorAction
     }
 
     /**
-     * 添加话题.
+     * 添加话题
      */
     public function addTopic()
     {
@@ -648,7 +627,7 @@ class ContentAction extends AdministratorAction
     }
 
     /**
-     * 执行添加话题.
+     * 执行添加话题
      */
     public function doAddTopic()
     {
@@ -680,8 +659,7 @@ class ContentAction extends AdministratorAction
     }
 
     /**
-     * 设置话题为推荐、精华或屏蔽.
-     *
+     * 设置话题为推荐、精华或屏蔽
      * @return array 操作成功状态和提示信息
      */
     public function setTopic()
@@ -724,7 +702,7 @@ class ContentAction extends AdministratorAction
     }
 
     /**
-     * 编辑话题.
+     * 编辑话题
      */
     public function editTopic()
     {
@@ -750,7 +728,7 @@ class ContentAction extends AdministratorAction
     }
 
     /**
-     * 执行编辑话题.
+     * 执行编辑话题
      */
     public function doEditTopic()
     {
@@ -800,7 +778,7 @@ class ContentAction extends AdministratorAction
     }
 
     /**
-     * 模板管理页面.
+     * 模板管理页面
      */
     public function template()
     {
@@ -825,7 +803,7 @@ class ContentAction extends AdministratorAction
     }
 
     /**
-     * 添加/编辑模板页面.
+     * 添加/编辑模板页面
      */
     public function upTemplate()
     {

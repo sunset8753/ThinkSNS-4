@@ -1,15 +1,13 @@
 <?php
 /**
- * 收藏控制器.
- *
+ * 收藏控制器
  * @author jason <yangjs17@yeah.net>
- *
  * @version TS3.0
  */
 class CollectionAction extends Action
 {
     /**
-     * 我的收藏页面.
+     * 我的收藏页面
      */
     public function index()
     {

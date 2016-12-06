@@ -1,7 +1,7 @@
 <?php
 /**
  * app 提现充值模块
- * bs.
+ * bs
  */
 use Ts\Models as Model;
 
@@ -14,11 +14,12 @@ class ApplicationApi extends Api
     private function rd($data = '', $msg = 'ok', $status = 0)
     {
         return array(
-            'data'   => $data,
-            'msg'    => $msg,
+            'data' => $data,
+            'msg' => $msg,
             'status' => $status,
         );
     }
+
 
     //获取版本号 用于app获取更新配置
     public function getVersion()
@@ -68,7 +69,7 @@ class ApplicationApi extends Api
     }
 
     /**
-     * 发布提现申请.
+     * 发布提现申请
      */
     public function createOrder()
     {
@@ -118,7 +119,7 @@ class ApplicationApi extends Api
 
     /**
      * 绑定/解绑账户
-     * bs.
+     * bs
      */
     public function setUserAccount()
     {
@@ -154,7 +155,7 @@ class ApplicationApi extends Api
     }
 
     /**
-     * 查看提现账户.
+     * 查看提现账户
      */
     public function getUserAccount()
     {

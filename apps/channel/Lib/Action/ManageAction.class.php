@@ -1,15 +1,13 @@
 <?php
 /**
- * 频道前台管理控制器.
- *
+ * 频道前台管理控制器
  * @author zivss <guolee226@gmail.com>
- *
  * @version TS3.0
  */
 class ManageAction extends Action
 {
     /**
-     * 频道管理弹窗.
+     * 频道管理弹窗
      */
     public function getAdminBox()
     {
@@ -29,8 +27,7 @@ class ManageAction extends Action
     }
 
     /**
-     * 添加分享进入频道.
-     *
+     * 添加分享进入频道
      * @return json 操作后的相关信息数据
      */
     public function doAddChannel()

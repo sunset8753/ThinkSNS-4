@@ -1,9 +1,7 @@
 <?php
 /**
- * 频道版本信息.
- *
+ * 频道版本信息
  * @author zivss <guolee226@gmail.com>
- *
  * @version TS3.0
  */
 if (!defined('SITE_PATH')) {

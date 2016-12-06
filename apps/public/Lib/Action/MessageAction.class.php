@@ -1,20 +1,19 @@
 <?php
 /**
- * MessageAction 消息模块.
- *
+ * MessageAction 消息模块
  * @version TS3.0
  */
 class MessageAction extends Action
 {
     /**
-     * 模块初始化.
+     * 模块初始化
      */
     public function _initialize()
     {
     }
 
     /**
-     * 私信列表.
+     * 私信列表
      */
     public function index()
     {
@@ -30,7 +29,7 @@ class MessageAction extends Action
     }
 
     /**
-     * 系统通知.
+     * 系统通知
      */
     public function notify()
     {
@@ -53,7 +52,7 @@ class MessageAction extends Action
     }
 
     /**
-     * 获取指定应用指定用户下的消息列表.
+     * 获取指定应用指定用户下的消息列表
      */
     public function notifyDetail()
     {
@@ -79,7 +78,7 @@ class MessageAction extends Action
     }
 
     /**
-     * 私信详情.
+     * 私信详情
      */
     public function detail()
     {
@@ -108,7 +107,7 @@ class MessageAction extends Action
     }
 
     /**
-     * 获取指定私信列表中的私信内容.
+     * 获取指定私信列表中的私信内容
      */
     public function loadMessage()
     {
@@ -128,9 +127,9 @@ class MessageAction extends Action
             if ($msg['attach_type'] === 'message_image') {
                 foreach ($msg['attach_infos'] as $mk => $mv) {
                     $imgUrl[$msg['message_id']][$mv['attach_id']] = array(
-                        'count'     => count($msg['attach_infos']),
-                        'index'     => $mk + 1,
-                        'url'       => $mv['url'],
+                        'count' => count($msg['attach_infos']),
+                        'index' => $mk + 1,
+                        'url' => $mv['url'],
                         'attach_id' => $mv['attach_id'],
                     );
                 }
@@ -143,7 +142,7 @@ class MessageAction extends Action
     }
 
     /**
-     * 发送私信弹窗.
+     * 发送私信弹窗
      */
     public function post()
     {
@@ -239,8 +238,7 @@ class MessageAction extends Action
     }
 
     /**
-     * 设置指定私信为已读.
-     *
+     * 设置指定私信为已读
      * @return int 1=成功 0=失败
      */
     public function doSetIsRead()
@@ -255,7 +253,6 @@ class MessageAction extends Action
 
     /**
      * 删除私信
-     *
      * @return int 1=成功 0=失败
      */
     public function doDelete()
@@ -269,8 +266,7 @@ class MessageAction extends Action
     }
 
     /**
-     * 删除用户指定私信会话.
-     *
+     * 删除用户指定私信会话
      * @return int 1=成功 0=失败
      */
     public function doDeleteSession()

@@ -1,9 +1,7 @@
 <?php
 /**
- * 插件请求控制器.
- *
+ * 插件请求控制器
  * @author zivss guolee226@gmail.com
- *
  * @version TS3.0
  */
 class WidgetAction extends Action
@@ -180,8 +178,8 @@ class WidgetAction extends Action
             // }
             // 保存信息
             $webpage_info = array(
-                'url'   => $url,
-                'hash'  => $hash,
+                'url' => $url,
+                'hash' => $hash,
                 'title' => t($title),
             );
             $webpage_id = $webpage_model->add($webpage_info);

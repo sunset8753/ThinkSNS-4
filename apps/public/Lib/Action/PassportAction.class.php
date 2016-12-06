@@ -1,9 +1,7 @@
 <?php
 /**
- * PassportAction 通行证模块.
- *
+ * PassportAction 通行证模块
  * @author  liuxiaoqing <liuxiaoqing@zhishisoft.com>
- *
  * @version TS3.0
  */
 class PassportAction extends Action
@@ -11,7 +9,7 @@ class PassportAction extends Action
     public $passport;
 
     /**
-     * 模块初始化.
+     * 模块初始化
      */
     protected function _initialize()
     {
@@ -19,7 +17,7 @@ class PassportAction extends Action
     }
 
     /**
-     * 通行证首页.
+     * 通行证首页
      */
     public function index()
     {
@@ -30,7 +28,7 @@ class PassportAction extends Action
     }
 
     /**
-     * 默认登录页.
+     * 默认登录页
      */
     public function login()
     {
@@ -47,9 +45,9 @@ class PassportAction extends Action
         $data = model('Xdata')->get('admin_Config:seo_login');
         !empty($data['title']) && $this->setTitle($data['title']);
         !empty($data['keywords']) && $this->setKeywords($data['keywords']);
-        !empty($data['des']) && $this->setDescription($data['des']);
+        !empty($data['des']) && $this->setDescription($data ['des']);
 
-        $login_bg = getImageUrlByAttachId($this->site['login_bg']);
+        $login_bg = getImageUrlByAttachId($this->site ['login_bg']);
         // if(empty($login_bg))
         // 	$login_bg = APP_PUBLIC_URL . '/image/login/banner.png';
         $this->assign('login_bg', $login_bg);
@@ -58,7 +56,7 @@ class PassportAction extends Action
     }
 
     /**
-     * 快速登录.
+     * 快速登录
      */
     public function quickLogin()
     {
@@ -77,7 +75,7 @@ class PassportAction extends Action
     }
 
     /**
-     * 用户登录.
+     * 用户登录
      */
     public function doLogin()
     {
@@ -99,7 +97,7 @@ class PassportAction extends Action
     }
 
     /**
-     * 注销登录.
+     * 注销登录
      */
     public function logout()
     {
@@ -109,7 +107,7 @@ class PassportAction extends Action
     }
 
     /**
-     * 找回密码页面.
+     * 找回密码页面
      */
     public function findPassword()
     {
@@ -139,7 +137,8 @@ class PassportAction extends Action
                     floatval($mobile),
                 ),
             ))
-            ->count();
+            ->count()
+        ;
         // $count = model('User')->where('`phone`="'.mysql_escape_string($mobile).'"')->count();
         if ($res && $count == 0) {
             $this->ajaxReturn(null, '此手机号没有注册该站点', 0);
@@ -160,7 +159,7 @@ class PassportAction extends Action
     // }
 
     /**
-     * 验证手机验证码是否正确.
+     * 验证手机验证码是否正确
      *
      * @author Medz Seven <lovevipdsw@vip.qq.com>
      **/
@@ -266,7 +265,7 @@ class PassportAction extends Action
     }
 
     /**
-     * 找回密码页面.
+     * 找回密码页面
      */
     private function _sendPasswordEmail($user)
     {
@@ -317,7 +316,7 @@ class PassportAction extends Action
     }
 
     /**
-     * 重置密码页面.
+     * 重置密码页面
      */
     public function resetPassword()
     {
@@ -328,7 +327,7 @@ class PassportAction extends Action
     }
 
     /**
-     * 执行重置密码操作.
+     * 执行重置密码操作
      */
     public function doResetPassword()
     {
@@ -359,7 +358,7 @@ class PassportAction extends Action
     }
 
     /**
-     * 检查重置密码的验证码操作.
+     * 检查重置密码的验证码操作
      */
     private function _checkResetPasswordCode($code)
     {

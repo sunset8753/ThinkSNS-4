@@ -1,9 +1,7 @@
 <?php
 /**
- * 关注控制器.
- *
+ * 关注控制器
  * @author chenweichuan <chenweichuan@zhishisoft.com>
- *
  * @version TS3.0
  */
 class FollowAction extends Action
@@ -19,8 +17,7 @@ class FollowAction extends Action
     }
 
     /**
-     * 添加关注操作.
-     *
+     * 添加关注操作
      * @return json 返回操作后的JSON信息数据
      */
     public function doFollow()
@@ -33,8 +30,7 @@ class FollowAction extends Action
     }
 
     /**
-     * 取消关注操作.
-     *
+     * 取消关注操作
      * @return json 返回操作后的JSON信息数据
      */
     public function unFollow()
@@ -46,8 +42,7 @@ class FollowAction extends Action
     }
 
     /**
-     * 批量添加关注操作.
-     *
+     * 批量添加关注操作
      * @return json 返回操作后的JSON信息数据
      */
     public function bulkDoFollow()

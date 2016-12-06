@@ -1,15 +1,13 @@
 <?php
 /**
- * 应用管理控制器.
- *
+ * 应用管理控制器
  * @author liuxiaoqing <liuxiaoqing@zhishisoft.com>
- *
  * @version TS3.0
  */
 class AppAction extends Action
 {
     /**
-     * 初始化控制器，加载相关样式表.
+     * 初始化控制器，加载相关样式表
      */
     protected function _initialize()
     {
@@ -17,7 +15,7 @@ class AppAction extends Action
     }
 
     /**
-     * 应用列表页面，默认为所有应用.
+     * 应用列表页面，默认为所有应用
      */
     public function index()
     {
@@ -31,7 +29,7 @@ class AppAction extends Action
     }
 
     /**
-     * 我的应用列表页面，登录用户已经安装的应用.
+     * 我的应用列表页面，登录用户已经安装的应用
      */
     public function myApp()
     {
@@ -41,8 +39,7 @@ class AppAction extends Action
     }
 
     /**
-     * 登录用户卸载应用操作.
-     *
+     * 登录用户卸载应用操作
      * @return json 返回操作后的JSON信息数据
      */
     public function uninstall()
@@ -61,8 +58,7 @@ class AppAction extends Action
     }
 
     /**
-     * 登录用户安装应用操作.
-     *
+     * 登录用户安装应用操作
      * @return json 返回操作后的JSON信息数据
      */
     public function install()
@@ -83,6 +79,7 @@ class AppAction extends Action
     // 添加更多应用
 
     /**  前台 应用管理  **/
+
     public function addapp()
     {
         $dao = model('App');

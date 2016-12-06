@@ -1,10 +1,8 @@
 <?php
 /**
  * 频道后台配置
- * 1.频道分类管理 - 目前支持1级分类.
- *
+ * 1.频道分类管理 - 目前支持1级分类
  * @author zivss <guolee226@gmail.com>
- *
  * @version TS3.0
  */
 tsload(APPS_PATH.'/admin/Lib/Action/AdministratorAction.class.php');
@@ -13,7 +11,7 @@ class AdminAction extends AdministratorAction
     private $_model_category;
 
     /**
-     * 初始化，配置内容标题.
+     * 初始化，配置内容标题
      */
     public function _initialize()
     {
@@ -34,7 +32,7 @@ class AdminAction extends AdministratorAction
     }
 
     /**
-     * 频道基本配置页面.
+     * 频道基本配置页面
      */
     public function index()
     {
@@ -48,7 +46,7 @@ class AdminAction extends AdministratorAction
     }
 
     /**
-     * 频道分类配置页面.
+     * 频道分类配置页面
      */
     public function channelCategory()
     {
@@ -66,7 +64,7 @@ class AdminAction extends AdministratorAction
     }
 
     /**
-     * 已审核管理页面.
+     * 已审核管理页面
      */
     public function auditList()
     {
@@ -80,7 +78,7 @@ class AdminAction extends AdministratorAction
     }
 
     /**
-     * 未审核管理页面.
+     * 未审核管理页面
      */
     public function unauditList()
     {
@@ -95,8 +93,7 @@ class AdminAction extends AdministratorAction
     }
 
     /**
-     * 取消推荐操作.
-     *
+     * 取消推荐操作
      * @return josn 相关操作信息数据
      */
     public function cancelRecommended()
@@ -117,8 +114,7 @@ class AdminAction extends AdministratorAction
     }
 
     /**
-     * 审核操作.
-     *
+     * 审核操作
      * @return josn 相关操作信息数据
      */
     public function auditChannelList()
@@ -147,7 +143,7 @@ class AdminAction extends AdministratorAction
     }
 
     /**
-     * 频道管理弹窗.
+     * 频道管理弹窗
      */
     public function editAdminBox()
     {
@@ -165,12 +161,10 @@ class AdminAction extends AdministratorAction
     }
 
     /**
-     * 获取内容信息.
-     *
-     * @param array  $map  查询条件
-     * @param string $type 类型
-     *
-     * @return array 获取相应的列表信息
+     * 获取内容信息
+     * @param  array  $map  查询条件
+     * @param  string $type 类型
+     * @return array  获取相应的列表信息
      */
     private function _getData($map, $type)
     {

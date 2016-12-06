@@ -1,7 +1,6 @@
 <?php
 /**
- * SearchAction 搜索模块.
- *
+ * SearchAction 搜索模块
  * @version TS3.0
  */
 class SearchAction extends Action
@@ -14,7 +13,7 @@ class SearchAction extends Action
     private $searchModel = '';
 
     /**
-     * 模块初始化.
+     * 模块初始化
      */
     public function _initialize()
     {
@@ -34,7 +33,7 @@ class SearchAction extends Action
     }
 
     /**
-     * 根据关键字进行搜索.
+     * 根据关键字进行搜索
      */
     public function index()
     {
@@ -151,20 +150,20 @@ class SearchAction extends Action
                         '%'.$this->key.'%',
                 );
                 $list = M('blog')->where($map)->findPage(20);
-                foreach ($list['data'] as $k => $v) {
-                    preg_match_all('#<img.*?src="([^"]*)"[^>]*>#i', $v['content'], $match);
-                    foreach ($match[1] as $imgurl) {
+                foreach ($list ['data'] as $k => $v) {
+                    preg_match_all('#<img.*?src="([^"]*)"[^>]*>#i', $v ['content'], $match);
+                    foreach ($match [1] as $imgurl) {
                         $imgurl = $imgurl;
-                        if (!empty($imgurl)) {
-                            $list['data'][$k]['img'][] = $imgurl;
+                        if (! empty($imgurl)) {
+                            $list ['data'] [$k] ['img'] [] = $imgurl;
                         }
                     }
-                    $is_digg = M('blog_digg')->where('post_id='.$v['id'].' and uid='.$this->mid)->find();
-                    $list['data'][$k]['digg'] = $is_digg ? 'digg' : 'undigg';
-                    if (count($list[$k]['img']) == '0') {
-                        $list['data'][$k]['img'][] = ''; // 默认图
+                    $is_digg = M('blog_digg')->where('post_id='.$v ['id'].' and uid='.$this->mid)->find();
+                    $list ['data'] [$k] ['digg'] = $is_digg ? 'digg' : 'undigg';
+                    if (count($list [$k] ['img']) == '0') {
+                        $list ['data'] [$k] ['img'] [] = ''; // 默认图
                     }
-                    $list['data'][$k]['content'] = t($list['data'][$k]['content']);
+                    $list ['data'] [$k] ['content'] = t($list ['data'] [$k] ['content']);
                 }
                 //dump($list);exit;
                 $this->assign('searchResult', $list);
@@ -259,8 +258,8 @@ class SearchAction extends Action
                     // 获取用户积分信息
                     //$userlist['data'][$k]['userCredit'] = model('Credit')->getUserCredit($this->uid);
                     //关注状态
-                    $userlist['data'][$k]['follow_state'] = $followstatus[$v['uid']];
-                    $userlist['data'][$k]['union_state'] = $unionstatus[$v['uid']];
+                    $userlist['data'][$k]['follow_state'] = $followstatus[ $v['uid'] ];
+                    $userlist['data'][$k]['union_state'] = $unionstatus[ $v['uid'] ];
                 }
                 $this->assign('searchResult', $userlist);
             }
@@ -293,7 +292,6 @@ class SearchAction extends Action
 
         return true;
     }
-
     private function _getWeibaName($weiba_ids)
     {
         $weiba_ids = array_unique($weiba_ids);
@@ -310,7 +308,7 @@ class SearchAction extends Action
     }
 
     /**
-     * 选择筛选时间.
+     * 选择筛选时间
      */
     public function selectDate()
     {
@@ -324,8 +322,7 @@ class SearchAction extends Action
     }
 
     /**
-     * 模糊搜索标签.
-     *
+     * 模糊搜索标签
      * @return mix 标签列表
      */
     public function searchTag()
@@ -436,20 +433,20 @@ class SearchAction extends Action
                         '%'.$this->key.'%',
                 );
             $list = M('blog')->where($map)->findPage(20);
-            foreach ($list['data'] as $k => $v) {
-                preg_match_all('#<img.*?src="([^"]*)"[^>]*>#i', $v['content'], $match);
-                foreach ($match[1] as $imgurl) {
+            foreach ($list ['data'] as $k => $v) {
+                preg_match_all('#<img.*?src="([^"]*)"[^>]*>#i', $v ['content'], $match);
+                foreach ($match [1] as $imgurl) {
                     $imgurl = $imgurl;
-                    if (!empty($imgurl)) {
-                        $list['data'][$k]['img'][] = $imgurl;
+                    if (! empty($imgurl)) {
+                        $list ['data'] [$k] ['img'] [] = $imgurl;
                     }
                 }
-                $is_digg = M('blog_digg')->where('post_id='.$v['id'].' and uid='.$this->mid)->find();
-                $list['data'][$k]['digg'] = $is_digg ? 'digg' : 'undigg';
-                if (count($list[$k]['img']) == '0') {
-                    $list['data'][$k]['img'][] = ''; // 默认图
+                $is_digg = M('blog_digg')->where('post_id='.$v ['id'].' and uid='.$this->mid)->find();
+                $list ['data'] [$k] ['digg'] = $is_digg ? 'digg' : 'undigg';
+                if (count($list [$k] ['img']) == '0') {
+                    $list ['data'] [$k] ['img'] [] = ''; // 默认图
                 }
-                $list['data'][$k]['content'] = t($list['data'][$k]['content']);
+                $list ['data'] [$k] ['content'] = t($list ['data'] [$k] ['content']);
             }
                 //dump($list);exit;
                 $this->assign('searchResult', $list);
@@ -507,8 +504,7 @@ class SearchAction extends Action
     }
 
     /**
-     * 获取标签.
-     *
+     * 获取标签
      * @return mix 标签信息
      */
     public function getTag()

@@ -1,11 +1,10 @@
 <?php
 /**
- * 后台，系统配置控制器.
- *
+ * 后台，系统配置控制器
  * @author liuxiaoqing <liuxiaoqing@zhishisoft.com>
- *
  * @version TS3.O
  */
+
 use Illuminate\Database\Capsule\Manager as Capsule;
 
 tsload(APPS_PATH.'/admin/Lib/Action/AdministratorAction.class.php');
@@ -13,7 +12,7 @@ tsload(APPS_PATH.'/admin/Lib/Action/AdministratorAction.class.php');
 class HomeAction extends AdministratorAction
 {
     /**
-     * 初始化，页面标题，用于双语.
+     * 初始化，页面标题，用于双语
      */
     public function _initialize()
     {
@@ -35,7 +34,7 @@ class HomeAction extends AdministratorAction
     }
 
     /**
-     * 系统信息 - 基本信息.
+     * 系统信息 - 基本信息
      */
     public function statistics()
     {
@@ -54,7 +53,7 @@ class HomeAction extends AdministratorAction
 
         // 数据库信息
         $mysqlinfo = Capsule::selectOne('SELECT VERSION() AS version');
-        $serverInfo[L('PUBLIC_MYSQL')] = $mysqlinfo['version'];
+        $serverInfo[L('PUBLIC_MYSQL')] = $mysqlinfo['version'] ;
 
         $t = D('')->query("SHOW TABLE STATUS LIKE '".C('DB_PREFIX')."%'");
         $dbsize = 0;
@@ -161,7 +160,7 @@ class HomeAction extends AdministratorAction
     }
 
     /**
-     * 系统信息 - 管理知识 - 知识列表.
+     * 系统信息 - 管理知识 - 知识列表
      */
     public function logs()
     {
@@ -186,7 +185,7 @@ class HomeAction extends AdministratorAction
     }
 
     /**
-     * 系统信息 - 管理知识 - 知识归档.
+     * 系统信息 - 管理知识 - 知识归档
      */
     public function logsArchive()
     {
@@ -200,7 +199,7 @@ class HomeAction extends AdministratorAction
         $this->pageButton[] = array('title' => L('PUBLIC_LOGS_REMOVE_SET'), 'onclick' => 'admin.cleanLogs(12)');
         $this->pageButton[] = array('title' => L('PUBLIC_LOGS_REMOVE_LOG'), 'onclick' => 'admin.logsArchive()');
 
-        $data['data'] = D('')->query("SHOW TABLE STATUS LIKE '".C('DB_PREFIX')."x_logs%'");
+        $data['data'] = D('')->query("SHOW TABLE STATUS LIKE '".C('DB_PREFIX')."x_logs%'") ;
 
         foreach ($data['data'] as &$v) {
             foreach ($v as $vk => $vv) {
@@ -217,7 +216,7 @@ class HomeAction extends AdministratorAction
     }
 
     /**
-     * 获取知识的分组情况.
+     * 获取知识的分组情况
      */
     public function _getLogGroup()
     {
@@ -229,7 +228,7 @@ class HomeAction extends AdministratorAction
     }
 
     /**
-     * 清除知识操作.
+     * 清除知识操作
      */
     public function _cleanLogs()
     {
@@ -247,7 +246,7 @@ class HomeAction extends AdministratorAction
     }
 
     /**
-     * 知识归档.
+     * 知识归档
      */
     public function _logsArchive()
     {
@@ -265,7 +264,7 @@ class HomeAction extends AdministratorAction
     }
 
     /**
-     * 删除知识操作.
+     * 删除知识操作
      */
     public function _delLogs()
     {
@@ -283,11 +282,9 @@ class HomeAction extends AdministratorAction
     }
 
     /**
-     * 获取知识数据.
-     *
-     * @param string $table 知识表名
-     *
-     * @return array 知识数据
+     * 获取知识数据
+     * @param  string $table 知识表名
+     * @return array  知识数据
      */
     private function _getLogsData($table = '')
     {
@@ -336,7 +333,7 @@ class HomeAction extends AdministratorAction
     }
 
     /**
-     * 系统工具 - 计划任务 - 计划任务列表.
+     * 系统工具 - 计划任务 - 计划任务列表
      */
     public function schedule()
     {
@@ -367,7 +364,7 @@ class HomeAction extends AdministratorAction
     }
 
     /**
-     * 保存计划任务操作.
+     * 保存计划任务操作
      */
     public function saveschedule()
     {
@@ -382,12 +379,12 @@ class HomeAction extends AdministratorAction
     }
 
     /**
-     * 删除计划任务操作.
+     * 删除计划任务操作
      */
     public function doDeleteSchedule()
     {
         $return = array('status' => 1, 'data' => L('PUBLIC_DELETE_SUCCESS'));
-        $ids = is_array($_REQUEST['id']) ? $_REQUEST['id'] : array(intval($_REQUEST['id']));
+        $ids = is_array($_REQUEST ['id']) ? $_REQUEST['id'] : array(intval($_REQUEST['id']));
         $res = model('Schedule')->delSchedule($ids);
         if ($res) {
             //TODO:记录知识
@@ -399,14 +396,14 @@ class HomeAction extends AdministratorAction
     }
 
     /**
-     * 资源统计 ？？？ 未完成.
+     * 资源统计 ？？？ 未完成
      */
     public function sourcesCount()
     {
     }
 
     /**
-     * 数据字典.
+     * 数据字典
      */
     public function systemdata()
     {
@@ -449,7 +446,6 @@ class HomeAction extends AdministratorAction
         $this->savePostUrl = U('admin/Home/doaddsystemdata');
         $this->displayConfig($detail);
     }
-
     //保存数据
     public function doaddsystemdata()
     {
@@ -480,7 +476,6 @@ class HomeAction extends AdministratorAction
             $this->error(model('Xdata')->getError());
         }
     }
-
     //删除数据
     public function deladdsystemdata()
     {
@@ -505,7 +500,7 @@ class HomeAction extends AdministratorAction
     }
 
     /**
-     * 运营工具 - 意见反馈 - 意见反馈列表.
+     * 运营工具 - 意见反馈 - 意见反馈列表
      */
     public function feedback()
     {
@@ -552,7 +547,7 @@ class HomeAction extends AdministratorAction
     }
 
     /**
-     * 运营工具 - 意见反馈 - 意见反馈类型.
+     * 运营工具 - 意见反馈 - 意见反馈类型
      */
     public function feedbackType()
     {
@@ -616,7 +611,6 @@ class HomeAction extends AdministratorAction
         $this->savePostUrl = U('admin/Home/doaddFeedbackType');
         $this->displayConfig($detail);
     }
-
     //添加分类
     public function doaddFeedbackType()
     {
@@ -689,7 +683,7 @@ class HomeAction extends AdministratorAction
     }
 
     /**
-     * 全站发送系统消息 + 邮件.
+     * 全站发送系统消息 + 邮件
      */
     public function dosendmsg()
     {
@@ -711,7 +705,7 @@ class HomeAction extends AdministratorAction
     }
 
     /**
-     * 邀请列表展示.
+     * 邀请列表展示
      */
     public function invatecount()
     {
@@ -748,7 +742,7 @@ class HomeAction extends AdministratorAction
     }
 
     /**
-     * 邀请排行榜展示.
+     * 邀请排行榜展示
      */
     public function invateTop()
     {
@@ -770,7 +764,7 @@ class HomeAction extends AdministratorAction
             $v['sort'] = $s;
             $v['DOACTION'] = '<a href="'.U('admin/Home/invateDetail', array('inviter_uid' => $v['inviter_uid'])).'">'.L('PUBLIC_VIEW_DETAIL').'</a>';
             $v['inviter_uid'] = $inviterInfo['space_link'];
-            $s++;
+            $s ++;
         }
 
         $this->allSelected = false;
@@ -778,7 +772,7 @@ class HomeAction extends AdministratorAction
     }
 
     /**
-     * 邀请查看详情展示.
+     * 邀请查看详情展示
      */
     public function invateDetail()
     {
@@ -919,8 +913,8 @@ class HomeAction extends AdministratorAction
         $this->opt['cachetype'] = array(
                 'File' => '文件缓存',
                 //'Db'=>'数据库缓存',
-                'Xcache'   => 'Xcache',
-                'APC'      => 'APC',
+                'Xcache' => 'Xcache',
+                'APC' => 'APC',
                 'Memcache' => 'Memcache',
                 //'Redis'=>'Redis',
                 //'WinCache'=>'WinCache',

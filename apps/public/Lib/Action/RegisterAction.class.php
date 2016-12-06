@@ -1,9 +1,7 @@
 <?php
 /**
- * RegisterAction 注册模块.
- *
+ * RegisterAction 注册模块
  * @author  liuxiaoqing <liuxiaoqing@zhishisoft.com>
- *
  * @version TS3.0
  */
 class RegisterAction extends Action
@@ -16,7 +14,7 @@ class RegisterAction extends Action
     private $_default_method = array('changeActivationEmail', 'activate', 'isEmailAvailable', 'isValidVerify', 'isPhoneAvailable', 'isUnameAvailable', 'sendReigterCode', 'resendActivationEmail');
 
     /**
-     * 模块初始化，获取注册配置信息、用户模型对象、注册模型对象、邀请注册与站点头部信息设置.
+     * 模块初始化，获取注册配置信息、用户模型对象、注册模型对象、邀请注册与站点头部信息设置
      */
     protected function _initialize()
     {
@@ -47,7 +45,7 @@ class RegisterAction extends Action
     }
 
     /**
-     * 默认注册页面 - 注册表单页面.
+     * 默认注册页面 - 注册表单页面
      */
     public function index()
     {
@@ -105,7 +103,7 @@ class RegisterAction extends Action
     }
 
     /**
-     * 第三方帐号集成 - 绑定本地帐号.
+     * 第三方帐号集成 - 绑定本地帐号
      */
     public function doBindStep1()
     {
@@ -146,7 +144,7 @@ class RegisterAction extends Action
     }
 
     /**
-     * 第三方帐号集成 - 注册新账号.
+     * 第三方帐号集成 - 注册新账号
      */
     public function doOtherStep1()
     {
@@ -295,7 +293,7 @@ class RegisterAction extends Action
     }
 
     /**
-     * 注册流程 - 执行第一步骤.
+     * 注册流程 - 执行第一步骤
      */
     public function doStep1()
     {
@@ -466,7 +464,7 @@ class RegisterAction extends Action
     }
 
     /**
-     * 等待审核页面.
+     * 等待审核页面
      */
     public function waitForAudit()
     {
@@ -486,7 +484,7 @@ class RegisterAction extends Action
     }
 
     /**
-     * 等待激活页面.
+     * 等待激活页面
      */
     public function waitForActivation()
     {
@@ -517,7 +515,7 @@ class RegisterAction extends Action
     }
 
     /**
-     * 发送激活邮件.
+     * 发送激活邮件
      */
     public function resendActivationEmail()
     {
@@ -526,7 +524,7 @@ class RegisterAction extends Action
     }
 
     /**
-     * 修改激活邮箱.
+     * 修改激活邮箱
      */
     public function changeActivationEmail()
     {
@@ -546,7 +544,7 @@ class RegisterAction extends Action
     }
 
     /**
-     * 通过链接激活帐号.
+     * 通过链接激活帐号
      */
     public function activate()
     {
@@ -575,7 +573,7 @@ class RegisterAction extends Action
     }
 
     /**
-     * 第二步注册.
+     * 第二步注册
      */
     public function step2()
     {
@@ -605,7 +603,7 @@ class RegisterAction extends Action
 
     /**
      * 注册流程 - 第三步骤
-     * 设置个人兴趣.
+     * 设置个人兴趣
      */
     public function step3()
     {
@@ -624,7 +622,7 @@ class RegisterAction extends Action
 
     /**
      * 注册流程 - 执行第三步骤
-     * 添加标签.
+     * 添加标签
      */
     public function doStep3()
     {
@@ -681,7 +679,7 @@ class RegisterAction extends Action
     }
 
     /**
-     * 注册流程 - 第四步骤.
+     * 注册流程 - 第四步骤
      */
     public function step4()
     {
@@ -723,7 +721,7 @@ class RegisterAction extends Action
     }
 
     /**
-     * 注册流程 - 第四步骤.
+     * 注册流程 - 第四步骤
      */
     public function getNRelatedUser()
     {
@@ -758,7 +756,7 @@ class RegisterAction extends Action
     }
 
     /**
-     * 注册流程 - 第四步骤.
+     * 注册流程 - 第四步骤
      */
     public function getGroup()
     {
@@ -789,7 +787,7 @@ class RegisterAction extends Action
     }
 
     /**
-     * 获取推荐用户.
+     * 获取推荐用户
      */
     public function getRelatedUser()
     {
@@ -805,7 +803,7 @@ class RegisterAction extends Action
     }
 
     /**
-     * 注册流程 - 执行第四步骤.
+     * 注册流程 - 执行第四步骤
      */
     public function doStep4()
     {
@@ -834,7 +832,7 @@ class RegisterAction extends Action
     }
 
     /**
-     * 注册流程 - 执行第四步骤.
+     * 注册流程 - 执行第四步骤
      */
     public function setStep4()
     {
@@ -859,7 +857,7 @@ class RegisterAction extends Action
     }
 
     /**
-     * 验证邮箱是否已被使用.
+     * 验证邮箱是否已被使用
      */
     public function isEmailAvailable()
     {
@@ -885,20 +883,20 @@ class RegisterAction extends Action
         if ($sms->CheckCaptcha($phone, $code)) {
             echo json_encode(array(
                 'status' => true,
-                'info'   => '验证通过',
+                'info' => '验证通过',
             ));
             exit;
         }
 
         echo json_encode(array(
             'status' => false,
-            'info'   => $sms->getMessage(),
+            'info' => $sms->getMessage(),
         ));
         exit;
     }
 
     /**
-     * 验证邀请邮件.
+     * 验证邀请邮件
      */
     public function isEmailAvailable_invite()
     {
@@ -911,7 +909,7 @@ class RegisterAction extends Action
     }
 
     /**
-     * 验证昵称是否已被使用.
+     * 验证昵称是否已被使用
      */
     public function isUnameAvailable()
     {
@@ -922,7 +920,7 @@ class RegisterAction extends Action
     }
 
     /**
-     * 添加用户关注信息.
+     * 添加用户关注信息
      */
     public function bulkDoFollow()
     {
@@ -931,7 +929,7 @@ class RegisterAction extends Action
     }
 
     /**
-     *  设置用户为已初始化.
+     *  设置用户为已初始化
      */
     public function doAuditUser()
     {
@@ -940,8 +938,7 @@ class RegisterAction extends Action
     }
 
     /**
-     * 判断验证码是否正确.
-     *
+     * 判断验证码是否正确
      * @return bool 若正确返回true，否则返回false
      */
     public function isValidVerify()
@@ -954,14 +951,14 @@ class RegisterAction extends Action
         if ($sms->CheckCaptcha($phone, $code)) {
             echo json_encode(array(
                 'status' => 1,
-                'info'   => '验证通过！',
+                'info' => '验证通过！',
             ));
             exit;
         }
 
         echo json_encode(array(
             'status' => 0,
-            'info'   => $sms->getMessage(),
+            'info' => $sms->getMessage(),
         ));
         unset($sms);
         exit;
@@ -973,7 +970,7 @@ class RegisterAction extends Action
         if (md5(strtoupper($_POST['verify'])) != $_SESSION['verify']) {
             echo json_encode(array(
                 'status' => 0,
-                'data'   => '图像验证码错误！',
+                'data' => '图像验证码错误！',
             ));
             exit;
         }
@@ -987,26 +984,26 @@ class RegisterAction extends Action
         if (0 >= preg_match('/^\+?[0\s]*[\d]{0,4}[\-\s]?\d{4,12}$/', $phone)) {
             echo json_encode(array(
                 'status' => 0,
-                'data'   => '不是正确的手机号码！',
+                'data' => '不是正确的手机号码！',
             ));
 
             /* # 验证该手机号码是否已经注册 */
         } elseif (!model('User')->isChangePhone($phone)) {
             echo json_encode(array(
                 'status' => 0,
-                'data'   => '该手机已经被注册成用户，您无法发送验证码！',
+                'data' => '该手机已经被注册成用户，您无法发送验证码！',
             ));
 
             /* # 检查是否发送成功 */
         } elseif (($sms = model('Sms')) and !$sms->sendCaptcha($phone, true)) {
             echo json_encode(array(
                 'status' => 0,
-                'data'   => $sms->getMessage(),
+                'data' => $sms->getMessage(),
             ));
         } else {
             echo json_encode(array(
                 'status' => 1,
-                'data'   => '发送成功，请注意查收！',
+                'data' => '发送成功，请注意查收！',
             ));
         }
         exit;

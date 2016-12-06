@@ -1,15 +1,13 @@
 <?php
 /**
- * 我的评论控制器.
- *
+ * 我的评论控制器
  * @author jason <yangjs17@yeah.net>
- *
  * @version TS3.0
  */
 class CommentAction extends Action
 {
     /**
-     * 我的评论页面.
+     * 我的评论页面
      */
     public function index()
     {
@@ -84,7 +82,7 @@ class CommentAction extends Action
     }
 
     /**
-     * 我的评论中，回复弹窗页面.
+     * 我的评论中，回复弹窗页面
      */
     public function reply()
     {

@@ -1,16 +1,13 @@
 <?php
 /**
- * 频道API模型.
- *
+ * 频道API模型
  * @author zivss <guolee226@gmail.com>
- *
  * @version ts3.0
  */
 class ChannelApiModel
 {
     /**
-     * 获取所有频道分类数据.
-     *
+     * 获取所有频道分类数据
      * @return array 所有频道分类数据
      */
     public function getAllChannel($uid)
@@ -43,8 +40,7 @@ class ChannelApiModel
     }
 
     /**
-     * 获取频道分类数据.
-     *
+     * 获取频道分类数据
      * @return array 所有频道分类数据
      */
     public function getChannels($uid, $count = 6, $page = 1, $order = 'sort asc', $sql = '')
@@ -86,9 +82,9 @@ class ChannelApiModel
     }
 
     /**
-     * 获取频道下的分享.
+     * 获取频道下的分享
      */
-    public function getChannelFeed($cid, $type, $count, $page, $order, $sql = '')
+    public function getChannelFeed($cid, $type, $count = 10, $page = 1, $order, $sql = '')
     {
         // $cid = intval($cid);
         $count = intval($count);
@@ -99,7 +95,7 @@ class ChannelApiModel
             if (is_array($cid)) {
                 $where .= ' AND c.channel_category_id in ('.implode(',', $cid).')';
             } else {
-                $where .= ' AND c.channel_category_id = '.intval($cid);
+                $where .= ' AND c.channel_category_id = '.intval($cid) ;
             }
         }
         if ($type) {

@@ -1,8 +1,8 @@
 <?php
 /**
- * 排行榜.
- *
+ * 排行榜
  * @author Stream
+ *
  */
 class RankAction extends Action
 {
@@ -25,10 +25,8 @@ class RankAction extends Action
         $this->assign($list);
         $this->display();
     }
-
     /**
-     * 获取排名.
-     *
+     * 获取排名
      * @param unknown_type $type
      * @param unknown_type $fids
      */
@@ -103,7 +101,7 @@ class RankAction extends Action
                 $icheckcon = 0;
                 foreach ($checkconuids as &$ccu) {
                     $icheckcon++;
-                    $ccu['rank'] = $icheckcon;
+                    $ccu['rank'] = $icheckcon ;
                     $ccu['uid'] = model('User')->getUserInfo($ccu['uid']);
                     $ccu['val'] = $ccu['value'];
                 }
@@ -120,11 +118,11 @@ class RankAction extends Action
                 }
             }
             $res = array(
-                    'followeruids'   => $followeruids,
+                    'followeruids' => $followeruids,
                     'experienceuids' => $experienceuids,
-                    'scoreuids'      => $scoreuids,
-                    'medaluids'      => $medaluids,
-                    'checkconuids'   => $checkconuids,
+                    'scoreuids' => $scoreuids,
+                    'medaluids' => $medaluids,
+                    'checkconuids' => $checkconuids,
                     'checktotaluids' => $checktotaluids, );
             model('Cache')->set($ranklistkey, $res, 600);
         }
@@ -171,11 +169,11 @@ class RankAction extends Action
             $scorerank += 1;
 
             $rankres = array(
-                    'followerrank'   => $followerrank,
+                    'followerrank' => $followerrank,
                     'experiencerank' => $experiencerank,
-                    'scorerank'      => $scorerank,
-                    'medalrank'      => $medalrank,
-                    'checkconrank'   => $checkconrank,
+                    'scorerank' => $scorerank,
+                    'medalrank' => $medalrank,
+                    'checkconrank' => $checkconrank,
                     'checktotalrank' => $checktotalrank, );
             model('Cache')->set('user_rank_'.$type.'_'.$this->mid, $rankres, 600);
         }
@@ -305,9 +303,8 @@ class RankAction extends Action
 
         return $resList;
     }
-
     /**
-     * 发布排行榜到我的分享.
+     * 发布排行榜到我的分享
      */
     public function postRank()
     {
@@ -339,9 +336,8 @@ class RankAction extends Action
         model('Feed')->put($this->mid, 'public', 'post', $data);
         echo 1;
     }
-
     /**
-     * 分享排行.
+     * 分享排行
      */
     public function weibo()
     {
@@ -405,9 +401,8 @@ class RankAction extends Action
         $this->_rightRank();
         $this->display();
     }
-
     /**
-     * 右侧排行.
+     * 右侧排行
      */
     private function _rightRank()
     {
@@ -422,9 +417,8 @@ class RankAction extends Action
         }
         $this->assign('flright', $followeruids);
     }
-
     /**
-     * 话题排行.
+     * 话题排行
      */
     public function topic()
     {

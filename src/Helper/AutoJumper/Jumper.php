@@ -8,6 +8,7 @@ use Closure;
 /**
  * ThinkSNS v4 Auto URL jump Conponent.
  *
+ * @package Ts\Helper\AutoJumper\Jumper
  * @author Seven Du <lovevipdsw@outlook.com>
  **/
 class Jumper
@@ -57,7 +58,7 @@ class Jumper
     protected static function registerArrayIterator()
     {
         if (!static::$iterator instanceof ArrayIterator) {
-            static::$iterator = new ArrayIterator();
+            static::$iterator = new ArrayIterator;
         }
     }
 } // END class Jumper

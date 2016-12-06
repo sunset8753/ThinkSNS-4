@@ -1,9 +1,7 @@
  <?php
 /**
- * 后台，用户管理控制器.
- *
+ * 后台，用户管理控制器
  * @author liuxiaoqing <liuxiaoqing@zhishisoft.com>
- *
  * @version TS3.0
  */
 // 加载后台控制器
@@ -13,7 +11,7 @@ class AdminAction extends AdministratorAction
     public $pageTitle = array();
 
     /**
-     * 初始化，初始化页面表头信息，用于双语.
+     * 初始化，初始化页面表头信息，用于双语
      */
     public function _initialize()
     {
@@ -32,11 +30,11 @@ class AdminAction extends AdministratorAction
     }
 
     /**
-     * 微吧列表.
+     * 微吧列表
      */
     public function index()
     {
-        if (isset($_POST['editSubmit']) == '1') {
+        if (isset($_POST ['editSubmit']) == '1') {
             array_map('h', $_POST);
             $res = model('Xdata')->lput('square', $_POST);
             if ($res) {
@@ -54,7 +52,7 @@ class AdminAction extends AdministratorAction
     }
 
     /**
-     * 添加微吧.
+     * 添加微吧
      */
     public function addWeiba()
     {
@@ -74,7 +72,7 @@ class AdminAction extends AdministratorAction
     }
 
     /**
-     * 执行添加微吧.
+     * 执行添加微吧
      */
     public function doAddWeiba()
     {
@@ -122,7 +120,7 @@ class AdminAction extends AdministratorAction
     }
 
     /**
-     * 编辑微吧.
+     * 编辑微吧
      */
     public function editWeiba()
     {
@@ -155,7 +153,7 @@ class AdminAction extends AdministratorAction
     }
 
     /**
-     * 执行编辑微吧.
+     * 执行编辑微吧
      */
     public function doEditWeiba()
     {
@@ -205,9 +203,8 @@ class AdminAction extends AdministratorAction
             $this->error(D('weiba')->getLastError());
         }
     }
-
     /**
-     * 微吧分类列表.
+     * 微吧分类列表
      */
     public function weibaCate()
     {
@@ -222,9 +219,8 @@ class AdminAction extends AdministratorAction
         }
         $this->displayList($list);
     }
-
     /**
-     * 添加微吧分类页面.
+     * 添加微吧分类页面
      */
     public function addWeibaCate()
     {
@@ -234,9 +230,8 @@ class AdminAction extends AdministratorAction
         $this->savePostUrl = U('weiba/Admin/doAddWeibaCate');
         $this->displayConfig();
     }
-
     /**
-     * 添加微吧分类数据.
+     * 添加微吧分类数据
      */
     public function doAddWeibaCate()
     {
@@ -258,9 +253,8 @@ class AdminAction extends AdministratorAction
             $this->error('分类不能为空');
         }
     }
-
     /**
-     * 编辑微吧分类页面.
+     * 编辑微吧分类页面
      */
     public function editWeibaCate()
     {
@@ -272,9 +266,8 @@ class AdminAction extends AdministratorAction
         $this->savePostUrl = U('weiba/Admin/doEditWeibaCate');
         $this->displayConfig($data);
     }
-
     /**
-     * 编辑微吧分类数据.
+     * 编辑微吧分类数据
      */
     public function doEditWeibaCate()
     {
@@ -299,9 +292,8 @@ class AdminAction extends AdministratorAction
             $this->error('分类不能为空');
         }
     }
-
     /**
-     * 删除微吧分类.
+     * 删除微吧分类
      */
     public function delWeibaCate()
     {
@@ -328,10 +320,8 @@ class AdminAction extends AdministratorAction
         echo json_encode($return);
         exit();
     }
-
     /**
      * 设置微吧推荐状态
-     *
      * @return array 操作成功状态和提示信息
      */
     public function setRecommend()
@@ -367,8 +357,7 @@ class AdminAction extends AdministratorAction
     }
 
     /**
-     * 解散微吧.
-     *
+     * 解散微吧
      * @return array 操作成功状态和提示信息
      */
     public function delWeiba()
@@ -398,7 +387,7 @@ class AdminAction extends AdministratorAction
     }
 
     /**
-     * 后台帖子列表.
+     * 后台帖子列表
      */
     public function postList()
     {
@@ -423,7 +412,7 @@ class AdminAction extends AdministratorAction
     }
 
     /**
-     * 帖子回收站.
+     * 帖子回收站
      */
     public function postRecycle()
     {
@@ -446,7 +435,6 @@ class AdminAction extends AdministratorAction
 
     /**
      * 设置帖子状态
-     *
      * @return array 操作成功状态和提示信息
      */
     public function setPost()
@@ -531,7 +519,7 @@ class AdminAction extends AdministratorAction
     }
 
     /**
-     * 后台编辑帖子.
+     * 后台编辑帖子
      */
     public function editPost()
     {
@@ -558,7 +546,7 @@ class AdminAction extends AdministratorAction
     }
 
     /**
-     * 执行编辑帖子.
+     * 执行编辑帖子
      */
     public function doEditPost()
     {
@@ -599,7 +587,7 @@ class AdminAction extends AdministratorAction
     }
 
     /**
-     * 后台删除帖子至回收站.
+     * 后台删除帖子至回收站
      */
     public function delPost()
     {
@@ -652,7 +640,7 @@ class AdminAction extends AdministratorAction
     }
 
     /**
-     * 后台还原帖子.
+     * 后台还原帖子
      */
     public function recoverPost()
     {
@@ -681,7 +669,7 @@ class AdminAction extends AdministratorAction
     }
 
     /**
-     * 后台删除帖子至回收站.
+     * 后台删除帖子至回收站
      */
     public function deletePost()
     {
@@ -707,7 +695,7 @@ class AdminAction extends AdministratorAction
     }
 
     /**
-     * 圈主审核配置.
+     * 圈主审核配置
      */
     public function weibaAdminAuditConfig()
     {
@@ -721,7 +709,6 @@ class AdminAction extends AdministratorAction
         // dump($weibaAdminAuditConfig);exit;
         $this->displayConfig($weibaAdminAuditConfig);
     }
-
     public function doWeibaAdminAuditConfig()
     {
         $list = $_POST['systemdata_list'];
@@ -743,7 +730,7 @@ class AdminAction extends AdministratorAction
     }
 
     /**
-     * 圈主审核.
+     * 圈主审核
      */
     public function weibaAdminAudit()
     {
@@ -783,7 +770,7 @@ class AdminAction extends AdministratorAction
     }
 
     /**
-     * 圈主审核通过/驳回.
+     * 圈主审核通过/驳回
      */
     public function doAudit()
     {
@@ -810,7 +797,7 @@ class AdminAction extends AdministratorAction
     }
 
     /**
-     * 微吧审核配置.
+     * 微吧审核配置
      */
     public function weibaAuditConfig()
     {
@@ -826,7 +813,6 @@ class AdminAction extends AdministratorAction
         // dump($weibaAuditConfig);exit;
         $this->displayConfig($weibaAuditConfig);
     }
-
     public function doWeibaAuditConfig()
     {
         $list = $_POST['systemdata_list'];
@@ -848,9 +834,8 @@ class AdminAction extends AdministratorAction
             $this->error('保存失败');
         }
     }
-
     /**
-     * 微吧审核.
+     * 微吧审核
      */
     public function weibaAudit()
     {
@@ -889,7 +874,6 @@ class AdminAction extends AdministratorAction
         }
         $this->displayList($listData);
     }
-
     public function doWeibaAudit()
     {
         if (empty($_POST['weiba_id'])) {
@@ -914,7 +898,7 @@ class AdminAction extends AdministratorAction
     }
 
     /**
-     * 微吧后台管理菜单.
+     * 微吧后台管理菜单
      */
     private function _initWeibaListAdminMenu()
     {
