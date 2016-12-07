@@ -120,7 +120,10 @@ class InformationApi extends Api
      */
     public function NewsList()
     {
-        !$_REQUEST['cid'] &&  return Ts\Service\ApiMessage::withArray('', 0, '资讯分类不能为空');//$this->error('资讯分类不能为空');
+        if (!$_REQUEST['cid']) {
+            return Ts\Service\ApiMessage::withArray('', 0, '资讯分类不能为空');
+        }
+
         $catid = intval($_REQUEST['cid']);
         $newsModel = Subject::getInstance();
         $map['cid'] = $catid;

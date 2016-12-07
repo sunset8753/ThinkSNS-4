@@ -50,11 +50,10 @@ class SystemApi extends Api
         }
 
         /* # 添加反馈，和错误提示 */
-        model('Feedback')->add(array('uid' => $uid, 'content' => $content, 'type' => 1, 'cTime' => time(), 'mTime' => 0)) or return Ts\Service\ApiMessage::withArray('', 0, '反馈失败！');//$this->error(array(
-                        //     'status' => -3,
-                        //     'msg' => '反馈失败！',
-                        // ));
-
+        if (!model('Feedback')->add(array('uid' => $uid, 'content' => $content, 'type' => 1, 'cTime' => time(), 'mTime' => 0))) {
+            return Ts\Service\ApiMessage::withArray('', 0, '反馈失败！');
+        }
+        
         /* # 反馈成功 */
         return Ts\Service\ApiMessage::withArray('', 1, '反馈成功');
         // return array(

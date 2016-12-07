@@ -515,6 +515,12 @@ class IndexAction extends Action
         $map['status'] = 1;
         $list = D('Weiba')->where($map)->field('weiba_id,weiba_name')->findAll();
         $this->assign('list', $list);
+        // 获取上传附件配置
+        $Config_attach = model('Xdata')->get('admin_Config:attach');
+        $attach_update_config['attach_max_size'] = ($Config_attach['attach_max_size'] < ini_get('post_max_size')) ? $Config_attach['attach_max_size'] : ini_get('post_max_size');
+        $attach_update_config['attach_allow_extension'] = str_replace(',', '、', $Config_attach['attach_allow_extension']);
+        $this->assign('attach_update_config',$attach_update_config);
+        unset($Config_attach, $attach_update_config);
         $this->display();
     }
 
@@ -566,6 +572,12 @@ class IndexAction extends Action
         $weiba = D('weiba')->where('weiba_id='.$weiba_id)->find();
         $this->assign('weiba_id', $weiba_id);
         $this->assign('weiba_name', $weiba['weiba_name']);
+        // 获取上传附件配置
+        $Config_attach = model('Xdata')->get('admin_Config:attach');
+        $attach_update_config['attach_max_size'] = ($Config_attach['attach_max_size'] < ini_get('post_max_size')) ? $Config_attach['attach_max_size'] : ini_get('post_max_size');
+        $attach_update_config['attach_allow_extension'] = str_replace(',', '、', $Config_attach['attach_allow_extension']);
+        $this->assign('attach_update_config',$attach_update_config);
+        unset($Config_attach, $attach_update_config);
 
         $this->setTitle('发表帖子 '.$weiba['weiba_name']);
         $this->setKeywords('发表帖子 '.$weiba['weiba_name']);
@@ -907,6 +919,12 @@ class IndexAction extends Action
                 $this->assign('log', intval($_GET['log']));
             }
             $this->assign('weiba_name', D('weiba')->where('weiba_id='.$post_detail['weiba_id'])->getField('weiba_name'));
+            // 获取上传附件配置
+            $Config_attach = model('Xdata')->get('admin_Config:attach');
+            $attach_update_config['attach_max_size'] = ($Config_attach['attach_max_size'] < ini_get('post_max_size')) ? $Config_attach['attach_max_size'] : ini_get('post_max_size');
+            $attach_update_config['attach_allow_extension'] = str_replace(',', '、', $Config_attach['attach_allow_extension']);
+            $this->assign('attach_update_config',$attach_update_config);
+            unset($Config_attach, $attach_update_config);
 
             $this->setTitle('编辑帖子 '.$weiba['weiba_name']);
             $this->setKeywords('编辑帖子 '.$weiba['weiba_name']);
