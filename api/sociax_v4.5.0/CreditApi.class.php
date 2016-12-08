@@ -113,7 +113,7 @@ class CreditApi extends Api
 
         if ($data['result']) {
             $data['charge_id'] = $data['result'];
-            if ($type == 0) {
+            if ($data['charge_type'] == 0) {
                 $configs = $parameter = array();
                 $configs['partner'] = $chargeConfigs['alipay_pid'];
                 $configs['seller_id'] = $chargeConfigs['alipay_pid'];
@@ -147,7 +147,7 @@ class CreditApi extends Api
                     'mesage' => '',
                     'data'   => $url,
                 );
-            } elseif ($type == 1) {
+            } elseif ($data['charge_type'] == 1) {
                 $ip = get_client_ip(); //微信支付需要终端ip
                 $order = array(
                     'body'             => '积分充值:'.$data['charge_sroce'].'积分',
@@ -199,7 +199,7 @@ class CreditApi extends Api
 
         if ($data['result']) {
             $data['charge_id'] = $data['result'];
-            if ($type == 0) {//支付宝支付
+            if ($data['charge_type'] == 0) {//支付宝支付
                 $configs = $parameter = array();
                 $configs['partner'] = $chargeConfigs['alipay_pid'];
                 $configs['seller_id'] = $chargeConfigs['alipay_pid'];
@@ -216,7 +216,7 @@ class CreditApi extends Api
                     'it_b_pay'     => '1c',
                 );
                 $url = createAlipayUrl($configs, $parameter, 2); //直接返回支付宝支付url
-            } elseif ($type == 1) {
+            } elseif ($data['charge_type'] == 1) {
                 $ip = get_client_ip(); //微信支付需要终端ip
                 $order = array(
                     'body'             => '积分充值:'.$data['charge_sroce'].'积分',

@@ -4384,7 +4384,7 @@ CREATE TABLE IF NOT EXISTS `ts_feed_topic` (
   `ctime` int(11) NOT NULL COMMENT '创建时间',
   `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '状态',
   `lock` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否锁定',
-  `domain` varchar(100) NOT NULL COMMENT '个性化地址',
+  `domain` varchar(100) NOT NULL DEFAULT '' COMMENT '个性化地址',
   `recommend` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否推荐',
   `recommend_time` int(11) DEFAULT '0' COMMENT '推荐时间',
   `des` text COMMENT '详细内容',

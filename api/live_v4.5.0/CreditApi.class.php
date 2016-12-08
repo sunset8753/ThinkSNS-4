@@ -103,40 +103,17 @@ class CreditApi extends Api
     */
     public function createCharge()
     {
-        $price = 0.01; //intval($this->data['money']);
-        // if ($price < 1) {
-        //     return array('status' => 0, 'mesage' => '充值金额不正确');
-        // }
-        $type = intval($this->data['type']);
-        $types = array('alipay', 'weixin');
-        if (!isset($types[$type])) {
-            return array('status' => 0, 'mesage' => '充值方式不支持');
-        }
-        $version = intval($this->data['version']) ?: 1; //版本   1-系统版  2-直播版
-        if ($version == 1) {
-            $chargeConfigs = model('Xdata')->get('admin_Config:charge');
-        } elseif ($version == 2) {
-            $chargeConfigs = model('Xdata')->get('admin_Config:ZBcharge');
-        } else {
-            return array('status' => 0, 'mesage' => '参数错误');
-        }
-        if (!in_array($types[$type], $chargeConfigs['charge_platform'])) {
-            return array('status' => 0, 'mesage' => '充值方式不支持');
+        $orderinfo = $this->setOrder();
+        if ($orderinfo['status'] == 0) {
+            return array('status' => 0, 'mesage' => $orderinfo['mesage']);
         }
 
-        $data['serial_number'] = 'CZ'.date('YmdHis').rand(0, 9).rand(0, 9);
-        $data['charge_type'] = $type;
-        $data['charge_value'] = $price;
-        $data['uid'] = $this->mid;
-        $data['ctime'] = time();
-        $data['status'] = 0;
-        $data['charge_sroce'] = intval($price * abs(intval($chargeConfigs['charge_ratio'])));
-        $data['charge_order'] = '';
-        // $result = D('credit_charge')->add($data);
+        $data = $orderinfo['data'];
+        $chargeConfigs = $orderinfo['config'];
 
-        if (!$result) {
-            $data['charge_id'] = $result;
-            if ($type == 0) {
+        if ($data['result']) {
+            $data['charge_id'] = $data['result'];
+            if ($data['charge_type'] == 0) {
                 $configs = $parameter = array();
                 $configs['partner'] = $chargeConfigs['alipay_pid'];
                 $configs['seller_id'] = $chargeConfigs['alipay_pid'];
@@ -161,8 +138,8 @@ class CreditApi extends Api
                     '}';
 
                 $url['url'] = createAlipayUrl($configs, $parameter, 3); //直接返回支付宝支付url
-                $url['charge_type'] = $type;
-                $url['charge_value'] = $price;
+                $url['charge_type'] = $data['charge_type'];
+                $url['charge_value'] = $data['charge_value'];
                 $url['out_trade_no'] = $data['serial_number'];
 
                 return array(
@@ -170,7 +147,7 @@ class CreditApi extends Api
                     'mesage' => '',
                     'data'   => $url,
                 );
-            } elseif ($type == 1) {
+            } elseif ($data['charge_type'] == 1) {
                 $ip = get_client_ip(); //微信支付需要终端ip
                 $order = array(
                     'body'             => '积分充值:'.$data['charge_sroce'].'积分',
@@ -189,8 +166,8 @@ class CreditApi extends Api
                 $input = $weixinpay->getPayParam($order, $chargeConfigs['weixin_pid'], $chargeConfigs['weixin_mid'], $chargeConfigs['weixin_key'], 2);
 
                 $input['out_trade_no'] = $data['serial_number'];
-                $input['charge_type'] = $type;
-                $input['charge_value'] = $price;
+                $input['charge_type'] = $data['charge_type'];
+                $input['charge_value'] = $data['charge_value'];
 
                 return array(
                     'status' => 1,
@@ -212,42 +189,17 @@ class CreditApi extends Api
      */
     public function createChargeIOS()
     {
-        $price = $this->data['money'];
-        if ($price < 1) {
-            return array('status' => 0, 'mesage' => '充值金额不正确');
-        }
-        $type = intval($this->data['type']);
-        $types = array('alipay', 'weixin');
-        if (!isset($types[$type])) {
-            return array('status' => 0, 'mesage' => '充值方式不支持');
+        $orderinfo = $this->setOrder();
+        if ($orderinfo['status'] == 0) {
+            return array('status' => 0, 'mesage' => $orderinfo['mesage']);
         }
 
-        $version = intval($this->data['version']) ?: 1; //版本   1-系统版  2-直播版
-        if ($version == 1) {
-            $chargeConfigs = model('Xdata')->get('admin_Config:charge');
-        } elseif ($version == 2) {
-            $chargeConfigs = model('Xdata')->get('admin_Config:ZBcharge');
-        } else {
-            return array('status' => 0, 'mesage' => '参数错误');
-        }
+        $data = $orderinfo['data'];
+        $chargeConfigs = $orderinfo['config'];
 
-        if (!in_array($types[$type], $chargeConfigs['charge_platform'])) {
-            return array('status' => 0, 'mesage' => '充值方式不支持');
-        }
-
-        $data['serial_number'] = 'CZ'.date('YmdHis').rand(0, 9).rand(0, 9);
-        $data['charge_type'] = $type;
-        $data['charge_value'] = $price;
-        $data['uid'] = $this->mid;
-        $data['ctime'] = time();
-        $data['status'] = 0;
-        $data['charge_sroce'] = intval($price * abs(intval($chargeConfigs['charge_ratio'])));
-        $data['charge_order'] = '';
-        $result = D('credit_charge')->add($data);
-
-        if ($result) {
-            $data['charge_id'] = $result;
-            if ($type == 0) {//支付宝支付
+        if ($data['result']) {
+            $data['charge_id'] = $data['result'];
+            if ($data['charge_type'] == 0) {//支付宝支付
                 $configs = $parameter = array();
                 $configs['partner'] = $chargeConfigs['alipay_pid'];
                 $configs['seller_id'] = $chargeConfigs['alipay_pid'];
@@ -264,7 +216,7 @@ class CreditApi extends Api
                     'it_b_pay'     => '1c',
                 );
                 $url = createAlipayUrl($configs, $parameter, 2); //直接返回支付宝支付url
-            } elseif ($type == 1) {
+            } elseif ($data['charge_type'] == 1) {
                 $ip = get_client_ip(); //微信支付需要终端ip
                 $order = array(
                     'body'             => '积分充值:'.$data['charge_sroce'].'积分',
@@ -481,19 +433,57 @@ class CreditApi extends Api
         return $arr;
     }
 
-    //微信sign加密方法
-    private function setWXsign($param, $wxkey)
+    //充值接口统一下单
+    public function setOrder()
     {
-        ksort($param);
-        $sign = '';
-        foreach ($param as $key => $value) {
-            if ($value && $key != 'sign' && $key != 'key') {
-                $sign .= $key.'='.$value.'&';
-            }
+        $price = intval($this->data['money']);
+        if ($price < 1) {
+            return array('status' => 0, 'mesage' => '充值金额不正确');
         }
-        $sign .= 'key='.$wxkey;
-        $sign = strtoupper(md5($sign));
+        $type = intval($this->data['type']);
+        $types = array('alipay', 'weixin');
+        if (!isset($types[$type])) {
+            return array('status' => 0, 'mesage' => '充值方式不支持');
+        }
+        $version = intval($this->data['version']) ?: 1; //版本   1-系统版  2-直播版
+        if ($version == 1) {
+            $chargeConfigs = model('Xdata')->get('admin_Config:charge');
+        } elseif ($version == 2) {
+            $chargeConfigs = model('Xdata')->get('admin_Config:ZBcharge');
+        } else {
+            return array('status' => 0, 'mesage' => '参数错误');
+        }
+        if (!in_array($types[$type], $chargeConfigs['charge_platform'])) {
+            return array('status' => 0, 'mesage' => '充值方式不支持');
+        }
 
-        return $sign;
+        $data['serial_number'] = 'CZ'.date('YmdHis').rand(0, 9).rand(0, 9);
+        $data['charge_type'] = $type;
+        $data['charge_value'] = $price;
+        $data['uid'] = $this->mid;
+        $data['ctime'] = time();
+        $data['status'] = 0;
+        $data['partner'] = $chargeConfigs['alipay_pid'];
+        $data['seller_id'] = $chargeConfigs['alipay_pid'];
+        $data['seller_email'] = $chargeConfigs['alipay_email'];
+        $data['private_key_path'] = $chargeConfigs['private_key_path'];
+        $data['charge_sroce'] = intval($price * abs(intval($chargeConfigs['charge_ratio'])));
+        $data['charge_order'] = '';
+        $result = D('credit_charge')->add($data);
+
+        if ($result) {
+            $data['result'] = $result;
+
+            return  array(
+                'status' => 1,
+                'data'   => $data,
+                'config' => $chargeConfigs,
+            );
+        } else {
+            return array(
+                'status' => 0,
+                'mesage' => '创建订单失败',
+            );
+        }
     }
 }

@@ -13,10 +13,9 @@ class CreditApi extends Api
     {
         $credit = model('Credit')->getUserCredit($this->mid);
 
-        return Ts\Service\ApiMessage::withArray($credit['credit']['score']['value'], 1, '');
-        // return array(
-        //         'score' => $credit ['credit'] ['score'] ['value'],
-        // );
+        return array(
+                'score' => $credit['credit']['score']['value'],
+        );
     }
 
     /*
@@ -45,8 +44,7 @@ class CreditApi extends Api
             $data[] = $rs;
         }
 
-        return Ts\Service\ApiMessage::withArray($data, 1, '');
-        // return $data;
+        return $data;
     }
 
     /*
@@ -64,14 +62,10 @@ class CreditApi extends Api
             $result = false;
         }
 
-        $status = $result ? 1 : 0;
-        $message = $result ? '积分转账成功！' : '积分转账失败';
-
-        return Ts\Service\ApiMessage::withArray('', $status, $message);
-        // return array(
-        //     'status' => $result ? 1 : 0,
-        //     'mesage' => $result ? '积分转账成功！' : '积分转账失败',
-        // );
+        return array(
+            'status' => $result ? 1 : 0,
+            'mesage' => $result ? '积分转账成功！' : '积分转账失败',
+        );
     }
 
     /*
@@ -90,8 +84,7 @@ class CreditApi extends Api
             unset($rs['id'], $rs['type'], $rs['cycle'], $rs['cycle_times'], $rs['des'], $rs['info']);
         }
 
-        return Ts\Service\ApiMessage::withArray($list, 1, '');
-        // return $list;
+        return $list;
     }
 
     /*
@@ -102,8 +95,7 @@ class CreditApi extends Api
         $action = @(string) $this->data['name'];
         @model('Credit')->setUserCredit($this->mid, $action);
 
-        return Ts\Service\ApiMessage::withArray('', 1, '');
-        // return 1;
+        return 1;
     }
 
     /*
@@ -113,8 +105,7 @@ class CreditApi extends Api
     {
         $orderinfo = $this->setOrder();
         if ($orderinfo['status'] == 0) {
-            return Ts\Service\ApiMessage::withArray('', 0, $orderinfo['mesage']);
-            // return array('status' => 0, 'mesage' => $orderinfo['mesage']);
+            return array('status' => 0, 'mesage' => $orderinfo['mesage']);
         }
 
         $data = $orderinfo['data'];
@@ -122,7 +113,7 @@ class CreditApi extends Api
 
         if ($data['result']) {
             $data['charge_id'] = $data['result'];
-            if ($type == 0) {
+            if ($data['charge_type'] == 0) {
                 $configs = $parameter = array();
                 $configs['partner'] = $chargeConfigs['alipay_pid'];
                 $configs['seller_id'] = $chargeConfigs['alipay_pid'];
@@ -151,13 +142,12 @@ class CreditApi extends Api
                 $url['charge_value'] = $data['charge_value'];
                 $url['out_trade_no'] = $data['serial_number'];
 
-                return Ts\Service\ApiMessage::withArray($url, 1, '');
-                // return array(
-                //     'status' => 1,
-                //     'mesage' => '',
-                //     'data' => $url,
-                // );
-            } elseif ($type == 1) {
+                return array(
+                    'status' => 1,
+                    'mesage' => '',
+                    'data'   => $url,
+                );
+            } elseif ($data['charge_type'] == 1) {
                 $ip = get_client_ip(); //微信支付需要终端ip
                 $order = array(
                     'body'             => '积分充值:'.$data['charge_sroce'].'积分',
@@ -179,20 +169,18 @@ class CreditApi extends Api
                 $input['charge_type'] = $data['charge_type'];
                 $input['charge_value'] = $data['charge_value'];
 
-                return Ts\Service\ApiMessage::withArray($input, 1, '');
-                // return array(
-                //     'status' => 1,
-                //     'mesage' => '',
-                //     'data' => $input,
-                // );
+                return array(
+                    'status' => 1,
+                    'mesage' => '',
+                    'data'   => $input,
+                );
             }
         } else {
             $res = array();
             $res['status'] = 0;
             $res['mesage'] = '充值创建失败';
 
-            return Ts\Service\ApiMessage::withArray('', $res['status'], $res['mesage']);
-            // return $res;
+            return $res;
         }
     }
 
@@ -203,8 +191,7 @@ class CreditApi extends Api
     {
         $orderinfo = $this->setOrder();
         if ($orderinfo['status'] == 0) {
-            return Ts\Service\ApiMessage::withArray('', 0, $orderinfo['mesage']);
-            // return array('status' => 0, 'mesage' => $orderinfo['mesage']);
+            return array('status' => 0, 'mesage' => $orderinfo['mesage']);
         }
 
         $data = $orderinfo['data'];
@@ -212,7 +199,7 @@ class CreditApi extends Api
 
         if ($data['result']) {
             $data['charge_id'] = $data['result'];
-            if ($type == 0) {//支付宝支付
+            if ($data['charge_type'] == 0) {//支付宝支付
                 $configs = $parameter = array();
                 $configs['partner'] = $chargeConfigs['alipay_pid'];
                 $configs['seller_id'] = $chargeConfigs['alipay_pid'];
@@ -229,7 +216,7 @@ class CreditApi extends Api
                     'it_b_pay'     => '1c',
                 );
                 $url = createAlipayUrl($configs, $parameter, 2); //直接返回支付宝支付url
-            } elseif ($type == 1) {
+            } elseif ($data['charge_type'] == 1) {
                 $ip = get_client_ip(); //微信支付需要终端ip
                 $order = array(
                     'body'             => '积分充值:'.$data['charge_sroce'].'积分',
@@ -249,19 +236,17 @@ class CreditApi extends Api
                 $url['out_trade_no'] = $data['serial_number'];
             }
 
-            return Ts\Service\ApiMessage::withArray($url, 1, '');
-            // return array(
-            //     'status' => 1,
-            //     'mesage' => '',
-            //     'data' => $url,
-            // );
+            return array(
+                'status' => 1,
+                'mesage' => '',
+                'data'   => $url,
+            );
         } else {
             $res = array();
             $res['status'] = 0;
             $res['mesage'] = '充值创建失败';
 
-            return Ts\Service\ApiMessage::withArray('', 0, $res['mesage']);
-            // return $res;
+            return $res;
         }
     }
 
@@ -315,17 +300,14 @@ class CreditApi extends Api
     {
         $map['serial_number'] = $this->data['out_trade_no'];
         if (!$map['serial_number']) {
-            return Ts\Service\ApiMessage::withArray('', 0, '参数错误');
-            // return array('status' => 0, 'mesage' => '参数错误');
+            return array('status' => 0, 'mesage' => '参数错误');
         }
 
         $status = D('credit_charge')->where($map)->getField('status');
         if ($status == 1) {
-            return Ts\Service\ApiMessage::withArray('', 1, '充值成功');
-            // return array('status' => 1, 'mesage' => '充值成功');
+            return array('status' => 1, 'mesage' => '充值成功');
         } else {
-            return Ts\Service\ApiMessage::withArray('', 1, '充值失败');
-            // return array('status' => 0, 'mesage' => '充值失败');
+            return array('status' => 0, 'mesage' => '充值失败');
         }
     }
 
@@ -340,8 +322,7 @@ class CreditApi extends Api
         if ($number && $sign && ($status == 1 || $status == 2) && $sign == $verify) {
             if ($status == 1) {
                 if (model('Credit')->charge_success(t($number))) {
-                    return Ts\Service\ApiMessage::withArray('', 1, '保存成功');
-                    // return array('status' => 1, 'mesage' => '保存成功');
+                    return array('status' => 1, 'mesage' => '保存成功');
                 }
             } else {
                 $map = array(
@@ -350,16 +331,13 @@ class CreditApi extends Api
                     'status'        => 0, // 这个条件不能删，删了就有充值漏洞
                 );
                 if (D('credit_charge')->where($map)->setField('status', 2)) {
-                    return Ts\Service\ApiMessage::withArray('', 1, '保存成功');
-                    // return array('status' => 1, 'mesage' => '保存成功');
+                    return array('status' => 1, 'mesage' => '保存成功');
                 }
             }
 
-            return Ts\Service\ApiMessage::withArray('', 0, '保存失败');
-            // return array('status' => 0, 'mesage' => '保存失败');
+            return array('status' => 0, 'mesage' => '保存失败');
         } else {
-            return Ts\Service\ApiMessage::withArray('', 0, '参数错误');
-            // return array('status' => 0, 'mesage' => '参数错误');
+            return array('status' => 0, 'mesage' => '参数错误');
         }
     }
 
@@ -485,6 +463,10 @@ class CreditApi extends Api
         $data['uid'] = $this->mid;
         $data['ctime'] = time();
         $data['status'] = 0;
+        $data['partner'] = $chargeConfigs['alipay_pid'];
+        $data['seller_id'] = $chargeConfigs['alipay_pid'];
+        $data['seller_email'] = $chargeConfigs['alipay_email'];
+        $data['private_key_path'] = $chargeConfigs['private_key_path'];
         $data['charge_sroce'] = intval($price * abs(intval($chargeConfigs['charge_ratio'])));
         $data['charge_order'] = '';
         $result = D('credit_charge')->add($data);

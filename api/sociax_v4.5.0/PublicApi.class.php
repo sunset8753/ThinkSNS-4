@@ -228,13 +228,15 @@ class PublicApi extends Api
                 $users = api('FindPeople')->around();
 
                 foreach ($users['data'] as $key => $value) {
-                    $findp['uid'] = $value['uid'];
-                    $findp['uname'] = $value['username'];
-                    $findp['remark'] = $value['remark'];
-                    $findp['avatar'] = $value['avatar'];
-                    $privacy = model('UserPrivacy')->getPrivacy($this->mid, $value['uid']);
-                    $findp['space_privacy'] = $privacy['space'];
-                    $fpeople[] = $findp;
+                    if (!empty($value)) {
+                        $findp['uid'] = $value['uid'];
+                        $findp['uname'] = $value['username'];
+                        $findp['remark'] = $value['remark'];
+                        $findp['avatar'] = $value['avatar'];
+                        $privacy = model('UserPrivacy')->getPrivacy($this->mid, $value['uid']);
+                        $findp['space_privacy'] = $privacy['space'];
+                        $fpeople[] = $findp;
+                    }
                 }
                 $list['near_users'] = $fpeople ? $fpeople : array();
             }

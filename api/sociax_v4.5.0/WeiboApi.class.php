@@ -23,7 +23,7 @@ class WeiboApi extends Api
     {
         // return $this->mid;
         $max_id = $this->max_id ? intval($this->max_id) : 0;
-        $count = $this->count ? intval($this->count) : 20;
+        $count = $this->count ? intval($this->count) : 10;
         $where = 'is_del=0 and is_audit=1';
         // 动态类型
         $type = $this->data['type'];
@@ -63,7 +63,7 @@ class WeiboApi extends Api
     {
         $tablePrefix = C('DB_PREFIX');
         $max_id = $this->max_id ? intval($this->max_id) : 0;
-        $count = $this->count ? intval($this->count) : 20;
+        $count = $this->count ? intval($this->count) : 10;
         $where = 'a.is_del=0 and a.is_audit=1';
         // 动态类型
         $type = $this->data['type'];
@@ -113,7 +113,7 @@ class WeiboApi extends Api
 
         $tablePrefix = C('DB_PREFIX');
         $max_id = $this->max_id ? intval($this->max_id) : 0;
-        $count = $this->count ? intval($this->count) : 20;
+        $count = $this->count ? intval($this->count) : 10;
         $cid = intval($this->data['cid']);
         $where = 'c.status = 1';
         if ($cid && in_array($cid, $cids)) {
@@ -273,7 +273,7 @@ class WeiboApi extends Api
     public function recommend_timeline()
     {
         $max_id = $this->max_id ? intval($this->max_id) : 0;
-        $count = $this->count ? intval($this->count) : 20;
+        $count = $this->count ? intval($this->count) : 10;
 
         $where = 'is_del=0 and is_audit=1 and is_recommend=1';
         !empty($max_id) && $where .= " AND feed_id < {$max_id}";
@@ -1979,12 +1979,14 @@ class WeiboApi extends Api
                         $_attach['attach_origin_width'] = $av['width'];
                         $_attach['attach_origin_height'] = $av['height'];
                         if ($av['width'] > 384 && $av['height'] > 384) {
-                            $_attach['attach_middle'] = getImageUrl($av['save_path'].$av['save_name'], 384, 384, true);
+                            //$_attach['attach_middle'] = getImageUrl($av['save_path'].$av['save_name'], 384, 384, true);
+                            $_attach['attach_middle'] = UPLOAD_URL . getThumbImage(UPLOAD_URL . $av['save_path'] . $av['save_name'], 384)['src'];
                         } else {
                             $_attach['attach_middle'] = $_attach['attach_origin'];
                         }
                         if ($av['width'] > 220 && $av['height'] > 220) {
-                            $_attach['attach_small'] = getImageUrl($av['save_path'].$av['save_name'], 220, 220, true);
+                            //$_attach['attach_small'] = getImageUrl($av['save_path'].$av['save_name'], 220, 220, true);
+                            $_attach['attach_small'] = UPLOAD_URL . getThumbImage(UPLOAD_URL . $av['save_path'] . $av['save_name'], 220)['src'];
                         } else {
                             $_attach['attach_small'] = $_attach['attach_origin'];
                         }
@@ -2152,7 +2154,7 @@ class WeiboApi extends Api
         $user_info['uid'] = $user_info_whole['uid'];
         $user_info['uname'] = $user_info_whole['uname'];
         $user_info['remark'] = $user_info_whole['remark'];
-        $user_info['avatar']['avatar_middle'] = $user_info_whole['avatar']['avatar_big'];
+        $user_info['avatar']['avatar_middle'] = $user_info_whole['avatar']['avatar_small'];
         $user_info['user_group'] = $user_info_whole['user_group'];
 
         /* 关注状态 */

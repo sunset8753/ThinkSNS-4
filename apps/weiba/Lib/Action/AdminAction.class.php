@@ -191,7 +191,7 @@ class AdminAction extends AdministratorAction
         $data['intro'] = $_POST['intro'];
         $data['notify'] = t($_POST['notify']);
         $data['who_can_post'] = t($_POST['who_can_post']);
-        $data['admin_uid'] = t($_POST['admin_uid']);
+        $data['admin_uid'] = intval($_POST['admin_uid']);
         $data['recommend'] = intval($_POST['recommend']);
 
         // # 修复，后台上传微吧logo前台没有logo
