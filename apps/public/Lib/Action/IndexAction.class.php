@@ -23,9 +23,21 @@ class IndexAction extends Action
         unset($weibaIfOpen, $channelIfOpen);
 
         // 安全过滤
-        $d['type'] = t($_GET['type']) ? t($_GET['type']) : 'all';
-        $d['feed_type'] = t($_GET['feed_type']) ? t($_GET['feed_type']) : '';
-        $d['feed_key'] = t($_GET['feed_key']) ? t($_GET['feed_key']) : '';
+        $d['type'] = 'all';
+        if (isset($_GET['type']) && t($_GET['type'])) {
+            $d['type'] = $_GET['type'];
+        }
+
+        $d['feed_type'] = '';
+        if (isset($_GET['feed_type']) && t($_GET['feed_type'])) {
+            $d['feed_type'] = $_GET['feed_type'];
+        }
+
+        $d['feed_key'] = '';
+        if (isset($_GET['feed_key']) && t($_GET['feed_key'])) {
+            $d['feed_key'] = $_GET['feed_key'];
+        }
+
         // 关注的人
         if ($d['type'] === 'following') {
             $d['groupname'] = L('PUBLIC_ACTIVITY_STREAM'); // 我关注的

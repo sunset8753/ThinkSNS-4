@@ -93,6 +93,27 @@ final class Ts
             date_default_timezone_set('Asia/Shanghai');
         }
 
+        /**
+         * 注册异常处理
+         */
+        set_exception_handler(function ($exception) {
+            if (!TS_APP_DEV) {
+                $message = $exception->getMessage();
+                include THEME_PATH.'/system_message.html';
+                exit;
+            }
+            var_dump($exception);
+        });
+
+        /**
+         * 注册错误处理
+         */
+        set_error_handler(
+            function ($errno, $errstr, $errfile, $errline, $errcontext) {
+                // 不处理任何信息了～mdzz!!!谁写的代码～简直。。。
+            }
+        );
+
         /* 初始化数据库 */
         self::$capsule = new Capsule();
         self::$capsule->addConnection((array) include TS_CONFIGURE.'/database.php');
