@@ -93,7 +93,7 @@ final class Ts
             date_default_timezone_set('Asia/Shanghai');
         }
 
-        /**
+        /*
          * 注册异常处理
          */
         set_exception_handler(function ($exception) {
@@ -105,7 +105,7 @@ final class Ts
             var_dump($exception);
         });
 
-        /**
+        /*
          * 注册错误处理
          */
         set_error_handler(
