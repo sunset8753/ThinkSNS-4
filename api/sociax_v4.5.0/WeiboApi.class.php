@@ -1980,13 +1980,13 @@ class WeiboApi extends Api
                         $_attach['attach_origin_height'] = $av['height'];
                         if ($av['width'] > 384 && $av['height'] > 384) {
                             //$_attach['attach_middle'] = getImageUrl($av['save_path'].$av['save_name'], 384, 384, true);
-                            $_attach['attach_middle'] = UPLOAD_URL . getThumbImage(UPLOAD_URL . $av['save_path'] . $av['save_name'], 384)['src'];
+                            $_attach['attach_middle'] = UPLOAD_URL.getThumbImage(UPLOAD_URL.$av['save_path'].$av['save_name'], 384)['src'];
                         } else {
                             $_attach['attach_middle'] = $_attach['attach_origin'];
                         }
                         if ($av['width'] > 220 && $av['height'] > 220) {
                             //$_attach['attach_small'] = getImageUrl($av['save_path'].$av['save_name'], 220, 220, true);
-                            $_attach['attach_small'] = UPLOAD_URL . getThumbImage(UPLOAD_URL . $av['save_path'] . $av['save_name'], 220)['src'];
+                            $_attach['attach_small'] = UPLOAD_URL.getThumbImage(UPLOAD_URL.$av['save_path'].$av['save_name'], 220)['src'];
                         } else {
                             $_attach['attach_small'] = $_attach['attach_origin'];
                         }
