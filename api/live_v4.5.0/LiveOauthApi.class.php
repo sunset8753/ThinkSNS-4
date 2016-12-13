@@ -726,7 +726,7 @@ class LiveOauthApi extends Api
     /**
      * @name 生成预处理订单
      *
-     * @param  array  $token 创建订单的相关信息
+     * @param array $token 创建订单的相关信息
      *
      * @return string 订单号
      */

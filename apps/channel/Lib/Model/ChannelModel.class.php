@@ -267,8 +267,8 @@ class ChannelModel extends Model
     /**
      * 格式化图片的大小，使瀑布流图片显示正常.
      *
-     * @param  array $data  频道数据数组，包含宽高数据
-     * @param int $width 格式化后的宽度，默认300px
+     * @param array $data  频道数据数组，包含宽高数据
+     * @param int   $width 格式化后的宽度，默认300px
      *
      * @return array 格式化宽高后的数据
      */

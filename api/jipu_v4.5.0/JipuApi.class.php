@@ -275,7 +275,6 @@ class JipuApi extends Api
             $login_salt = rand(11111, 99999);
             $data['login_salt'] = $save['login_salt'] = $login_salt;
             $data['password'] = $save['password'] = md5(md5($this->data['password']).$login_salt);
-            
         }
 
         //修改手机号
@@ -306,7 +305,7 @@ class JipuApi extends Api
         return array(
                 'status' => 1,
                 'msg'    => '修改成功',
-                'data'   => $data
+                'data'   => $data,
         );
     }
 }

@@ -312,13 +312,13 @@ class UserApi extends Api
      * @param varchar $uname
      *                         用户名
      * @param varchar $key
-     *                          搜索关键字
-     * @param int $max_id
-     *                          上次返回的最后一条关注ID
-     * @param int $count
-     *                   粉丝个数
+     *                         搜索关键字
+     * @param int     $max_id
+     *                         上次返回的最后一条关注ID
+     * @param int     $count
+     *                         粉丝个数
      *
-     * @return array   用户信息+关注状态
+     * @return array 用户信息+关注状态
      */
     public function user_follower()
     {
@@ -390,13 +390,13 @@ class UserApi extends Api
      * @param varchar $uname
      *                         用户名
      * @param varchar $key
-     *                          搜索关键字
-     * @param int $max_id
-     *                          上次返回的最后一条关注ID
-     * @param int $count
-     *                          关注个数
+     *                         搜索关键字
+     * @param int     $max_id
+     *                         上次返回的最后一条关注ID
+     * @param int     $count
+     *                         关注个数
      *
-     * @return array   用户信息+关注状态
+     * @return array 用户信息+关注状态
      */
     public function user_following()
     {
@@ -465,13 +465,13 @@ class UserApi extends Api
      * @param varchar $uname
      *                         用户名
      * @param varchar $key
-     *                          搜索关键字
-     * @param int $max_id
-     *                          上次返回的最后一条关注ID
-     * @param int $count
-     *                   好友个数
+     *                         搜索关键字
+     * @param int     $max_id
+     *                         上次返回的最后一条关注ID
+     * @param int     $count
+     *                         好友个数
      *
-     * @return array   用户信息+关注状态
+     * @return array 用户信息+关注状态
      */
     public function user_friend()
     {

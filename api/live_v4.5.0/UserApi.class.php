@@ -312,13 +312,13 @@ class UserApi extends Api
      * @param varchar $uname
      *                         用户名
      * @param varchar $key
-     *                          搜索关键字
-     * @param int $max_id
-     *                          上次返回的最后一条关注ID
-     * @param int $count
-     *                   粉丝个数
+     *                         搜索关键字
+     * @param int     $max_id
+     *                         上次返回的最后一条关注ID
+     * @param int     $count
+     *                         粉丝个数
      *
-     * @return array   用户信息+关注状态
+     * @return array 用户信息+关注状态
      */
     public function user_follower()
     {
@@ -389,13 +389,13 @@ class UserApi extends Api
      * @param varchar $uname
      *                         用户名
      * @param varchar $key
-     *                          搜索关键字
-     * @param int $max_id
-     *                          上次返回的最后一条关注ID
-     * @param int $count
-     *                          关注个数
+     *                         搜索关键字
+     * @param int     $max_id
+     *                         上次返回的最后一条关注ID
+     * @param int     $count
+     *                         关注个数
      *
-     * @return array   用户信息+关注状态
+     * @return array 用户信息+关注状态
      */
     public function user_following()
     {
@@ -463,13 +463,13 @@ class UserApi extends Api
      * @param varchar $uname
      *                         用户名
      * @param varchar $key
-     *                          搜索关键字
-     * @param int $max_id
-     *                          上次返回的最后一条关注ID
-     * @param int $count
-     *                   好友个数
+     *                         搜索关键字
+     * @param int     $max_id
+     *                         上次返回的最后一条关注ID
+     * @param int     $count
+     *                         好友个数
      *
-     * @return array   用户信息+关注状态
+     * @return array 用户信息+关注状态
      */
     public function user_friend()
     {
@@ -1387,7 +1387,7 @@ class UserApi extends Api
         foreach ($uids as $key => $value) {
             $r = model('Follow')->doFollow($this->mid, $value);
         }
-        
+
         if ($r) {
             $r['status'] = 1;
             $r['msg'] = '关注成功';
@@ -1410,7 +1410,7 @@ class UserApi extends Api
      * @return array 状态+提示+关注状态
      */
     public function unfollow()
-    {   
+    {
         if (empty($this->mid) || empty($this->user_id)) {
             return array(
                     'status' => 0,

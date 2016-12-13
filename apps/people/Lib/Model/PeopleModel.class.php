@@ -145,7 +145,7 @@ class PeopleModel extends model
     /**
      * 获取筛选用户数据列表.
      *
-     * @param  array  $data  筛选相关条件
+     * @param array  $data  筛选相关条件
      * @param string $field 字段数据
      * @param string $order 排序数据
      *
@@ -240,7 +240,7 @@ class PeopleModel extends model
     /**
      * 获取筛选认证用数据列表.
      *
-     * @param  array  $data  筛选相关条件
+     * @param array  $data  筛选相关条件
      * @param string $field 字段数据
      * @param string $order 排序数据
      *
@@ -287,7 +287,7 @@ class PeopleModel extends model
     /**
      * 获取筛选官方用户数据列表.
      *
-     * @param  array  $data  筛选相关条件
+     * @param array  $data  筛选相关条件
      * @param string $field 字段数据
      * @param string $order 排序数据
      *
@@ -317,7 +317,7 @@ class PeopleModel extends model
     /**
      * 获取筛选用户数据列表.
      *
-     * @param  array  $data  筛选相关条件
+     * @param array  $data  筛选相关条件
      * @param string $field 字段数据
      * @param string $order 排序数据
      * @param int    $page  分页个数
@@ -409,7 +409,7 @@ class PeopleModel extends model
     /**
      * 获取筛选认证用数据列表.
      *
-     * @param  array  $data  筛选相关条件
+     * @param array  $data  筛选相关条件
      * @param string $field 字段数据
      * @param string $order 排序数据
      * @param int    $page  分页个数
@@ -444,7 +444,7 @@ class PeopleModel extends model
     /**
      * 获取筛选官方用户数据列表.
      *
-     * @param  array  $data  筛选相关条件
+     * @param array  $data  筛选相关条件
      * @param string $field 字段数据
      * @param string $order 排序数据
      * @param int    $page  分页个数
@@ -507,7 +507,7 @@ class PeopleModel extends model
      * @param string $type  指定类型
      * @param int    $limit 显示数据，默认为3
      *
-     * @return array  指定用户的相关信息
+     * @return array 指定用户的相关信息
      */
     public function getTopUserInfos($uids, $type, $limit = 3)
     {

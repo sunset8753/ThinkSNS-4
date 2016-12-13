@@ -18,7 +18,7 @@ class FollowWeibaWidget extends Widget
      * $data['weiba_name'] string 目标微吧的名称
      * $data['follow_state'] array 当前用户与目标微吧的关注状态，array('following'=>1)
      *
-     * @param  array  $data 渲染的相关配置参数
+     * @param array $data 渲染的相关配置参数
      *
      * @return string 渲染后的模板数据
      */

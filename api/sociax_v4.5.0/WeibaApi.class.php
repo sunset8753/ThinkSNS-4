@@ -975,7 +975,7 @@ class WeibaApi extends Api
      * @param array $fids
      *                           用户ID数组
      * @param array $follow_data
-     *                            关注状态数据
+     *                           关注状态数据
      *
      * @return array 格式化后的用户关注状态数据
      */

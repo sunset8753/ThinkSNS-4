@@ -11,7 +11,7 @@ class UserListWidget extends Widget
     /**
      * 模板渲染.
      *
-     * @param  array  $data 相关数据
+     * @param array $data 相关数据
      *
      * @return string 用户展示列表
      */

@@ -16,7 +16,7 @@ class ManageWeibaListWidget extends Widget
      * @example
      * $data['manage_uid'] integer 用户ID
      *
-     * @param  array  $data 渲染的相关配置参数
+     * @param array $data 渲染的相关配置参数
      *
      * @return string 渲染后的模板数据
      */

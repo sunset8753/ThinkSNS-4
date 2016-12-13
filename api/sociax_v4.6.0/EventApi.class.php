@@ -170,7 +170,7 @@ class EventApi extends Api
     /**
      * 更具类型，返回列表数据.
      *
-     * @param  int   $type 获取的类型， 0我参与的活动 1我发起的活动， 2我关注的活动
+     * @param int $type 获取的类型， 0我参与的活动 1我发起的活动， 2我关注的活动
      *
      * @return array
      *

@@ -225,7 +225,7 @@ class ChannelApi extends Api
      * @param int $channel_category_id
      *                                 频道分类ID
      * @param int $type
-     *                                            1-关注 0-取消关注
+     *                                 1-关注 0-取消关注
      *
      * @return 状态+提示
      */
