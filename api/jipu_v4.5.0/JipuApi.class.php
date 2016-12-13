@@ -214,6 +214,7 @@ class JipuApi extends Api
     {
         $uid = $this->data['uid'];
         $save = array();
+        $data = array();
         // 修改用户昵称
         if (isset($this->data['uname'])) {
             $uname = t($this->data['uname']);
@@ -272,8 +273,9 @@ class JipuApi extends Api
                 return $return;
             }
             $login_salt = rand(11111, 99999);
-            $save['login_salt'] = $login_salt;
-            $save['password'] = md5(md5($this->data['password']).$login_salt);
+            $data['login_salt'] = $save['login_salt'] = $login_salt;
+            $data['password'] = $save['password'] = md5(md5($this->data['password']).$login_salt);
+            
         }
 
         //修改手机号
@@ -304,6 +306,7 @@ class JipuApi extends Api
         return array(
                 'status' => 1,
                 'msg'    => '修改成功',
+                'data'   => $data
         );
     }
 }

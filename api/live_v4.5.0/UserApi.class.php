@@ -1371,7 +1371,7 @@ class UserApi extends Api
      * 关注一个用户 --using.
      *
      * @param
-     *        	integer user_id 要关注的用户ID
+     *          integer user_id 要关注的用户ID
      *
      * @return array 状态+提示+关注状态
      */
@@ -1383,7 +1383,11 @@ class UserApi extends Api
                     'msg'    => '参数错误',
             );
         }
-        $r = model('Follow')->doFollow($this->mid, $this->user_id);
+        $uids = explode(',', $this->user_id);
+        foreach ($uids as $key => $value) {
+            $r = model('Follow')->doFollow($this->mid, $value);
+        }
+        
         if ($r) {
             $r['status'] = 1;
             $r['msg'] = '关注成功';
@@ -1401,19 +1405,22 @@ class UserApi extends Api
      * 取消关注一个用户 --using.
      *
      * @param
-     *        	integer user_id 要关注的用户ID
+     *          integer user_id 要关注的用户ID
      *
      * @return array 状态+提示+关注状态
      */
     public function unfollow()
-    {
+    {   
         if (empty($this->mid) || empty($this->user_id)) {
             return array(
                     'status' => 0,
                     'msg'    => '参数错误',
             );
         }
-        $r = model('Follow')->unFollow($this->mid, $this->user_id);
+        $uids = explode(',', $this->user_id);
+        foreach ($uids as $key => $value) {
+            $r = model('Follow')->unFollow($this->mid, $value);
+        }
         if ($r) {
             $r['status'] = 1;
             $r['msg'] = '取消成功';
