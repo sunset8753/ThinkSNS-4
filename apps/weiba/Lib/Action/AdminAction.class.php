@@ -497,8 +497,8 @@ class AdminAction extends AdministratorAction
     }
 
     /**
-     * 添加首页帖子
-     */ 
+     * 添加首页帖子.
+     */
     public function addIndexPost()
     {
         $_REQUEST['tabHash'] = 'addIndexPost';
@@ -515,9 +515,10 @@ class AdminAction extends AdministratorAction
     }
 
     /**
-     * 编辑首页帖子
-     */ 
-    public function editIndexPost(){
+     * 编辑首页帖子.
+     */
+    public function editIndexPost()
+    {
         $_REQUEST['tabHash'] = 'editIndexPost';
         if ($_GET['post_id'] != '') {
             $imgs = M('weiba_post')->where('post_id='.$_GET['post_id'])->find();
@@ -526,7 +527,7 @@ class AdminAction extends AdministratorAction
         $this->_initWeibaListAdminMenu();
         $this->pageTab[] = array('title' => '编辑首页帖子', 'tabHash' => 'editIndexPost', 'url' => U('weiba/Admin/editIndexPost'));
         // 列表key值 DOACTION表示操作
-        $this->pageKeyList = array('post_id','index_img');
+        $this->pageKeyList = array('post_id', 'index_img');
         // 表单URL设置
         $this->savePostUrl = U('weiba/Admin/doIndexPost');
         $this->notEmpty = array('index_img');
@@ -535,9 +536,10 @@ class AdminAction extends AdministratorAction
     }
 
     /**
-     * 添加/修改首页帖子
-     */ 
-    public function doIndexPost(){
+     * 添加/修改首页帖子.
+     */
+    public function doIndexPost()
+    {
         $img = M('weiba_post')->where('post_id='.(int) $_POST['post_id'])->find();
         if ($_POST['index_img'] == '') {
             $this->error('请上传图片!');

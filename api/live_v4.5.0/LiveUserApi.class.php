@@ -63,7 +63,7 @@ class LiveUserApi extends LiveBaseApi
         }
         $data['ticket'] = $_REQUEST['ticket'];
         $result = json_decode(tocurl($this->Service_User_Url, $this->curl_header, $data), true);
-        
+
         if ($result['code'] == 1) {
             $add_data['uid'] = $uid;
             $add_data['sex'] = $data['sex'];
@@ -109,7 +109,7 @@ class LiveUserApi extends LiveBaseApi
         }
 
         return $result;
-    } 
+    }
 
     /**
      * 获取用户信息.
