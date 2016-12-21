@@ -472,7 +472,7 @@ class AdminAction extends AdministratorAction
         $list = M('weiba_post')->where($map)->order('last_reply_time desc,post_time desc')->findPage(5);
         $scount = M('weiba_post')->where($map)->count();
         if ($scount < 5) {
-            $this->pageButton[] = array('title' => '添加帖子', 'onclick' => "location.href='".U('weiba/Admin/newImg')."'");
+            $this->pageButton[] = array('title' => '添加帖子', 'onclick' => "location.href='".U('weiba/Admin/addIndexPost')."'");
         }
         // 数据组装
         foreach ($list['data'] as $k => $v) {
@@ -485,7 +485,7 @@ class AdminAction extends AdministratorAction
             $list['data'][$k]['is_index_time'] = friendlyDate($v['is_index_time']);
             $list['data'][$k]['weiba_id'] = M('weiba')->where('weiba_id='.$v['weiba_id'])->getField('weiba_name');
             if ($v['is_del'] == 0) {
-                $list['data'][$k]['DOACTION'] = '<a href='.U('weiba/Admin/newImg', 'post_id='.$v['post_id']).'>修改</a>&nbsp;-&nbsp;';
+                $list['data'][$k]['DOACTION'] = '<a href='.U('weiba/Admin/editIndexPost', 'post_id='.$v['post_id']).'>修改</a>&nbsp;-&nbsp;';
 
                 $list['data'][$k]['DOACTION'] .= '<a href="javascript:void(0)" onclick="admin.removePost('.$v['post_id'].')">移除帖子</a>';
             } else {
@@ -496,38 +496,68 @@ class AdminAction extends AdministratorAction
         $this->displayList($listData);
     }
 
-    public function newImg()
+    /**
+     * 添加首页帖子
+     */ 
+    public function addIndexPost()
     {
+        $_REQUEST['tabHash'] = 'addIndexPost';
+        // 初始化微吧列表管理菜单
+        $this->_initWeibaListAdminMenu();
+        $this->pageTab[] = array('title' => '添加首页帖子', 'tabHash' => 'addIndexPost', 'url' => U('weiba/Admin/addIndexPost'));
+        // 列表key值 DOACTION表示操作
+        $this->pageKeyList = array('post_id', 'index_img');
+        // 表单URL设置
+        $this->savePostUrl = U('weiba/Admin/doIndexPost');
+        $this->notEmpty = array('post_id', 'index_img');
+        $this->onsubmit = 'admin.checkNewImg(this)';
+        $this->displayConfig();
+    }
+
+    /**
+     * 编辑首页帖子
+     */ 
+    public function editIndexPost(){
+        $_REQUEST['tabHash'] = 'editIndexPost';
         if ($_GET['post_id'] != '') {
             $imgs = M('weiba_post')->where('post_id='.$_GET['post_id'])->find();
-            //dump(M()->getLastSql());
-            $this->assign('img', $imgs);
-            //dump($imgs);exit;
         }
-        if (IS_POST) {
-            $img = M('weiba_post')->where('post_id='.(int) $_POST['post_id'])->find();
-            if ($_POST['img_1'] == '') {
-                $this->error('请上传图片!');
-            } else {
-                $data['index_img'] = (int) $_POST['img_1'];
-                $data['is_index'] = 1;
-                $data['is_index_time'] = time();
-                if ($img && $img['is_del'] != 1) {
-                    $res = M('weiba_post')->where('post_id='.$img['post_id'])->save($data);
-                    //dump(M()->getLastSql());
-                    //dump($res);exit;
-                } else {
-                    $this->error('该帖子已经删除!');
-                }
-                if ($res) {
-                    $this->assign('jumpUrl', U('weiba/Admin/indexPost'));
-                    $this->success('设置成功!');
-                } else {
-                    $this->error('设置失败!');
-                }
-            }
+        // 初始化微吧列表管理菜单
+        $this->_initWeibaListAdminMenu();
+        $this->pageTab[] = array('title' => '编辑首页帖子', 'tabHash' => 'editIndexPost', 'url' => U('weiba/Admin/editIndexPost'));
+        // 列表key值 DOACTION表示操作
+        $this->pageKeyList = array('post_id','index_img');
+        // 表单URL设置
+        $this->savePostUrl = U('weiba/Admin/doIndexPost');
+        $this->notEmpty = array('index_img');
+        $this->onsubmit = 'admin.checkNewImg(this)';
+        $this->displayConfig($imgs);
+    }
+
+    /**
+     * 添加/修改首页帖子
+     */ 
+    public function doIndexPost(){
+        $img = M('weiba_post')->where('post_id='.(int) $_POST['post_id'])->find();
+        if ($_POST['index_img'] == '') {
+            $this->error('请上传图片!');
         } else {
-            $this->display();
+            $data['index_img'] = (int) $_POST['index_img'];
+            $data['is_index'] = 1;
+            $data['is_index_time'] = time();
+            if ($img && $img['is_del'] != 1) {
+                $res = M('weiba_post')->where('post_id='.$img['post_id'])->save($data);
+                //dump(M()->getLastSql());
+                //dump($res);exit;
+            } else {
+                $this->error('该帖子已经删除!');
+            }
+            if ($res) {
+                $this->assign('jumpUrl', U('weiba/Admin/indexPost'));
+                $this->success('操作成功');
+            } else {
+                $this->error('操作失败');
+            }
         }
     }
 

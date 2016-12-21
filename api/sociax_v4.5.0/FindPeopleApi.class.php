@@ -170,6 +170,7 @@ class FindPeopleApi extends Api
                 $user_list[$k]['uid'] = $v['uid'];
                 $user_list[$k]['uname'] = $v['uname'];
                 $user_list[$k]['remark'] = D('UserRemark')->getRemark($this->mid, $v['uid']);
+                $user_list [$k]['remark'] = $user_list[$k]['remark'] ? $user_list[$k]['remark'] : '';
                 $user_list[$k]['intro'] = $user_list[$k]['intro'] ? formatEmoji(false, $user_list[$k]['intro']) : '';
                 $user_list[$k]['follow_status'] = $follow_status[$v['uid']];
                 $user_info = api('User')->get_user_info($v['uid']);
@@ -182,6 +183,7 @@ class FindPeopleApi extends Api
                 $user_list[$k]['uid'] = $v['userInfo']['uid'];
                 $user_list[$k]['uname'] = $v['userInfo']['uname'];
                 $user_list[$k]['remark'] = $v['userInfo']['remark'];
+                $user_list [$k]['remark'] = $v['userInfo']['remark'] ? $v['userInfo']['remark'] : '';
                 $user_list[$k]['avatar'] = $v['userInfo']['avatar_big'];
                 $user_list[$k]['intro'] = $v['info']['msg'] ? formatEmoji(false, $v['info']['msg']) : '';
                 $user_list[$k]['follow_status'] = model('Follow')->getFollowState($this->mid, $v['userInfo']['uid']);
@@ -437,17 +439,16 @@ class FindPeopleApi extends Api
                     'msg'    => '请选择地区',
             );
         }
-        !empty($max_id) && $map['uid'] = array(
-                'lt',
-                $max_id,
-        );
-        $map['city'] = $city_id;
-        $map['is_init'] = 1;
-        $map['uid'] = array(
-                'neq',
-                $this->mid,
-        );
-        $uids = model('User')->where($map)->order('uid desc')->field('uid')->limit($count)->findAll();
+        $sql = " `city` = ".$city_id." and `is_init` = 1 and  `uid` != ".$this->mid;
+
+        !empty($max_id) && $sql = " `city` = ".$city_id." and `is_init` = 1 and  ( `uid` != ".$this->mid." and `uid` < ".$max_id." ) ";
+        // $map['city'] = $city_id;
+        // $map['is_init'] = 1;
+        // $map['uid'] = array(
+        //         'neq',
+        //         $this->mid,
+        // );
+        $uids = model('User')->where($sql)->order('uid desc')->field('uid')->limit($count)->findAll();
         $user_list = array();
         foreach ($uids as $k => $v) {
             $user_info = api('User')->get_user_info($v['uid']);

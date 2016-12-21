@@ -45,7 +45,6 @@ class LiveUserApi extends LiveBaseApi
         $data['usid'] = $this->usid_prex.$uid; //传递uid增加前缀
         $data['uname'] = getUserName($uid); //用户名
         $data['sex'] = getUserField($uid, 'sex'); //传递性别
-        $data['ticket'] = $_REQUEST['ticket'];
 
         // $data = [
         //     'usid' => $this->usid_prex.$uid, //传递uid增加前缀
@@ -53,13 +52,6 @@ class LiveUserApi extends LiveBaseApi
         //     'sex' => getUserField($uid, 'sex'),  //传递性别
         // ];
         //语法不能高于5.3.12.。。
-        if ($this->mod->where(array('usid' => $data['usid']))->count() && !isset($data['ticket'])) {
-            return array(
-                    'status' => 0,
-                    'msg'    => '直播用户已经存在',
-                );
-            die;
-        }
 
         //参数检测
         if (in_array('', $data)) {
@@ -69,8 +61,9 @@ class LiveUserApi extends LiveBaseApi
                 );
             die;
         }
-
+        $data['ticket'] = $_REQUEST['ticket'];
         $result = json_decode(tocurl($this->Service_User_Url, $this->curl_header, $data), true);
+        
         if ($result['code'] == 1) {
             $add_data['uid'] = $uid;
             $add_data['sex'] = $data['sex'];
@@ -78,7 +71,8 @@ class LiveUserApi extends LiveBaseApi
             $add_data['ticket'] = $result['data']['ticket'];
             $add_data['uname'] = $data['uname'];
             $add_data['ctime'] = $add_data['mtime'] = time();
-            if (!isset($data['ticket'])) {
+
+            if (empty($data['ticket'])) {
                 if (!$this->mod->add($add_data)) {
                     //写入直播用户数据失败
                     return array(
@@ -113,7 +107,9 @@ class LiveUserApi extends LiveBaseApi
                 die;
             }
         }
-    }
+
+        return $result;
+    } 
 
     /**
      * 获取用户信息.

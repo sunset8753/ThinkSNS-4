@@ -260,11 +260,11 @@ class UserAction extends AdministratorAction
         // 列表key值 DOACTION表示操作
         switch (strtolower($type)) {
             case 'index':
-                $this->pageKeyList = array('uid', 'uname', 'user_group', 'location', 'is_audit', 'is_active', 'is_init', 'ctime', 'reg_ip', 'DOACTION');
+                $this->pageKeyList = array('uid', 'uname', 'phone', 'user_group', 'location', 'is_audit', 'is_active', 'is_init', 'ctime', 'reg_ip', 'DOACTION');
                 break;
             case 'dellist':
             case 'disablesendlist':
-                $this->pageKeyList = array('uid', 'uname', 'user_group', 'location', 'is_audit', 'is_active', 'is_init', 'ctime', 'reg_ip', 'disable_time', 'DOACTION');
+                $this->pageKeyList = array('uid', 'uname', 'phone', 'user_group', 'location', 'is_audit', 'is_active', 'is_init', 'ctime', 'reg_ip', 'disable_time', 'DOACTION');
                 break;
             case 'pending':
                 $this->pageKeyList = array('uid', 'uname', 'location', 'ctime', 'reg_ip', 'DOACTION');
