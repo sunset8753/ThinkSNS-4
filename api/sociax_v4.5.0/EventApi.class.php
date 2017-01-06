@@ -10,6 +10,7 @@ use Apps\Event\Model\Enrollment;
 use Apps\Event\Model\Event;
 use Apps\Event\Model\Star;
 use Ts\Models as Model;
+
 /**
  * 活动API.
  *
@@ -423,7 +424,7 @@ class EventApi extends Api
             foreach ($videoids as $key2 => $value2) {
                 $videoinfo = D('video')->where(array('video_id'=>$value2))->find();
                 $videodata = array(
-                    'url' => SITE_URL.$videoinfo['video_mobile_path'],
+                    'url'    => SITE_URL.$videoinfo['video_mobile_path'],
                     'imgurl' => SITE_URL.$videoinfo['image_path'],
                     );
 
@@ -441,15 +442,15 @@ class EventApi extends Api
         $eid = intval($this->data['eid']);
         if (empty($eid)) {
             return array(
-                'status' => 0,
+                'status'  => 0,
                 'message' => '参数错误',
                 );
         }
-        $page = intval($this->data['page'])? : 1 ;
-        $count = intval($this->data['count']) ? : 20;
-        $limit = ($page-1)*$count;
+        $page = intval($this->data['page']) ?: 1;
+        $count = intval($this->data['count']) ?: 20;
+        $limit = ($page - 1) * $count;
         $users = D('event_enrollment')->where(array(
-            'eid' => array('eq', $eid),
+            'eid'   => array('eq', $eid),
             'aduit' => array('eq', 1),
         ))->field('uid')->limit($limit.','.$count)->select();
 
@@ -457,7 +458,7 @@ class EventApi extends Api
             foreach ($users as $key => $value) {
                 $value = model('User')->getUserInfo($value['uid']);
                 $users[$key] = $value;
-                if (!empty($this->mid) && D('user_follow')->where(array('uid'=>$this->mid,'fid'=>$value['uid']))->find()) {
+                if (!empty($this->mid) && D('user_follow')->where(array('uid'=>$this->mid, 'fid'=>$value['uid']))->find()) {
                     $users[$key]['is_follow'] = 1;
                 } else {
                     $users[$key]['is_follow'] = 0;
@@ -465,17 +466,16 @@ class EventApi extends Api
             }
         } else {
             return array(
-                'status' => 0,
+                'status'  => 0,
                 'message' => '暂无相关数据',
                 );
         }
 
         return array(
             'status' => 1,
-            'data' => $users,
+            'data'   => $users,
             );
     }
-
 
     /**
      * 获取活动列表 - 按照最新发布排序.
@@ -594,31 +594,30 @@ class EventApi extends Api
      */
     public function myComment()
     {
-        $max_id = intval($this->data['max_id']); 
+        $max_id = intval($this->data['max_id']);
         $count = intval($this->data['count']) ?: 10;
-        $type = intval($this->data['type']) ? : 1;
+        $type = intval($this->data['type']) ?: 1;
 
         if ($type == 1) {
-            $list = Model\Comment::where('app','Event')->where('table','event_list')->where('app_uid',$this->mid);
+            $list = Model\Comment::where('app', 'Event')->where('table', 'event_list')->where('app_uid', $this->mid);
         } else {
             $eid = intval($this->data['eid']);
             if (!$eid) {
-                return array(                
+                return array(
                     'status'  => 0,
                     'message' => '参数错误',
                     );
             }
-            $list = Model\Comment::where('app','Event')->where('table','event_list')->where('row_id',$eid);
+            $list = Model\Comment::where('app', 'Event')->where('table', 'event_list')->where('row_id', $eid);
         }
-        
+
         if (!empty($max_id)) {
-            $data = $list->where('comment_id','<',$max_id)->orderby('comment_id','desc')->take($count)->get();
+            $data = $list->where('comment_id', '<', $max_id)->orderby('comment_id', 'desc')->take($count)->get();
         } else {
-            $data = $list->orderby('comment_id','desc')->take($count)->get();
+            $data = $list->orderby('comment_id', 'desc')->take($count)->get();
         }
         $return = array();
         if (!empty($data->toArray())) {
-
             foreach ($data as $key => $value) {
                 $_return = array();
                 $_return['eid'] = $value['row_id'];
@@ -651,26 +650,27 @@ class EventApi extends Api
                 $return[] = $_return;
             }
 
-        if ($type != 1) {
-            $commentCount = Event::getInstance()->getCommentCount($eid);
-            return array(
-                'status' => 1,
-                'data' => $return,
+            if ($type != 1) {
+                $commentCount = Event::getInstance()->getCommentCount($eid);
+
+                return array(
+                'status'       => 1,
+                'data'         => $return,
                 'commentCount' => $commentCount,
                 );
-        }
-        return array(
+            }
+
+            return array(
             'status' => 1,
-            'data' => $return,
+            'data'   => $return,
             );
         } else {
-            return array(                
+            return array(
                 'status'  => 0,
                 'message' => '暂无相关数据',
                 );
         }
     }
-
 
     //删除活动
     public function delEvent()
@@ -679,22 +679,18 @@ class EventApi extends Api
 
         $delete = Event::getInstance()->setId($eid)->setUid($this->mid)->delete();
         if ($delete) {
-            Model\EventStar::where('eid',$eid)->delete();
-            Model\Comment::where('app','Event')->where('table','event_list')->where('row_id',$eid)->delete();
+            Model\EventStar::where('eid', $eid)->delete();
+            Model\Comment::where('app', 'Event')->where('table', 'event_list')->where('row_id', $eid)->delete();
 
             return array(
-                'status' => 1,
+                'status'  => 1,
                 'message' => '删除成功',
                 );
         } else {
-
             return array(
-                'status' => 0,
+                'status'  => 0,
                 'message' => Event::getInstance()->getError(),
                 );
         }
     }
-
-
-
 } // END class EventApi extends Api

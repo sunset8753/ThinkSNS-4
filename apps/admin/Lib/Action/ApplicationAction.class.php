@@ -211,6 +211,7 @@ class ApplicationAction extends AdministratorAction
         ));
         $this->displayConfig();
     }
+
     /*================= Application about setting end   ========================*/
 
     /*================ Application feedback setting start ======================*/

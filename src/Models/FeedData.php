@@ -2,13 +2,12 @@
 
 namespace Ts\Models;
 
-use Ts\Bases\Model;
 use Medz\Component\EmojiFormat;
+use Ts\Bases\Model;
 
 /**
- * 分享数据模型
+ * 分享数据模型.
  *
- * @package Ts\Models\FeedData
  * @author Seven Du <lovevipdsw@outlook.com>
  **/
 class FeedData extends Model

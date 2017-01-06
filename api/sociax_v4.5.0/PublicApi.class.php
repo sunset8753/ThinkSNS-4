@@ -1,11 +1,9 @@
 <?php
 
-use Illuminate\Database\Capsule\Manager as Capsule;
-use Apps\Event\Common;
 use Apps\Event\Model\Cate;
-use Apps\Event\Model\Enrollment;
 use Apps\Event\Model\Event;
-use Apps\Event\Model\Star;
+use Illuminate\Database\Capsule\Manager as Capsule;
+
 /**
  * 公开api接口.
  *
@@ -124,6 +122,7 @@ class PublicApi extends Api
         ob_end_flush();
         exit;
     }
+
     /**
      * 发现.
      *
@@ -133,7 +132,7 @@ class PublicApi extends Api
      **/
     public function discover()
     {
-        $open_arr = !empty($this->data['needs']) ? explode(',', t($this->data['needs'])) : array('1', '2', '3', '4', '5', '6', '7', '8', '9', '10','11');
+        $open_arr = !empty($this->data['needs']) ? explode(',', t($this->data['needs'])) : array('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11');
         $type = !empty($this->data['type']) ? t($this->data['type']) : 'system';
         $list = S('api_discover_'.$type);
 
