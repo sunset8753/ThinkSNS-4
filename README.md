@@ -1,13 +1,28 @@
-# ThinkSNS
-ThinkSNS v4开源社交系统 [Web page](http://www.thinksns.com)
+<h1 align="center">ThinkSNS</h1>
+<p align="center">
+  <a href="https://packagist.org/packages/medz/thinksns">
+    <img src="https://poser.pugx.org/medz/thinksns/v/stable" alt="Latest Stable Version" />
+  </a>
+  <a href="https://packagist.org/packages/medz/thinksns">
+    <img src="https://poser.pugx.org/medz/thinksns/v/stable" alt="Total Downloads" />
+  </a>
+  <a href="https://packagist.org/packages/medz/thinksns">
+    <img src="https://poser.pugx.org/medz/thinksns/v/unstable" alt="Latest Unstable Version" />
+  </a>
+  <a href="https://github.com/medz/thinksns/blob/master/LICENSE">
+    <img src="https://poser.pugx.org/medz/thinksns/license" alt="License" />
+  </a>
+  <a href="https://styleci.io/repos/42001557">
+    <img src="https://styleci.io/repos/42001557/shield?branch=master" alt="StyleCI" />
+  </a>
+</p>
 
+# 概述
 A extensable social networing system.
 
-[![Latest Stable Version](https://poser.pugx.org/medz/thinksns/v/stable)](https://packagist.org/packages/medz/thinksns)
-[![Total Downloads](https://poser.pugx.org/medz/thinksns/downloads)](https://packagist.org/packages/medz/thinksns)
-[![Latest Unstable Version](https://poser.pugx.org/medz/thinksns/v/unstable)](https://packagist.org/packages/medz/thinksns)
-[![License](https://poser.pugx.org/medz/thinksns/license)](https://github.com/medz/thinksns/blob/master/LICENSE)
-[![StyleCI](https://styleci.io/repos/42001557/shield?branch=master)](https://styleci.io/repos/42001557)
+[TS+](https://github.com/zhiyicx/thinksns-plus)
+[website](http://www.thinksns.com)
+[demo preview](http://demo.thinksns.com/ts4)
 
 # 如何获得ThinkSNS
 >* Composer
