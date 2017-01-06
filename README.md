@@ -20,9 +20,9 @@
 # 概述
 A extensable social networing system.
 
-[TS+](https://github.com/zhiyicx/thinksns-plus)
-[website](http://www.thinksns.com)
-[demo preview](http://demo.thinksns.com/ts4)
+- [TS+](https://github.com/zhiyicx/thinksns-plus)
+- [website](http://www.thinksns.com)
+- [demo preview](http://demo.thinksns.com/ts4)
 
 # 如何获得ThinkSNS
 >* Composer
