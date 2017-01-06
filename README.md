@@ -4,7 +4,7 @@
     <img src="https://poser.pugx.org/medz/thinksns/v/stable" alt="Latest Stable Version" />
   </a>
   <a href="https://packagist.org/packages/medz/thinksns">
-    <img src="https://poser.pugx.org/medz/thinksns/v/stable" alt="Total Downloads" />
+    <img src="https://poser.pugx.org/medz/thinksns/downloads" alt="Total Downloads" />
   </a>
   <a href="https://packagist.org/packages/medz/thinksns">
     <img src="https://poser.pugx.org/medz/thinksns/v/unstable" alt="Latest Unstable Version" />
