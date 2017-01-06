@@ -15,7 +15,7 @@ error_reporting(0);
 // set_time_limit(0);
 
 // 新的系统核心接入
-require TS_ROOT.'/src/bootstrap.php';
+require dirname(__FILE__).'/src/bootstrap.php';
 
 //session 设置
 ini_set('session.cookie_httponly', 1);

@@ -304,6 +304,13 @@ class RegisterAction extends Action
             $this->error('注册参数错误');
         }
 
+        // 增强注册验证方式
+        if ($this->_config['account_type'] == 'email') {
+            $regType = 'email';
+        } elseif ($this->_config['account_type'] == 'phone') {
+            $regType = 'phone';
+        }
+
         $invite = t($_POST['invate']);
         $inviteCode = t($_POST['invate_key']);
         $email = t($_POST['email']);

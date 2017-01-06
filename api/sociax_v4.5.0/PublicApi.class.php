@@ -1,7 +1,11 @@
 <?php
 
 use Illuminate\Database\Capsule\Manager as Capsule;
-
+use Apps\Event\Common;
+use Apps\Event\Model\Cate;
+use Apps\Event\Model\Enrollment;
+use Apps\Event\Model\Event;
+use Apps\Event\Model\Star;
 /**
  * 公开api接口.
  *
@@ -101,6 +105,26 @@ class PublicApi extends Api
     }
 
     /**
+     * 获取用户协议HTML信息.
+     *
+     * @author bs
+     **/
+    public function showAgreement()
+    {
+        ob_end_clean();
+        ob_start();
+        header('Content-Type:text/html;charset=utf-8');
+        echo '<!DOCTYPE html>',
+             '<html lang="zh">',
+                '<head><title>用户协议</title></head>',
+                '<body>',
+                json_decode(json_encode(model('Xdata')->get('admin_Application:agreement')), false)->agreement,
+                '</body>',
+             '</html>';
+        ob_end_flush();
+        exit;
+    }
+    /**
      * 发现.
      *
      * @return array
@@ -109,7 +133,7 @@ class PublicApi extends Api
      **/
     public function discover()
     {
-        $open_arr = !empty($this->data['needs']) ? explode(',', t($this->data['needs'])) : array('1', '2', '3', '4', '5', '6', '7', '8', '9', '10');
+        $open_arr = !empty($this->data['needs']) ? explode(',', t($this->data['needs'])) : array('1', '2', '3', '4', '5', '6', '7', '8', '9', '10','11');
         $type = !empty($this->data['type']) ? t($this->data['type']) : 'system';
         $list = S('api_discover_'.$type);
 
@@ -307,6 +331,24 @@ class PublicApi extends Api
             $goods_rs = json_decode($goods_rs, true);
 
             $list['jipu_goods'] = $goods_rs;
+        }
+
+        //活动
+        if (in_array('11', $open_arr)) {
+            $num = 5; //随机五条
+            $data = Event::getInstance()->getRightEvent($num);
+            foreach ($data as $key => $value) {
+                $value['area'] = model('Area')->getAreaById($value['area']);
+                $value['area'] = $value['area']['title'];
+                $value['city'] = model('Area')->getAreaById($value['city']);
+                $value['city'] = $value['city']['title'];
+                $value['image'] = getImageUrlByAttachId($value['image']);
+                $value['cate'] = Cate::getInstance()->getById($value['cid']);
+                $value['cate'] = $value['cate']['name'];
+                $data[$key] = $value;
+            }
+
+            $list['event'] = $data;
         }
 
         return $list;

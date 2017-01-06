@@ -135,6 +135,7 @@ $menu = array(
                 'Socket设置' => U('admin/Application/socket'),
                 '极光推送'     => U('admin/Application/jpush'),
                 '关于我们'     => U('admin/Application/about'),
+                '用户协议'     => U('admin/Application/agreement'),
                 '反馈管理'     => U('admin/Application/feedback'),
                 '提现管理'     => U('admin/Application/ZB_credit_order'),
             ),

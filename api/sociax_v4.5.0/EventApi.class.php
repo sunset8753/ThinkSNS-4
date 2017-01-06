@@ -9,7 +9,7 @@ use Apps\Event\Model\Cate;
 use Apps\Event\Model\Enrollment;
 use Apps\Event\Model\Event;
 use Apps\Event\Model\Star;
-
+use Ts\Models as Model;
 /**
  * 活动API.
  *
@@ -211,6 +211,14 @@ class EventApi extends Api
         return $this->uploadFile('image', 'event_image', 'gif', 'jpg', 'png', 'jpeg');
     }
 
+    /*
+        上传视频
+     */
+    public function uploadVideo()
+    {
+        return model('Video')->upload();
+    }
+
     /**
      * 上传文件.
      *
@@ -268,7 +276,7 @@ class EventApi extends Api
      **/
     public function create()
     {
-        list($title, $stime, $etime, $area, $city, $address, $place, $image, $mainNumber, $price, $tips, $cate, $audit, $content) = Common::getInput(array('title', 'stime', 'etime', 'area', 'city', 'address', 'place', 'image', 'mainNumber', 'price', 'tips', 'cate', 'audit', 'content'));
+        list($title, $stime, $etime, $area, $city, $address, $place, $image, $mainNumber, $price, $tips, $cate, $audit, $content, $longitude, $latitude, $attach, $video) = Common::getInput(array('title', 'stime', 'etime', 'area', 'city', 'address', 'place', 'image', 'mainNumber', 'price', 'tips', 'cate', 'audit', 'content', 'longitude', 'latitude', 'attach', 'video'));
         $audit != 1 and
         $audit = 0;
         /* 有大写参数，APP可能穿错，避免错误，还是多写一下 */
@@ -278,7 +286,11 @@ class EventApi extends Api
                                 ->setEtime($etime) // 结束时间
                                 ->setArea($area) // 地区
                                 ->setCity($city) // 城市
+                                ->setAttach($attach) //附件
+                                ->setVideo($video) //视频
                                 ->setLocation($address) // 详细地址
+                                ->setLongitude($longitude) // 经度
+                                ->setLatitude($latitude) // 纬度
                                 ->setPlace($place)  // 场所
                                 ->setImage($image) // 封面图片
                                 ->setManNumber($mainNumber)  // 活动人数
@@ -289,11 +301,11 @@ class EventApi extends Api
                                 ->setUid($this->mid) // 发布活动的用户
                                 ->setTips($tips) // 费用说明
                                 ->add())) {
-            self::message(array(
+            return array(
                 'status'  => 1,
                 'message' => '发布成功',
                 'data'    => $id,
-            ));
+            );
         }
         self::error(array(
             'status'  => 0,
@@ -396,8 +408,74 @@ class EventApi extends Api
         /* 封面 */
         $data['image'] = getImageUrlByAttachId($data['image']);
 
+        //图片附件
+        if (!empty($data['attach'])) {
+            $attachids = explode(',', $data['attach']);
+            foreach ($attachids as $key => $value) {
+                $attach[] = getAttachUrlByAttachId($value);
+            }
+            $data['attach'] = $attach;
+        }
+
+        //视频附件
+        if (!empty($data['video'])) {
+            $videoids = explode(',', $data['video']);
+            foreach ($videoids as $key2 => $value2) {
+                $videoinfo = D('video')->where(array('video_id'=>$value2))->find();
+                $videodata = array(
+                    'url' => SITE_URL.$videoinfo['video_mobile_path'],
+                    'imgurl' => SITE_URL.$videoinfo['image_path'],
+                    );
+
+                $video[] = $videodata;
+                $data['video'] = $video;
+            }
+        }
+
         return $data;
     }
+
+    //获取分页的活动成员信息
+    public function getEventUsers()
+    {
+        $eid = intval($this->data['eid']);
+        if (empty($eid)) {
+            return array(
+                'status' => 0,
+                'message' => '参数错误',
+                );
+        }
+        $page = intval($this->data['page'])? : 1 ;
+        $count = intval($this->data['count']) ? : 20;
+        $limit = ($page-1)*$count;
+        $users = D('event_enrollment')->where(array(
+            'eid' => array('eq', $eid),
+            'aduit' => array('eq', 1),
+        ))->field('uid')->limit($limit.','.$count)->select();
+
+        if (!empty($users)) {
+            foreach ($users as $key => $value) {
+                $value = model('User')->getUserInfo($value['uid']);
+                $users[$key] = $value;
+                if (!empty($this->mid) && D('user_follow')->where(array('uid'=>$this->mid,'fid'=>$value['uid']))->find()) {
+                    $users[$key]['is_follow'] = 1;
+                } else {
+                    $users[$key]['is_follow'] = 0;
+                }
+            }
+        } else {
+            return array(
+                'status' => 0,
+                'message' => '暂无相关数据',
+                );
+        }
+
+        return array(
+            'status' => 1,
+            'data' => $users,
+            );
+    }
+
 
     /**
      * 获取活动列表 - 按照最新发布排序.
@@ -424,6 +502,8 @@ class EventApi extends Api
             $value['image'] = getImageUrlByAttachId($value['image']);
             $value['cate'] = Cate::getInstance()->getById($value['cid']);
             $value['cate'] = $value['cate']['name'];
+            $value['num'] = Event::getInstance()->getUserCount($value['eid']);
+
             $data['data'][$key] = $value;
         }
 
@@ -452,6 +532,7 @@ class EventApi extends Api
             $value['image'] = getImageUrlByAttachId($value['image']);
             $value['cate'] = Cate::getInstance()->getById($value['cid']);
             $value['cate'] = $value['cate']['name'];
+            $value['num'] = Event::getInstance()->getUserCount($value['eid']);
             $data[$key] = $value;
         }
 
@@ -507,4 +588,113 @@ class EventApi extends Api
     {
         Common::setHeader('application/json', 'utf-8');
     }
+
+    /*
+        活动评论
+     */
+    public function myComment()
+    {
+        $max_id = intval($this->data['max_id']); 
+        $count = intval($this->data['count']) ?: 10;
+        $type = intval($this->data['type']) ? : 1;
+
+        if ($type == 1) {
+            $list = Model\Comment::where('app','Event')->where('table','event_list')->where('app_uid',$this->mid);
+        } else {
+            $eid = intval($this->data['eid']);
+            if (!$eid) {
+                return array(                
+                    'status'  => 0,
+                    'message' => '参数错误',
+                    );
+            }
+            $list = Model\Comment::where('app','Event')->where('table','event_list')->where('row_id',$eid);
+        }
+        
+        if (!empty($max_id)) {
+            $data = $list->where('comment_id','<',$max_id)->orderby('comment_id','desc')->take($count)->get();
+        } else {
+            $data = $list->orderby('comment_id','desc')->take($count)->get();
+        }
+        $return = array();
+        if (!empty($data->toArray())) {
+
+            foreach ($data as $key => $value) {
+                $_return = array();
+                $_return['eid'] = $value['row_id'];
+                $_return['title'] = $value['app_detail_summary'];
+                $_return['comment_id'] = $value['comment_id'];
+                $_return['app_uid'] = $value['app_uid'];
+                $_return['uid'] = $value['uid'];
+                $_return['to_uid'] = $value['to_uid'];
+                $_return['content'] = $value['content'];
+                $_return['ctime'] = $value['ctime'];
+                if (!empty($_return['to_uid'])) {
+                    $toUserInfo = getUserInfo($value['to_uid']);
+                    $_return['to_uname'] = $toUserInfo['uname'];
+                    $_return['to_remark'] = $toUserInfo['remark'];
+                    $_return['to_avatar'] = getUserFace($value['to_uid']);
+                } else {
+                    $_return['to_uname'] = '';
+                    $_return['to_remark'] = '';
+                    $_return['to_avatar'] = '';
+                }
+                $appUserInfo = getUserInfo($value['app_uid']);
+                $_return['app_uname'] = $appUserInfo['uname'];
+                $_return['app_remark'] = $appUserInfo['remark'];
+                $_return['app_avatar'] = getUserFace($value['app_uid']);
+                $UserInfo = getUserInfo($value['uid']);
+                $_return['uname'] = $UserInfo['uname'];
+                $_return['remark'] = $UserInfo['remark'];
+                $_return['avatar'] = getUserFace($value['uid']);
+
+                $return[] = $_return;
+            }
+
+        if ($type != 1) {
+            $commentCount = Event::getInstance()->getCommentCount($eid);
+            return array(
+                'status' => 1,
+                'data' => $return,
+                'commentCount' => $commentCount,
+                );
+        }
+        return array(
+            'status' => 1,
+            'data' => $return,
+            );
+        } else {
+            return array(                
+                'status'  => 0,
+                'message' => '暂无相关数据',
+                );
+        }
+    }
+
+
+    //删除活动
+    public function delEvent()
+    {
+        $eid = intval($this->data['eid']);
+
+        $delete = Event::getInstance()->setId($eid)->setUid($this->mid)->delete();
+        if ($delete) {
+            Model\EventStar::where('eid',$eid)->delete();
+            Model\Comment::where('app','Event')->where('table','event_list')->where('row_id',$eid)->delete();
+
+            return array(
+                'status' => 1,
+                'message' => '删除成功',
+                );
+        } else {
+
+            return array(
+                'status' => 0,
+                'message' => Event::getInstance()->getError(),
+                );
+        }
+    }
+
+
+
 } // END class EventApi extends Api

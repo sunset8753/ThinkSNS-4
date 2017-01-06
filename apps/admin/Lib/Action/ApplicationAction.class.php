@@ -196,6 +196,21 @@ class ApplicationAction extends AdministratorAction
         $this->displayConfig();
     }
 
+    /**
+     * 客户端用户协议页面设置.
+     *
+     * @author bs
+     **/
+    public function agreement()
+    {
+        $this->pageKeyList = array('agreement');
+        array_push($this->pageTab, array(
+            'title' => '用户协议设置',
+            'hash'  => 'agreement',
+            'url'   => U('admin/Application/agreement'),
+        ));
+        $this->displayConfig();
+    }
     /*================= Application about setting end   ========================*/
 
     /*================ Application feedback setting start ======================*/

@@ -1082,6 +1082,8 @@ class UserApi extends Api
             } else {
                 $save['search_key'] = $save['uname'];
             }
+
+            $save['first_letter'] = getShortPinyin($save['uname']);
         }
         // 修改性别
         if (isset($this->data['sex'])) {
