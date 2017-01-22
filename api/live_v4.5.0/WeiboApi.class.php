@@ -11,11 +11,11 @@ class WeiboApi extends Api
      * 获取全站最新发布微博 --using.
      *
      * @param
-     *        	integer max_id 上次返回的最后一条微博ID
+     *          integer max_id 上次返回的最后一条微博ID
      * @param
-     *        	integer count 微博条数
+     *          integer count 微博条数
      * @param
-     *        	varchar type 微博类型 'post','repost','postimage','postfile','postvideo'
+     *          varchar type 微博类型 'post','repost','postimage','postfile','postvideo'
      *
      * @return array 微博列表
      */
@@ -23,7 +23,7 @@ class WeiboApi extends Api
     {
         // return $this->mid;
         $max_id = $this->max_id ? intval($this->max_id) : 0;
-        $count = $this->count ? intval($this->count) : 20;
+        $count = $this->count ? intval($this->count) : 10;
         $where = 'is_del=0 and is_audit=1';
         // 动态类型
         $type = $this->data['type'];
@@ -51,11 +51,11 @@ class WeiboApi extends Api
      * 获取当前用户所关注的用户发布的微博 --using.
      *
      * @param
-     *        	integer max_id 上次返回的最后一条微博ID
+     *          integer max_id 上次返回的最后一条微博ID
      * @param
-     *        	integer count 微博条数
+     *          integer count 微博条数
      * @param
-     *        	varchar type 微博类型 'post','repost','postimage','postfile','postvideo'
+     *          varchar type 微博类型 'post','repost','postimage','postfile','postvideo'
      *
      * @return array 微博列表
      */
@@ -63,7 +63,7 @@ class WeiboApi extends Api
     {
         $tablePrefix = C('DB_PREFIX');
         $max_id = $this->max_id ? intval($this->max_id) : 0;
-        $count = $this->count ? intval($this->count) : 20;
+        $count = $this->count ? intval($this->count) : 10;
         $where = 'a.is_del=0 and a.is_audit=1';
         // 动态类型
         $type = $this->data['type'];
@@ -92,13 +92,13 @@ class WeiboApi extends Api
      * 获取当前用户所关注频道分类下的微博 --using.
      *
      * @param
-     *        	integer cid 频道ID(可选,0或null为全部)
+     *          integer cid 频道ID(可选,0或null为全部)
      * @param
-     *        	integer max_id 上次返回的最后一条微博ID
+     *          integer max_id 上次返回的最后一条微博ID
      * @param
-     *        	integer count 微博条数
+     *          integer count 微博条数
      * @param
-     *        	varchar type 微博类型 'post','repost','postimage','postfile','postvideo'
+     *          varchar type 微博类型 'post','repost','postimage','postfile','postvideo'
      *
      * @return array 指定频道分类下的微博列表
      */
@@ -113,7 +113,7 @@ class WeiboApi extends Api
 
         $tablePrefix = C('DB_PREFIX');
         $max_id = $this->max_id ? intval($this->max_id) : 0;
-        $count = $this->count ? intval($this->count) : 20;
+        $count = $this->count ? intval($this->count) : 10;
         $cid = intval($this->data['cid']);
         $where = 'c.status = 1';
         if ($cid && in_array($cid, $cids)) {
@@ -147,13 +147,13 @@ class WeiboApi extends Api
      * 获取某个话题下的微博 --using.
      *
      * @param
-     *        	varchar topic_name 话题名称
+     *          varchar topic_name 话题名称
      * @param
-     *        	integer max_id 上次返回的最后一条微博ID
+     *          integer max_id 上次返回的最后一条微博ID
      * @param
-     *        	integer count 微博条数
+     *          integer count 微博条数
      * @param
-     *        	integer type 微博类型 'post','repost','postimage','postfile','postvideo'
+     *          integer type 微博类型 'post','repost','postimage','postfile','postvideo'
      *
      * @return array 话题详情
      */
@@ -264,16 +264,16 @@ class WeiboApi extends Api
      * 获取推荐最新发布微博 --using.
      *
      * @param
-     *        	integer max_id 上次返回的最后一条微博ID
+     *          integer max_id 上次返回的最后一条微博ID
      * @param
-     *        	integer count 微博条数
+     *          integer count 微博条数
      *
      * @return array 微博列表
      */
     public function recommend_timeline()
     {
         $max_id = $this->max_id ? intval($this->max_id) : 0;
-        $count = $this->count ? intval($this->count) : 20;
+        $count = $this->count ? intval($this->count) : 10;
 
         $where = 'is_del=0 and is_audit=1 and is_recommend=1';
         !empty($max_id) && $where .= " AND feed_id < {$max_id}";
@@ -291,7 +291,7 @@ class WeiboApi extends Api
      * 某条微博详细内容 --using.
      *
      * @param
-     *        	integer feed_id 微博ID
+     *          integer feed_id 微博ID
      *
      * @return array 微博详细信息
      */
@@ -334,11 +334,11 @@ class WeiboApi extends Api
      * 获取指定微博的评论列表 --using.
      *
      * @param
-     *        	integer feed_id 微博ID
+     *          integer feed_id 微博ID
      * @param
-     *        	integer max_id 上次返回的最后一条评论ID
+     *          integer max_id 上次返回的最后一条评论ID
      * @param
-     *        	integer count 评论条数
+     *          integer count 评论条数
      *
      * @return array 评论列表
      */
@@ -391,11 +391,11 @@ class WeiboApi extends Api
      * 获取指定微博的赞过的人的列表 --using.
      *
      * @param
-     *        	integer feed_id 微博ID
+     *          integer feed_id 微博ID
      * @param
-     *        	integer max_id 上次返回的最后一条赞的ID
+     *          integer max_id 上次返回的最后一条赞的ID
      * @param
-     *        	integer count 数量
+     *          integer count 数量
      *
      * @return array 点赞的用户列表
      */
@@ -432,7 +432,7 @@ class WeiboApi extends Api
      * 发布一条微博 --using.
      *
      * @param
-     *        	string content 微博内容
+     *          string content 微博内容
      * @param float  $latitude
      *                          纬度
      * @param float  $longitude
@@ -440,22 +440,21 @@ class WeiboApi extends Api
      * @param string $address
      *                          具体地址
      * @param
-     *        	integer from 来源(2-android 3-iphone)
+     *          integer from 来源(2-android 3-iphone)
      * @param
-     *        	string channel_category_id 频道ID(多个频道ID之间用逗号隔开)
+     *          string channel_category_id 频道ID(多个频道ID之间用逗号隔开)
      *
      * @return array 状态+提示/数据
      */
     public function post_weibo($datas)
     {
-        if (!$datas) {
-            if (!CheckPermission('core_normal', 'feed_post')) {
-                return array(
-                        'status' => 0,
-                        'msg'    => '您没有权限',
-                );
-            }
-        } else {
+        if (!CheckPermission('core_normal', 'feed_post')) {
+            return array(
+                'status' => 0,
+                'msg'    => '您没有权限',
+            );
+        }
+        if ($datas) {
             $this->data['type'] = $datas['type'];
         }
 
@@ -471,7 +470,7 @@ class WeiboApi extends Api
         $data['body'] = $this->data['content'];
 
         /* 格式化emoji */
-        $data['body'] = formatEmoji(true, $data['body']);
+        $data['body'] = t(formatEmoji(true, $data['body']));
 
         if (trim($data['body']) == '') {
             return array(
@@ -596,7 +595,7 @@ class WeiboApi extends Api
      * @param file $_FILE
      *                    图片
      * @param
-     *        	string content 微博内容
+     *          string content 微博内容
      * @param float  $latitude
      *                          纬度
      * @param float  $longitude
@@ -604,14 +603,20 @@ class WeiboApi extends Api
      * @param string $address
      *                          具体地址
      * @param
-     *        	integer from 来源(2-android 3-iphone)
+     *          integer from 来源(2-android 3-iphone)
      * @param
-     *        	string channel_id 频道ID(多个频道ID之间用逗号隔开)
+     *          string channel_id 频道ID(多个频道ID之间用逗号隔开)
      *
      * @return array 状态+提示/数据
      */
     public function upload_photo()
     {
+        if (!CheckPermission('core_normal', 'feed_post')) {
+            return array(
+                'status' => 0,
+                'msg'    => '您没有权限',
+            );
+        }
         $d['attach_type'] = 'feed_image';
         $d['upload_type'] = 'image';
         $GLOBALS['fromMobile'] = true;
@@ -636,7 +641,7 @@ class WeiboApi extends Api
      * @param file $_FILE
      *                    视频
      * @param
-     *        	string content 微博内容
+     *          string content 微博内容
      * @param float  $latitude
      *                          纬度
      * @param float  $longitude
@@ -644,16 +649,21 @@ class WeiboApi extends Api
      * @param string $address
      *                          具体地址
      * @param
-     *        	integer from 来源(2-android 3-iphone)
+     *          integer from 来源(2-android 3-iphone)
      * @param
-     *        	string channel_id 频道ID(多个频道ID之间用逗号隔开)
+     *          string channel_id 频道ID(多个频道ID之间用逗号隔开)
      *
      * @return array 状态+提示/数据
      */
     public function upload_video()
     {
         // return $_FILES;
-
+        if (!CheckPermission('core_normal', 'feed_post')) {
+            return array(
+                'status' => 0,
+                'msg'    => '您没有权限',
+            );
+        }
         // dump($_REQUEST);exit;
         $info = model('Video')->upload($this->data['from'], $this->data['timeline']);
         if ($info['status']) {
@@ -678,7 +688,7 @@ class WeiboApi extends Api
      * 删除一条微博 --using.
      *
      * @param
-     *        	integer feed_id 微博ID
+     *          integer feed_id 微博ID
      *
      * @return array 状态+提示
      */
@@ -720,9 +730,9 @@ class WeiboApi extends Api
      * 转发一条微博 --using.
      *
      * @param
-     *        	integer feed_id 微博ID
+     *          integer feed_id 微博ID
      * @param
-     *        	string content 转发内容
+     *          string content 转发内容
      * @param float  $latitude
      *                          纬度
      * @param float  $longitude
@@ -730,7 +740,7 @@ class WeiboApi extends Api
      * @param string $address
      *                          具体地址
      * @param
-     *        	integer from 来源(2-android 3-iPhone)
+     *          integer from 来源(2-android 3-iPhone)
      *
      * @return array 状态+提示
      */
@@ -761,7 +771,6 @@ class WeiboApi extends Api
         $p['latitude'] = floatval($this->data['latitude']);
         $p['longitude'] = floatval($this->data['longitude']);
         $p['address'] = t($this->data['address']);
-
         /* # 将emoji编码 */
         $p['body'] = formatEmoji(true, $p['body']);
 
@@ -787,13 +796,13 @@ class WeiboApi extends Api
      * 评论一条微博 --using.
      *
      * @param
-     *        	integer feed_id 微博ID
+     *          integer feed_id 微博ID
      * @param
-     *        	integer to_comment_id 评论ID
+     *          integer to_comment_id 评论ID
      * @param
-     *        	string content 评论内容
+     *          string content 评论内容
      * @param
-     *        	integer from 来源(2-android 3-iPhone)
+     *          integer from 来源(2-android 3-iPhone)
      *
      * @return array 状态+提示
      */
@@ -827,7 +836,7 @@ class WeiboApi extends Api
         $data['content'] = $this->data['content'];
         // $data ['from'] = 'feed';
         /* # 将emoji编码 */
-        $data['content'] = formatEmoji(true, $data['content']);
+        $data['content'] = t(formatEmoji(true, $data['content']));
         if ($this->data['to_comment_id']) {
             $data['to_comment_id'] = intval($this->data['to_comment_id']);
             $data['to_uid'] = model('Comment')->where('comment_id='.intval($this->data['to_comment_id']))->getField('uid');
@@ -857,7 +866,7 @@ class WeiboApi extends Api
                             'msg'    => $filterContentStatus['data'],
                     );
                 }
-                $wr_data['content'] = $filterContentStatus['data'];
+                $wr_data['content'] = t($filterContentStatus['data']);
                 $wr_data['reply_id'] = $data['comment_id'];
 
                 D('weiba_reply')->add($wr_data);
@@ -928,7 +937,7 @@ class WeiboApi extends Api
      * 赞某条微博 --using.
      *
      * @param
-     *        	integer feed_id 微博ID
+     *          integer feed_id 微博ID
      *
      * @return array 状态+提示
      */
@@ -953,7 +962,7 @@ class WeiboApi extends Api
      * 取消赞某条微博 --using.
      *
      * @param
-     *        	integer feed_id 微博ID
+     *          integer feed_id 微博ID
      *
      * @return array 状态+提示
      */
@@ -978,7 +987,7 @@ class WeiboApi extends Api
      * 赞某条评论 --using.
      *
      * @param
-     *        	integer comment_id 评论ID
+     *          integer comment_id 评论ID
      *
      * @return array 状态+提示
      */
@@ -1003,7 +1012,7 @@ class WeiboApi extends Api
      * 取消赞某条评论 --using.
      *
      * @param
-     *        	integer comment_id 评论ID
+     *          integer comment_id 评论ID
      *
      * @return array 状态+提示
      */
@@ -1028,7 +1037,7 @@ class WeiboApi extends Api
      * 收藏一条资源 --using.
      *
      * @param
-     *        	integer feed_id 资源ID
+     *          integer feed_id 资源ID
      *
      * @return array 状态+提示
      */
@@ -1055,7 +1064,7 @@ class WeiboApi extends Api
      * 取消收藏 --using.
      *
      * @param
-     *        	integer feed_id 资源ID
+     *          integer feed_id 资源ID
      *
      * @return array 状态+提示
      */
@@ -1078,11 +1087,11 @@ class WeiboApi extends Api
      * 举报一条微博 --using.
      *
      * @param
-     *        	integer feed_id 微博ID
+     *          integer feed_id 微博ID
      * @param
-     *        	varchar reason 举报原因
+     *          varchar reason 举报原因
      * @param
-     *        	integer from 来源(2-android 3-iphone)
+     *          integer from 来源(2-android 3-iphone)
      *
      * @return array 状态+提示
      */
@@ -1200,13 +1209,13 @@ class WeiboApi extends Api
      * 用户收藏的微博 --using.
      *
      * @param
-     *        	integer user_id 用户UID
+     *          integer user_id 用户UID
      * @param
-     *        	integer max_id 上次返回的最后一条收藏ID
+     *          integer max_id 上次返回的最后一条收藏ID
      * @param
-     *        	integer count 微博条数
+     *          integer count 微博条数
      * @param
-     *        	integer type 微博类型 'post','repost','postimage','postfile','postvideo'
+     *          integer type 微博类型 'post','repost','postimage','postfile','postvideo'
      *
      * @return array 微博列表
      */
@@ -1285,13 +1294,13 @@ class WeiboApi extends Api
      * 按关键字搜索微博 --using.
      *
      * @param
-     *        	integer max_id 上次返回的最后一条收藏ID
+     *          integer max_id 上次返回的最后一条收藏ID
      * @param
-     *        	integer count 微博条数
+     *          integer count 微博条数
      * @param
-     *        	varchar key 关键字
+     *          varchar key 关键字
      * @param
-     *        	integer type 微博类型 'post','repost','postimage','postfile','postvideo'
+     *          integer type 微博类型 'post','repost','postimage','postfile','postvideo'
      *
      * @return array 微博列表
      */
@@ -1341,13 +1350,13 @@ class WeiboApi extends Api
      * 按话题搜索微博 --using.
      *
      * @param
-     *        	integer max_id 上次返回的最后一条收藏ID
+     *          integer max_id 上次返回的最后一条收藏ID
      * @param
-     *        	integer count 微博条数
+     *          integer count 微博条数
      * @param
-     *        	varchar key 关键字
+     *          varchar key 关键字
      * @param
-     *        	integer type 微博类型 'post','repost','postimage','postfile','postvideo'
+     *          integer type 微博类型 'post','repost','postimage','postfile','postvideo'
      *
      * @return array 微博列表
      */
@@ -1398,11 +1407,11 @@ class WeiboApi extends Api
      * 搜索@最近联系人 --using.
      *
      * @param
-     *        	varchar key 关键字
+     *          varchar key 关键字
      * @param
-     *        	integer max_id 上次返回的最后一条用户UID
+     *          integer max_id 上次返回的最后一条用户UID
      * @param
-     *        	integer count 用户条数
+     *          integer count 用户条数
      *
      * @return array 用户列表
      */
@@ -1488,11 +1497,11 @@ class WeiboApi extends Api
      * 搜索话题 --using.
      *
      * @param
-     *        	varchar key 关键字
+     *          varchar key 关键字
      * @param
-     *        	integer max_id 上次返回的最后一条话题ID
+     *          integer max_id 上次返回的最后一条话题ID
      * @param
-     *        	integer count 话题条数
+     *          integer count 话题条数
      *
      * @return array 话题列表
      */
@@ -1531,9 +1540,9 @@ class WeiboApi extends Api
      * 提到用户的微博 --using.
      *
      * @param
-     *        	integer max_id 上次返回的最后一条atme_id
+     *          integer max_id 上次返回的最后一条atme_id
      * @param
-     *        	integer count @条数
+     *          integer count @条数
      *
      * @return array 提到我的列表
      */
@@ -1596,9 +1605,9 @@ class WeiboApi extends Api
      * 与我相关.
      *
      * @param
-     *        	integer max_id 上次返回的最后一条atme_id
+     *          integer max_id 上次返回的最后一条atme_id
      * @param`
-     *        	integer count @条数
+     *          integer count @条数
      *
      * @return array 与我相关列表
      */
@@ -1638,9 +1647,9 @@ class WeiboApi extends Api
      * 获取当前用户收到的评论 --using.
      *
      * @param
-     *        	integer max_id 上次返回的最后一条comment_id
+     *          integer max_id 上次返回的最后一条comment_id
      * @param
-     *        	integer count 评论条数
+     *          integer count 评论条数
      *
      * @return array 评论列表
      */
@@ -1690,9 +1699,9 @@ class WeiboApi extends Api
      * 获取当前用户发出的评论 --using.
      *
      * @param
-     *        	integer max_id 上次返回的最后一条comment_id
+     *          integer max_id 上次返回的最后一条comment_id
      * @param
-     *        	integer count 评论条数
+     *          integer count 评论条数
      *
      * @return array 评论列表
      */
@@ -1735,9 +1744,9 @@ class WeiboApi extends Api
      * 获取当前用户的收到的赞 --using.
      *
      * @param
-     *        	integer max_id 上次返回的最后一条digg_id
+     *          integer max_id 上次返回的最后一条digg_id
      * @param
-     *        	integer count 赞条数
+     *          integer count 赞条数
      *
      * @return array 赞列表
      */
@@ -1788,7 +1797,7 @@ class WeiboApi extends Api
      * 格式化手机端微博 --using.
      *
      * @param
-     *        	array feed_ids 微博ID
+     *          array feed_ids 微博ID
      *
      * @return array 微博详细信息
      */
@@ -1863,9 +1872,9 @@ class WeiboApi extends Api
      * 获取微博详情 --using.
      *
      * @param
-     *        	integer feed_id 微博ID
+     *          integer feed_id 微博ID
      * @param
-     *        	integer is_source 是否为原微博
+     *          integer is_source 是否为原微博
      *
      * @return array 微博详细信息
      */
@@ -1970,12 +1979,14 @@ class WeiboApi extends Api
                         $_attach['attach_origin_width'] = $av['width'];
                         $_attach['attach_origin_height'] = $av['height'];
                         if ($av['width'] > 384 && $av['height'] > 384) {
-                            $_attach['attach_middle'] = getImageUrl($av['save_path'].$av['save_name'], 384, 384, true);
+                            //$_attach['attach_middle'] = getImageUrl($av['save_path'].$av['save_name'], 384, 384, true);
+                            $_attach['attach_middle'] = UPLOAD_URL.getThumbImage(UPLOAD_URL.$av['save_path'].$av['save_name'], 384)['src'];
                         } else {
                             $_attach['attach_middle'] = $_attach['attach_origin'];
                         }
                         if ($av['width'] > 220 && $av['height'] > 220) {
-                            $_attach['attach_small'] = getImageUrl($av['save_path'].$av['save_name'], 220, 220, true);
+                            //$_attach['attach_small'] = getImageUrl($av['save_path'].$av['save_name'], 220, 220, true);
+                            $_attach['attach_small'] = UPLOAD_URL.getThumbImage(UPLOAD_URL.$av['save_path'].$av['save_name'], 220)['src'];
                         } else {
                             $_attach['attach_small'] = $_attach['attach_origin'];
                         }
@@ -2033,11 +2044,11 @@ class WeiboApi extends Api
      * 获取资源信息 --using.
      *
      * @param
-     *        	varchar app 应用名称
+     *          varchar app 应用名称
      * @param
-     *        	integer app_row_table 资源所在表
+     *          integer app_row_table 资源所在表
      * @param
-     *        	integer app_row_id 资源ID
+     *          integer app_row_id 资源ID
      *
      * @return array 资源信息
      */
@@ -2133,7 +2144,7 @@ class WeiboApi extends Api
      * 获取用户信息 --using.
      *
      * @param
-     *        	integer uid 用户UID
+     *          integer uid 用户UID
      *
      * @return array 用户信息
      */
@@ -2143,7 +2154,7 @@ class WeiboApi extends Api
         $user_info['uid'] = $user_info_whole['uid'];
         $user_info['uname'] = $user_info_whole['uname'];
         $user_info['remark'] = $user_info_whole['remark'];
-        $user_info['avatar']['avatar_middle'] = $user_info_whole['avatar']['avatar_big'];
+        $user_info['avatar']['avatar_middle'] = $user_info_whole['avatar']['avatar_small'];
         $user_info['user_group'] = $user_info_whole['user_group'];
 
         /* 关注状态 */

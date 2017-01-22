@@ -708,29 +708,52 @@ class OauthApi extends Api
         $type_uid = addslashes($this->data['type_uid']);
         $access_token = addslashes($this->data['access_token']);
         $refresh_token = addslashes($this->data['refresh_token']);
+        $openid = addslashes($this->data['openid']);
         $expire = intval($this->data['expire_in']);
         if (!empty($type) && !empty($type_uid)) {
             $user = M('login')->where("type_uid='{$type_uid}' AND type='{$type}'")->find();
-            if ($user && $user['uid'] > 0) {
-                if ($login = M('login')->where('uid='.$user['uid']." AND type='location'")->find()) {
-                    $data['oauth_token'] = $login['oauth_token'];
-                    $data['oauth_token_secret'] = $login['oauth_token_secret'];
-                    $data['uid'] = $login['uid'];
-                    $arr_un_in = M('user')->where(array('uid' => $user['uid']))->field('uname,intro')->find();
-                    $data['uname'] = $arr_un_in['uname'];
-                    $data['intro'] = $arr_un_in['intro'] ? formatEmoji(true, $arr_un_in['intro']) : '';
-                    $data['avatar'] = getUserFace($user['uid'], 'm');
-                } else {
-                    $data['oauth_token'] = getOAuthToken($user['uid']);
-                    $data['oauth_token_secret'] = getOAuthTokenSecret();
-                    $data['uid'] = $user['uid'];
-                    $savedata['type'] = 'location';
-                    $savedata = array_merge($savedata, $data);
-                    $result = M('login')->add($savedata);
-                    if (!$result) {
-                        return array('status' => 0, 'msg' => '获取失败');
+
+            //目前微信登录根据unionid判断  老用户通过openid登录时 判断并生成一条unionid绑定的登录信息
+            if (!$user && !empty($openid)) {
+                $user = M('login')->where("type_uid='{$openid}' AND type='{$type}'")->find();
+                if (!empty($user)) {
+                    $unionid = $this->getUnionId($access_token, $openid);
+                    if ($unionid == $type_uid) {
+                        $newdata['uid'] = $user['uid'];
+                        $newdata['type_uid'] = $type_uid;//存入新的unionid
+                        $newdata['type'] = $user['type'];
+                        $newdata['oauth_token'] = $user['oauth_token'];
+                        $newdata['oauth_token_secret'] = $user['oauth_token_secret'];
+                        $newdata['is_sync'] = $user['is_sync'];
+
+                        M('login')->add($newdata);
                     }
                 }
+            }
+
+            if ($user && $user['uid'] > 0) {
+                $data['oauth_token'] = getOAuthToken($user['uid']);
+                $data['oauth_token_secret'] = getOAuthTokenSecret();
+                $data['uid'] = $user['uid'];
+                $login = D('')->table(C('DB_PREFIX').'login')->where('uid='.$user['uid']." AND type='location'")->find();
+                if (!$login) {
+                    $savedata['type'] = 'location';
+                    $savedata = array_merge($savedata, $data);
+                    $result = D('')->table(C('DB_PREFIX').'login')->add($savedata);
+                } else {
+                    //清除缓存
+                    model('Cache')->rm($login['oauth_token'].$login['oauth_token_secret']);
+                    $result = D('')->table(C('DB_PREFIX').'login')->where('uid='.$user['uid']." AND type='location'")->save($data);
+                }
+                if (!$result) {
+                    return array('status' => 0, 'msg' => '获取失败');
+                }
+                // 获取用户信息
+                $arr_un_in = M('user')->where(array('uid' => $user['uid']))->field('uname,intro')->find();
+                $data['uname'] = $arr_un_in['uname'];
+                $data['intro'] = $arr_un_in['intro'] ? formatEmoji(true, $arr_un_in['intro']) : '';
+                $data['avatar'] = getUserFace($user['uid'], 'm');
+
                 //生成ticket
                 if ($live_user_info = D('live_user_info')->where(array('uid' => $user['uid']))->find()) {
                     $data['ticket'] = $live_user_info['ticket'];

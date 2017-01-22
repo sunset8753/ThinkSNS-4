@@ -170,6 +170,7 @@ class FindPeopleApi extends Api
                 $user_list[$k]['uid'] = $v['uid'];
                 $user_list[$k]['uname'] = $v['uname'];
                 $user_list[$k]['remark'] = D('UserRemark')->getRemark($this->mid, $v['uid']);
+                $user_list[$k]['remark'] = $user_list[$k]['remark'] ? $user_list[$k]['remark'] : '';
                 $user_list[$k]['intro'] = $user_list[$k]['intro'] ? formatEmoji(false, $user_list[$k]['intro']) : '';
                 $user_list[$k]['follow_status'] = $follow_status[$v['uid']];
                 $user_info = api('User')->get_user_info($v['uid']);
@@ -182,6 +183,7 @@ class FindPeopleApi extends Api
                 $user_list[$k]['uid'] = $v['userInfo']['uid'];
                 $user_list[$k]['uname'] = $v['userInfo']['uname'];
                 $user_list[$k]['remark'] = $v['userInfo']['remark'];
+                $user_list[$k]['remark'] = $v['userInfo']['remark'] ? $v['userInfo']['remark'] : '';
                 $user_list[$k]['avatar'] = $v['userInfo']['avatar_big'];
                 $user_list[$k]['intro'] = $v['info']['msg'] ? formatEmoji(false, $v['info']['msg']) : '';
                 $user_list[$k]['follow_status'] = model('Follow')->getFollowState($this->mid, $v['userInfo']['uid']);
@@ -212,9 +214,9 @@ class FindPeopleApi extends Api
      * 按标签搜索用户 --using.
      *
      * @param
-     *        	integer tag_id 标签ID
+     *          integer tag_id 标签ID
      * @param
-     *        	integer max_id 上次返回的最后一个用户ID
+     *          integer max_id 上次返回的最后一个用户ID
      * @param string $count
      *                      数量
      *
@@ -269,10 +271,24 @@ class FindPeopleApi extends Api
                     $tag_id,
             );
         }
-        !empty($max_id) && $tmap['row_id'] = array(
-                'lt',
-                $max_id,
-        );
+        if (!empty($max_id)) {
+            $tmap['row_id'] = array(
+                array(
+                    'lt',
+                    $max_id,
+                ),
+                array(
+                    'neq',
+                    $this->mid,
+                ),
+                'AND',
+            );
+        } else {
+            $tmap['row_id'] = array(
+                'neq',
+                $this->mid,
+            );
+        }
         $uids = M('app_tag')->field('`row_id`')->where($tmap)->order('row_id desc')->limit($count)->findAll();
 
         $user_list = array();
@@ -404,9 +420,9 @@ class FindPeopleApi extends Api
      * 按地区搜索用户 --using.
      *
      * @param
-     *        	integer city_id 城市ID
+     *          integer city_id 城市ID
      * @param
-     *        	integer max_id 上次返回的最后一个用户ID
+     *          integer max_id 上次返回的最后一个用户ID
      * @param string $count
      *                      数量
      *
@@ -423,13 +439,16 @@ class FindPeopleApi extends Api
                     'msg'    => '请选择地区',
             );
         }
-        !empty($max_id) && $map['uid'] = array(
-                'lt',
-                $max_id,
-        );
-        $map['city'] = $city_id;
-        $map['is_init'] = 1;
-        $uids = model('User')->where($map)->order('uid desc')->field('uid')->limit($count)->findAll();
+        $sql = ' `city` = '.$city_id.' and `is_init` = 1 and  `uid` != '.$this->mid;
+
+        !empty($max_id) && $sql = ' `city` = '.$city_id.' and `is_init` = 1 and  ( `uid` != '.$this->mid.' and `uid` < '.$max_id.' ) ';
+        // $map['city'] = $city_id;
+        // $map['is_init'] = 1;
+        // $map['uid'] = array(
+        //         'neq',
+        //         $this->mid,
+        // );
+        $uids = model('User')->where($sql)->order('uid desc')->field('uid')->limit($count)->findAll();
         $user_list = array();
         foreach ($uids as $k => $v) {
             $user_info = api('User')->get_user_info($v['uid']);
@@ -471,9 +490,9 @@ class FindPeopleApi extends Api
      * 按认证搜索用户 --using.
      *
      * @param
-     *        	integer verify_id 认证类型ID
+     *          integer verify_id 认证类型ID
      * @param
-     *        	integer max_id 上次返回的最后一个ID
+     *          integer max_id 上次返回的最后一个ID
      * @param string $count
      *                      数量
      *
@@ -745,24 +764,24 @@ class FindPeopleApi extends Api
      * @return float 距离
      */
     // private function getDistinct($myLat, $myLng, $userLat, $userLng) {
-    // 	$earthRadius = 6367000; // approximate radius of earth in meters
-    // 	$lat1 = ($myLat * pi ()) / 180;
-    // 	$lng1 = ($myLng * pi ()) / 180;
-    // 	$lat2 = ($userLat * pi ()) / 180;
-    // 	$lng2 = ($userLng * pi ()) / 180;
-    // 	$calcLongitude = $lng2 - $lng1;
-    // 	$calcLatitude = $lat2 - $lat1;
-    // 	$stepOne = pow ( sin ( $calcLatitude / 2 ), 2 ) + cos ( $lat1 ) * cos ( $lat2 ) * pow ( sin ( $calcLongitude / 2 ), 2 );
-    // 	$stepTwo = 2 * asin ( min ( 1, sqrt ( $stepOne ) ) );
-    // 	$calculatedDistance = round ( $earthRadius * $stepTwo / 1000, 1 );
-    // 	return $calculatedDistance . 'km';
+    //  $earthRadius = 6367000; // approximate radius of earth in meters
+    //  $lat1 = ($myLat * pi ()) / 180;
+    //  $lng1 = ($myLng * pi ()) / 180;
+    //  $lat2 = ($userLat * pi ()) / 180;
+    //  $lng2 = ($userLng * pi ()) / 180;
+    //  $calcLongitude = $lng2 - $lng1;
+    //  $calcLatitude = $lat2 - $lat1;
+    //  $stepOne = pow ( sin ( $calcLatitude / 2 ), 2 ) + cos ( $lat1 ) * cos ( $lat2 ) * pow ( sin ( $calcLongitude / 2 ), 2 );
+    //  $stepTwo = 2 * asin ( min ( 1, sqrt ( $stepOne ) ) );
+    //  $calculatedDistance = round ( $earthRadius * $stepTwo / 1000, 1 );
+    //  return $calculatedDistance . 'km';
     // }
 
     /**
      * 根据通讯录搜索用户 --using.
      *
      * @param
-     *        	string tel 以逗号连接的手机号码串
+     *          string tel 以逗号连接的手机号码串
      *
      * @return array
      */

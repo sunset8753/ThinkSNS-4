@@ -25,7 +25,7 @@
 
 
 /*帐号绑定*/
-.ico-sina-big,.ico-qq-big,.ico-qzone-big,.ico-renren-big,.ico-douban-big,.ico-baidu-big,.ico-taobao-big{background:url(image/ico-account.png) no-repeat;width:36px;height:36px;display:inline-block;}
+.ico-sina-big,.ico-qq-big,.ico-qzone-big,.ico-renren-big,.ico-douban-big,.ico-baidu-big,.ico-taobao-big,.ico-weixin-big{background:url(image/ico-account.png) no-repeat;width:36px;height:36px;display:inline-block;}
 .ico-sina-big{background-position:-46px -564px;}
 .ico-qzone-big{background-position:-184px -564px;}
 .ico-qq-big{background-position:-138px -564px;}
@@ -33,6 +33,7 @@
 .ico-douban-big{background-position:-276px -564px;}
 .ico-baidu-big{background-position:-322px -564px;}
 .ico-taobao-big{background-position:-322px -564px;}
+.ico-weixin-big{background-position:-322px -564px;}
 .bind-content{border:1px solid #eee;font-size:14px;}
 .bind-content li{height:66px;border-bottom:1px solid #eee;overflow:hidden;zoom:1;}
 .bind-content li .w1,.bind-content li .w2,.bind-content li .w3,.bind-content li .w4,.bind-content li .w5{float:left;text-align:center;}

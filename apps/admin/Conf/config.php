@@ -145,7 +145,7 @@ $menu = array(
 
 $app_list = model('App')->getConfigList();
 foreach ($app_list as $k => $v) {
-    if ($k == '找伙伴') {
+    if ($k == '找伙伴' || $k == 'Html5') {
         continue;
     }
     $menu['admin_menu']['apps'][L('PUBLIC_APP_MANAGEMENT')][$k] = $v;

@@ -470,7 +470,7 @@ class WeiboApi extends Api
         $data['body'] = $this->data['content'];
 
         /* 格式化emoji */
-        $data['body'] = formatEmoji(true, $data['body']);
+        $data['body'] = t(formatEmoji(true, $data['body']));
 
         if (trim($data['body']) == '') {
             return array(
@@ -836,7 +836,7 @@ class WeiboApi extends Api
         $data['content'] = $this->data['content'];
         // $data ['from'] = 'feed';
         /* # 将emoji编码 */
-        $data['content'] = formatEmoji(true, $data['content']);
+        $data['content'] = t(formatEmoji(true, $data['content']));
         if ($this->data['to_comment_id']) {
             $data['to_comment_id'] = intval($this->data['to_comment_id']);
             $data['to_uid'] = model('Comment')->where('comment_id='.intval($this->data['to_comment_id']))->getField('uid');
@@ -866,7 +866,7 @@ class WeiboApi extends Api
                             'msg'    => $filterContentStatus['data'],
                     );
                 }
-                $wr_data['content'] = $filterContentStatus['data'];
+                $wr_data['content'] = t($filterContentStatus['data']);
                 $wr_data['reply_id'] = $data['comment_id'];
 
                 D('weiba_reply')->add($wr_data);

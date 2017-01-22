@@ -724,7 +724,7 @@ class WeibaApi extends Api
         if (M('weiba_follow')->where($data)->find()) {
             $res = D('weiba_follow')->where($data)->delete();
             if ($res) {
-                M('weiba')->where('weiba_id='.$weiba_id)->setDec('follower_count');
+                M('weiba')->where('weiba_id='.$data['weiba_id'])->setDec('follower_count');
                 M('weiba_apply')->where($data)->delete();
 
                 // 添加积分
@@ -1315,7 +1315,7 @@ class WeibaApi extends Api
         }
         $data['uid'] = $this->mid;
         $data['ctime'] = time();
-        $data['content'] = preg_html(h($this->data['content']));
+        $data['content'] = t(preg_html(h($this->data['content'])));
         /* # 格式化emoji */
         $data['content'] = formatEmoji(true, $data['content']);
         $data['attach_id'] = intval($this->data['attach_id']);
@@ -1633,7 +1633,7 @@ class WeibaApi extends Api
         if (!$filterContentStatus['status']) {
             $this->error($filterContentStatus['data'], true);
         }
-        $data['content'] = $filterContentStatus['data'];
+        $data['content'] = t($filterContentStatus['data']);
 
         $res = D('weiba_post')->add($data);
         if ($res) {

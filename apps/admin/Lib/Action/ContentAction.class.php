@@ -376,7 +376,7 @@ class ContentAction extends AdministratorAction
         $this->assign('pageTitle', $isRec ? L('PUBLIC_RECYCLE_BIN') : L('PUBLIC_FILE_MANAGEMENT'));
         $map['is_del'] = $isRec == 1 ? 1 : 0;    //未删除的
         !empty($_POST['attach_id']) && $map['attach_id'] = array('in', explode(',', $_POST['attach_id']));
-        $_POST['from'] > 1 && $map['from'] = t($_POST['from']);
+        $_POST['from'] > 0 && $map['from'] = intval($_POST['from']-1);
         !empty($_POST['name']) && $map['name'] = array('like', '%'.t($_POST['name']).'%');
 
         $listData = model('Attach')->getAttachList($map, '*', 'attach_id desc', 10);
@@ -439,7 +439,6 @@ class ContentAction extends AdministratorAction
 
         $this->pageKeyList = array('video_id', 'name', 'size', 'uid', 'ctime', 'from', 'DOACTION');
         $this->searchKey = array('video_id', 'name', 'from');
-
         $this->opt['from'] = array_merge(array('-1' => L('PUBLIC_ALL_STREAM')), $this->from);
         $this->pageTab[] = array('title' => '视频列表', 'tabHash' => 'list', 'url' => U('admin/Content/video'));
         $this->pageTab[] = array('title' => L('PUBLIC_RECYCLE_BIN'), 'tabHash' => 'rec', 'url' => U('admin/Content/videoRec'));
@@ -456,9 +455,8 @@ class ContentAction extends AdministratorAction
         $this->assign('pageTitle', $is_del ? L('PUBLIC_RECYCLE_BIN') : L('视频管理'));
         $map['is_del'] = $is_del == 1 ? 1 : 0;    //未删除的
         !empty($_POST['video_id']) && $map['video_id'] = array('in', explode(',', $_POST['video_id']));
-        $_POST['from'] > 1 && $map['from'] = t($_POST['from']);
+        $_POST['from'] > 0 && $map['from'] = intval($_POST['from']-1);
         !empty($_POST['name']) && $map['name'] = array('like', '%'.t($_POST['name']).'%');
-
         // $listData = model('Attach')->getAttachList($map,'*','attach_id desc',10);
         $listData = D('video')->where($map)->findPage(20);
 

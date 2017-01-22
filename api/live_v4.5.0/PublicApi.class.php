@@ -99,7 +99,26 @@ class PublicApi extends Api
         ob_end_flush();
         exit;
     }
-
+    /**
+     * 获取用户协议HTML信息.
+     *
+     * @author bs
+     **/
+    public function showAgreement()
+    {
+        ob_end_clean();
+        ob_start();
+        header('Content-Type:text/html;charset=utf-8');
+        echo '<!DOCTYPE html>',
+             '<html lang="zh">',
+                '<head><title>用户协议</title></head>',
+                '<body>',
+                json_decode(json_encode(model('Xdata')->get('admin_Application:agreement')), false)->agreement,
+                '</body>',
+             '</html>';
+        ob_end_flush();
+        exit;
+    }
     /**
      * 发现.
      *
@@ -249,6 +268,24 @@ class PublicApi extends Api
                     $gifts[] = $gift;
                 }
                 $list['gifts'] = $gifts ? $gifts : array();
+            }
+
+            //活动
+            if (in_array('11', $open_arr)) {
+                $num = 5; //随机五条
+                $data = Event::getInstance()->getRightEvent($num);
+                foreach ($data as $key => $value) {
+                    $value['area'] = model('Area')->getAreaById($value['area']);
+                    $value['area'] = $value['area']['title'];
+                    $value['city'] = model('Area')->getAreaById($value['city']);
+                    $value['city'] = $value['city']['title'];
+                    $value['image'] = getImageUrlByAttachId($value['image']);
+                    $value['cate'] = Cate::getInstance()->getById($value['cid']);
+                    $value['cate'] = $value['cate']['name'];
+                    $data[$key] = $value;
+                }
+
+                $list['event'] = $data ? : array();
             }
 
             S('api_discover_'.$type, $list, 3600);

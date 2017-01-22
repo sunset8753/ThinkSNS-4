@@ -194,6 +194,7 @@ class EventApi extends Api
             $value['cate'] = Cate::getInstance()->getById($value['cid']);
             $value['cate'] = $value['cate']['name'];
             $value['user'] = model('User')->getUserInfo($value['uid']);
+            $value['num'] = Event::getInstance()->getUserCount($value['eid']);
             $list['data'][$key] = $value;
         }
 
@@ -264,7 +265,7 @@ class EventApi extends Api
 
         return array(
             'status' => 1,
-            'data'   => array_pop($info['info']),
+            'data'   => $info['info'],
         );
     }
 
@@ -383,13 +384,14 @@ class EventApi extends Api
                 'message' => '您访问的活动不存在，或者已经被删除！',
             ));
         }
-
         /* 地区 */
         $data['area'] = model('Area')->getAreaById($data['area']);
         $data['area'] = $data['area']['title'];
         $data['city'] = model('Area')->getAreaById($data['city']);
         $data['city'] = $data['city']['title'];
-
+        $data['content'] = parseForApi($data['content']);
+        $data['content'] = preg_replace_callback("/(\[.+?\])/is", '_parse_expressionApi', $data['content']);//替换表情
+        // $data['content'] = parse_html($data['content']);
         /* 分类 */
         $data['cate'] = Cate::getInstance()->getById($data['cid']);
         $data['cate'] = $data['cate']['name'];
@@ -413,7 +415,10 @@ class EventApi extends Api
         if (!empty($data['attach'])) {
             $attachids = explode(',', $data['attach']);
             foreach ($attachids as $key => $value) {
-                $attach[] = getAttachUrlByAttachId($value);
+                $_attach = getAttachUrlByAttachId($value);
+                if ($_attach) {
+                    $attach[] = $_attach;
+                }
             }
             $data['attach'] = $attach;
         }
@@ -626,7 +631,7 @@ class EventApi extends Api
                 $_return['app_uid'] = $value['app_uid'];
                 $_return['uid'] = $value['uid'];
                 $_return['to_uid'] = $value['to_uid'];
-                $_return['content'] = $value['content'];
+                $_return['content'] = formatEmoji(false, $value['content']);
                 $_return['ctime'] = $value['ctime'];
                 if (!empty($_return['to_uid'])) {
                     $toUserInfo = getUserInfo($value['to_uid']);

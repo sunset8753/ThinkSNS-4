@@ -125,9 +125,9 @@ class RegisterAction extends Action
                 $other['is_sync'] = 0;
                 D('Login')->add($other);
                 //同步到UCenter
-                if (UC_SYNC) {
-                    model('Passport')->ucBindUser($email, $password, t($_POST['other_type']), t($_POST['other_uid']));
-                }
+                // if (UC_SYNC) {
+                //     model('Passport')->ucBindUser($email, $password, t($_POST['other_type']), t($_POST['other_uid']));
+                // }
             } else {
                 $this->error('绑定失败，第三方信息不正确');
             }
@@ -264,9 +264,9 @@ class RegisterAction extends Action
                 D('login')->add($other);
 
                 //同步到UCenter
-                if (UC_SYNC) {
-                    model('Passport')->ucBindUser($uname, $password, t($_POST['other_type']), t($_POST['other_uid']));
-                }
+                // if (UC_SYNC) {
+                //     model('Passport')->ucBindUser($uname, $password, t($_POST['other_type']), t($_POST['other_uid']));
+                // }
             }
 
             //登录

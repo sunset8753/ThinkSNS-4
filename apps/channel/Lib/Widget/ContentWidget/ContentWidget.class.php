@@ -91,8 +91,8 @@ class ContentWidget extends Widget
             // 分享配置
             $weiboSet = model('Xdata')->get('admin_Config:feed');
             $var['weibo_premission'] = $weiboSet['weibo_premission'];
-            $content['pageHtml'] = $list['html'];
         }
+        $content['pageHtml'] = $list['html'];
         // 渲染模版
         $content['html'] = fetch(dirname(__FILE__).'/_load.html', $var);
 

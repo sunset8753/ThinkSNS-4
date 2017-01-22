@@ -3,7 +3,6 @@
 use Apps\Event\Model\Cate;
 use Apps\Event\Model\Event;
 use Illuminate\Database\Capsule\Manager as Capsule;
-
 /**
  * 公开api接口.
  *
@@ -159,7 +158,7 @@ class PublicApi extends Api
                     $weiba_recommend[$k]['following'] = $followStatus[$v['weiba_id']]['following'];
                     if ($v['new_day'] != date('Y-m-d', time())) {
                         $weiba_recommend[$k]['new_count'] = 0;
-                        $this->setNewcount($v['weiba_id'], 0);
+                        api('Weiba')->setNewcount($v['weiba_id'], 0);
                     }
                     $weiba_recommend[$k]['title'] = formatEmoji(false, $weiba_recommend[$k]['title']);
                     $weiba_recommend[$k]['content'] = formatEmoji(false, $weiba_recommend[$k]['content']);
@@ -276,7 +275,25 @@ class PublicApi extends Api
                 $list['gifts'] = $gifts ? $gifts : array();
             }
 
-            S('api_discover_'.$type, $list, 3600);
+            //活动
+            if (in_array('11', $open_arr)) {
+                $num = 5; //随机五条
+                $data = Event::getInstance()->getRightEvent($num);
+                foreach ($data as $key => $value) {
+                    $value['area'] = model('Area')->getAreaById($value['area']);
+                    $value['area'] = $value['area']['title'];
+                    $value['city'] = model('Area')->getAreaById($value['city']);
+                    $value['city'] = $value['city']['title'];
+                    $value['image'] = getImageUrlByAttachId($value['image']);
+                    $value['cate'] = Cate::getInstance()->getById($value['cid']);
+                    $value['cate'] = $value['cate']['name'];
+                    $data[$key] = $value;
+                }
+
+                $list['event'] = $data ? : array();
+            }
+
+            S('api_discover_'.$type, $list, 1800);
         }
 
         //直播
@@ -332,24 +349,26 @@ class PublicApi extends Api
             $list['jipu_goods'] = $goods_rs;
         }
 
-        //活动
-        if (in_array('11', $open_arr)) {
-            $num = 5; //随机五条
-            $data = Event::getInstance()->getRightEvent($num);
-            foreach ($data as $key => $value) {
-                $value['area'] = model('Area')->getAreaById($value['area']);
-                $value['area'] = $value['area']['title'];
-                $value['city'] = model('Area')->getAreaById($value['city']);
-                $value['city'] = $value['city']['title'];
-                $value['image'] = getImageUrlByAttachId($value['image']);
-                $value['cate'] = Cate::getInstance()->getById($value['cid']);
-                $value['cate'] = $value['cate']['name'];
-                $data[$key] = $value;
-            }
-
-            $list['event'] = $data;
-        }
-
         return $list;
+    }
+
+    public function test()
+    {   
+        $result = array();
+        $data = [
+            array('id'=>1,'name'=>'张三','性别'=>'男'),
+            array('id'=>2,'name'=>'李四','性别'=>'女'),
+            array('id'=>3,'name'=>'王二','性别'=>'女'),
+            array('id'=>4,'name'=>'麻子','性别'=>'男'),
+        ];
+        $result = array_map(function($item){
+            return array(
+                'id' => $item['id'],
+                'name' => $item['name'],
+                'sex' => $item['性别'] == '男' ? 1 : 2,
+                );
+        }, $data);
+
+        dump($result); die;
     }
 } // END class PublicApi extends Api

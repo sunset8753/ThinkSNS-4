@@ -676,9 +676,24 @@ class OauthApi extends Api
         }
     }
 
-    // function test123(){
-    // 	return  M('sms')->order('ID desc')->find();
-    // }
+    private function getUnionId($access_token, $openid)
+    {
+        $token_url = 'https://api.weixin.qq.com/sns/userinfo?'
+            .'access_token='.$access_token
+            .'&openid='.$openid;
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $token_url);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $result = curl_exec($ch);
+        $res = json_decode($result, true);
+        if ($res['unionid']) {
+            return $res['unionid'];
+        } else {
+            return false;
+        }
+    }
 
     /**
      * 记录或获取第三方登录接口获取到的信息 --using.
@@ -697,11 +712,53 @@ class OauthApi extends Api
         $type_uid = addslashes($this->data['type_uid']);
         $access_token = addslashes($this->data['access_token']);
         $refresh_token = addslashes($this->data['refresh_token']);
+        $openid = addslashes($this->data['openid']);
         $expire = intval($this->data['expire_in']);
         if (!empty($type) && !empty($type_uid)) {
             $user = M('login')->where("type_uid='{$type_uid}' AND type='{$type}'")->find();
+
+            //目前微信登录根据unionid判断  老用户通过openid登录时 判断并生成一条unionid绑定的登录信息
+            if (!$user && !empty($openid)) {
+                $user = M('login')->where("type_uid='{$openid}' AND type='{$type}'")->find();
+                if (!empty($user)) {
+                    $unionid = $this->getUnionId($access_token, $openid);
+                    if ($unionid == $type_uid) {
+                        $newdata['uid'] = $user['uid'];
+                        $newdata['type_uid'] = $type_uid;//存入新的unionid
+                        $newdata['type'] = $user['type'];
+                        $newdata['oauth_token'] = $user['oauth_token'];
+                        $newdata['oauth_token_secret'] = $user['oauth_token_secret'];
+                        $newdata['is_sync'] = $user['is_sync'];
+
+                        M('login')->add($newdata);
+                    }
+                }
+            }
+
             if ($user && $user['uid'] > 0) {
-                if ($login = M('login')->where('uid='.$user['uid']." AND type='location'")->find()) {
+                //记录token
+                $data['oauth_token'] = getOAuthToken($user['uid']);
+                $data['oauth_token_secret'] = getOAuthTokenSecret();
+                $data['uid'] = $user['uid'];
+                $login = D('')->table(C('DB_PREFIX').'login')->where('uid='.$user['uid']." AND type='location'")->find();
+                if (!$login) {
+                    $savedata['type'] = 'location';
+                    $savedata = array_merge($savedata, $data);
+                    $result = D('')->table(C('DB_PREFIX').'login')->add($savedata);
+                } else {
+                    //清除缓存
+                    model('Cache')->rm($login['oauth_token'].$login['oauth_token_secret']);
+                    $result = D('')->table(C('DB_PREFIX').'login')->where('uid='.$user['uid']." AND type='location'")->save($data);
+                }
+                if (!$result) {
+                    return array('status' => 0, 'msg' => '获取失败');
+                }
+                // 获取用户信息
+                $arr_un_in = M('user')->where(array('uid' => $user['uid']))->field('uname,intro')->find();
+                $data['uname'] = $arr_un_in['uname'];
+                $data['intro'] = $arr_un_in['intro'] ? formatEmoji(true, $arr_un_in['intro']) : '';
+                $data['avatar'] = getUserFace($user['uid'], 'm');
+                /*if ($login = M('login')->where('uid='.$user['uid']." AND type='location'")->find()) {
                     $data['oauth_token'] = $login['oauth_token'];
                     $data['oauth_token_secret'] = $login['oauth_token_secret'];
                     $data['uid'] = $login['uid'];
@@ -719,7 +776,7 @@ class OauthApi extends Api
                     if (!$result) {
                         return array('status' => 0, 'msg' => '获取失败');
                     }
-                }
+                }*/
 
                 return $data;
             } else {
