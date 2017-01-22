@@ -720,7 +720,7 @@ class OauthApi extends Api
                     $unionid = $this->getUnionId($access_token, $openid);
                     if ($unionid == $type_uid) {
                         $newdata['uid'] = $user['uid'];
-                        $newdata['type_uid'] = $type_uid;//存入新的unionid
+                        $newdata['type_uid'] = $type_uid; //存入新的unionid
                         $newdata['type'] = $user['type'];
                         $newdata['oauth_token'] = $user['oauth_token'];
                         $newdata['oauth_token_secret'] = $user['oauth_token_secret'];

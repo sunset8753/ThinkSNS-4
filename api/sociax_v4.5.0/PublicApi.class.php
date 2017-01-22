@@ -3,6 +3,7 @@
 use Apps\Event\Model\Cate;
 use Apps\Event\Model\Event;
 use Illuminate\Database\Capsule\Manager as Capsule;
+
 /**
  * 公开api接口.
  *
@@ -290,7 +291,7 @@ class PublicApi extends Api
                     $data[$key] = $value;
                 }
 
-                $list['event'] = $data ? : array();
+                $list['event'] = $data ?: array();
             }
 
             S('api_discover_'.$type, $list, 1800);
@@ -353,22 +354,23 @@ class PublicApi extends Api
     }
 
     public function test()
-    {   
+    {
         $result = array();
         $data = [
-            array('id'=>1,'name'=>'张三','性别'=>'男'),
-            array('id'=>2,'name'=>'李四','性别'=>'女'),
-            array('id'=>3,'name'=>'王二','性别'=>'女'),
-            array('id'=>4,'name'=>'麻子','性别'=>'男'),
+            array('id'=>1, 'name'=>'张三', '性别'=>'男'),
+            array('id'=> 2, 'name'=>'李四', '性别'=>'女'),
+            array('id'=> 3, 'name'=>'王二', '性别'=>'女'),
+            array('id'=> 4, 'name'=>'麻子', '性别'=>'男'),
         ];
-        $result = array_map(function($item){
+        $result = array_map(function ($item) {
             return array(
-                'id' => $item['id'],
+                'id'   => $item['id'],
                 'name' => $item['name'],
-                'sex' => $item['性别'] == '男' ? 1 : 2,
+                'sex'  => $item['性别'] == '男' ? 1 : 2,
                 );
         }, $data);
 
-        dump($result); die;
+        dump($result);
+        die;
     }
 } // END class PublicApi extends Api

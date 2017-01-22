@@ -376,7 +376,7 @@ class ContentAction extends AdministratorAction
         $this->assign('pageTitle', $isRec ? L('PUBLIC_RECYCLE_BIN') : L('PUBLIC_FILE_MANAGEMENT'));
         $map['is_del'] = $isRec == 1 ? 1 : 0;    //未删除的
         !empty($_POST['attach_id']) && $map['attach_id'] = array('in', explode(',', $_POST['attach_id']));
-        $_POST['from'] > 0 && $map['from'] = intval($_POST['from']-1);
+        $_POST['from'] > 0 && $map['from'] = intval($_POST['from'] - 1);
         !empty($_POST['name']) && $map['name'] = array('like', '%'.t($_POST['name']).'%');
 
         $listData = model('Attach')->getAttachList($map, '*', 'attach_id desc', 10);
@@ -455,7 +455,7 @@ class ContentAction extends AdministratorAction
         $this->assign('pageTitle', $is_del ? L('PUBLIC_RECYCLE_BIN') : L('视频管理'));
         $map['is_del'] = $is_del == 1 ? 1 : 0;    //未删除的
         !empty($_POST['video_id']) && $map['video_id'] = array('in', explode(',', $_POST['video_id']));
-        $_POST['from'] > 0 && $map['from'] = intval($_POST['from']-1);
+        $_POST['from'] > 0 && $map['from'] = intval($_POST['from'] - 1);
         !empty($_POST['name']) && $map['name'] = array('like', '%'.t($_POST['name']).'%');
         // $listData = model('Attach')->getAttachList($map,'*','attach_id desc',10);
         $listData = D('video')->where($map)->findPage(20);

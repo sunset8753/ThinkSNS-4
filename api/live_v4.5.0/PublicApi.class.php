@@ -99,6 +99,7 @@ class PublicApi extends Api
         ob_end_flush();
         exit;
     }
+
     /**
      * 获取用户协议HTML信息.
      *
@@ -119,6 +120,7 @@ class PublicApi extends Api
         ob_end_flush();
         exit;
     }
+
     /**
      * 发现.
      *
@@ -285,7 +287,7 @@ class PublicApi extends Api
                     $data[$key] = $value;
                 }
 
-                $list['event'] = $data ? : array();
+                $list['event'] = $data ?: array();
             }
 
             S('api_discover_'.$type, $list, 3600);

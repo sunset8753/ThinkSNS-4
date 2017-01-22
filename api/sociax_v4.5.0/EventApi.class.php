@@ -390,7 +390,7 @@ class EventApi extends Api
         $data['city'] = model('Area')->getAreaById($data['city']);
         $data['city'] = $data['city']['title'];
         $data['content'] = parseForApi($data['content']);
-        $data['content'] = preg_replace_callback("/(\[.+?\])/is", '_parse_expressionApi', $data['content']);//替换表情
+        $data['content'] = preg_replace_callback("/(\[.+?\])/is", '_parse_expressionApi', $data['content']); //替换表情
         // $data['content'] = parse_html($data['content']);
         /* 分类 */
         $data['cate'] = Cate::getInstance()->getById($data['cid']);
