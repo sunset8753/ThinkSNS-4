@@ -1319,7 +1319,7 @@ class WeibaApi extends Api
         /* # 格式化emoji */
         $data['content'] = formatEmoji(true, $data['content']);
         $data['attach_id'] = intval($this->data['attach_id']);
-
+        $data['comment_id'] = 0;
         $filterContentStatus = filter_words($data['content']);
         if (!$filterContentStatus['status']) {
             return array(
@@ -1369,6 +1369,7 @@ class WeibaApi extends Api
             $data['cancomment'] = 1;
             // 解锁
             unlockSubmit();
+
             if ($comment_id = model('Comment')->addComment($datas)) {
                 $data1['comment_id'] = $comment_id;
                 // $data1['storey'] = model('Comment')->where('comment_id='.$comment_id)->getField('storey');
@@ -1408,7 +1409,7 @@ class WeibaApi extends Api
             $data['feed_id'] = $datas['row_id'];
             $data['comment_id'] = $comment_id;
             $data['storey'] = $data1['storey'];
-
+            
             $data['attach_info'] = model('Attach')->getAttachById($data['attach_id']);
             if ($data['attach_info']['attach_type'] == 'weiba_comment_image' || $data['attach_info']['attach_type'] == 'feed_image') {
                 $data['attach_info']['attach_url'] = getImageUrl($data['attach_info']['save_path'].$data['attach_info']['save_name'], 200, 200);

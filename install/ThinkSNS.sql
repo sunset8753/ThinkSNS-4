@@ -9234,7 +9234,7 @@ CREATE TABLE IF NOT EXISTS `ts_weiba_post` (
   `recommend` tinyint(1) DEFAULT '0' COMMENT '是否设为推荐',
   `recommend_time` int(11) DEFAULT '0' COMMENT '设为推荐的时间',
   `is_del` tinyint(2) DEFAULT '0' COMMENT '是否已删除 0-否 1-是',
-  `feed_id` int(11) NOT NULL COMMENT '对应的分享ID',
+  `feed_id` int(11) DEFAULT '0' NOT NULL COMMENT '对应的分享ID',
   `reply_all_count` int(11) NOT NULL DEFAULT '0' COMMENT '全部评论数目',
   `attach` varchar(255) DEFAULT NULL,
   `praise` int(11) DEFAULT '0' COMMENT '喜欢',
