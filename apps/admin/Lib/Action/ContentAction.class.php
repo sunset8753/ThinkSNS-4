@@ -621,7 +621,7 @@ class ContentAction extends AdministratorAction
         //dump($_POST);exit;
         $listData = model('FeedTopicAdmin')->getTopic('', $_REQUEST['recommend']);
         foreach ($listData['data'] as $k => &$v) {
-            $v['note'] = "<div style='width:400px; border:0; margin:0; padding:0;'>".$v['note']."</div>";
+            $v['note'] = "<div style='width:400px; border:0; margin:0; padding:0;'>".$v['note'].'</div>';
         }
         //dump($listData);exit;
         $this->displayList($listData);

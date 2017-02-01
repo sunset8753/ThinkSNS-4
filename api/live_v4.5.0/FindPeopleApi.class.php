@@ -703,7 +703,7 @@ class FindPeopleApi extends Api
              * 当前用户对该用户的关注状态
              */
             $data['followStatus'] = model('Follow')->getFollowState($this->mid, $userData['uid']);
-                
+
             //个人空间隐私权限
             $privacy = model('UserPrivacy')->getPrivacy($this->mid, $value['uid']);
             $data['space_privacy'] = $privacy['space'];
@@ -831,7 +831,6 @@ class FindPeopleApi extends Api
                         //个人空间隐私权限
                         $privacy = model('UserPrivacy')->getPrivacy($this->mid, $uid);
                         $user_list[$k]['space_privacy'] = $privacy['space'];
-
                     } else {
                         $user_list1[$k]['uid'] = 0;
                         $user_list1[$k]['tel'] = $v;

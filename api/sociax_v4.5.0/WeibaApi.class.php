@@ -1128,6 +1128,7 @@ class WeibaApi extends Api
             //个人空间隐私权限
         $privacy = model('UserPrivacy')->getPrivacy($this->mid, $uid);
         $user_info['space_privacy'] = $privacy['space'];
+
         return $user_info;
     }
 

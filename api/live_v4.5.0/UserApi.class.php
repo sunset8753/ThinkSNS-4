@@ -145,7 +145,7 @@ class UserApi extends Api
         //用户空间隐私判断
         $privacy = model('UserPrivacy')->getPrivacy($this->mid, $userInfo['uid']);
         $user_info['space_privacy'] = $privacy['space'];
-        
+
         $follower = model('Follow')->where('fid='.$user_info['uid'])->order('follow_id DESC')->field('uid')->limit($num)->findAll();
         $following = model('Follow')->where('uid='.$user_info['uid'])->order('follow_id DESC')->field('fid')->limit($num)->findAll();
         $follower_arr = $following_arr = array();
@@ -310,6 +310,7 @@ class UserApi extends Api
         //个人空间隐私权限
         $privacy = model('UserPrivacy')->getPrivacy($this->mid, $uid);
         $user_info['space_privacy'] = $privacy['space'];
+
         return $user_info;
     }
 

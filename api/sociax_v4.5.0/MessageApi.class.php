@@ -42,11 +42,11 @@ class MessageApi extends Api
         $privacy = model('UserPrivacy')->getPrivacy($this->mid, $value['uid']);
 
         return array(
-            'status' => '1',
-            'uname'  => $user['uname'],
-            'remark' => $user['remark'],
-            'avatar' => $user['avatar_original'],
-            'intro'  => $user['intro'] ? formatEmoji(false, $user['intro']) : '',
+            'status'        => '1',
+            'uname'         => $user['uname'],
+            'remark'        => $user['remark'],
+            'avatar'        => $user['avatar_original'],
+            'intro'         => $user['intro'] ? formatEmoji(false, $user['intro']) : '',
             'space_privacy' => $privacy['space'],
         );
     }
