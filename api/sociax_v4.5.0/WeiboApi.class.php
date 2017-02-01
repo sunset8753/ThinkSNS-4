@@ -418,6 +418,8 @@ class WeiboApi extends Api
             $digg_list[$k]['intro'] = $user_info['intro'];
             $digg_list[$k]['avatar'] = $user_info['avatar']['avatar_big'];
             $digg_list[$k]['follow_status'] = $follow_status[$v['uid']];
+            $privacy = model('UserPrivacy')->getPrivacy($this->mid, $v['uid']);
+            $digg_list[$k]['space_privacy'] = $privacy['space'];
             unset($digg_list[$k]['feed_id']);
         }
 
@@ -1484,6 +1486,9 @@ class WeiboApi extends Api
                     $at_list[$k]['uname'] = $v['uname'];
                     $at_list[$k]['remark'] = D('UserRemark')->getRemark($this->mid, $v['uid']);
                     $at_list[$k]['intro'] = $v['intro'] ? formatEmoji(false, $v['intro']) : '';
+                    //个人空间隐私权限
+                    $privacy = model('UserPrivacy')->getPrivacy($this->mid, $v['uid']);
+                    $at_list[$k]['space_privacy'] = $privacy['space'];
                     $avatar = model('Avatar')->init($v['uid'])->getUserAvatar();
                     $at_list[$k]['avatar'] = $avatar['avatar_small'];
                 }

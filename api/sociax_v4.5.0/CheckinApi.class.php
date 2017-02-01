@@ -55,6 +55,9 @@ class CheckinApi extends Api
             $v['avatar'] = $avatar['avatar_big'];
             $v['uname'] = getUserName($v['uid']);
             $v['remark'] = D('UserRemark')->getRemark($this->mid, $v['uid']);
+            //个人空间隐私权限
+            $privacy = model('UserPrivacy')->getPrivacy($this->mid, $v['uid']);
+            $v['space_privacy'] = $privacy['space'];
         }
 
         return $list;

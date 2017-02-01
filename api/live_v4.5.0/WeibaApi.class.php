@@ -138,6 +138,9 @@ class WeibaApi extends Api
         foreach ($list['data'] as $key => $value) {
             $value['user'] = model('User')->getUserInfo($value['uid']);
             $list['data'][$key] = $value;
+            //个人空间隐私权限
+            $privacy = model('UserPrivacy')->getPrivacy($this->mid, $value['uid']);
+            $list['data'][$key]['space_privacy'] = $privacy['space'];
         }
         model('UserData')->setKeyValue($this->mid, 'unread_digg_weibapost', 0);
 
@@ -724,7 +727,7 @@ class WeibaApi extends Api
         if (M('weiba_follow')->where($data)->find()) {
             $res = D('weiba_follow')->where($data)->delete();
             if ($res) {
-                M('weiba')->where('weiba_id='.$weiba_id)->setDec('follower_count');
+                M('weiba')->where('weiba_id='.$data['weiba_id'])->setDec('follower_count');
                 M('weiba_apply')->where($data)->delete();
 
                 // 添加积分
@@ -1122,7 +1125,9 @@ class WeibaApi extends Api
         $user_info['remark'] = $user_info_whole['remark'];
         $user_info['avatar']['avatar_middle'] = $user_info_whole['avatar']['avatar_middle'];
         $user_info['user_group'] = $user_info_whole['user_group'];
-
+            //个人空间隐私权限
+        $privacy = model('UserPrivacy')->getPrivacy($this->mid, $uid);
+        $user_info['space_privacy'] = $privacy['space'];
         return $user_info;
     }
 
@@ -1315,11 +1320,11 @@ class WeibaApi extends Api
         }
         $data['uid'] = $this->mid;
         $data['ctime'] = time();
-        $data['content'] = preg_html(h($this->data['content']));
+        $data['content'] = t(preg_html(h($this->data['content'])));
         /* # 格式化emoji */
         $data['content'] = formatEmoji(true, $data['content']);
         $data['attach_id'] = intval($this->data['attach_id']);
-
+        $data['comment_id'] = 0;
         $filterContentStatus = filter_words($data['content']);
         if (!$filterContentStatus['status']) {
             return array(
@@ -1369,6 +1374,7 @@ class WeibaApi extends Api
             $data['cancomment'] = 1;
             // 解锁
             unlockSubmit();
+
             if ($comment_id = model('Comment')->addComment($datas)) {
                 $data1['comment_id'] = $comment_id;
                 // $data1['storey'] = model('Comment')->where('comment_id='.$comment_id)->getField('storey');
@@ -1633,7 +1639,7 @@ class WeibaApi extends Api
         if (!$filterContentStatus['status']) {
             $this->error($filterContentStatus['data'], true);
         }
-        $data['content'] = $filterContentStatus['data'];
+        $data['content'] = t($filterContentStatus['data']);
 
         $res = D('weiba_post')->add($data);
         if ($res) {

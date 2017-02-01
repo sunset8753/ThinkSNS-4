@@ -620,6 +620,9 @@ class ContentAction extends AdministratorAction
         $this->pageKeyList = array('topic_id', 'topic_name', 'note', 'domain', 'des', 'pic', 'topic_user', 'outlink', 'DOACTION');
         //dump($_POST);exit;
         $listData = model('FeedTopicAdmin')->getTopic('', $_REQUEST['recommend']);
+        foreach ($listData['data'] as $k => &$v) {
+            $v['note'] = "<div style='width:400px; border:0; margin:0; padding:0;'>".$v['note']."</div>";
+        }
         //dump($listData);exit;
         $this->displayList($listData);
     }

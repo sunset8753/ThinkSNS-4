@@ -463,6 +463,9 @@ class EventApi extends Api
             foreach ($users as $key => $value) {
                 $value = model('User')->getUserInfo($value['uid']);
                 $users[$key] = $value;
+                //个人空间隐私权限
+                $privacy = model('UserPrivacy')->getPrivacy($this->mid, $value['uid']);
+                $users[$key]['space_privacy'] = $privacy['space'];
                 if (!empty($this->mid) && D('user_follow')->where(array('uid'=>$this->mid, 'fid'=>$value['uid']))->find()) {
                     $users[$key]['is_follow'] = 1;
                 } else {
@@ -638,6 +641,9 @@ class EventApi extends Api
                     $_return['to_uname'] = $toUserInfo['uname'];
                     $_return['to_remark'] = $toUserInfo['remark'];
                     $_return['to_avatar'] = getUserFace($value['to_uid']);
+                    //个人空间隐私权限
+                    $privacy = model('UserPrivacy')->getPrivacy($this->mid, $value['to_uid']);
+                    $_return['to_space_privacy'] = $privacy['space'];
                 } else {
                     $_return['to_uname'] = '';
                     $_return['to_remark'] = '';
@@ -647,10 +653,16 @@ class EventApi extends Api
                 $_return['app_uname'] = $appUserInfo['uname'];
                 $_return['app_remark'] = $appUserInfo['remark'];
                 $_return['app_avatar'] = getUserFace($value['app_uid']);
+                //个人空间隐私权限
+                $privacy = model('UserPrivacy')->getPrivacy($this->mid, $mu['app_uid']);
+                $_return['app_space_privacy'] = $privacy['space'];
                 $UserInfo = getUserInfo($value['uid']);
                 $_return['uname'] = $UserInfo['uname'];
                 $_return['remark'] = $UserInfo['remark'];
                 $_return['avatar'] = getUserFace($value['uid']);
+                //个人空间隐私权限
+                $privacy = model('UserPrivacy')->getPrivacy($this->mid, $value['uid']);
+                $_return['space_privacy'] = $privacy['space'];
 
                 $return[] = $_return;
             }

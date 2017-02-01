@@ -24,6 +24,10 @@ class FindPeopleApi extends Api
                 $gu['uname'] = $user['uname'];
                 $gu['avatar'] = $user['avatar_big'];
 
+                //个人空间隐私权限
+                $privacy = model('UserPrivacy')->getPrivacy($this->mid, $gu['uid']);
+                $gu['space_privacy'] = $privacy['space'];
+
                 $map['key'] = 'weibo_count';
                 $map['uid'] = $gu['uid'];
                 $gu['weibo_count'] = (string) M('user_data')->where($map)->getField('value');
@@ -60,6 +64,9 @@ class FindPeopleApi extends Api
                 $mu['uname'] = $user['uname'];
                 $mu['avatar'] = $user['avatar_big'];
                 $mu['remark'] = $user['remark'];
+                //个人空间隐私权限
+                $privacy = model('UserPrivacy')->getPrivacy($this->mid, $mu['uid']);
+                $mu['space_privacy'] = $privacy['space'];
 
                 $lists[] = $mu;
             }
@@ -175,6 +182,8 @@ class FindPeopleApi extends Api
                 $user_list[$k]['follow_status'] = $follow_status[$v['uid']];
                 $user_info = api('User')->get_user_info($v['uid']);
                 $user_list[$k]['avatar'] = $user_info['avatar']['avatar_big'];
+                $privacy = model('UserPrivacy')->getPrivacy($this->mid, $v['uid']);
+                $user_list[$k]['space_privacy'] = $privacy['space'];
             }
         } else { // 获取感兴趣的5个人
             $user = model('RelatedUser')->getRelatedUser($rus);
@@ -187,6 +196,8 @@ class FindPeopleApi extends Api
                 $user_list[$k]['avatar'] = $v['userInfo']['avatar_big'];
                 $user_list[$k]['intro'] = $v['info']['msg'] ? formatEmoji(false, $v['info']['msg']) : '';
                 $user_list[$k]['follow_status'] = model('Follow')->getFollowState($this->mid, $v['userInfo']['uid']);
+                $privacy = model('UserPrivacy')->getPrivacy($this->mid, $v['uid']);
+                $user_list[$k]['space_privacy'] = $privacy['space'];
             }
         }
 
@@ -300,6 +311,8 @@ class FindPeopleApi extends Api
             $user_list[$k]['avatar'] = $user_info['avatar']['avatar_big'];
             $user_list[$k]['intro'] = $user_info['intro'] ? formatEmoji(false, $user_info['intro']) : '';
             $user_list[$k]['follow_status'] = model('Follow')->getFollowState($this->mid, $v['row_id']);
+            $privacy = model('UserPrivacy')->getPrivacy($this->mid, $v['uid']);
+            $user_list[$k]['space_privacy'] = $privacy['space'];
         }
 
         return $user_list;
@@ -349,6 +362,8 @@ class FindPeopleApi extends Api
             $user_list[$k]['avatar'] = $user_info['avatar']['avatar_big'];
             $user_list[$k]['intro'] = $user_info['intro'] ? formatEmoji(false, $user_info['intro']) : '';
             $user_list[$k]['follow_status'] = model('Follow')->getFollowState($this->mid, $v['uid']);
+            $privacy = model('UserPrivacy')->getPrivacy($this->mid, $v['uid']);
+            $user_list[$k]['space_privacy'] = $privacy['space'];
         }
 
         return $user_list;
@@ -458,6 +473,8 @@ class FindPeopleApi extends Api
             $user_list[$k]['avatar'] = $user_info['avatar']['avatar_big'];
             $user_list[$k]['intro'] = $user_info['intro'] ? formatEmoji(false, $user_info['intro']) : '';
             $user_list[$k]['follow_status'] = model('Follow')->getFollowState($this->mid, $v['uid']);
+            $privacy = model('UserPrivacy')->getPrivacy($this->mid, $v['uid']);
+            $user_list[$k]['space_privacy'] = $privacy['space'];
         }
 
         return $user_list;
@@ -531,6 +548,8 @@ class FindPeopleApi extends Api
             $user_list[$k]['avatar'] = $user_info['avatar']['avatar_big'];
             $user_list[$k]['intro'] = $user_info['intro'] ? formatEmoji(false, $user_info['intro']) : '';
             $user_list[$k]['follow_status'] = model('Follow')->getFollowState($this->mid, $v['uid']);
+            $privacy = model('UserPrivacy')->getPrivacy($this->mid, $v['uid']);
+            $user_list[$k]['space_privacy'] = $privacy['space'];
         }
 
         return $user_list;
@@ -684,6 +703,10 @@ class FindPeopleApi extends Api
              * 当前用户对该用户的关注状态
              */
             $data['followStatus'] = model('Follow')->getFollowState($this->mid, $userData['uid']);
+                
+            //个人空间隐私权限
+            $privacy = model('UserPrivacy')->getPrivacy($this->mid, $value['uid']);
+            $data['space_privacy'] = $privacy['space'];
 
             /*
              * 用户简介
@@ -805,6 +828,10 @@ class FindPeopleApi extends Api
                         $user_list[$k]['avatar'] = $user_info['avatar']['avatar_big'];
                         $user_list[$k]['intro'] = $user_info['intro'] ? formatEmoji(false, $user_info['intro']) : '';
                         $user_list[$k]['follow_status'] = model('Follow')->getFollowState($this->mid, $user_info['uid']);
+                        //个人空间隐私权限
+                        $privacy = model('UserPrivacy')->getPrivacy($this->mid, $uid);
+                        $user_list[$k]['space_privacy'] = $privacy['space'];
+
                     } else {
                         $user_list1[$k]['uid'] = 0;
                         $user_list1[$k]['tel'] = $v;

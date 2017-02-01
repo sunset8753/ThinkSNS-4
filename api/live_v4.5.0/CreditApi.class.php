@@ -463,10 +463,6 @@ class CreditApi extends Api
         $data['uid'] = $this->mid;
         $data['ctime'] = time();
         $data['status'] = 0;
-        $data['partner'] = $chargeConfigs['alipay_pid'];
-        $data['seller_id'] = $chargeConfigs['alipay_pid'];
-        $data['seller_email'] = $chargeConfigs['alipay_email'];
-        $data['private_key_path'] = $chargeConfigs['private_key_path'];
         $data['charge_sroce'] = intval($price * abs(intval($chargeConfigs['charge_ratio'])));
         $data['charge_order'] = '';
         $result = D('credit_charge')->add($data);

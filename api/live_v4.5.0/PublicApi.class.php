@@ -1,5 +1,7 @@
 <?php
 
+use Apps\Event\Model\Cate;
+use Apps\Event\Model\Event;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
 /**
@@ -130,7 +132,7 @@ class PublicApi extends Api
      **/
     public function discover()
     {
-        $open_arr = !empty($this->data['needs']) ? explode(',', t($this->data['needs'])) : array('1', '2', '3', '4', '5', '6', '7', '8', '9', '10');
+        $open_arr = !empty($this->data['needs']) ? explode(',', t($this->data['needs'])) : array('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11');
         $type = !empty($this->data['type']) ? t($this->data['type']) : 'system';
         $list = S('api_discover_'.$type);
 
@@ -276,18 +278,19 @@ class PublicApi extends Api
             if (in_array('11', $open_arr)) {
                 $num = 5; //随机五条
                 $data = Event::getInstance()->getRightEvent($num);
-                foreach ($data as $key => $value) {
-                    $value['area'] = model('Area')->getAreaById($value['area']);
-                    $value['area'] = $value['area']['title'];
-                    $value['city'] = model('Area')->getAreaById($value['city']);
-                    $value['city'] = $value['city']['title'];
-                    $value['image'] = getImageUrlByAttachId($value['image']);
-                    $value['cate'] = Cate::getInstance()->getById($value['cid']);
-                    $value['cate'] = $value['cate']['name'];
-                    $data[$key] = $value;
+                foreach ($data as $key => &$value) {
+                    $_event = $value;
+                    $_event['area'] = model('Area')->getAreaById($_event['area']);
+                    $_event['area'] = $_event['area']['title'];
+                    $_event['city'] = model('Area')->getAreaById($_event['city']);
+                    $_event['city'] = $_event['city']['title'];
+                    $_event['image'] = getImageUrlByAttachId($_event['image']);
+                    $_event['cate'] = Cate::getInstance()->getById($_event['cid']);
+                    $_event['cate'] = $_event['cate']['name'];
+                    $event[] = $_event;
                 }
 
-                $list['event'] = $data ?: array();
+                $list['event'] = $event ? $event : array();
             }
 
             S('api_discover_'.$type, $list, 3600);

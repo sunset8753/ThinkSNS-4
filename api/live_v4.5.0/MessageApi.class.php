@@ -38,6 +38,8 @@ class MessageApi extends Api
                 'msg'    => '用户不存在',
             ));
         }
+        //个人空间隐私权限
+        $privacy = model('UserPrivacy')->getPrivacy($this->mid, $value['uid']);
 
         return array(
             'status' => '1',
@@ -45,6 +47,7 @@ class MessageApi extends Api
             'remark' => $user['remark'],
             'avatar' => $user['avatar_original'],
             'intro'  => $user['intro'] ? formatEmoji(false, $user['intro']) : '',
+            'space_privacy' => $privacy['space'],
         );
     }
 
@@ -324,6 +327,9 @@ class MessageApi extends Api
             $user_info['uname'] = $user_info_whole['uname'];
             $user_info['avatar'] = $user_info_whole['avatar_middle'];
             $user_info['remark'] = $user_info_whole['remark'];
+            //个人空间隐私权限
+            $privacy = model('UserPrivacy')->getPrivacy($this->mid, $user_info_whole['uid']);
+            $user_info['space_privacy'] = $privacy['space'];
             $list_info['memebrs'][] = $user_info;
             unset($user_info, $user_info_whole);
         }

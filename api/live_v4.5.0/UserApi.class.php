@@ -142,7 +142,10 @@ class UserApi extends Api
         $user_info['weibo_count'] = t(intval($userInfo['user_data']['weibo_count']));
         $user_info['follower_count'] = t(intval($userInfo['user_data']['follower_count']));
         $user_info['following_count'] = t(intval($userInfo['user_data']['following_count']));
-
+        //用户空间隐私判断
+        $privacy = model('UserPrivacy')->getPrivacy($this->mid, $userInfo['uid']);
+        $user_info['space_privacy'] = $privacy['space'];
+        
         $follower = model('Follow')->where('fid='.$user_info['uid'])->order('follow_id DESC')->field('uid')->limit($num)->findAll();
         $following = model('Follow')->where('uid='.$user_info['uid'])->order('follow_id DESC')->field('fid')->limit($num)->findAll();
         $follower_arr = $following_arr = array();
@@ -152,6 +155,8 @@ class UserApi extends Api
             $follower_arr[$k]['uname'] = $follower_info['uname'];
             $follower_arr[$k]['remark'] = $follower_info['remark'];
             $follower_arr[$k]['avatar'] = $follower_info['avatar']['avatar_big'];
+            $privacy = model('UserPrivacy')->getPrivacy($this->mid, $follower_info['uid']);
+            $follower_arr[$k]['space_privacy'] = $privacy['space'];
         }
         foreach ($following as $k1 => $v1) {
             $following_info = $this->get_user_info($v1['fid']);
@@ -159,6 +164,8 @@ class UserApi extends Api
             $following_arr[$k1]['uname'] = $following_info['uname'];
             $following_arr[$k1]['remark'] = $following_info['remark'];
             $following_arr[$k1]['avatar'] = $following_info['avatar']['avatar_big'];
+            $privacy = model('UserPrivacy')->getPrivacy($this->mid, $following_info['uid']);
+            $following_arr[$k1]['space_privacy'] = $privacy['space'];
         }
         $user_info['follower'] = $follower_arr;
         $user_info['following'] = $following_arr;
@@ -300,7 +307,9 @@ class UserApi extends Api
         $user_info['user_data'] = model('UserData')->getUserData($uid);
         // 用户备注
         $user_info['remark'] = model('UserRemark')->getRemark($this->mid, $uid);
-
+        //个人空间隐私权限
+        $privacy = model('UserPrivacy')->getPrivacy($this->mid, $uid);
+        $user_info['space_privacy'] = $privacy['space'];
         return $user_info;
     }
 
@@ -376,6 +385,9 @@ class UserApi extends Api
             $follower_arr[$k]['intro'] = $follower_info['intro'] ? formatEmoji(false, $follower_info['intro']) : '';
             $follower_arr[$k]['avatar'] = $follower_info['avatar']['avatar_big'];
             $follower_arr[$k]['follow_status'] = $follow_status[$v['uid']];
+            //个人空间隐私权限
+            $privacy = model('UserPrivacy')->getPrivacy($this->mid, $v['uid']);
+            $follower_arr[$k]['space_privacy'] = $privacy['space'];
         }
 
         return $follower_arr;
@@ -450,6 +462,9 @@ class UserApi extends Api
             $following_arr[$k]['intro'] = $following_info['intro'] ? formatEmoji(false, $following_info['intro']) : '';
             $following_arr[$k]['avatar'] = $following_info['avatar']['avatar_big'];
             $following_arr[$k]['follow_status'] = $follow_status[$v['fid']];
+            //个人空间隐私权限
+            $privacy = model('UserPrivacy')->getPrivacy($this->mid, $v['fid']);
+            $following_arr[$k]['space_privacy'] = $privacy['space'];
         }
 
         return $following_arr;
@@ -522,6 +537,9 @@ class UserApi extends Api
             $friend_arr[$k]['intro'] = $friend_info['intro'] ? formatEmoji(false, $friend_info['intro']) : '';
             $friend_arr[$k]['avatar'] = $friend_info['avatar']['avatar_big'];
             $friend_arr[$k]['follow_status'] = $follow_status[$v['fid']];
+            //个人空间隐私权限
+            $privacy = model('UserPrivacy')->getPrivacy($this->mid, $v['fid']);
+            $friend_arr[$k]['space_privacy'] = $privacy['space'];
         }
 
         return $friend_arr;
@@ -599,6 +617,9 @@ class UserApi extends Api
                 $letters[$first_letter][$v['follow_id']]['intro'] = $friend_info['intro'] ? formatEmoji(false, $friend_info['intro']) : '';
                 $letters[$first_letter][$v['follow_id']]['avatar'] = $friend_info['avatar']['avatar_original'];
                 $letters[$first_letter][$v['follow_id']]['follow_status'] = $follow_status[$v['fid']];
+                //个人空间隐私权限
+                $privacy = model('UserPrivacy')->getPrivacy($this->mid, $v['fid']);
+                $letters[$first_letter][$v['follow_id']]['space_privacy'] = $privacy['space'];
             }
 
             return $letters;
@@ -627,6 +648,9 @@ class UserApi extends Api
                 $user_detail['intro'] = $friend_info['intro'] ? formatEmoji(false, $friend_info['intro']) : '';
                 $user_detail['avatar'] = $friend_info['avatar']['avatar_original'];
                 $user_detail['follow_status'] = $follow_status[$v['uid']];
+                //个人空间隐私权限
+                $privacy = model('UserPrivacy')->getPrivacy($this->mid, $v['uid']);
+                $user_detail['space_privacy'] = $privacy['space'];
                 $user_list[] = $user_detail;
             }
 
@@ -849,6 +873,9 @@ class UserApi extends Api
             $user_blacklist[$k]['remark'] = $blacklist_info['remark'];
             $user_blacklist[$k]['intro'] = $blacklist_info['intro'] ? formatEmoji(false, $blacklist_info['intro']) : '';
             $user_blacklist[$k]['avatar'] = $blacklist_info['avatar']['avatar_big'];
+            //个人空间隐私权限
+            $privacy = model('UserPrivacy')->getPrivacy($this->mid, $v['fid']);
+            $user_blacklist[$k]['space_privacy'] = $privacy['space'];
         }
 
         return $user_blacklist;

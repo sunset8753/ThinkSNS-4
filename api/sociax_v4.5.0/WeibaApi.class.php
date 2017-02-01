@@ -138,6 +138,9 @@ class WeibaApi extends Api
         foreach ($list['data'] as $key => $value) {
             $value['user'] = model('User')->getUserInfo($value['uid']);
             $list['data'][$key] = $value;
+            //个人空间隐私权限
+            $privacy = model('UserPrivacy')->getPrivacy($this->mid, $value['uid']);
+            $list['data'][$key]['space_privacy'] = $privacy['space'];
         }
         model('UserData')->setKeyValue($this->mid, 'unread_digg_weibapost', 0);
 
@@ -1122,7 +1125,9 @@ class WeibaApi extends Api
         $user_info['remark'] = $user_info_whole['remark'];
         $user_info['avatar']['avatar_middle'] = $user_info_whole['avatar']['avatar_middle'];
         $user_info['user_group'] = $user_info_whole['user_group'];
-
+            //个人空间隐私权限
+        $privacy = model('UserPrivacy')->getPrivacy($this->mid, $uid);
+        $user_info['space_privacy'] = $privacy['space'];
         return $user_info;
     }
 
