@@ -2,10 +2,9 @@
 
 namespace Ts\Models;
 
-use Ts\Bases\Model;
 use AvatarModel as Avatar;
 use CreditModel as OldTsCreditModel;
-use Medz\Component\EmojiFormat;
+use Ts\Bases\Model;
 
 /**
  * 用户数据模型.
@@ -151,8 +150,7 @@ class User extends Model
 
         return (object) static::$instances[$classNamme]
             ->init($this->uid)
-            ->getUserAvatar()
-            ;
+            ->getUserAvatar();
     }
 
     public function getCreditAttribute()
@@ -217,8 +215,7 @@ class User extends Model
         return $this
             ->hasMany('Ts\\Models\\AppTag', 'row_id', 'uid')
             ->byApp('public')
-            ->byTable('user')
-            ;
+            ->byTable('user');
     }
 
     /**
@@ -237,8 +234,7 @@ class User extends Model
         return $this->uid == $uid
             ?: (bool) $this->followers()
                 ->where('fid', '=', $uid)
-                ->count(array('follow_id'))
-            ;
+                ->count(array('follow_id'));
     }
 
     /**
@@ -257,8 +253,7 @@ class User extends Model
         return $this->uid == $uid
             ?: (bool) $this->followings()
                 ->where('uid', '=', $uid)
-                ->count(array('follow_id'))
-            ;
+                ->count(array('follow_id'));
     }
 
     /* 备注 */
@@ -268,7 +263,6 @@ class User extends Model
             ->where('mid', '=', $uid)
             ->select('remark')
             ->first()
-            ->remark
-            ;
+            ->remark;
     }
 } // END class User extends Model

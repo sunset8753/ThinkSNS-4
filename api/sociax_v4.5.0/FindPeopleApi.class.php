@@ -18,7 +18,7 @@ class FindPeopleApi extends Api
             $iscore++;
 
             $gu['uid'] == $this->mid && $rank = $iscore;
-            $gu['score'] = (int)$gu['score'];
+            $gu['score'] = (int) $gu['score'];
             if ($key < 14) {
                 $gu['rank'] = (string) $iscore;
                 $user = model('User')->getUserInfo($gu['uid']);
@@ -39,7 +39,7 @@ class FindPeopleApi extends Api
         empty($rank) && $rank = 10000; // 一万名后不再作排名，以提高性能
 
         $my['rank'] = '排名：'.$rank;
-        $my['lists'] = $lists ? : array();
+        $my['lists'] = $lists ?: array();
 
         return $my;
     }
@@ -75,7 +75,7 @@ class FindPeopleApi extends Api
         // empty ( $rank ) && $rank = 10000; // 一万名后不再作排名，以提高性能
 
         $my['rank'] = '排名：'.$rank;
-        $my['lists'] = $lists ? : array();
+        $my['lists'] = $lists ?: array();
 
         return $my;
     }
@@ -250,12 +250,10 @@ class FindPeopleApi extends Api
                                 $query->whereIn('uid', $ruid_arr);
                             });
                         }
-
                     })
                     ->skip($max_id)
-                    ->take($count-1)
+                    ->take($count - 1)
                     ->get();
-
             } else {
                 $usersObj = $usersObj->where(function ($query) use ($key) {
                     $query->where('search_key', 'like', '%'.$key.'%');
@@ -265,7 +263,6 @@ class FindPeopleApi extends Api
                             $query->whereIn('uid', $ruid_arr);
                         });
                     }
-
                 })
                     ->skip($max_id)
                     ->take($count)
@@ -279,8 +276,8 @@ class FindPeopleApi extends Api
                 $user_list[0]['remark'] = $user_list[0]['remark'] ? $user_list[0]['remark'] : '';
                 $user_list[0]['intro'] = $userObj->intro;
                 $user_list[0]['intro'] = $user_list[0]['intro'] ? $user_list[0]['intro'] : '';
-                $user_list[0]['follow_state']['following'] = (int)$userObj->followIngStatus($this->mid);
-                $user_list[0]['follow_state']['follower'] = (int)$userObj->followStatus($this->mid);
+                $user_list[0]['follow_state']['following'] = (int) $userObj->followIngStatus($this->mid);
+                $user_list[0]['follow_state']['follower'] = (int) $userObj->followStatus($this->mid);
                 $user_list[0]['avatar'] = $userObj->face->avatar_big;
             }
             foreach ($usersObj as $k => $v) {
@@ -291,8 +288,8 @@ class FindPeopleApi extends Api
                 $user_list[$k]['remark'] = $user_list[$k]['remark'] ? $user_list[$k]['remark'] : '';
                 $user_list[$k]['intro'] = $v->intro;
                 $user_list[$k]['intro'] = $user_list[$k]['intro'] ? $user_list[$k]['intro'] : '';
-                $user_list[$k]['follow_state']['following'] = (int)$v->followIngStatus($this->mid);
-                $user_list[$k]['follow_state']['follower'] = (int)$v->followStatus($this->mid);
+                $user_list[$k]['follow_state']['following'] = (int) $v->followIngStatus($this->mid);
+                $user_list[$k]['follow_state']['follower'] = (int) $v->followStatus($this->mid);
                 $user_list[$k]['avatar'] = $v->face->avatar_big;
             }
         } else { // 获取感兴趣的5个人

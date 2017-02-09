@@ -4,9 +4,6 @@ namespace Ts\Models;
 
 use Ts\Bases\Model;
 
-/**
- *
- */
 class UserDepartment extends Model
 {
     protected $table = 'user_department';

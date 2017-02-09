@@ -5,7 +5,7 @@ namespace Ts\Models;
 use Ts\Bases\Model;
 
 /**
- * 用户部门模型
+ * 用户部门模型.
  */
 class Department extends Model
 {

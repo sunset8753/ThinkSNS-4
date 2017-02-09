@@ -5,7 +5,7 @@ namespace Ts\Models;
 use Ts\Bases\Model;
 
 /**
- * 勋章模型
+ * 勋章模型.
  */
 class Medal extends Model
 {

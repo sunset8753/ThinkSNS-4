@@ -1576,7 +1576,7 @@ class WeibaApi extends Api
                     break;
             }
         }
-        $this->data ['content'] = t($this->data ['content']);
+        $this->data['content'] = t($this->data['content']);
         if (!empty($imgs)) {
             foreach ($imgs as $v) {
                 $src = getImageUrlByAttachId($v['attach_id'], 320, 1000);

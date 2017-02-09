@@ -31,8 +31,6 @@ class UserGroup extends Model
         if ($this->user_group_icon !== null and $this->user_group_icon != '-1') {
             return sprintf('%s/image/usergroup/%s', THEME_PUBLIC_URL, $this->user_group_icon);
         }
-
-        return;
     }
 
     public function getImageAttribute()
@@ -40,6 +38,5 @@ class UserGroup extends Model
         if ($this->user_group_icon !== null and $this->user_group_icon != '-1') {
             return '<img title="'.$this->user_group_name.'" src="'.$this->Icon.'" style="width:auto;height:auto;display:inline;cursor:pointer;" />';
         }
-        return;
     }
 } // END class UserGroup extends Model

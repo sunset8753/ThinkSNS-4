@@ -535,10 +535,12 @@ class PeopleModel extends model
     }
 
     /**
-     * 通过条件查询相应的用户信息（新）
-     * @param  array  $data 相应的查询条件
-     * @param  string $type 查询类型
-     * @return array  相应的用户信息
+     * 通过条件查询相应的用户信息（新）.
+     *
+     * @param array  $data 相应的查询条件
+     * @param string $type 查询类型
+     *
+     * @return array 相应的用户信息
      */
     public function getPeopleNew($data, $type)
     {
@@ -575,8 +577,10 @@ class PeopleModel extends model
     }
 
     /**
-     * 获取用户组装数据（新）
+     * 获取用户组装数据（新）.
+     *
      * @param $objList
+     *
      * @return mixed
      */
     public function getUsersInfoNew($objList)
@@ -591,8 +595,10 @@ class PeopleModel extends model
     }
 
     /**
-     * 获取用户详情（新）
+     * 获取用户详情（新）.
+     *
      * @param $userObj
+     *
      * @return array|bool|mixed|static
      */
     public function getUserInfoNew($userObj)
@@ -610,9 +616,9 @@ class PeopleModel extends model
             $userInfo['avatar_small'] = $userInfo['face']->avatar_small;
             $userInfo['avatar_tiny'] = $userInfo['face']->avatar_tiny;
             $userInfo['avatar_url'] = U('public/Attach/avatar', array(
-                'uid' => $userInfo ['uid'],
+                'uid' => $userInfo['uid'],
             ));
-            $userInfo ['space_url'] = !empty($userInfo['domain']) ? U('public/Profile/index', array(
+            $userInfo['space_url'] = !empty($userInfo['domain']) ? U('public/Profile/index', array(
                 'uid' => $userInfo['domain'],
             )) : U('public/Profile/index', array(
                 'uid' => $userInfo['uid'],
