@@ -51,17 +51,13 @@
       <div class="clearfix"> {:W('Menu', array('cid'=>$cid,'sex'=>$sex,'area'=>$area,'verify'=>$verify,'type'=>$type, 'pid' => $pid))} </div>
     </div>
     <div id="col" class="st-bg clearfix">
-      <php>if(in_array($type, array('tag','area'))):</php>
-        {:W('Filter', array('cid'=>$cid,'sex'=>$sex,'area'=>$area,'verify'=>$verify,'type'=>$type))}
-      <php>endif;</php>
-      <php>if(in_array($type, array('verify','official')) && !empty($topUser)):</php>
-        {:W('Face', array('uids'=>$topUser,'type'=>$type))}
-      <php>endif;</php>
+      <!--删除了一段代码-->
       <php>if(in_array($type, array('verify', 'official'))):</php>
-        {:W('UserList', array('cid'=>$cid,'uids'=>$topUser,'type'=>$type,'verify'=>$verify,'pid'=>$pid))}
+      {:W('UserList', array('cid'=>$cid,'uids'=>$topUser,'type'=>$type,'verify'=>$verify,'pid'=>$pid))}
       <php>else:</php>
-        {:W('UserList', array('cid'=>$cid,'sex'=>$sex,'area'=>$area,'verify'=>$verify,'type'=>$type))}
+      {:W('UserList', array('cid'=>$cid,'sex'=>$sex,'area'=>$area,'unit'=>$unit,'verify'=>$verify,'type'=>$type))}
       <php>endif;</php>
+
     </div>
   </div>
 </div>

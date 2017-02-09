@@ -1576,7 +1576,7 @@ class WeibaApi extends Api
                     break;
             }
         }
-
+        $this->data ['content'] = t($this->data ['content']);
         if (!empty($imgs)) {
             foreach ($imgs as $v) {
                 $src = getImageUrlByAttachId($v['attach_id'], 320, 1000);
@@ -1640,7 +1640,7 @@ class WeibaApi extends Api
         if (!$filterContentStatus['status']) {
             $this->error($filterContentStatus['data'], true);
         }
-        $data['content'] = t($filterContentStatus['data']);
+        $data['content'] = $filterContentStatus['data'];
 
         $res = D('weiba_post')->add($data);
         if ($res) {

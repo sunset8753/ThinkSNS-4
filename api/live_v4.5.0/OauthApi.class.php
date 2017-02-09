@@ -758,7 +758,7 @@ class OauthApi extends Api
                 if ($live_user_info = D('live_user_info')->where(array('uid' => $user['uid']))->find()) {
                     $data['ticket'] = $live_user_info['ticket'];
                 } else {
-                    $live_user_info = file_get_contents(SITE_URL.'/api.php?api_version=live&mod=LiveUser&act=postUser&uid='.$user['uid']);
+                    $live_user_info = file_get_contents(SITE_URL.'/api.php?api_type=live&mod=LiveUser&act=postUser&uid='.$user['uid']);
                     $live_user_info = json_decode($live_user_info, true);
                     $live_user_info['status'] == 1 && $data['ticket'] = $live_user_info['data']['ticket'];
                 }
@@ -840,7 +840,7 @@ class OauthApi extends Api
             if ($live_user_info = D('live_user_info')->where(array('uid' => $uid))->find()) {
                 $data['ticket'] = $live_user_info['ticket'];
             } else {
-                $live_user_info = file_get_contents(SITE_URL.'/api.php?api_version=live&mod=LiveUser&act=postUser&uid='.$uid);
+                $live_user_info = file_get_contents(SITE_URL.'/api.php?api_type=live&mod=LiveUser&act=postUser&uid='.$uid);
                 //$live_user_info && $data['ticket'] = $live_user_info['ticket'];
                 $live_user_info = json_decode($live_user_info, true);
                 $live_user_info['status'] == 1 && $data['ticket'] = $live_user_info['data']['ticket'];

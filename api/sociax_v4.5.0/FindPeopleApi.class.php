@@ -18,6 +18,7 @@ class FindPeopleApi extends Api
             $iscore++;
 
             $gu['uid'] == $this->mid && $rank = $iscore;
+            $gu['score'] = (int)$gu['score'];
             if ($key < 14) {
                 $gu['rank'] = (string) $iscore;
                 $user = model('User')->getUserInfo($gu['uid']);
@@ -30,7 +31,7 @@ class FindPeopleApi extends Api
 
                 $map['key'] = 'weibo_count';
                 $map['uid'] = $gu['uid'];
-                $gu['weibo_count'] = (string) M('user_data')->where($map)->getField('value');
+                $gu['weibo_count'] = (int) M('user_data')->where($map)->getField('value');
 
                 $lists[] = $gu;
             }
@@ -38,7 +39,7 @@ class FindPeopleApi extends Api
         empty($rank) && $rank = 10000; // 一万名后不再作排名，以提高性能
 
         $my['rank'] = '排名：'.$rank;
-        $my['lists'] = $lists;
+        $my['lists'] = $lists ? : array();
 
         return $my;
     }
@@ -74,7 +75,7 @@ class FindPeopleApi extends Api
         // empty ( $rank ) && $rank = 10000; // 一万名后不再作排名，以提高性能
 
         $my['rank'] = '排名：'.$rank;
-        $my['lists'] = $lists;
+        $my['lists'] = $lists ? : array();
 
         return $my;
     }
@@ -202,6 +203,117 @@ class FindPeopleApi extends Api
         }
 
         return $user_list;
+    }
+
+    /**
+     * 找人首页-搜索用户 --using.
+     *
+     * @param string $key
+     *                       搜索关键词
+     * @param string $max_id
+     *                       上次返回的最后一个用户ID
+     * @param string $count
+     *                       数量
+     * @request int $rus 感兴趣的人返回个数，default：5
+     *
+     * @return array 用户列表
+     */
+    public function search_user2()
+    {
+        $max_id = $this->max_id ? intval($this->max_id) : 0;
+        $count = $this->count ? intval($this->count) : 20;
+
+        $key = t($this->data['key']);
+        if ($key) {
+            $userObj = \Ts\Models\User::where(function ($query) {
+                $query->where('is_init', '=', 1)
+                    ->where('is_audit', '=', 1)
+                    ->where('is_active', '=', 1)
+                    ->where('is_del', '=', 0);
+            });
+            $usersObj = \Ts\Models\User::where(function ($query) {
+                $query->where('is_init', '=', 1)
+                    ->where('is_audit', '=', 1)
+                    ->where('is_active', '=', 1)
+                    ->where('is_del', '=', 0);
+            });
+            $userObj = $userObj->where('uname', '=', $key)
+                ->select('uid', 'uname', 'intro')
+                ->first();
+            if ($userObj) {
+                $usersObj = $usersObj->where('uid', '!=', $userObj->uid)
+                    ->where(function ($query) use ($key) {
+                        $query->where('search_key', 'like', '%'.$key.'%');
+                        $ruid_arr = D('UserRemark')->searchRemark($this->mid, t($this->data['key']));
+                        if ($ruid_arr) {
+                            $query->orWhere(function ($query) use ($ruid_arr) {
+                                $query->whereIn('uid', $ruid_arr);
+                            });
+                        }
+
+                    })
+                    ->skip($max_id)
+                    ->take($count-1)
+                    ->get();
+
+            } else {
+                $usersObj = $usersObj->where(function ($query) use ($key) {
+                    $query->where('search_key', 'like', '%'.$key.'%');
+                    $ruid_arr = D('UserRemark')->searchRemark($this->mid, t($this->data['key']));
+                    if ($ruid_arr) {
+                        $query->orWhere(function ($query) use ($ruid_arr) {
+                            $query->whereIn('uid', $ruid_arr);
+                        });
+                    }
+
+                })
+                    ->skip($max_id)
+                    ->take($count)
+                    ->get();
+            }
+            $user_list = array();
+            if ($userObj) {
+                $user_list[0]['uid'] = $userObj->uid;
+                $user_list[0]['uname'] = $userObj->uname;
+                $user_list[0]['remark'] = $userObj->remark($this->mid);
+                $user_list[0]['remark'] = $user_list[0]['remark'] ? $user_list[0]['remark'] : '';
+                $user_list[0]['intro'] = $userObj->intro;
+                $user_list[0]['intro'] = $user_list[0]['intro'] ? $user_list[0]['intro'] : '';
+                $user_list[0]['follow_state']['following'] = (int)$userObj->followIngStatus($this->mid);
+                $user_list[0]['follow_state']['follower'] = (int)$userObj->followStatus($this->mid);
+                $user_list[0]['avatar'] = $userObj->face->avatar_big;
+            }
+            foreach ($usersObj as $k => $v) {
+                $k = $userObj ? ($k + 1) : $k;
+                $user_list[$k]['uid'] = $v->uid;
+                $user_list[$k]['uname'] = $v->uname;
+                $user_list[$k]['remark'] = $v->remark($this->mid);
+                $user_list[$k]['remark'] = $user_list[$k]['remark'] ? $user_list[$k]['remark'] : '';
+                $user_list[$k]['intro'] = $v->intro;
+                $user_list[$k]['intro'] = $user_list[$k]['intro'] ? $user_list[$k]['intro'] : '';
+                $user_list[$k]['follow_state']['following'] = (int)$v->followIngStatus($this->mid);
+                $user_list[$k]['follow_state']['follower'] = (int)$v->followStatus($this->mid);
+                $user_list[$k]['avatar'] = $v->face->avatar_big;
+            }
+        } else { // 获取感兴趣的5个人
+            /* 感兴趣的人人数 */
+            $rus = intval($this->data['rus']);
+            $rus or
+            $rus = 5;
+            $user = model('RelatedUser')->getRelatedUser($rus);
+            $user_list = array();
+            foreach ($user as $k => $v) {
+                $user_list[$k]['uid'] = $v['userInfo']['uid'];
+                $user_list[$k]['uname'] = $v['userInfo']['uname'];
+                $user_list[$k]['remark'] = $v['userInfo']['remark'];
+                $user_list[$k]['remark'] = $v['userInfo']['remark'] ? $v['userInfo']['remark'] : '';
+                $user_list[$k]['avatar'] = $v['userInfo']['avatar_big'];
+                $user_list[$k]['intro'] = $v['info']['msg'] ? formatEmoji(false, $v['info']['msg']) : '';
+                $user_list[$k]['follow_status'] = model('Follow')->getFollowState($this->mid, $v['userInfo']['uid']);
+            }
+        }
+
+        return array_values($user_list);
     }
 
     /**

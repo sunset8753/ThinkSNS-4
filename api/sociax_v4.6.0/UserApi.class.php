@@ -1674,16 +1674,16 @@ class UserApi extends Api
 
         //判断长度
         $length = mb_strlen($remark, 'utf-8');
-        $res = ($length >= 2 && $length <= 10);
+        $res = ($length >= 0 && $length <= 10);
         if (!$res) {
-            return Ts\Service\ApiMessage::withArray('', 0, '备注长度必须在2-10个字之间');
+            return Ts\Service\ApiMessage::withArray('', 0, '备注长度必须在0-10个字之间');
             // return array(
             //     'status' => 0,
             //     'msg' => '备注长度必须在2-10个字之间',
             // );
         }
 
-        if (!empty($uid) && !empty($remark)) {
+        if (!empty($uid)) {
             $rm['mid'] = $this->mid;
             $rm['uid'] = $uid;
 

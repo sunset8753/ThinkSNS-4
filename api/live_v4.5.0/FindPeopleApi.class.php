@@ -18,6 +18,7 @@ class FindPeopleApi extends Api
             $iscore++;
 
             $gu['uid'] == $this->mid && $rank = $iscore;
+            $gu['score'] = (int)$gu['score'];
             if ($key < 14) {
                 $gu['rank'] = (string) $iscore;
                 $user = model('User')->getUserInfo($gu['uid']);
@@ -30,7 +31,7 @@ class FindPeopleApi extends Api
 
                 $map['key'] = 'weibo_count';
                 $map['uid'] = $gu['uid'];
-                $gu['weibo_count'] = (string) M('user_data')->where($map)->getField('value');
+                $gu['weibo_count'] = (int) M('user_data')->where($map)->getField('value');
 
                 $lists[] = $gu;
             }
@@ -38,7 +39,7 @@ class FindPeopleApi extends Api
         empty($rank) && $rank = 10000; // 一万名后不再作排名，以提高性能
 
         $my['rank'] = '排名：'.$rank;
-        $my['lists'] = $lists;
+        $my['lists'] = $lists ? : array();
 
         return $my;
     }
@@ -74,7 +75,7 @@ class FindPeopleApi extends Api
         // empty ( $rank ) && $rank = 10000; // 一万名后不再作排名，以提高性能
 
         $my['rank'] = '排名：'.$rank;
-        $my['lists'] = $lists;
+        $my['lists'] = $lists ? : array();
 
         return $my;
     }

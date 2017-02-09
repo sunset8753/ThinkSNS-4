@@ -533,4 +533,155 @@ class PeopleModel extends model
 
         return $list;
     }
+
+    /**
+     * 通过条件查询相应的用户信息（新）
+     * @param  array  $data 相应的查询条件
+     * @param  string $type 查询类型
+     * @return array  相应的用户信息
+     */
+    public function getPeopleNew($data, $type)
+    {
+        // 设置查询条件
+        $list = array();
+        $data['limit'] = intval($data['limit']) ? intval($data['limit']) : 30;
+        switch ($type) {
+            case 'tag':
+                $list = model('UserCategory')->getUidsByCid($data['cid'], $authenticate, $data['limit']);
+                break;
+            case 'area':
+                $list = $this->_getFilterData($data);
+                break;
+            case 'verify':
+                $list = $this->_getVerifyData($data);
+                break;
+            case 'official':
+                $list = $this->_getOfficialData($data);
+                break;
+            case 'unit':
+                $list = $this->_getUnitData($data);
+                break;
+        }
+        $uids = getSubByKey($list['data'], 'uid');
+        if (!$uids) {
+            return null;
+        }
+        $objList = \Ts\Models\User::whereIn('uid', $uids)->orderBy('uid', 'desc')->get();
+        unset($list['data']);
+        // 用户数据信息组装
+        $list['data'] = $this->getUsersInfoNew($objList);
+
+        return $list;
+    }
+
+    /**
+     * 获取用户组装数据（新）
+     * @param $objList
+     * @return mixed
+     */
+    public function getUsersInfoNew($objList)
+    {
+        $list = array();
+        foreach ($objList as $v) {
+            $list[] = $this->getUserInfoNew($v);
+        }
+        unset($objList);
+
+        return $list;
+    }
+
+    /**
+     * 获取用户详情（新）
+     * @param $userObj
+     * @return array|bool|mixed|static
+     */
+    public function getUserInfoNew($userObj)
+    {
+        $userInfo = static_cache('user_info_new_'.$userObj->uid);
+        if (empty($userInfo)) {
+            $userInfo = model('Cache')->get('ui_new_'.$userObj->uid);
+        }
+        if (empty($userInfo)) {
+            $userInfo = $userObj->toArray();
+            // 获取用户头像
+            $userInfo['avatar_original'] = $userInfo['face']->avatar_original;
+            $userInfo['avatar_big'] = $userInfo['face']->avatar_big;
+            $userInfo['avatar_middle'] = $userInfo['face']->avatar_middle;
+            $userInfo['avatar_small'] = $userInfo['face']->avatar_small;
+            $userInfo['avatar_tiny'] = $userInfo['face']->avatar_tiny;
+            $userInfo['avatar_url'] = U('public/Attach/avatar', array(
+                'uid' => $userInfo ['uid'],
+            ));
+            $userInfo ['space_url'] = !empty($userInfo['domain']) ? U('public/Profile/index', array(
+                'uid' => $userInfo['domain'],
+            )) : U('public/Profile/index', array(
+                'uid' => $userInfo['uid'],
+            ));
+            $userInfo['space_link'] = "<a href='".$userInfo['space_url']."' target='_blank' uid='{$userInfo['uid']}' event-node='face_card'>".$userInfo['uname'].'</a>';
+            $userInfo['space_link_no'] = "<a href='".$userInfo['space_url']."' title='".$userInfo['uname']."' target='_blank'>".$userInfo['uname'].'</a>';
+
+            // 获取用户标签
+            foreach ($userObj->tags as $tagLink) {
+                $userInfo['user_tag'][$tagLink->tag->tag_id] = $tagLink->tag->name;
+            }
+            //
+            foreach ($userObj->userData as $userdata) {
+                $userInfo['userdata'][$userdata->key] = $userdata->value;
+            }
+            // 部门
+            foreach ($userObj->department as $depart) {
+                $_depart['department_id'] = $depart->department->department_id;
+                $_depart['title'] = $depart->department->title;
+                $_depart['parent_dept_id'] = $depart->department->parent_dept_id;
+                $_depart['display_order'] = $depart->department->display_order;
+                $userInfo['depart'][] = $_depart;
+                unset($_depart);
+            }
+            // 勋章
+            foreach ($userObj->medal as $medal) {
+                $_medal['id'] = $medal->medal->id;
+                $_medal['name'] = $medal->medal->name;
+                $_medal['desc'] = $medal->medal->desc;
+                $_medal['src'] = $medal->medal->src;
+                $_medal['small_src'] = $medal->medal->small_src;
+                $_medal['type'] = $medal->medal->type;
+                $_medal['share_card'] = $medal->medal->share_card;
+                $userInfo['medals'][] = $_medal;
+                unset($_medal);
+            }
+            // 用户组
+            foreach ($userObj->group as $key => $group) {
+                if ($key > 0) {
+                    $userInfo['group_icon'] .= '&nbsp;';
+                }
+                if ($group->info->user_group_icon != -1) {
+                    $_group['user_group_id'] = $group->info->user_group_id;
+                    $_group['user_group_name'] = $group->info->user_group_name;
+                    $_group['user_group_icon'] = $group->info->user_group_icon;
+                    $_group['user_group_type'] = $group->info->user_group_type;
+                    $_group['app_name'] = $group->info->app_name;
+                    $_group['is_authenticate'] = $group->info->is_authenticate;
+                    $_group['user_group_icon_url'] = $group->info->icon;
+                    $userInfo['group_icon'] .= $group->info->image;
+                    $userInfo['api_user_group'] = $_group;
+                    unset($_group);
+                }
+            }
+            $userInfo['user_group'] = $userInfo['group_icon_only'] = $userInfo['api_user_group'];
+            $userInfo['credit_info'] = $userObj->credit;
+            // 被关注数
+            $userInfo['user_data']['follower_count'] = $userInfo['userdata']['follower_count'];
+
+            unset($userInfo['face'], $userInfo['tags'], $userInfo['user_data'], $userInfo['department'], $userInfo['medal'], $userInfo['group'], $userInfo['credit']);
+            model('Cache')->set('ui_new_'.$userInfo['uid'], $userInfo, 600);
+            static_cache('user_info_new'.$userInfo['uid'], $userInfo);
+        }
+        // 与该用户的关注状态
+        if ($_SESSION['mid']) {
+            $userInfo['follow_state']['following'] = $userObj->followIngStatus($_SESSION['mid']);
+            $userInfo['follow_state']['follower'] = $userObj->followStatus($_SESSION['mid']);
+        }
+
+        return $userInfo;
+    }
 }
