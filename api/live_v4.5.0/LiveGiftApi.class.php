@@ -86,7 +86,7 @@ class LiveGiftApi extends LiveBaseApi
         $gift['uid'] = $uids[$gift['usid']];
         $credit_mod = new CreditUser();
         $user_data = $credit_mod->where('uid', $gift['uid'])->select('score')->first();
-        if ($user_data['score'] < $gift['num']) {
+        if ($user_data->score < $gift['num']) {
             return array('status' => 0, 'message' => '金币数量不足');
         }
         $live_gift_log = M('live_gift_log');

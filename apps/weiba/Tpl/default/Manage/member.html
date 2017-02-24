@@ -1,6 +1,12 @@
 <include file="__THEME__/header" />
 <link href="__APP__/weiba.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="__APP__/weiba.js"></script>
+<style>
+  .s-txt, .s-txt-focus {
+    line-height: 30px;
+    height: 30px;
+  }
+</style>
 
 <div class="content_holder">
   <div class="content no_bg"> 
@@ -54,10 +60,10 @@
           </form>
           <php>}else if($on=='lock'){</php>
           <form>
-            <dl class="member-list" id="list">
+            <dl class="member-list" id="list" style="margin-top:10px;">
               <input type="hidden" value="{$_GET['weiba_id']}" id="weiba_id" />
               <div class="clearfix" id="weiba-selectUser">{:W('SearchUser', array('name' => 'selectUser','follow'=>0,'max'=>1))}
-              <div class="left mt10"><a onclick="addUser()" class="btn-green-small">添加黑名单</a></div>
+              <div class="left mt10" style="margin:0;"><a onclick="addUser()" class="btn-green-small">添加黑名单</a></div>
               </div>     
               <dt class="f9 cGray2"> 
                 <!-- <input id="checkbox_handle" type="checkbox" value="0" onclick="checkAll(this)"> --><!--<a href="javascript:void(0)" class="btn-cancel right" onclick="moveOut({$weiba_id})"><span>移出微吧</span></a>--> 

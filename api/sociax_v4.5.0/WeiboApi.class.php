@@ -1189,7 +1189,7 @@ class WeiboApi extends Api
         $count = intval($this->count);
         $type = $this->data['type'];
 
-        $where = "uid = '{$uid}' AND is_del = 0 AND app='public' ";
+        $where = "uid = '{$uid}' AND is_del = 0";
         if (in_array($type, array(
                 'postimage',
                 'postfile',

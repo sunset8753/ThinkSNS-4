@@ -539,10 +539,11 @@ class PeopleModel extends model
      *
      * @param array  $data 相应的查询条件
      * @param string $type 查询类型
+     * @param int    $mid  用户uid
      *
      * @return array 相应的用户信息
      */
-    public function getPeopleNew($data, $type)
+    public function getPeopleNew($data, $type, $mid)
     {
         // 设置查询条件
         $list = array();
@@ -568,7 +569,11 @@ class PeopleModel extends model
         if (!$uids) {
             return null;
         }
-        $objList = \Ts\Models\User::whereIn('uid', $uids)->orderBy('uid', 'desc')->get();
+        $objList = \Ts\Models\User::whereIn('uid', $uids)->where(function ($query) use ($mid) {
+            if ($mid > 0) {
+                $query->where('uid', '!=', intval($mid));
+            }
+        })->orderBy('uid', 'desc')->get();
         unset($list['data']);
         // 用户数据信息组装
         $list['data'] = $this->getUsersInfoNew($objList);

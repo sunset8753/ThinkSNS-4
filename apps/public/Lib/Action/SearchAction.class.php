@@ -58,6 +58,10 @@ class SearchAction extends Action
                         'like',
                         '%'.$this->key.'%',
                 );
+                $map['uid'] = array(
+                    'neq',
+                    $this->mid
+                );
                 $list = model('user')->where($map)->findPage(20);
 
                 $fids = getSubByKey($list['data'], 'uid');
