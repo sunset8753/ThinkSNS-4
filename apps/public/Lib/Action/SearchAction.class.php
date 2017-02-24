@@ -60,7 +60,7 @@ class SearchAction extends Action
                 );
                 $map['uid'] = array(
                     'neq',
-                    $this->mid
+                    $this->mid,
                 );
                 $list = model('user')->where($map)->findPage(20);
 
