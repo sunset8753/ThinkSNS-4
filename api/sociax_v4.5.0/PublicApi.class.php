@@ -155,14 +155,16 @@ class PublicApi extends Api
                 $weiba_id = getSubByKey($weiba_recommend, 'weiba_id');
                 $followStatus = api('Weiba')->getFollowStateByWeibaids($this->mid, $weiba_id);
                 foreach ($weiba_recommend as $k => $v) {
-                    $weiba_recommend[$k]['logo'] = getImageUrlByAttachId($v['logo'], 200, 200);
+                    $weiba_recommend[$k]['logo'] = getImageUrlByAttachId($v['logo'], 200, 200) ? : '';
                     $weiba_recommend[$k]['following'] = $followStatus[$v['weiba_id']]['following'];
                     if ($v['new_day'] != date('Y-m-d', time())) {
                         $weiba_recommend[$k]['new_count'] = 0;
                         api('Weiba')->setNewcount($v['weiba_id'], 0);
                     }
-                    $weiba_recommend[$k]['title'] = formatEmoji(false, $weiba_recommend[$k]['title']);
-                    $weiba_recommend[$k]['content'] = formatEmoji(false, $weiba_recommend[$k]['content']);
+                    $weiba_recommend[$k]['notify'] = $v['notify'] ? : '';
+                    $weiba_recommend[$k]['info'] = $v['info'] ? : '';
+                    $weiba_recommend[$k]['title'] = formatEmoji(false, $weiba_recommend[$k]['title']) ? : '';
+                    $weiba_recommend[$k]['content'] = formatEmoji(false, $weiba_recommend[$k]['content']) ? : '';
                 }
                 $list['weibas'] = $weiba_recommend ? $weiba_recommend : array();
             }
@@ -238,7 +240,7 @@ class PublicApi extends Api
                 foreach ($user as $k => $v) {
                     $user_list[$k]['uid'] = $v['userInfo']['uid'];
                     $user_list[$k]['uname'] = $v['userInfo']['uname'];
-                    $user_list[$k]['remark'] = $v['userInfo']['remark'];
+                    $user_list[$k]['remark'] = $v['userInfo']['remark'] ? : '';
                     $user_list[$k]['avatar'] = $v['userInfo']['avatar_big'];
                     $privacy = model('UserPrivacy')->getPrivacy($this->mid, $v['userInfo']['uid']);
                     $user_list[$k]['space_privacy'] = $privacy['space'];
@@ -254,7 +256,7 @@ class PublicApi extends Api
                     if (!empty($value)) {
                         $findp['uid'] = $value['uid'];
                         $findp['uname'] = $value['username'];
-                        $findp['remark'] = $value['remark'];
+                        $findp['remark'] = $value['remark'] ? : '';
                         $findp['avatar'] = $value['avatar'];
                         $privacy = model('UserPrivacy')->getPrivacy($this->mid, $value['uid']);
                         $findp['space_privacy'] = $privacy['space'];
@@ -270,7 +272,7 @@ class PublicApi extends Api
 
                 foreach ($giftlogs as $key => $value) {
                     $gift = D('Gift')->where(array('id' => $value['gid']))->field('id,name,image')->find();
-                    $gift['image'] = getImageUrlByAttachId($gift['image']);
+                    $gift['image'] = getImageUrlByAttachId($gift['image']) ? : '';
                     $gifts[] = $gift;
                 }
                 $list['gifts'] = $gifts ? $gifts : array();
@@ -286,7 +288,7 @@ class PublicApi extends Api
                     $_event['area'] = $_event['area']['title'];
                     $_event['city'] = model('Area')->getAreaById($_event['city']);
                     $_event['city'] = $_event['city']['title'];
-                    $_event['image'] = getImageUrlByAttachId($_event['image']);
+                    $_event['image'] = getImageUrlByAttachId($_event['image']) ? : '';
                     $_event['cate'] = Cate::getInstance()->getById($_event['cid']);
                     $_event['cate'] = $_event['cate']['name'];
                     $event[] = $_event;

@@ -5865,7 +5865,7 @@ INSERT INTO `ts_lang` (`lang_id`, `key`, `appname`, `filetype`, `zh-cn`, `en`, `
 INSERT INTO `ts_lang` (`lang_id`, `key`, `appname`, `filetype`, `zh-cn`, `en`, `zh-tw`) VALUES (1181, 'PUBLIC_PLEASE_PARENTER', 'PUBLIC', 1, '请选择好友', 'Please select friends', '擇好請選朋友');
 INSERT INTO `ts_lang` (`lang_id`, `key`, `appname`, `filetype`, `zh-cn`, `en`, `zh-tw`) VALUES (1182, 'PUBLIC_ATTACH_UPLOADING_NOSENT', 'PUBLIC', 1, '附件正在上传中，请稍后再发布', 'The attachment is uploading, please release later', '附件正在上傳中，請稍後再發布');
 INSERT INTO `ts_lang` (`lang_id`, `key`, `appname`, `filetype`, `zh-cn`, `en`, `zh-tw`) VALUES (1183, 'PUBLIC_TEXTARE_PLEASE', 'PUBLIC', 1, '#请在这里输入自定义话题#', '#Topic#', '#請在這裏輸入自定義話題#');
-INSERT INTO `ts_lang` (`lang_id`, `key`, `appname`, `filetype`, `zh-cn`, `en`, `zh-tw`) VALUES (1184, 'PUBLIC_DELETE_THISNEWS', 'PUBLIC', 1, '确定删除这条信息？', 'Conform to delete?', '確定刪除這條信息？');
+INSERT INTO `ts_lang` (`lang_id`, `key`, `appname`, `filetype`, `zh-cn`, `en`, `zh-tw`) VALUES (1184, 'PUBLIC_DELETE_THISNEWS', 'PUBLIC', 1, '确定删除这条信息？', 'Confirm to delete?', '確定刪除這條信息？');
 INSERT INTO `ts_lang` (`lang_id`, `key`, `appname`, `filetype`, `zh-cn`, `en`, `zh-tw`) VALUES (1185, 'PUBLIC_MANAGE_GROUP', 'PUBLIC', 1, '管理分组', 'Manage Group', '管理分組');
 INSERT INTO `ts_lang` (`lang_id`, `key`, `appname`, `filetype`, `zh-cn`, `en`, `zh-tw`) VALUES (1186, 'PUBLIC_TYPENOT_ISNULL', 'PUBLIC', 1, '积分类型不能为空', 'Points type can not be empty', '積分類型不能爲空');
 INSERT INTO `ts_lang` (`lang_id`, `key`, `appname`, `filetype`, `zh-cn`, `en`, `zh-tw`) VALUES (1187, 'PUBLIC_TYPENAME_ISNULL', 'PUBLIC', 1, '积分别名不能为空', 'Points alias can not be empty', '積分別名不能爲空');

@@ -116,8 +116,8 @@
                       </div>
                     </div>
                     <div class="c3">
-                      <div class="item mr10 ml0"> <span>浏览</span> <span>({$vo.read_count|default=0})</span> </div>
-                      <div class="item mr10 ml0"> <span>回复</span> <span>({$vo.reply_count|default=0})</span> </div>
+                      <div class="item mr10 ml0"> <span>浏览</span> <span>({$vo.read_count|get_friend_num})</span> </div>
+                      <div class="item mr10 ml0"> <span>回复</span> <span>({$vo.reply_count|get_friend_num})</span> </div>
                     </div>
                   </li>
                 </volist>
