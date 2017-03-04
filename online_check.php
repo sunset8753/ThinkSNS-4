@@ -2,9 +2,6 @@
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-//exit;
-define('SITE_PATH', dirname(__FILE__));
-
 /* # 设置时区 */
 if (!ini_get('date.timezone') and function_exists('date_default_timezone_set')) {
     date_default_timezone_set('Asia/Shanghai');

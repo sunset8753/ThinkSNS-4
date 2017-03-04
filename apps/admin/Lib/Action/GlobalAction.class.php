@@ -368,7 +368,7 @@ class GlobalAction extends AdministratorAction
         foreach ($creditType as $v) {
             $action[$v['name']] = intval($_POST[$v['name']]);
         }
-
+        $action['alias'] = '系统修改';
         if ($_POST['action'] == 'set') {
             //积分修改为
             foreach ($user as $v) {
