@@ -243,20 +243,20 @@ class PublicApi extends Api
                 }
                 $list['near_users'] = $fpeople ? $fpeople : array();
             }
-            
+
             //积分商城
             if (in_array('8', $open_arr)) {
                 $db_prefix = C('DB_PREFIX');
                 $gifts = M('')->field('gift.id, gift.image, gift.name')
                            ->table("{$db_prefix}gift AS gift LEFT JOIN {$db_prefix}gift_log AS log ON gift.id=log.gid")
-                           ->where("gift.isDel = 0")
+                           ->where('gift.isDel = 0')
                            ->group('gid')
                            ->order('COUNT(`gid`) DESC')
                            ->limit(8)
                            ->findAll();
 
                 foreach ($gifts as $key => &$value) {
-                    $value['image'] = getImageUrlByAttachId($value['image']) ? : '';
+                    $value['image'] = getImageUrlByAttachId($value['image']) ?: '';
                 }
                 $list['gifts'] = $gifts ? $gifts : array();
             }
