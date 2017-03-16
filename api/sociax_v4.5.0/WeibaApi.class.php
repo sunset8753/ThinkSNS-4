@@ -236,6 +236,9 @@ class WeibaApi extends Api
         $replace = '<br/>';
         $data['content'] = str_replace($br, $replace, $data['content']);
 
+        // 去掉视频
+        $data['content'] = strip_html_tags(array('embed'), $data['content']);
+
         $weiba_detail = D('weiba')->where('weiba_id='.$data['weiba_id'])->find();
         $weiba_detail['logo'] = getImageUrlByAttachId($weiba_detail['logo'], 200, 200);
 

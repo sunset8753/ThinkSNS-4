@@ -268,12 +268,17 @@ class PublicApi extends Api
 
             //积分商城
             if (in_array('8', $open_arr)) {
-                $giftlogs = D('GiftLog')->field('`gid`')->group('`gid`')->order('COUNT(`gid`) DESC')->limit(8)->findAll();
+                $db_prefix = C('DB_PREFIX');
+                $gifts = M('')->field('gift.id, gift.image, gift.name')
+                           ->table("{$db_prefix}gift AS gift LEFT JOIN {$db_prefix}gift_log AS log ON gift.id=log.gid")
+                           ->where("gift.isDel = 0")
+                           ->group('gid')
+                           ->order('COUNT(`gid`) DESC')
+                           ->limit(8)
+                           ->findAll();
 
-                foreach ($giftlogs as $key => $value) {
-                    $gift = D('Gift')->where(array('id' => $value['gid']))->field('id,name,image')->find();
-                    $gift['image'] = getImageUrlByAttachId($gift['image']) ?: '';
-                    $gifts[] = $gift;
+                foreach ($gifts as $key => &$value) {
+                    $value['image'] = getImageUrlByAttachId($value['image']) ? : '';
                 }
                 $list['gifts'] = $gifts ? $gifts : array();
             }
