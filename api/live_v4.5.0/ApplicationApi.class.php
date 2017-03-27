@@ -42,6 +42,8 @@ class ApplicationApi extends Api
             return $this->rd('', '认证失败', 1);
         }
         $chongzhi_info = model('Xdata')->get('admin_Config:charge');
+        $info['weixin'] = in_array('weixin', $chongzhi_info['charge_platform']) ? true : false;
+        $info['alipay'] = in_array('alipay', $chongzhi_info['charge_platform']) ? true : false;
         $info['cash_exchange_ratio_list'] = getExchangeConfig('cash');
         $info['charge_ratio'] = $chongzhi_info['charge_ratio'] ?: '100'; //1人民币等于多少积分
         $info['charge_description'] = $chongzhi_info['description'] ?: '充值描述'; //充值描述
