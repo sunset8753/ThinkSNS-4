@@ -1,40 +1,63 @@
-# ThinkSNS-4
-ThinkSNS v4开源社交系统 [Web page](http://www.thinksns.com)
+<h1 align="center">ThinkSNS</h1>
+<p align="center">
+  <a href="https://packagist.org/packages/medz/thinksns">
+    <img src="https://poser.pugx.org/medz/thinksns/v/stable" alt="Latest Stable Version" />
+  </a>
+  <a href="https://packagist.org/packages/medz/thinksns">
+    <img src="https://poser.pugx.org/medz/thinksns/downloads" alt="Total Downloads" />
+  </a>
+  <a href="https://packagist.org/packages/medz/thinksns">
+    <img src="https://poser.pugx.org/medz/thinksns/v/unstable" alt="Latest Unstable Version" />
+  </a>
+  <a href="https://github.com/medz/thinksns/blob/master/LICENSE">
+    <img src="https://poser.pugx.org/medz/thinksns/license" alt="License" />
+  </a>
+  <a href="https://styleci.io/repos/42001557">
+    <img src="https://styleci.io/repos/42001557/shield?branch=master" alt="StyleCI" />
+  </a>
+</p>
+
+# 概述
 A extensable social networing system.
 
-[![Latest Stable Version](https://poser.pugx.org/medz/thinksns-4/v/stable)](https://packagist.org/packages/medz/thinksns-4) [![Total Downloads](https://poser.pugx.org/medz/thinksns-4/downloads)](https://packagist.org/packages/medz/thinksns-4) [![Latest Unstable Version](https://poser.pugx.org/medz/thinksns-4/v/unstable)](https://packagist.org/packages/medz/thinksns-4) [![License](https://poser.pugx.org/medz/thinksns-4/license)](https://packagist.org/packages/medz/thinksns-4)
+- [TS+](https://github.com/zhiyicx/thinksns-plus)
+- [website](http://www.thinksns.com)
+- [demo preview](http://demo.thinksns.com/ts4)
 
 # 如何获得ThinkSNS
 >* Composer
 ```shell
-composer create-project medz/thinksns-4
+composer create-project medz/thinksns
 ```
 >
 >* git
 ```shell
-git clone https://github.com/medz/ThinkSNS-4.git
+git clone https://github.com/medz/thinksns.git
 ```
 > 克隆下来后，使用composer初始化~
 ```shell
 composer install
 ```
 >* Download
-https://github.com/medz/ThinkSNS-4/releases
+https://github.com/medz/thinksns/releases
 下载的zip档案是进过composer初始化后的包，可以直接解压使用，无需使用composer初始化，如果需要升级，请执行
 ```shell
 composer update
 ```
 
 # 开源的力量
-## 我们需要你
-一款开源程序的发展，不能只靠我们自己，我们希望更多的开发者加入到Ts的开发当中，还原发送邮件到 [lovevipdsw@outlook.com](mailto://lovevipdsw@outlook.com) 申请合作者。
-当然，不一定要成为合作者才能为Ts贡献代码，你可以先Fork到自己的仓库中，进行更新~我们会定期合并。
-如果你觉得，我们查看的效率太慢，如果你提交的代码的确优秀或者你希望加入的Ts开发当中，可以发送邮件来申请协作者。
-## 申请成功后需要注意什么~
-* 你可以新建自己的baranch来进行代码提交。
-* 你的代码，在一定需求中，会一直保留下来。
-* 和你一样的协作者以及主版本都将择优使用你的代码。
-* 为了情怀。
+欢迎各位为TS提交代码，谢谢。
 
-## 还有什么
-TS中存在太多冗余的东西，尤其是js，不知道哪位愿意做清理工作呢？
+
+## 常见解决方案
+- [网站ffmpeg视频转码](https://github.com/medz/thinksns-ffmpeg-bin)帮助不会配置视频转码的用户设置转码程序～
+
+
+## 🙏
+
+- 前端清理工作：🙏感谢*耿师傅*，正在进行～上上一个💋。
+- 稳定性修复工作：[@HHHCODE](https://github.com/HHHCODE).
+
+
+## LICENSE
+[ThinkSNS授权协议](http://www.thinksns.com/commercialAuthorizationa.htm)

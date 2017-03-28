@@ -16,7 +16,6 @@ class GlobalAction extends AdministratorAction
         return true;
     }
 
-/** 系统配置 - 积分配置 **/
     //积分类别设置
     public function creditType()
     {
@@ -24,11 +23,12 @@ class GlobalAction extends AdministratorAction
         $this->assign('creditType', $creditType);
         $this->display();
     }
+
     public function editCreditType()
     {
         $type = t($_GET['type']);
         if ($cid = intval($_GET['cid'])) {
-            $creditType = M('credit_type')->where("`id`=$cid")->find();//积分类别
+            $creditType = M('credit_type')->where("`id`=$cid")->find(); //积分类别
             if (!$creditType) {
                 $this->error('无此积分类型');
             }
@@ -44,6 +44,7 @@ class GlobalAction extends AdministratorAction
 
         $this->display();
     }
+
     public function doAddCreditType()
     {
         // if ( !$this->__isValidRequest('name') ) $this->error('数据不完整');
@@ -87,6 +88,7 @@ class GlobalAction extends AdministratorAction
             $this->error('保存失败');
         }
     }
+
     public function doEditCreditType()
     {
         // if ( !$this->__isValidRequest('id,name') ) $this->error('数据不完整');
@@ -137,6 +139,7 @@ class GlobalAction extends AdministratorAction
             $this->error('保存失败');
         }
     }
+
     public function doDeleteCreditType()
     {
         $ids = t($_POST['ids']);
@@ -144,7 +147,7 @@ class GlobalAction extends AdministratorAction
         if (empty($ids)) {
             echo 0;
 
-            return ;
+            return;
         }
 
         $map['id'] = array('in', $ids);
@@ -184,6 +187,7 @@ class GlobalAction extends AdministratorAction
             echo 0;
         }
     }
+
     //积分规则设置
     public function credit()
     {
@@ -196,11 +200,12 @@ class GlobalAction extends AdministratorAction
 
     public function addCredit()
     {
-        $creditType = M('credit_type')->order('id ASC')->findAll();//积分类别
+        $creditType = M('credit_type')->order('id ASC')->findAll(); //积分类别
         $this->assign('creditType', $creditType);
         $this->assign('type', 'add');
         $this->display('editCredit');
     }
+
     public function doAddCredit()
     {
         $name = trim($_POST['name']);
@@ -242,6 +247,7 @@ class GlobalAction extends AdministratorAction
             $this->error('保存失败');
         }
     }
+
     public function editCredit()
     {
         $cid = intval($_GET['cid']);
@@ -250,7 +256,7 @@ class GlobalAction extends AdministratorAction
             $this->error('无此积分规则');
         }
 
-        $creditType = M('credit_type')->order('id ASC')->findAll();//积分类别
+        $creditType = M('credit_type')->order('id ASC')->findAll(); //积分类别
         $this->assign('creditType', $creditType);
 
         $this->assign('credit', $credit);
@@ -258,6 +264,7 @@ class GlobalAction extends AdministratorAction
 
         $this->display();
     }
+
     public function doEditCredit()
     {
         $name = trim($_POST['name']);
@@ -304,6 +311,7 @@ class GlobalAction extends AdministratorAction
             $this->error('保存失败');
         }
     }
+
     public function doDeleteCredit()
     {
         $ids = t($_POST['ids']);
@@ -311,7 +319,7 @@ class GlobalAction extends AdministratorAction
         if (empty($ids)) {
             echo 0;
 
-            return ;
+            return;
         }
 
         $map['id'] = array('in', $ids);
@@ -333,6 +341,7 @@ class GlobalAction extends AdministratorAction
             echo 0;
         }
     }
+
     //批量用户积分设置
     public function creditUser()
     {
@@ -341,6 +350,7 @@ class GlobalAction extends AdministratorAction
         $this->assign('grounlist', model('UserGroup')->getUserGroupByMap('', 'user_group_id, user_group_name'));
         $this->display();
     }
+
     public function doCreditUser()
     {
         set_time_limit(0);
@@ -358,7 +368,7 @@ class GlobalAction extends AdministratorAction
         foreach ($creditType as $v) {
             $action[$v['name']] = intval($_POST[$v['name']]);
         }
-
+        $action['alias'] = '系统修改';
         if ($_POST['action'] == 'set') {
             //积分修改为
             foreach ($user as $v) {
@@ -400,7 +410,7 @@ class GlobalAction extends AdministratorAction
         $this->success('保存成功');
     }
 
-    //积分等级设置    
+    //积分等级设置
     public function creditLevel()
     {
         $_REQUEST['tabHash'] = 'level';
@@ -505,6 +515,7 @@ class GlobalAction extends AdministratorAction
             $this->error('编辑失败');
         }
     }
+
     public function doDeleteCreditLevel()
     {
         $ids = t($_POST['ids']);
@@ -512,7 +523,7 @@ class GlobalAction extends AdministratorAction
         if (empty($ids)) {
             echo 0;
 
-            return ;
+            return;
         }
 
         $list = model('Xdata')->get('admin_Credit:level');

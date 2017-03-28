@@ -33,7 +33,7 @@
         <dl class="blog clearfix">
           <volist name="logList.data" id="vo">
             <dd>
-              <div class="form-tt"><img src="{$user_info[$vo['uid']]['avatar_small']}" /></div>
+              <div class="form-tt"><img width="50px" height="50px" src="{$user_info[$vo['uid']]['avatar_small']}" /></div>
               <div class="form-row">
                 <p class="f9">{$vo.ctime|friendlyDate}</p>
                 <p>{$vo.content}</p>

@@ -16,7 +16,7 @@
             <div class="people-info">
               <div class="item"><h6>微博</h6><span>{$vo.userdata.weibo_count|default=0}</span></div>
               <div class="item"><h6>关注</h6><span>{$vo.userdata.following_count|default=0}</span></div>
-              <div class="item" style="margin-right:0;"><h6>粉丝</h6><span event-node="follower_count" event-args="uid={$vo.uid}">{$vo.user_data.follower_count|default=0}</span></div>
+              <div class="item" style="margin-right:0;"><h6>粉丝</h6><span event-node="follower_count" event-args="uid={$vo.uid}">{$vo.userdata.follower_count|default=0}</span></div>
             </div>
 			<!--<p class="mb5 f9" title="{$vo.info}">{$vo.info|getShort=12}</p>-->
 			<!--<php>if($GLOBALS['ts']['mid'] != $vo['uid']):</php>

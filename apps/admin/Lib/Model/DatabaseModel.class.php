@@ -9,7 +9,7 @@ class DatabaseModel extends Model
         return M('')->query('SHOW TABLE STATUS LIKE "'.C('DB_PREFIX').'%"');
     }
 
-    public function getTableSql($table, $startfrom = 0, $filesize, $currentsize, $complete = true)
+    public function getTableSql($table, $startfrom, $filesize, $currentsize, $complete = true)
     {
         $tabledump = '';
         $offset = 200;
@@ -22,13 +22,13 @@ class DatabaseModel extends Model
 
         if ($startfrom == 0) {
             $createtable = M('')->query('SHOW CREATE TABLE '.$table);
-            $tabledump       .= "DROP TABLE IF EXISTS $table;\n";
-            $tabledump       .= $createtable[0]['Create Table'].";\n\n";
+            $tabledump .= "DROP TABLE IF EXISTS $table;\n";
+            $tabledump .= $createtable[0]['Create Table'].";\n\n";
         }
 
         $first_field = $tablefields[0];
         $numrows = $offset;
-        while ($currentsize + strlen($tabledump) + 500  < $filesize && $numrows == $offset) {
+        while ($currentsize + strlen($tabledump) + 500 < $filesize && $numrows == $offset) {
             if ($first_field['Extra'] == 'auto_increment') {
                 $sql = 'SELECT * FROM '.$table.' WHERE '.$first_field['Field']." > $startfrom LIMIT $offset";
             } else {
@@ -53,7 +53,7 @@ class DatabaseModel extends Model
                         if ($first_field['Extra'] == 'auto_increment') {
                             $startfrom = $oneRow[$first_field['Field']];
                         } else {
-                            $startfrom ++;
+                            $startfrom++;
                         }
                         $tabledump .= 'INSERT INTO '.$table." VALUES ($dumpsql);\n";
                     } else {

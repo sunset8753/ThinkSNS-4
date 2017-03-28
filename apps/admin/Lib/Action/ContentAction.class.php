@@ -1,4 +1,5 @@
 <?php
+
 //+----------------------------------------------------------------------
 // | Sociax [ WE CAN DO IT JUST THINK IT ]
 // +----------------------------------------------------------------------
@@ -8,16 +9,15 @@
 // +----------------------------------------------------------------------
 // | Author: jason <yangjs17@yeah.net>
 // +----------------------------------------------------------------------
-// 
+//
 
 /**
+ * 内容管理.
  +------------------------------------------------------------------------------
- * 内容管理
- +------------------------------------------------------------------------------
- *                            
- * @author    jason <yangjs17@yeah.net> 
+ *
+ * @author    jason <yangjs17@yeah.net>
+ *
  * @version   1.0
- +------------------------------------------------------------------------------
  */
 tsload(APPS_PATH.'/admin/Lib/Action/AdministratorAction.class.php');
 
@@ -53,7 +53,7 @@ class ContentAction extends AdministratorAction
             $this->pageButton[] = array('title' => L('PUBLIC_REMOVE_COMPLETELY'), 'onclick' => "admin.ContentEdit('','deleteFeed','".L('PUBLIC_REMOVE_COMPLETELY')."','".L('PUBLIC_DYNAMIC')."')");
         }
 
-        $isRec == 1 &&  $_REQUEST['tabHash'] = 'rec';
+        $isRec == 1 && $_REQUEST['tabHash'] = 'rec';
         $is_audit == 0 && $_REQUEST['tabHash'] = 'unAudit';
         $this->assign('pageTitle', $isRec ? L('PUBLIC_RECYCLE_BIN') : L('PUBLIC_DYNAMIC_MANAGEMENT'));
         $map['is_del'] = $isRec == 1 ? 1 : 0;
@@ -89,7 +89,7 @@ class ContentAction extends AdministratorAction
     public function feedUnAudit()
     {
         $this->pageKey = APP_NAME.'_'.MODULE_NAME.'_feed';
-        $this->searchPageKey = 'S_'.$this->pageKey ;
+        $this->searchPageKey = 'S_'.$this->pageKey;
         $this->feed(0, 0);
     }
 
@@ -97,9 +97,10 @@ class ContentAction extends AdministratorAction
     public function feedRec()
     {
         $this->pageKey = APP_NAME.'_'.MODULE_NAME.'_feed';
-        $this->searchPageKey = 'S_'.$this->pageKey ;
+        $this->searchPageKey = 'S_'.$this->pageKey;
         $this->feed(1);
     }
+
     //恢复
     public function feedRecover()
     {
@@ -112,6 +113,7 @@ class ContentAction extends AdministratorAction
         echo json_encode($return);
         exit();
     }
+
     //分享通过审核
     public function auditFeed()
     {
@@ -124,7 +126,8 @@ class ContentAction extends AdministratorAction
         echo json_encode($return);
         exit();
     }
-    //假删除 
+
+    //假删除
     public function delFeed()
     {
         $return = model('Feed')->doEditFeed($_POST['id'], 'delFeed', L('PUBLIC_STREAM_DELETE'));
@@ -136,7 +139,8 @@ class ContentAction extends AdministratorAction
         echo json_encode($return);
         exit();
     }
-    //真删除 
+
+    //真删除
     public function deleteFeed()
     {
         $return = model('Feed')->doEditFeed($_POST['id'], 'deleteFeed', L('PUBLIC_REMOVE_COMPLETELY'));
@@ -150,8 +154,10 @@ class ContentAction extends AdministratorAction
     }
 
     /**
-     * 评论管理
-     * @param  bool  $isRec 是否是回收站列表
+     * 评论管理.
+     *
+     * @param bool $isRec 是否是回收站列表
+     *
      * @return array 相关数据
      */
     public function comment($isRec = false, $is_audit = 1)
@@ -176,7 +182,7 @@ class ContentAction extends AdministratorAction
             $this->pageButton[] = array('title' => L('PUBLIC_REMOVE_COMPLETELY'), 'onclick' => "admin.ContentEdit('','deleteComment','".L('PUBLIC_REMOVE_COMPLETELY')."','".L('PUBLIC_STREAM_COMMENT')."')");
         }
 
-        $isRec == 1 &&  $_REQUEST['tabHash'] = 'rec';
+        $isRec == 1 && $_REQUEST['tabHash'] = 'rec';
         $is_audit == 0 && $_REQUEST['tabHash'] = 'unAudit';
         $this->assign('pageTitle', $isRec ? L('PUBLIC_RECYCLE_BIN') : '评论管理');
         $map['is_del'] = $isRec == 1 ? 1 : 0;
@@ -213,7 +219,7 @@ class ContentAction extends AdministratorAction
     public function commentUnAudit()
     {
         $this->pageKey = APP_NAME.'_'.MODULE_NAME.'_comment';
-        $this->searchPageKey = 'S_'.$this->pageKey ;
+        $this->searchPageKey = 'S_'.$this->pageKey;
         $this->comment(0, 0);
     }
 
@@ -221,7 +227,7 @@ class ContentAction extends AdministratorAction
     public function commentRec()
     {
         $this->pageKey = APP_NAME.'_'.MODULE_NAME.'_comment';
-        $this->searchPageKey = 'S_'.$this->pageKey ;
+        $this->searchPageKey = 'S_'.$this->pageKey;
         $this->comment(1);
     }
 
@@ -244,19 +250,21 @@ class ContentAction extends AdministratorAction
         exit();
     }
 
-    //假删除 
+    //假删除
     public function delComment()
     {
         echo json_encode(model('Comment')->doEditComment($_POST['id'], 'delComment', '删除成功'));
     }
-    //真删除 
+
+    //真删除
     public function deleteComment()
     {
         echo json_encode(model('Comment')->doEditComment($_POST['id'], 'deleteComment', '评论彻底删除成功'));
     }
 
     /**
-     * 私信管理列表
+     * 私信管理列表.
+     *
      * @param int $isRec [description]
      */
     public function message($isRec = 0)
@@ -277,9 +285,9 @@ class ContentAction extends AdministratorAction
         } else {
             $this->pageButton[] = array('title' => L('PUBLIC_REMOVE_COMPLETELY'), 'onclick' => "admin.ContentEdit('','deleteMessage','".L('PUBLIC_REMOVE_COMPLETELY')."','".L('PUBLIC_PRIVATE_MESSAGE')."')");
         }
-        $isRec == 1 &&  $_REQUEST['tabHash'] = 'rec';
+        $isRec == 1 && $_REQUEST['tabHash'] = 'rec';
         $this->assign('pageTitle', $isRec ? L('PUBLIC_RECYCLE_BIN') : L('PUBLIC_PRIVATE_MESSAGE_MANAGEMENT'));
-        // 未删除的 
+        // 未删除的
         $map['a.is_del'] = ($isRec == 1) ? 1 : 0;
         !empty($_POST['from_uid']) && $map['a.from_uid'] = intval($_POST['from_uid']);
         !empty($_POST['mix_man']) && $map['c.member_uid'] = intval($_POST['mix_man']);
@@ -308,7 +316,7 @@ class ContentAction extends AdministratorAction
                 $v['from_uid'] = $uname[$v['from_uid']];
             }
 
-            $v['content'] = '<div style="width:500px">'.getShort($v['content'], 120, '...').'</div>';// 截取120字
+            $v['content'] = '<div style="width:500px">'.getShort($v['content'], 120, '...').'</div>'; // 截取120字
             $v['mtime'] = date('Y-m-d H:i:s', $v['mtime']);
             $v['DOACTION'] = $isRec == 0 ? "<a href='javascript:void(0)' onclick='admin.ContentEdit({$v['message_id']},\"delMessage\",\"".L('PUBLIC_STREAM_DELETE').'","'.L('PUBLIC_PRIVATE_MESSAGE')."\");'>".L('PUBLIC_STREAM_DELETE').'</a>'
                                         : "<a href='javascript:void(0)' onclick='admin.ContentEdit({$v['message_id']},\"MessageRecover\",\"".L('PUBLIC_RECOVER').'","'.L('PUBLIC_PRIVATE_MESSAGE')."\")'>".L('PUBLIC_RECOVER').'</a>';
@@ -322,20 +330,23 @@ class ContentAction extends AdministratorAction
     public function messageRec()
     {
         $this->pageKey = APP_NAME.'_'.MODULE_NAME.'_message';
-        $this->searchPageKey = 'S_'.$this->pageKey ;
+        $this->searchPageKey = 'S_'.$this->pageKey;
         $this->message(1);
     }
+
     //恢复
     public function messageRecover()
     {
         echo json_encode(model('Message')->doEditMessage($_POST['id'], 'messageRecover', L('PUBLIC_RECOVER')));
     }
-    //假删除 
+
+    //假删除
     public function delMessage()
     {
         echo json_encode(model('Message')->doEditMessage($_POST['id'], 'delMessage', L('PUBLIC_STREAM_DELETE')));
     }
-    //真删除 
+
+    //真删除
     public function deleteMessage()
     {
         echo json_encode(model('Message')->doEditMessage($_POST['id'], 'deleteMessage', L('PUBLIC_REMOVE_COMPLETELY')));
@@ -361,11 +372,11 @@ class ContentAction extends AdministratorAction
             $this->pageButton[] = array('title' => L('PUBLIC_REMOVE_COMPLETELY'), 'onclick' => "admin.ContentEdit('','deleteAttach','".L('PUBLIC_REMOVE_COMPLETELY')."','".L('PUBLIC_FILE_STREAM')."')");
         }
 
-        $isRec == 1 &&  $_REQUEST['tabHash'] = 'rec';
+        $isRec == 1 && $_REQUEST['tabHash'] = 'rec';
         $this->assign('pageTitle', $isRec ? L('PUBLIC_RECYCLE_BIN') : L('PUBLIC_FILE_MANAGEMENT'));
-        $map['is_del'] = $isRec == 1 ? 1 : 0;    //未删除的 
+        $map['is_del'] = $isRec == 1 ? 1 : 0;    //未删除的
         !empty($_POST['attach_id']) && $map['attach_id'] = array('in', explode(',', $_POST['attach_id']));
-        $_POST['from'] > 1 && $map['from'] = t($_POST['from']);
+        $_POST['from'] > 0 && $map['from'] = intval($_POST['from'] - 1);
         !empty($_POST['name']) && $map['name'] = array('like', '%'.t($_POST['name']).'%');
 
         $listData = model('Attach')->getAttachList($map, '*', 'attach_id desc', 10);
@@ -393,28 +404,32 @@ class ContentAction extends AdministratorAction
     public function attachRec()
     {
         $this->pageKey = APP_NAME.'_'.MODULE_NAME.'_attach';
-        $this->searchPageKey = 'S_'.$this->pageKey ;
+        $this->searchPageKey = 'S_'.$this->pageKey;
         $this->attach(1);
     }
+
     //恢复
     public function attachRecover()
     {
         echo json_encode(model('Attach')->doEditAttach($_POST['id'], 'attachRecover', L('PUBLIC_RECOVER')));
     }
-    //假删除 
+
+    //假删除
     public function delAttach()
     {
         echo json_encode(model('Attach')->doEditAttach($_POST['id'], 'delAttach', L('PUBLIC_STREAM_DELETE')));
     }
-    //真删除 
+
+    //真删除
     public function deleteAttach()
     {
         echo json_encode(model('Attach')->doEditAttach($_POST['id'], 'deleteAttach', L('PUBLIC_REMOVE_COMPLETELY')));
     }
+
     //TODO 临时放着 后面要移动到messagemodel中
 
     /**
-     * 视频管理
+     * 视频管理.
      */
     public function video($is_del = 0)
     {
@@ -424,7 +439,6 @@ class ContentAction extends AdministratorAction
 
         $this->pageKeyList = array('video_id', 'name', 'size', 'uid', 'ctime', 'from', 'DOACTION');
         $this->searchKey = array('video_id', 'name', 'from');
-
         $this->opt['from'] = array_merge(array('-1' => L('PUBLIC_ALL_STREAM')), $this->from);
         $this->pageTab[] = array('title' => '视频列表', 'tabHash' => 'list', 'url' => U('admin/Content/video'));
         $this->pageTab[] = array('title' => L('PUBLIC_RECYCLE_BIN'), 'tabHash' => 'rec', 'url' => U('admin/Content/videoRec'));
@@ -437,13 +451,12 @@ class ContentAction extends AdministratorAction
             $this->pageButton[] = array('title' => L('PUBLIC_REMOVE_COMPLETELY'), 'onclick' => "admin.ContentEdit('','deleteVideo','".L('PUBLIC_REMOVE_COMPLETELY')."','".L('PUBLIC_FILE_STREAM')."')");
         }
 
-        $is_del == 1 &&  $_REQUEST['tabHash'] = 'rec';
+        $is_del == 1 && $_REQUEST['tabHash'] = 'rec';
         $this->assign('pageTitle', $is_del ? L('PUBLIC_RECYCLE_BIN') : L('视频管理'));
-        $map['is_del'] = $is_del == 1 ? 1 : 0;    //未删除的 
+        $map['is_del'] = $is_del == 1 ? 1 : 0;    //未删除的
         !empty($_POST['video_id']) && $map['video_id'] = array('in', explode(',', $_POST['video_id']));
-        $_POST['from'] > 1 && $map['from'] = t($_POST['from']);
+        $_POST['from'] > 0 && $map['from'] = intval($_POST['from'] - 1);
         !empty($_POST['name']) && $map['name'] = array('like', '%'.t($_POST['name']).'%');
-
         // $listData = model('Attach')->getAttachList($map,'*','attach_id desc',10);
         $listData = D('video')->where($map)->findPage(20);
 
@@ -466,24 +479,28 @@ class ContentAction extends AdministratorAction
     public function videoRec()
     {
         $this->pageKey = APP_NAME.'_'.MODULE_NAME.'_video';
-        $this->searchPageKey = 'S_'.$this->pageKey ;
+        $this->searchPageKey = 'S_'.$this->pageKey;
         $this->video(1);
     }
+
     //恢复
     public function videoRecover()
     {
         echo json_encode(model('Video')->doEditVideo($_POST['id'], 'videoRecover', L('PUBLIC_RECOVER')));
     }
-    //假删除 
+
+    //假删除
     public function delvideo()
     {
         echo json_encode(model('Video')->doEditVideo($_POST['id'], 'delVideo', L('PUBLIC_STREAM_DELETE')));
     }
-    //真删除 
+
+    //真删除
     public function deletevideo()
     {
         echo json_encode(model('Video')->doEditVideo($_POST['id'], 'deleteVideo', L('PUBLIC_REMOVE_COMPLETELY')));
     }
+
     //视频配置
     public function video_config()
     {
@@ -498,6 +515,7 @@ class ContentAction extends AdministratorAction
         $this->savePostUrl = U('admin/Content/do_video_config');
         $this->displayConfig($data);
     }
+
     public function do_video_config()
     {
         $list = $_POST['systemdata_list'];
@@ -517,7 +535,7 @@ class ContentAction extends AdministratorAction
     }
 
     /**
-     * 举报管理
+     * 举报管理.
      */
     public function denounce($map)
     {
@@ -529,7 +547,7 @@ class ContentAction extends AdministratorAction
         $data = model('Denounce')->getFromList($map);
         $data['state'] = $map['state'];
         $this->assign($data);
-        if (is_array($map) && sizeof($map) == '1') {
+        if (is_array($map) && count($map) == '1') {
             unset($map);
         }
         $this->assign($_GET);
@@ -542,7 +560,8 @@ class ContentAction extends AdministratorAction
     }
 
     /**
-     * 删除举报回收站内容
+     * 删除举报回收站内容.
+     *
      * @return int 是否删除成功
      */
     public function doDeleteDenounce()
@@ -550,7 +569,7 @@ class ContentAction extends AdministratorAction
         // 判断参数
         if (empty($_POST['ids'])) {
             echo 0;
-            exit ;
+            exit;
         }
 
         $data[] = L('PUBLIC_CONTENT_REPORT_DELETE');
@@ -561,7 +580,8 @@ class ContentAction extends AdministratorAction
     }
 
     /**
-     * 撤销举报内容
+     * 撤销举报内容.
+     *
      * @return int 是否撤销成功
      */
     public function doReviewDenounce()
@@ -569,7 +589,7 @@ class ContentAction extends AdministratorAction
         // 判断参数
         if (empty($_POST['ids'])) {
             echo 0;
-            exit ;
+            exit;
         }
 
         $data[] = L('PUBLIC_CONTENT_REPORT_REVOKE');
@@ -580,7 +600,7 @@ class ContentAction extends AdministratorAction
     }
 
     /**
-     * 话题管理
+     * 话题管理.
      */
     public function topic()
     {
@@ -600,12 +620,15 @@ class ContentAction extends AdministratorAction
         $this->pageKeyList = array('topic_id', 'topic_name', 'note', 'domain', 'des', 'pic', 'topic_user', 'outlink', 'DOACTION');
         //dump($_POST);exit;
         $listData = model('FeedTopicAdmin')->getTopic('', $_REQUEST['recommend']);
+        foreach ($listData['data'] as $k => &$v) {
+            $v['note'] = "<div style='width:400px; border:0; margin:0; padding:0;'>".$v['note'].'</div>';
+        }
         //dump($listData);exit;
         $this->displayList($listData);
     }
 
     /**
-     * 添加话题
+     * 添加话题.
      */
     public function addTopic()
     {
@@ -626,7 +649,7 @@ class ContentAction extends AdministratorAction
     }
 
     /**
-     * 执行添加话题
+     * 执行添加话题.
      */
     public function doAddTopic()
     {
@@ -653,13 +676,14 @@ class ContentAction extends AdministratorAction
             $this->assign('jumpUrl', U('admin/Content/topic'));
             $this->success(L('PUBLIC_ADD_SUCCESS'));
         } else {
-            $this->error($user->getLastError());
+            $this->error(model('FeedTopicAdmin')->getError());
         }
     }
 
     /**
-     * 设置话题为推荐、精华或屏蔽
-     * @return array 操作成功状态和提示信息 
+     * 设置话题为推荐、精华或屏蔽.
+     *
+     * @return array 操作成功状态和提示信息
      */
     public function setTopic()
     {
@@ -670,7 +694,7 @@ class ContentAction extends AdministratorAction
             exit();
         }
         switch (intval($_POST['type'])) {
-            case '1' :
+            case '1':
                 $field = 'recommend';
                 break;
             case '2':
@@ -701,7 +725,7 @@ class ContentAction extends AdministratorAction
     }
 
     /**
-     * 编辑话题
+     * 编辑话题.
      */
     public function editTopic()
     {
@@ -727,7 +751,7 @@ class ContentAction extends AdministratorAction
     }
 
     /**
-     * 执行编辑话题
+     * 执行编辑话题.
      */
     public function doEditTopic()
     {
@@ -749,7 +773,7 @@ class ContentAction extends AdministratorAction
                 $this->error('外链格式错误');
             }
         }
-        //$data['name'] = t($_POST['name']); 
+        //$data['name'] = t($_POST['name']);
         $data['note'] = t($_POST['note']);
         $data['domain'] = t($_POST['domain']);
         $data['des'] = h($_POST['des']);
@@ -772,12 +796,12 @@ class ContentAction extends AdministratorAction
             $this->assign('jumpUrl', U('admin/Content/topic'));
             $this->success(L('PUBLIC_SYSTEM_MODIFY_SUCCESS'));
         } else {
-            $this->error($user->getLastError());
+            $this->error(D('feed_topic')->getError());
         }
     }
 
     /**
-     * 模板管理页面
+     * 模板管理页面.
      */
     public function template()
     {
@@ -802,7 +826,7 @@ class ContentAction extends AdministratorAction
     }
 
     /**
-     * 添加/编辑模板页面
+     * 添加/编辑模板页面.
      */
     public function upTemplate()
     {

@@ -3,11 +3,7 @@
 //显示无限极分类的HTML代码
 /**
  * $field = array('id','name','pid','sort')
- *   <tr>
- <td colspan="10">
- {:showCatetree($tree,$field,$_func)}
- </td>
- </tr>
+ *   <tr>.
  */
 //TODO 可以移动到functions中
 function showCatetree($data, $field, $func, $p = array())
@@ -32,7 +28,7 @@ function showCatetree($data, $field, $func, $p = array())
         $html .= "<td><span rel='edit' cateid='".$val[$field['id']]."' func='{$func}'>".L('PUBLIC_MODIFY')."</span>
 			<span rel='move' cateid='".$val[$field['id']]."' func='{$func}'>".L('PUBLIC_MOVES')."</span>	
 			<span rel='del' cateid='".$val[$field['id']]."' func='{$func}'>".L('PUBLIC_STREAM_DELETE').'</span></td></tr>';
-        //递归	
+        //递归
         if (!empty($val['_child'])) {
             $html .= "<tr><td colspan='10'>".showCatetree($val['_child'], $field, $func, $val).'</td></tr>';
         }
@@ -42,10 +38,9 @@ function showCatetree($data, $field, $func, $p = array())
 }
 //传统形式显示无限极分类树
 /**
- * 
- $field = array('id'=>'','name'=>'','pid'=>,'sort')
  *   <tr><td>ID</td><td>部门</td><td>排序</td><td>操作</td></tr>
- *   {:showTree($tree,$field,$_func)}
+ *   {:showTree($tree,$field,$_func)}.
+ *
  * @param unknown_type $data
  * @param unknown_type $field
  * @param unknown_type $func
@@ -55,7 +50,7 @@ function showTree($data, $field, $func, $p = '')
 {
     $html = '';
     $p = empty($p) ? '' : $p.' - ';
-    // $big  = empty($p) ? "style='font-weight:bold'" : ''; 
+    // $big  = empty($p) ? "style='font-weight:bold'" : '';
     foreach ($data as $key => $val) {
         $html .= "<tr><td>{$val[$field['id']]}</td>
 				 <td>{$p}{$val[$field['name']]}</td>"
@@ -106,7 +101,7 @@ function _makeMd5FileToArray($dir, $res = array())
     return $res;
 }
 /**
- *把给定的目录生成一个文件MD5列表
+ *把给定的目录生成一个文件MD5列表.
  *
  * @param array|string $dir  目录路径
  * @param string       $type 类型：core 核心 app 应用 plug 插件 theme 模板

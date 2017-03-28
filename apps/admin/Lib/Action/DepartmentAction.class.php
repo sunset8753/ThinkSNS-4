@@ -2,8 +2,8 @@
 
 tsload(APPS_PATH.'/admin/Lib/Action/AdministratorAction.class.php');
 /**
- * 后台部门管理
- * 
+ * 后台部门管理.
+ *
  * @author jason
  */
 class DepartmentAction extends AdministratorAction
@@ -17,6 +17,7 @@ class DepartmentAction extends AdministratorAction
         $this->pageTitle['index'] = L('PUBLIC_DEPARTMENT_SETTING');
         parent::_initialize();
     }
+
     public function index()
     {
         if (!empty($_POST)) {
@@ -30,13 +31,13 @@ class DepartmentAction extends AdministratorAction
 
         //显示分类HTML需要知道的对应字段
         $this->assign('field', array('id' => 'department_id', 'name' => 'title', 'sort' => 'display_order'));
-        $this->assign('_func', 'department');    //JS操作函数前缀	
+        $this->assign('_func', 'department');    //JS操作函数前缀
 
         $this->pageKeyList = array('department_id', 'title', 'parent_dept_id', 'display_order', 'ctime', 'DOACTION');
 
         $this->savePostUrl = U('admin/Department/index');    //添加部门的数据提交地址
 
-        //获取1级部门	
+        //获取1级部门
         $this->opt['parent_dept_id'] = model('Department')->getHashDepartment(0);
 
         $this->notEmpty = array('title');
@@ -44,11 +45,13 @@ class DepartmentAction extends AdministratorAction
 
         $this->displayCateTree($department);
     }
-    //修改名称	
+
+    //修改名称
     public function editDepartment()
     {
         $this->delDepartment();
     }
+
     public function doeditDepartment()
     {
         $id = intval($_POST['id']);
@@ -79,11 +82,13 @@ class DepartmentAction extends AdministratorAction
         echo json_encode($return);
         exit();
     }
+
     //移动部门
     public function moveDepartment()
     {
         $this->delDepartment();
     }
+
     public function domoveDepartment()
     {
         $id = intval($_POST['id']);
@@ -110,6 +115,7 @@ class DepartmentAction extends AdministratorAction
         echo json_encode($return);
         exit();
     }
+
     //删除部门
     public function delDepartment()
     {
@@ -122,6 +128,7 @@ class DepartmentAction extends AdministratorAction
         $this->assign('info', $info);
         $this->display();
     }
+
     //删除部门操作
     public function dodelDepartment()
     {

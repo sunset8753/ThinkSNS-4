@@ -62,7 +62,7 @@ class TestAction extends Action
             }else{
                 $str .= $vo['COLUMN_NAME'].';';
             }
-            
+
         }
         echo($str); */
     }
@@ -192,7 +192,7 @@ class TestAction extends Action
 
     public function data()
     {
-        $nums = 1000;//测试数
+        $nums = 1000; //测试数
         $add = array();
         $add['version'] = 1;
         $add['language'] = 'all';
@@ -200,7 +200,7 @@ class TestAction extends Action
         $add['creator_uid'] = $this->mid;
         $add['create_time'] = time();
         $add['comment_count'] = 0;
-        for ($i = 0;$i < $nums;$i++) {
+        for ($i = 0; $i < $nums; $i++) {
             $add['status'] = rand(0, 2);
             $add['active'] = rand(0, 1);
             $add['category_id'] = rand(1, 4);
@@ -226,25 +226,14 @@ class TestAction extends Action
     public function findLang()
     {
 
-        //  - model-
-        // $filePath[] = ADDON_PATH.'/model';
-        // 
-        // - view -
-//		$filePath[] = ADDON_PATH.'/theme/stv1/public';
-//		$filePath[] = ADDON_PATH.'/theme/stv1/task';
-//		$filePath[] = ADDON_PATH.'/theme/stv1/support';
-//		$filePath[] = ADDON_PATH.'/theme/stv1/contact';
-//		$filePath[] = ADDON_PATH.'/theme/stv1/admin';
-        // 
         // - app -
- $filePath[] = SITE_PATH.'/apps/public';
+        $filePath[] = SITE_PATH.'/apps/public';
         $filePath[] = SITE_PATH.'/apps/support';
         $filePath[] = SITE_PATH.'/apps/contact';
         $filePath[] = SITE_PATH.'/apps/admin';
         $filePath[] = SITE_PATH.'/apps/task';
 
         $filelist = array();
-        require_once ADDON_PATH.'/library/io/Dir.class.php';
 
         foreach ($filePath as $v) {
             $filelist[$v] = $this->getDir($v);
@@ -258,7 +247,7 @@ class TestAction extends Action
                 $data = file_get_contents($v);
 
                 if ($ext == 'php' || $ext == 'js') {
-                    $data = preg_replace("!((/\*)[\s\S]*?(\*/))|(//.*)!", '', $data);//去掉注释里的中文
+                    $data = preg_replace("!((/\*)[\s\S]*?(\*/))|(//.*)!", '', $data); //去掉注释里的中文
                 }
                 preg_match_all('/([\x{4e00}-\x{9fa5}])+/u', $data, $result);
                 if (!empty($result[0])) {
@@ -268,6 +257,7 @@ class TestAction extends Action
         }
         dump($findLang);
     }
+
     public function getDir($dir, $list = array())
     {
         $dirs = new Dir($dir);
@@ -284,6 +274,7 @@ class TestAction extends Action
 
         return $list;
     }
+
     //下面是一些demo
     public function demo()
     {
@@ -341,8 +332,8 @@ class TestAction extends Action
             $hash[$dv['id']] = $dv;
             $tree[$dv['id']] = $dv;
             !isset($child[$dv['id']]) && $child[$dv['id']] = array();
-            $tree[$dv['id']]['_child'] = & $child[$dv['id']];
-            $child[$dv['pid']][] = & $tree[$dv['id']];
+            $tree[$dv['id']]['_child'] = &$child[$dv['id']];
+            $child[$dv['pid']][] = &$tree[$dv['id']];
         }
 
         return $child[0];
@@ -386,7 +377,7 @@ class TestAction extends Action
     }
 
     /**
-     * 生成语言文件
+     * 生成语言文件.
      */
     public function createLangPhpFile()
     {
@@ -417,7 +408,7 @@ class TestAction extends Action
     }
 
     /**
-     * 获取生成的语言文件内容
+     * 获取生成的语言文件内容.
      */
     public function getzLang()
     {
@@ -466,7 +457,7 @@ class TestAction extends Action
         // 	$map['filetype'] = 1;
         // 	$map['key'] = $k;
         // 	$save['en'] = $v;
-        // 	D('')->table('sociax_lang')->where($map)->save($save);			
+        // 	D('')->table('sociax_lang')->where($map)->save($save);
         // }
 
         // $lang = include(CONF_PATH.'/lang/public_zh-cn.js-');
@@ -475,7 +466,7 @@ class TestAction extends Action
         // 	$map['filetype'] = 1;
         // 	$map['key'] = $k;
         // 	$save['zh-cn'] = $v;
-        // 	D('')->table('sociax_lang')->where($map)->save($save);			
+        // 	D('')->table('sociax_lang')->where($map)->save($save);
         // }
 
         // $lang = include(CONF_PATH.'/lang/public_zh-tw.js');
@@ -528,7 +519,7 @@ class TestAction extends Action
     {
         // $file = fopen(CONF_PATH.'/lang/t.php','r');
         // while(!feof($file)){
-        // 	$d = fgets($file,'4096'); 
+        // 	$d = fgets($file,'4096');
         // 	$data[] = trim($d)."',";
         // }
         // fclose($file);
@@ -601,7 +592,7 @@ class TestAction extends Action
     }
 
     /**
-     * 插入Ts2.8用户信息
+     * 插入Ts2.8用户信息.
      */
     public function insertTsUser()
     {
@@ -627,6 +618,7 @@ class TestAction extends Action
             model('UserGroupLink')->domoveUsergroup($result, 3);
         }
     }
+
     public function testpiny()
     {
         $unames = model('User')->field('uid,uname')->findAll();
@@ -705,7 +697,8 @@ class TestAction extends Action
     }
 
     /**
-     * Google翻译API
+     * Google翻译API.
+     *
      * @return [type] [description]
      */
     private function translatorGoogleAPI($text, $tl = 'zh-CN', $sl = 'auto', $ie = 'UTF-8')
@@ -734,6 +727,7 @@ class TestAction extends Action
             // dump($tw);
         }
     }
+
     public function upUserData()
     {
         set_time_limit(0);
@@ -784,7 +778,7 @@ class TestAction extends Action
                     } else {
                         $sql .= " , ($uid,'$key','$val')";
                     }
-                    $k ++;
+                    $k++;
                 }
                 $rr = M()->execute($sql);
                 dump($sql);
@@ -803,6 +797,7 @@ class TestAction extends Action
             echo '<script>window.location.href="'.U('public/Test/upUserData', array('p' => $p)).'";</script>';
         }
     }
+
     /**
      * 转移2.8头像为3.0头像地址
      */
@@ -842,7 +837,8 @@ class TestAction extends Action
     }
 
     /**
-     * 创建多级文件目录
+     * 创建多级文件目录.
+     *
      * @param string $path 路径名称
      */
     private function _createFolder($path)
@@ -854,7 +850,8 @@ class TestAction extends Action
     }
 
     /**
-     * 生成后台菜单配置文件
+     * 生成后台菜单配置文件.
+     *
      * @return [type] void
      */
     public function createSystemConfigPhpFile()
@@ -940,7 +937,8 @@ class TestAction extends Action
     }
 
     /**
-     * 获得后台菜单配置文件
+     * 获得后台菜单配置文件.
+     *
      * @return [type] void
      */
     public function getzLang1()

@@ -8,14 +8,14 @@ class SelectFriendsAction extends Action
         $db_prefix = C('DB_PREFIX');
         $Model = M('');
         if ($name) {
-            //从我关注的人中找				
+            //从我关注的人中找
             $followings = $Model->field('follow.fid AS fuid,user.uname AS funame')
                                 ->table("{$db_prefix}user_follow AS follow LEFT JOIN {$db_prefix}user AS user ON follow.fid=user.uid")
                                 ->where("follow.uid={$this->mid} AND user.uname LIKE '%{$name}%'")
                                 ->order('follow.follow_id DESC')
                                 ->limit(10)
                                 ->findAll();
-            //从我的粉丝中找	
+            //从我的粉丝中找
             $followers = $Model->field('follow.uid AS fuid,user.uname AS funame')
                                ->table("{$db_prefix}user_follow AS follow LEFT JOIN {$db_prefix}user AS user ON follow.uid=user.uid")
                                ->where("follow.fid={$this->mid} AND user.uname LIKE '%{$name}%'")
@@ -24,7 +24,7 @@ class SelectFriendsAction extends Action
                                ->findAll();
         }
         //合并，并过滤重复
-        is_array($followings) || $followings = array();//查询返回空时，不为数组，则需转为空数组
+        is_array($followings) || $followings = array(); //查询返回空时，不为数组，则需转为空数组
         is_array($followers) || $followers = array();
         $follow = $this->unique_arr(array_merge($followings, $followers));
         foreach ($follow as $k => $v) {
@@ -113,9 +113,9 @@ class SelectFriendsAction extends Action
         foreach ($array2D as &$v) {
             $v = implode(',', $v);  //降维,也可以用implode,将一维数组转换为用逗号连接的字
         }
-        $array2D = array_unique($array2D);    //去掉重复的字符串,也就是重复的一维数组  
+        $array2D = array_unique($array2D);    //去掉重复的字符串,也就是重复的一维数组
         foreach ($array2D as &$v) {
-            $v = explode(',', $v);   //再将拆开的数组重新组装  
+            $v = explode(',', $v);   //再将拆开的数组重新组装
         }
 
         return $array2D;

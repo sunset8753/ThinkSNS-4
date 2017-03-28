@@ -1,7 +1,6 @@
 <include file="__THEME__/header" />
 
 <link href="__APP__/weiba.css" rel="stylesheet" type="text/css" />
-<link href="__THEME__/public/account.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="__APP__/weiba.js"></script>
 <script>
 var UPLOAD_URL ='{:UPLOAD_URL}';
@@ -32,7 +31,7 @@ var UPLOAD_URL ='{:UPLOAD_URL}';
                             </li>
                             <li>
                                 <div class="c1"><font color="red"> * </font>简介：</div>
-                                <div class="c2"><textarea  class="text" rows="3" style="width:610px;" name="intro" id="intro">{$weiba_detail['intro']}</textarea><br /></div>
+                                <div class="c2"><textarea  class="text" rows="3" style="width:610px; overflow:auto;" name="intro" id="intro">{$weiba_detail['intro']}</textarea><br /></div>
                             </li>
                             <li>
                                 <div class="c1">发帖权限：</div>
